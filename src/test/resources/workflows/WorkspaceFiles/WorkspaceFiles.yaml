@@ -1,0 +1,87 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  ######################################################
+  
+  - id: LoadWorkspaceFileOne
+    type: GroovyActorNode
+    properties:
+      actor.usesStepDirectory: true
+      inflows:
+        workspacefile: workspace:/workspaceFileOne.txt
+      actor.step: |
+        filetext = workspacefile
+      outflows: 
+        filetext: /text
+  
+  - id: PrintWorkspaceFileOneFromString
+    type: GroovyActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        println "PrintWorkspaceFileOneFromString:";
+        println text;
+        println ""
+      inflows:
+        text: /text
+
+  - id: PrintWorkspaceFileOneFromFile
+    type: GroovyActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        println "PrintWorkspaceFileOneFromFile:"
+        println file.text
+        println ""
+      actor.inputs:
+        file:
+          type: File
+      inflows:
+        file: /text
+
+  - id: PrintWorkspaceFileTwoFromFile
+    type: GroovyActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        println "PrintWorkspaceFileTwoFromFile:"
+        println file.text
+        println ""
+      actor.inputs:
+        file:
+          type: File
+      inflows:
+        file: workspace:/workspaceFileTwo.txt
+        
+  - id: PrintWorkspaceFileTwoFromString
+    type: GroovyActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        println "PrintWorkspaceFileTwoFromString:"
+        println text
+        println ""
+      inflows:
+        text: workspace:/workspaceFileTwo.txt
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: WorkspaceFiles
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes: 
+        - !ref LoadWorkspaceFileOne
+        - !ref PrintWorkspaceFileOneFromString
+        - !ref PrintWorkspaceFileOneFromFile
+        - !ref PrintWorkspaceFileTwoFromFile
+        - !ref PrintWorkspaceFileTwoFromString

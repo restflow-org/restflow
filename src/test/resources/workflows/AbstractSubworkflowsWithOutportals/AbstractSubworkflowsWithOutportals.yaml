@@ -1,0 +1,66 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+  - classpath:/workflows/NestedWorkflow/NestedWorkflow.yaml
+
+components:
+
+- id: WA
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+      - !ref NB
+      
+- id: NB
+  type: Node
+  properties: 
+    actor: !ref WC
+    sequences:
+      invalue: 
+        - 1
+        - 2
+        - 3
+    nestedUriPrefix: /foo/{invalue}/
+
+- id: WC
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    inputs: 
+      invalue:
+    outputs:
+      outvalue:
+    nodes:
+      - !ref WCInportal
+      - !ref ND
+      - !ref WCOutportal
+
+- id: WCInportal
+  type: InPortal
+  properties:
+    outflows:
+      invalue: /invalue
+
+- id: ND
+  type: GroovyActorNode
+  properties:
+    sequences:
+      input: 
+        - 1
+        - 2
+        - 3
+    actor.step: |
+      output = input;
+      println output;
+    outflows:
+      output: /outvalue
+
+- id: WCOutportal
+  type: OutPortal
+  properties:
+    inflows:
+      outvalue: /outvalue
+    

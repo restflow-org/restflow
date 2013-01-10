@@ -1,0 +1,112 @@
+imports:
+
+- classpath:/common/types.yaml
+- classpath:/common/directors.yaml
+- actors:actors.yaml
+
+components:
+
+- id: Maps
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+    - !ref LoadSpreadSheets
+    - !ref ParseGroups
+    - !ref ParseCrystals
+    - !ref PrintSamples
+
+- id: LoadSpreadSheets
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+        - id: 45
+          groups:
+            - name: DRT-33
+              crystals:
+                DRT110: 1
+                DRT240: 3
+                DRT322: 4
+            - name: DRT-55
+              crystals:
+                DRT225: 5
+                DRT542: 9
+            - name: DRT-17
+              crystals:
+                DRT010: 6
+                DRT250: 17
+                DRT035: 8
+        - id: 195
+          groups:
+            - name: ABC-077
+              crystals:
+                ABC11: 9
+                ABC40: 17
+                ABC22: 5
+            - name: ABC-410
+              crystals:
+                ABC25: 3
+                ABC24: 19
+    outflows:
+      value: /spreadsheet
+
+- id: ParseGroups
+  type: GroovyActorNode
+  properties: 
+    actor.initialize:
+      index = 0;
+      _status.enableInput("spreadsheet");
+    actor.step: |
+      id = spreadsheet.id;
+      group = spreadsheet.groups[index];
+      groupName = group.name;
+      samplePositions = group.crystals;
+      index++;
+      if (index >= spreadsheet.groups.size()) {
+        index = 0;
+        _status.enableInput('spreadsheet');       
+      }
+    actor.inputs:
+      spreadsheet:
+        defaultReadiness: false
+    actor.outputs:
+      id:
+      groupName:
+      samplePositions:
+    inflows: 
+      spreadsheet: /spreadsheet/     
+    outflows:
+      samplePositions: /samples
+      id: /spreadsheetId
+      groupName: /group
+    actor.state:
+      index:
+      spreadsheet:
+
+- id: ParseCrystals
+  type: Node
+  properties:
+    validateInflowNames: false
+    inflows:
+      map: /samples
+      id: /spreadsheetId
+    actor: !ref MapDisassembler
+    outflows:
+      item: /items/{id}/{key}/
+
+- id: PrintSamples
+  type: GroovyActorNode
+  properties: 
+    actor.step: |
+      println "Spreadsheet $id Sample $sampleId Pin $pin"
+    actor.inputs:
+      id:  
+      pin:
+      sampleId:
+    inflows: 
+      pin: /items/{id}/{sampleId}/     
+
+      
+      

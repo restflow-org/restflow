@@ -1,0 +1,83 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: GenerateIntegerSequence1
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 3
+      outflows: 
+        value: /counter/value1/
+
+  - id: GenerateIntegerSequence2
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 5
+        step: 1
+        max: 7
+      outflows: 
+        value: /counter/value2/
+
+  # create a sequence of integers
+  - id: GenerateIntegerSequence3
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      endFlowOnNoOutput: true
+      sequences: 
+        value:
+          - 13
+          - 75
+          - 60
+          - 15
+          - 20
+      outflows: 
+        value: /counter/value3/
+        
+  - id: MergeOne
+    type: MergeNode
+    properties:   
+      inflows:
+        input1: /counter/value1/
+        input2: /counter/value2/
+        input3: /counter/value3/
+      outflows: 
+        output: /counter/merged/
+
+  - id: RenderIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /counter/merged/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: NonDeterministicMerge
+    type: Workflow
+    properties:
+      nodes: 
+        - !ref GenerateIntegerSequence1
+        - !ref GenerateIntegerSequence2
+        - !ref GenerateIntegerSequence3
+        - !ref MergeOne
+        - !ref RenderIntegers
+    

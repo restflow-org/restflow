@@ -1,0 +1,57 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: GenerateValueList
+    type: Node
+    properties:   
+      actor: !ref ListSource
+      constants:
+        inputList:
+          - 2.6
+          - 5.5
+          - 3.9
+      outflows:
+        outputList: /values/
+
+  - id: AverageValues
+    type: Node
+    properties:   
+      actor: !ref Averager
+      inflows:
+        valueList: /values/
+      outflows:
+        average: /averages/
+
+  - id: RenderAverage
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Value average
+        outputAtWrapup: true
+      inflows: 
+        message: /averages/
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: AveragerWorkflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateValueList
+        - !ref AverageValues
+        - !ref RenderAverage
+    

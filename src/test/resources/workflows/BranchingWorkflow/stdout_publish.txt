@@ -1,0 +1,14 @@
+1
+Hey there!! :-)
+2
+Hello!!!!!
+3
+Hi!! :-)
+*** Value stream ***
+Hey there!! :-)
+Hello!!!!!
+Hi!! :-)
+*** Count stream ***
+1
+2
+3

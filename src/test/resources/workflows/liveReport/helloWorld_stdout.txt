@@ -1,0 +1,5 @@
+meta: {runName: liveReport, host: smblx11.slac.stanford.edu, lastModified: 1297817197000,
+  pid: '8560', running: 'true'}
+inputs: {FileName: /data/bluser/BL7-1/Nov2010/test-myo-BL7-1_13_0001.img, FirstImgNum: '10',
+  LastImgNum: '600', PDBFile: /home/ystsai/myo/myo.pdb, InputResolution: '1.0'}
+

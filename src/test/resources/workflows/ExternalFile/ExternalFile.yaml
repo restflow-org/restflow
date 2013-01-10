@@ -1,0 +1,25 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+  
+  - id: RenderFile
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: RenderFile
+        outputAtWrapup: true
+      inflows:
+        message: file:src/test/resources/workflows/ExternalFile/test.txt
+
+  - id: ExternalFile
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref RenderFile

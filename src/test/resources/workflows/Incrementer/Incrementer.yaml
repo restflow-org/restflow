@@ -1,0 +1,55 @@
+
+namespace:
+
+  organization: ssrl
+  module: Sub
+
+imports:
+
+  - classpath:/common/types.yaml
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+  
+components:
+
+  - id: Inputs
+    type: InPortal
+    properties:
+      outflows: 
+        value: /value
+        step: /step
+
+  - id: IncrementInputValueByStep
+    type: Node
+    properties: 
+      actor: !ref Adder
+      stepsOnce: true
+      inflows:
+        a: /value
+        b: /step
+      outflows:
+        sum: /incrementedValue/
+
+  - id: Outputs
+    type: OutPortal
+    properties:
+      inflows: 
+        out: /incrementedValue/
+        step: /step
+
+  - id: Incrementer
+    type: Workflow
+    properties:
+      director: !ref MTDataDrivenDirector
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+#     director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref Inputs
+        - !lref IncrementInputValueByStep
+        - !lref Outputs
+      inputs:
+        value: 
+          default: 0
+        step: 
+          default:  10

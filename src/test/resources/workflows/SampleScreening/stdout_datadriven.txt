@@ -1,0 +1,20 @@
+Evaluating sample DRT110.
+Evaluating sample DRT322.
+Evaluating sample DRT240.
+Sample DRT322 wins from group a
+Collecting Best from Group a : DRT322
+Evaluating sample DRT410.
+Evaluating sample DRT540.
+Evaluating sample DRT622.
+Sample DRT622 wins from group b
+Collecting Best from Group b : DRT622
+Evaluating sample DRT710.
+Evaluating sample DRT840.
+Evaluating sample DRT922.
+Sample DRT922 wins from group c
+Collecting Best from Group c : DRT922
+Evaluating sample DRT442.
+Evaluating sample DRT420.
+Evaluating sample DRT430.
+Sample DRT442 wins from group d
+Collecting Best from Group d : DRT442

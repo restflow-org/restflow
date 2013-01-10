@@ -1,0 +1,6 @@
+/files/file_1.txt: !file /files/file_1.txt
+/files/appended_1.txt: !file /files/appended_1.txt
+/files/file_2.txt: !file /files/file_2.txt
+/files/appended_2.txt: !file /files/appended_2.txt
+/files/file_3.txt: !file /files/file_3.txt
+/files/appended_3.txt: !file /files/appended_3.txt

@@ -1,0 +1,12 @@
+*** Node step counts ***
+Squares: 1
+Squares.GenerateValues: 3
+Squares.RenderSquares: 3
+Squares.Square: 3
+*** Published resources ***
+/square/1: 1
+/square/2: 4
+/square/3: 9
+/value/1: 1
+/value/2: 2
+/value/3: 3

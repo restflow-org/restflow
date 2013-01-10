@@ -1,0 +1,367 @@
+imports:
+
+- classpath:/common/types.yaml
+
+components:
+
+- id: Adder
+  type: GroovyActor
+  properties:
+    step: |
+      sum=a+b
+    inputs:
+      a: 
+        default: 0
+      b: 
+        default: 0
+    outputs: 
+      sum:
+      
+- id: StringConcatenator
+  type: GroovyActor
+  properties:
+    step: |
+      concatenatedString = stringOne + stringTwo; 
+    inputs:
+      stringOne:
+        type: String
+      stringTwo:
+        type: String
+    outputs: 
+      concatenatedString:
+
+- id: Counter
+  type: GroovyActor
+  properties:
+    step: |
+      count=_status.stepCount
+    inputs: 
+      input:
+    outputs:
+      count:
+
+- id: ConstantSource
+  type: GroovyActor
+  properties:
+    step: |
+      output=value;
+    inputs: 
+      value:
+    outputs: 
+      value:
+
+- id: IntegerConstantSource
+  type: GroovyActor
+  properties:
+    step: |
+      output=value;
+    inputs: 
+      value:
+    outputs: 
+      value:
+    types:
+      value: Integer
+      output: Integer
+      
+#TODO: Alias SingleUnit buffer to ConstantSource
+- id: SingleUnitBuffer
+  type: ConstantSource
+
+- id: SingleUnitIntegerBuffer
+  type: IntegerConstantSource
+
+- id: SerialAdder
+  type: GroovyActor
+  properties:
+    step:
+      sum = addend[0] + addend[1];
+    inputs: 
+      addend:
+        accrue: 2
+    outputs: 
+      sum:
+
+- id: PrintStreamWriter
+  type: GroovyActor
+  properties:
+    initialize: |
+      bufferedStream = new ByteArrayOutputStream();
+      printStream = new PrintStream(bufferedStream);
+    step: |
+      if (message != null) {
+        printStream.println(message);
+        if (outputImmediately) println( message );
+      }
+    dispose: |
+      if (outputAtWrapup) {
+        if (name != null) {
+          System.out.println("*** " + name + " ***");
+        }
+        System.out.print(bufferedStream.toString());
+      }
+    state:
+      bufferedStream:
+      printStream:
+    inputs:
+      name:
+        type: String
+      message:
+        type: String
+        nullable: true
+      outputImmediately:
+        default: true
+      outputAtWrapup: 
+        default: false
+
+- id: IntegerSequenceGenerator
+  type: GroovyActor
+  properties:
+    initialize: |
+      nextValue=initial
+    step: |
+      value = nextValue;
+      nextValue += step;
+      if ( value > max) {
+        _status.setOutputEnable("value", false);			
+      }
+    state: 
+      nextValue:
+    inputs:
+      initial: 
+        default: 1
+      step: 
+        default: 1
+      max: 
+        default: 1
+    outputs:
+      value:
+        nullable: true
+    
+- id: ListSource
+  type: GroovyActor
+  properties:
+    step: |
+      outputList = inputList;
+    inputs: 
+      inputList:
+        type: List<Number>
+    outputs: 
+      outputList:  
+  
+- id: IntegerStreamMerger
+  type: GroovyActor
+  properties:
+    initialize: |
+      _status.enableInput("a");
+      _status.enableInput("b");
+    step: |
+      if (a == null) {
+        c = b;
+        _status.enableInput('b');
+        return;
+      }
+      
+      if (b == null) {
+        c = a;
+        _status.enableInput('a');          
+        return;
+      }
+      
+      if (a < b) {
+        c = a;
+        _status.enableInput('a');          
+        return;
+      } 
+      
+      if (b < a) {
+        c = b;
+        _status.enableInput('b');          
+        return;
+      }
+      
+      c = a;
+      _status.enableInput('a');          
+      
+    inputs:
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:    
+    state: 
+      a:
+      b:
+
+- id: IntegerStreamMergerNoDuplicates
+  type: GroovyActor
+  properties:
+    initialize: |
+      _status.enableInput("a");
+      _status.enableInput("b");
+      _last = 0;
+      _first = true;
+    step: |
+      if ((a == null) && (b == null)) {
+        c = null;
+        return;
+      }
+      if (a == null) {
+        c = b;
+        _status.enableInput('b');
+      } else
+      if (b == null) {
+        c = a;
+        _status.enableInput('a');
+      } else
+      if (a < b) {
+        c = a;
+        _status.enableInput('a');
+      } else
+      if (a > b) {
+        c = b;
+        _status.enableInput('b');
+      } else
+      if (a == b) {
+        c = a;
+        _status.enableInput('a');
+        _status.enableInput('b');
+      }
+      
+      if (_first) {
+        _last = c;
+        _first = false;
+      } else {
+        if (c == _last) {
+          _status.setOutputEnable("c", false);			
+        } else {
+          _last = c;
+        }
+      }
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:    
+    state: 
+      a:
+      b:
+      _last:
+      _first:
+
+- id: Averager
+  type: GroovyActor
+  properties:
+    step: |
+      double sum = 0;
+      int count = 0;
+      
+      valueList.each() { sum = sum + it }
+      
+      if (valueList.size() > 0) {
+        average = sum / valueList.size();
+      } else {
+        average = null;
+      }
+    inputs: 
+      valueList: 
+        type: List<Number>
+    outputs: 
+      average:
+
+- id: Multiplier
+  type: GroovyActor
+  properties:
+    step: product=a*b
+    inputs: 
+      a:
+      b:
+    outputs: 
+      product:
+
+
+- id: IntegerBandpassFilter
+  type: GroovyActor
+  properties:
+    step: |
+      if (input >= min && input <= max) {
+        output = input;
+      } else {
+        _status.setOutputEnable("output", false);
+      }
+    inputs: 
+      min:
+      max:
+      input:
+    outputs: 
+      output:  
+
+- id: ListDisassembler
+  type: GroovyActor
+  properties:
+    initialize:
+      index = 0;
+      list = null;
+      _status.enableInput("list");
+    step:
+      if (list != null) {
+        item = list[index++];
+        if (index >= list.size()) {
+          index = 0;
+          list = null;
+          _status.setReadyForInput('list',true);       
+        }
+      }
+    inputs:
+      list:
+        defaultReadiness: false
+    outputs:
+      item:
+    state:
+      index:
+      list:
+      
+- id: MapDisassembler
+  type: GroovyActor
+  properties:
+    initialize: |    
+      iterator = null;
+    step: |
+      if (map == null) throw Exception("!");
+
+      if (iterator == null) {
+        iterator = map.iterator();
+      }
+
+      if (iterator.hasNext()) {
+       
+        def entry = iterator.next();
+       
+        item = entry.value;
+        key  = entry.key;
+        last = !iterator.hasNext();
+       
+        if (last == true) {
+          iterator = null;
+          _status.enableInputs();
+        } else {
+          _status.disableInputs();
+        }
+      }
+    outputs:
+      item:
+      key:
+      last:
+    state:
+      iterator:
+      map:

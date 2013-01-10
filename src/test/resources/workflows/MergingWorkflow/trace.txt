@@ -1,0 +1,16 @@
+*** Node step counts ***
+MergingWorkflow: 1
+MergingWorkflow.CreateEmphases: 3
+MergingWorkflow.CreateGreetings: 3
+MergingWorkflow.EmphasizeGreeting: 3
+MergingWorkflow.RenderEmphasizedGreeting: 3
+*** Published resources ***
+/messages/emphasis/1: !
+/messages/emphasis/2: !!
+/messages/emphasis/3: !!!
+/messages/emphasizedGreeting/1: Hey there my friend!
+/messages/emphasizedGreeting/2: Hello!!
+/messages/emphasizedGreeting/3: Good night!!!
+/messages/greeting/1: Hey there my friend
+/messages/greeting/2: Hello
+/messages/greeting/3: Good night

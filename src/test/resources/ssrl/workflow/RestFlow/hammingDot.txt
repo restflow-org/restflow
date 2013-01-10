@@ -1,0 +1,46 @@
+
+digraph "HammingSequence" {
+node [shape=ellipse];
+node [shape=ellipse];
+"MultiplyByTwo";
+node [shape=ellipse];
+"MultiplyByThree";
+node [shape=ellipse];
+"MultiplyByFive";
+node [shape=ellipse];
+"MergeProductsFiveAndThree";
+node [shape=ellipse];
+"MergeProductsFiveThreeAndTwo";
+node [shape=ellipse];
+"BufferMergedProducts";
+node [shape=ellipse];
+"DiscardProductsGreaterThanMax";
+node [shape=ellipse];
+"RenderHammingSequence";
+node [shape=box];
+  "/products/two" [label = "/products/two"];
+"MultiplyByTwo" -> "/products/two"[label="product"];
+  "/merged/filtered" [label = "/merged/filtered"];
+ "/merged/filtered" -> "MultiplyByTwo" [label="a"]
+  "/products/three" [label = "/products/three"];
+"MultiplyByThree" -> "/products/three"[label="product"];
+ "/merged/filtered" -> "MultiplyByThree" [label="a"]
+  "/products/five" [label = "/products/five"];
+"MultiplyByFive" -> "/products/five"[label="product"];
+ "/merged/filtered" -> "MultiplyByFive" [label="a"]
+  "/merged/five_three" [label = "/merged/five_three"];
+"MergeProductsFiveAndThree" -> "/merged/five_three"[label="c"];
+ "/products/three" -> "MergeProductsFiveAndThree" [label="b"]
+ "/products/five" -> "MergeProductsFiveAndThree" [label="a"]
+  "/merged/five_three_two" [label = "/merged/five_three_two"];
+"MergeProductsFiveThreeAndTwo" -> "/merged/five_three_two"[label="c"];
+ "/products/two" -> "MergeProductsFiveThreeAndTwo" [label="b"]
+ "/merged/five_three" -> "MergeProductsFiveThreeAndTwo" [label="a"]
+  "/merged/buffered" [label = "/merged/buffered"];
+"BufferMergedProducts" -> "/merged/buffered"[label="value"];
+ "/merged/five_three_two" -> "BufferMergedProducts" [label="value"]
+"DiscardProductsGreaterThanMax" -> "/merged/filtered"[label="output"];
+ "/merged/buffered" -> "DiscardProductsGreaterThanMax" [label="input"]
+ "/merged/filtered" -> "RenderHammingSequence" [label="message"]
+}
+

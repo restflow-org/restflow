@@ -1,0 +1,51 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: ControlSignals
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateControlSignal
+        - !ref CreateGreeting
+        - !ref RenderGreeting
+
+  - id: CreateControlSignal
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - 1
+          - 2
+          - 3
+      outflows:
+        value: control:/signal
+        
+  - id: CreateGreeting
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      constants:
+        value: hello
+      inflows:
+        enable: control:/signal
+      outflows:
+        value:
+  
+  - id: RenderGreeting
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: RenderGreeting
+        outputAtWrapup: true
+      inflows:
+        message: CreateGreeting.value
+

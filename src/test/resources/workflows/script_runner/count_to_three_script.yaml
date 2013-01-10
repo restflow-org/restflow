@@ -1,0 +1,89 @@
+
+namespace:
+
+  module: TestScript
+
+imports:
+
+  - classpath:/common/support.yaml
+  - classpath:/common/actorBeans.yaml
+  - classpath:/common/actors.yaml
+  - classpath:/common/directors.yaml
+  
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+
+  - id: AuthSession
+    type: ssrl.beans.AuthSession
+    properties:
+      sessionId: "#{systemEnvironment['AUTH.SESSION']}"
+      userName: "#{systemEnvironment['AUTH.USERNAME']}"
+
+  - id: ImpersonFactory
+    type: ssrl.impersonation.factory.ImpersonCommandFactory
+    properties:
+      defaultScriptDir: /home/scottm/
+      psToProcessConvertor: !!ssrl.util.PsToProcessConvertorLinux []
+      impConfig.impersonHost: localhost
+      impConfig.impersonPort: 61001
+      impConfig.scriptEnv:
+        ISO_DIR: /tmp/iso
+
+  - id: RampBean
+    type: org.restflow.beans.Ramp
+    singleton: false    
+  
+  - id: RampActor
+    type: org.restflow.actors.ScriptActor
+    singleton: false
+    properties:
+      runnerFactory: !local ImpersonFactory
+      script: test2.tcl 
+      session: !local AuthSession
+      inputs:
+        initial:
+        step:
+      outputs:
+        value:
+
+  #NODES
+  - id: Ramp
+    type: Node
+    properties:   
+      actor: !local RampActor
+      stateful: true
+      constants:
+        initial: 5
+        step: 7
+      outflows:
+        value: /counter/value/
+
+  - id: ValueRenderer
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+      inflows: 
+        message: /counter/value/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: workflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      firingCount: 3
+      nodes:
+        - !local Ramp
+        - !local ValueRenderer
+    

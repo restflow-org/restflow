@@ -1,0 +1,67 @@
+namespace:
+
+  organization: ssrl
+  module: adders
+
+imports:
+
+- classpath:/common/types.yaml
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: Incrementer
+  type: Workflow
+  properties:
+    director: !ref DataDrivenDirector
+    nodes:
+      - !ref ssrl.adders.InputValueAndIncrement
+      - !ref ssrl.adders.IncrementInputValue
+      - !ref ssrl.adders.RenderInputs
+      - !ref ssrl.adders.OutputIncrementedValueAndIncrement
+    inputs:
+      value: 
+        default: 0 
+      increment:
+        default: 1
+    outputs:
+      incrementedValue: 
+      appliedIncrement:
+      
+- id: InputValueAndIncrement
+  type: InPortal
+  properties:
+    outflows: 
+      value: /inputValue/
+      increment: /inputIncrement/
+
+- id: IncrementInputValue
+  type: GroovyActorNode
+  properties: 
+    stepsOnce: true
+    actor.step: |
+      sum = a + b
+    inflows:
+      a: /inputValue/
+      b: /inputIncrement/
+    outflows:
+      sum: /incrementedValue/   
+
+- id: RenderInputs
+  type: GroovyActorNode
+  properties:
+    actor.step: 
+      println "Incrementer received value=" + value + " and increment=" + increment
+    inflows:
+      value: /inputValue/
+      increment: /inputIncrement/
+
+- id: OutputIncrementedValueAndIncrement
+  type: OutPortal
+  properties:
+    inflows: 
+      incrementedValue: /incrementedValue/
+      appliedIncrement: /inputIncrement/
+
+

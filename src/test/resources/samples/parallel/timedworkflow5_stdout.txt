@@ -1,0 +1,41 @@
+EndNode initializing
+StartNode starting to step
+StartNode received 5
+StartNode finished stepping
+StartNode starting to step
+StartNode received 10
+StartNode finished stepping
+LeftBranchNode starting to step
+LeftBranchNode received 6
+LeftBranchNode finished stepping
+RightBranchNode starting to step
+RightBranchNode received 6
+RightBranchNode finished stepping
+StartNode starting to step
+StartNode received 15
+StartNode finished stepping
+LeftBranchNode starting to step
+LeftBranchNode received 11
+LeftBranchNode finished stepping
+RightBranchNode starting to step
+RightBranchNode received 11
+RightBranchNode finished stepping
+EndNode starting to step
+Left value  = 7
+Right value = 7
+EndNode finished stepping.
+LeftBranchNode starting to step
+LeftBranchNode received 16
+LeftBranchNode finished stepping
+RightBranchNode starting to step
+RightBranchNode received 16
+RightBranchNode finished stepping
+EndNode starting to step
+Left value  = 12
+Right value = 12
+EndNode finished stepping.
+EndNode starting to step
+Left value  = 17
+Right value = 17
+EndNode finished stepping.
+EndNode wrapping up.

@@ -1,0 +1,102 @@
+
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateGreetingFiles
+    - !ref EmphasizeGreeting
+    finalReporter: !ref FinalReport
+    reports:
+      longestGreeting:  !ref LongestGreetingReport
+      shortestGreeting: !ref ShortestGreetingReport
+      status: !inline
+        type: UnixProcessStatusReporter
+
+- id: FinalReport
+  type: GroovyTemplateReporter
+  properties:
+    description: "final report"
+    inflows:
+      g1File: /messages/1/greeting.txt    
+      g2File: /messages/2/greeting.txt      
+      g3File: /messages/3/greeting.txt
+      g1: /messages/emphasizedGreeting/1
+      g2: /messages/emphasizedGreeting/2
+      g3: /messages/emphasizedGreeting/3
+    template: |
+      <% 
+      //g2 is loaded from disk, g1 and g3 values are already in the products map.
+      def greetingList = [g1:g1,g2:g2File.text,g3:g3]
+      %>
+      File Name: ${g3File.name}
+      Contents: ${g3File.text}
+      ${g1}
+      ${g2}
+      ${g3}
+      Yaml format: ${tools.yaml.dump(greetingList)}
+      
+- id: LongestGreetingReport
+  type: GroovyTemplateReporter
+  properties:
+    description: "shows the longest greeting"
+    inflows:
+        g1: /messages/emphasizedGreeting/1
+        g2: /messages/emphasizedGreeting/2
+        g3: /messages/emphasizedGreeting/3    
+    template: |
+        <%
+        def greetings = [g1,g2,g3]
+        def longest = greetings.max{ it.size() }
+        %>
+        Longest greeting: $longest
+        
+- id: ShortestGreetingReport
+  type: GroovyTemplateReporter
+  properties:
+    description: "shows the shortest greeting"
+    template: |
+        <%
+        def g1 = products['/messages/emphasizedGreeting/1']
+        def g2 = products['/messages/emphasizedGreeting/2']
+        def g3 = products['/messages/emphasizedGreeting/3']
+        
+        def greetings = [g1,g2,g3]
+        def shortest = greetings.min{ it.size() }
+        
+        %>
+        Shortest greeting: $shortest
+        
+
+- id: CreateGreetingFiles
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+      - Hello World
+      - Good Afternoon, 'Cosmos'
+      - Good night, and good luck
+    outflows:
+      value: file:/messages/{STEP}/greeting.txt
+
+- id: EmphasizeGreeting
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      stringOne = stringOneFile.text; //read the file
+      concatenatedString = stringOne + stringTwo;
+    inflows:
+      stringOneFile: file:/messages/{STEP}/greeting.txt
+    constants:
+      stringTwo: '!!'
+    outflows:
+      concatenatedString: /messages/emphasizedGreeting/
+      

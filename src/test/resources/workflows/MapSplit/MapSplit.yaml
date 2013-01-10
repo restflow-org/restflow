@@ -1,0 +1,59 @@
+imports:
+
+- classpath:/common/types.yaml
+- classpath:/common/directors.yaml
+- actors:actors.yaml
+
+components:
+
+- id: MapSplit
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+    - !ref MakeMap
+    - !ref SplitMap   
+    - !ref PrintItems 
+
+- id: MakeMap
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+        - name: Scott
+          zip: 94304
+          grade: A
+          product: Zebra
+        - name: Joe
+          zip: 95356
+          grade: B
+          product: Acrobat
+    outflows:
+      value: /myMap
+
+- id: SplitMap
+  type: Node
+  properties:
+    actor: !inline
+      className: org.restflow.beans.MapSplitter
+    inflows: 
+      map: /myMap 
+    outflows:
+      product: /{name}/{zip}/{grade}
+      name: /name
+      zip: /zip
+      grade: /grade
+
+
+- id: PrintItems
+  type: Node
+  properties: 
+    actor: !ref PrintStreamWriter
+    constants:
+      name: Flattened map
+      outputAtWrapup: true
+    inflows: 
+      message: /{name}/{zip}/{grade}  
+      
+      

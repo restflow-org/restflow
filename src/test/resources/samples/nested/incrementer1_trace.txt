@@ -1,0 +1,10 @@
+*** Node step counts ***
+Incrementer: 1
+Incrementer.IncrementInputValue: 1
+Incrementer.InputValueAndIncrement: 1
+Incrementer.OutputIncrementedValueAndIncrement: 1
+Incrementer.RenderInputs: 1
+*** Published resources ***
+/incrementedValue: 1
+/inputIncrement: 1
+/inputValue: 0

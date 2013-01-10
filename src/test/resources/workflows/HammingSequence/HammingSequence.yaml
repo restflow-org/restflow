@@ -1,0 +1,117 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  ######################################################
+  
+  - id: MultiplyByTwo
+    type: Node
+    properties:   
+      actor: !ref Multiplier
+      constants: 
+        b: 2
+      inflows:
+        a: /merged/filtered/
+      outflows: 
+        product: /products/two/
+  
+  - id: MultiplyByThree
+    type: Node
+    properties:   
+      actor: !ref Multiplier
+      constants: 
+        b: 3
+      inflows:
+        a: /merged/filtered/
+      outflows: 
+        product: /products/three/
+
+  - id: MultiplyByFive
+    type: Node
+    properties:   
+      actor: !ref Multiplier
+      constants: 
+        b: 5
+      inflows:
+        a: /merged/filtered/
+      outflows: 
+        product: /products/five/
+
+  - id: MergeProductsFiveAndThree
+    type: Node
+    properties:   
+      actor: !ref IntegerStreamMergerNoDuplicates
+      inflows:
+        a: /products/five/
+        b: /products/three/
+      outflows: 
+        c: /merged/five_three/
+
+  - id: MergeProductsFiveThreeAndTwo
+    type: Node
+    properties:   
+      actor: !ref IntegerStreamMergerNoDuplicates
+      inflows:
+        a: /merged/five_three/
+        b: /products/two/
+      outflows: 
+        c: /merged/five_three_two/
+
+  - id: BufferMergedProducts
+    type: Node
+    properties:   
+      actor: !ref SingleUnitIntegerBuffer
+      constants: 
+        value: 1
+      inflows: 
+        value: /merged/five_three_two/
+      outflows: 
+        value: /merged/buffered/
+
+  - id: DiscardProductsGreaterThanMax
+    type: Node
+    properties:   
+      actor: !ref IntegerBandpassFilter
+      endFlowOnNoOutput: true
+      constants:
+        min: 1
+        max: 30
+      inflows:
+        input: /merged/buffered/
+      outflows: 
+        output: /merged/filtered/
+
+  - id: RenderHammingSequence
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Hamming Sequence
+        outputAtWrapup: true
+      inflows: 
+        message: /merged/filtered/
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: HammingSequence
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes: 
+        - !ref MultiplyByTwo
+        - !ref MultiplyByThree
+        - !ref MultiplyByFive
+        - !ref MergeProductsFiveAndThree
+        - !ref MergeProductsFiveThreeAndTwo
+        - !ref BufferMergedProducts
+        - !ref DiscardProductsGreaterThanMax
+        - !ref RenderHammingSequence
+    

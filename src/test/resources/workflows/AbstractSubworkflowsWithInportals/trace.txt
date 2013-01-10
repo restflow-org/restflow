@@ -1,0 +1,13 @@
+*** Node step counts ***
+WA: 1
+WA.NB: 3
+WA.NB.ND: 3
+WA.NB.WCInportal: 3
+WA.NB.WCOutportal: 3
+*** Published resources ***
+/foo/1/invalue: 1
+/foo/1/outvalue: 1
+/foo/2/invalue: 2
+/foo/2/outvalue: 2
+/foo/3/invalue: 3
+/foo/3/outvalue: 3

@@ -1,0 +1,71 @@
+
+imports:
+
+  - classpath:/common/groovyActors.yaml
+  - classpath:/common/scriptActors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+
+- id: CreateTemplatedFile
+  type: Node
+  properties:
+    actor: !ref TemplateFileMaker
+    outflows:
+      filename: file:/xds/2/XDSCONV.INP
+
+- id: PrintTemplatedFile
+  type: Node
+  properties: 
+    actor: !ref PrintStreamWriter
+    constants:
+      name: OutputStream
+      outputAtWrapup: true
+    inflows:
+      message: file:/xds/2/XDSCONV.INP
+
+- id: TemplateFileMaker
+  type: GroovyActor
+  properties:
+    settings: 
+      xdsInputTemplate: !ref XDSConvFileTemplate
+    step: |
+      def model = [wilson: "TRUE"];
+      model.friedel = "TRUE";
+      import groovy.text.SimpleTemplateEngine;
+      def engine = new SimpleTemplateEngine();
+      template1 = engine.createTemplate(xdsInputTemplate).make(model);
+      filename = template1.toString();
+    outputs:
+      filename: 
+
+- id: XDSConvFileTemplate 
+  className: java.lang.String 
+  singleton: true 
+  constructor: 
+  - value: | 
+      ! 
+      ! Output file format conversion
+      ! 
+      OUTPUT_FILE= XDS_CONV.HKL CCP4_F
+      INPUT_FILE= XDS_SCALE.HKL
+      GENERATE_FRACTION_OF_TEST_REFLECTIONS= 0.05
+      WILSON_STATISTICS= $wilson
+      FRIEDEL'S_LAW= $friedel
+
+  #############################
+  # declaration of the workflow
+  #############################
+ 
+- id: TemplateTest
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+      - !ref CreateTemplatedFile
+      - !ref PrintTemplatedFile

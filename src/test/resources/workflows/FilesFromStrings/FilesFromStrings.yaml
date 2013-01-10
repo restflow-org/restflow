@@ -1,0 +1,80 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: FilesFromStrings
+    type: Workflow
+    properties:
+      nodes:
+        - !ref CreateFile
+        - !ref AppendString
+        - !ref PrintFile
+        - !ref PrintText
+  
+  - id: CreateFile
+    type: Node
+    properties:
+      actor: !ref ConstantSource
+      outflows:
+        value: file:/files/file_{STEP}.txt
+      sequences:
+        value: 
+          - This is file 1
+          - This is file 2
+          - This is file 3
+
+  - id: AppendString
+    type: Node
+    properties:
+      actor: !ref FileAppender
+      inflows:
+        inFile: /files/file_{}.txt
+      constants: 
+        textToAppend: " with an add-on." 
+      outflows:
+        outFile: file:/files/appended_{STEP}.txt
+
+  - id: PrintFile
+    type: Node
+    properties: 
+      actor: !ref FilePrinter
+      inflows:
+        inFile: /files/appended_{STEP}.txt
+
+  - id: PrintText
+    type: Node
+    properties: 
+      actor: !ref TextPrinter
+      inflows:
+        inText: /files/appended_{STEP}.txt
+
+  - id: FileAppender
+    type: JavaActor
+    properties:
+      wrappedBean: !bean {className: org.restflow.beans.FileAppender}
+      usesStepDirectory: true
+      inputs: 
+        inFile:
+        textToAppend:
+      outputs: 
+        outFile:
+
+  - id: FilePrinter
+    type: JavaActor
+    properties:
+      wrappedBean: !bean {className: org.restflow.beans.FilePrinter}
+      inputs:
+        inFile:
+          type: File
+                  
+  - id: TextPrinter
+    type: JavaActor
+    properties:
+      wrappedBean: !bean {className: org.restflow.beans.TextPrinter}
+      inputs:
+        inText:
+          type: String

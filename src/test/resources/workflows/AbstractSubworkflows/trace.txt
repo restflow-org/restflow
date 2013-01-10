@@ -1,0 +1,5 @@
+*** Node step counts ***
+WA: 1
+WA.NB: 3
+WA.NB.ND: 9
+*** Published resources ***

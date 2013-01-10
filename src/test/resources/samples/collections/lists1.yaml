@@ -1,0 +1,77 @@
+imports:
+
+- classpath:/common/types.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: Lists
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateLists
+    - !ref PrintList
+    - !ref FlattenLists
+    - !ref PrintItems
+    
+- id: CreateLists
+  type: GroovyActorNode
+  properties:
+    endFlowOnNull : true
+    actor.initialize:
+      count = 0;
+      max = 5;
+    actor.step: |
+      if (count < max) {
+        list = new LinkedList();
+        list.add(count * 3 + 1);
+        list.add(count * 3 + 2);
+        list.add(count * 3 + 3);
+        count++;
+      } else {
+        list = null;
+      }
+    actor.state:
+      count:
+      max:
+    outflows:
+      list: /list/
+
+- id: PrintList
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      println(list);
+    inflows:
+      list: /list/
+  
+- id: FlattenLists
+  type: GroovyActorNode
+  properties:
+    actor.flagsInputReadiness: true
+    actor.initialize:
+      index = 0;
+      list = null;
+    actor.step:
+      if (list != null) {
+        item = list[index++];
+        if (index >= list.size()) {
+          index = 0;
+          list = null;
+          _status.enableInput('list');       
+        }
+      }
+    inflows:
+      list: /list/
+    outflows:
+      item: /items/
+      
+- id: PrintItems
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      println(item);
+    inflows:
+      item: /items/     
+        

@@ -1,0 +1,285 @@
+
+imports:
+
+- /common/types.yaml
+
+types:
+- id: RestFlowActor
+  className: org.restflow.actors.RestFlowActor
+  singleton: false
+
+components:
+
+- id: Adder
+  type: RestFlowActor
+  properties:
+    usesStepDirectory: true
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: Adder   
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      a:
+      b:
+    outputs: 
+      sum:
+
+- id: ConstantSource
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: ConstantSource   
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs:
+      value:
+    outputs:
+      restflow-stdout:
+      restflow-stderr:
+      restflow-trace:    
+      value:
+
+- id: ListSource
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: ListSource  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    wrappedBean: !bean {className: org.restflow.beans.ListSource}
+    inputs: 
+      inputList:
+        type: List<Number>
+    outputs: 
+      outputList:
+
+- id: SingleUnitBuffer
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: SingleUnitBuffer 
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      value:
+    outputs: 
+      value:
+    state:
+      value:
+  
+- id: StringConcatenator
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: StringConcatenator 
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs:
+      stringOne:
+        type: String
+      stringTwo:
+        type: String
+    outputs: 
+      concatenatedString:
+
+- id: PrintStreamWriter
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: PrintStreamWriter  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs:
+      outputImmediately:
+        default: true    
+      message:
+        type: String
+      outputAtWrapup:
+      name:
+    state:
+        printStream:
+        bufferedStream:
+
+- id: Counter
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: Counter  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      input:
+    outputs:
+      count:
+    state:
+      count:
+
+- id: IntegerSequenceGenerator
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: IntegerSequenceGenerator  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~
+    inputs:
+      initial: 1
+      step: 1
+      max: 1
+      first: true
+    outputs:
+      value:
+        nullable: true
+    state:
+      value:
+      first:
+        
+
+        
+- id: SerialAdder
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: SerialAdder  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      addend:
+    outputs: 
+      sum:
+    stateful: true
+        
+- id: Multiplier
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: Multiplier  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      a:
+        type: Number
+        default: 1
+      b:
+        type: Number
+        default: 1
+    outputs: 
+      product:
+
+- id: Averager
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: Averager  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      valueList: 
+        type: List<Number>
+    outputs: 
+      average:
+        
+- id: IntegerBandpassFilter
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: IntegerBandpassFilter  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      min:
+      max:
+      input:
+    outputs: 
+      output:   
+        
+- id: IntegerStreamMerger
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: IntegerStreamMerger  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:
+    state:
+      a:
+      b:  
+      
+- id: IntegerStreamMergerNoDuplicates
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: IntegerStreamMergerNoDuplicates  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:
+    state:
+      a:
+      b:
+      first:
+      last:
+
+- id: ListDisassembler
+  type: RestFlowActor
+  properties:
+    settings:
+      restflow-generateDot: false
+      restflow-file: classpath:common/java/actors.yaml      
+      restflow-workflow: ListDisassembler  
+      restflow-generateDot: false
+      restflow-importMapOverride: ~     
+    inputs:
+      list:
+        defaultReadiness: false
+    outputs:
+      item: 
+    state:
+      index:
+      list:

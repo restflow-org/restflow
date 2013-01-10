@@ -1,0 +1,37 @@
+imports:
+
+- classpath:/common/groovyActors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: Required
+  className: org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
+  properties:
+    placeholderPrefix:  "<#"
+    placeholderSuffix:  "#>"
+    ignoreUnresolvablePlaceholders: false
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateGreeting
+    - !ref RenderGreeting
+
+- id: CreateGreeting
+  type: Node
+  properties:  
+    actor: !ref ConstantSource
+    constants:
+      value: <#ARG3#>
+    outflows:
+      output: /messages/greeting/
+ 
+- id: RenderGreeting
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter
+    inflows:
+      message: /messages/greeting/

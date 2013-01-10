@@ -1,0 +1,70 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: UnorderedConcurrentMultipliers
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateMultipliers
+        - !ref CreateMultiplicands
+        - !ref MultiplyConcurrently
+        - !ref RenderProducts
+
+  - id: CreateMultipliers
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 2
+        step: 2
+        max: 200
+      outflows:
+        value: /multiplier
+
+  - id: CreateMultiplicands
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 100
+      outflows:
+        value: /multiplicand
+        
+  - id: MultiplyConcurrently
+    type: GroovyActorNode
+    properties:
+      maxConcurrency: 1000
+      ordered: false
+      actor.step:
+        c = a * b;
+        import java.util.Random;
+        rand = new Random();
+        delay = rand.nextInt(30);
+        System.err.println(delay);
+        System.sleep(delay);
+      inflows:
+        a: /multiplier
+        b: /multiplicand
+      outflows:
+        c: /product/{a}/{b}/
+
+  - id: RenderProducts
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        outputAtWrapup: false
+      inflows:
+        message: /product/{a}/{b}/
+        

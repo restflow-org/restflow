@@ -1,0 +1,27 @@
+<%
+	if ( System.env["HOST"] != meta.host ) {
+		running = "unknown"
+	} else {
+		def cmd = ['sh','-c', 'ps -eo "pid" | grep '+ meta.pid ]
+		ProcessBuilder pb = new ProcessBuilder(cmd).redirectErrorStream(true);
+		def ps = pb.start().text
+		if (ps == "" ) {
+			running= "false";
+		} else {
+			running = "true";
+		}	
+ 	}
+
+	meta.put('running',running);
+	meta.put('lastModified', 1297817197000); //hard code the modification time to past unit tests
+      
+    def FileName = products['/img/imagePathName']
+    def FirstImgNum = products['/img/InputFirstImgNum']
+    def LastImgNum = products['/img/InputLastImgNum']
+    def PDBFile = products['/protein/pdbfile']
+    def InputResolution = products['/input/resolution']
+    
+	def inputs = ['FileName': FileName, 'FirstImgNum': FirstImgNum, 'LastImgNum':LastImgNum, 'PDBFile':PDBFile, 'InputResolution': InputResolution]
+
+    println tools.yaml.dump(['meta':meta,'inputs':inputs])
+%>

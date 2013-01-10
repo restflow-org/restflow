@@ -1,0 +1,53 @@
+To use the client-server execution model, you need to start the RestFlow server.
+The server prints settings of two environment variables. You can use one
+of the convenience scripts (start-daemon.SHELL) to start the server in the
+back-ground and set the environment variables automatically.
+
+To do so in bash, do the following:
+
+  `start-daemon.bash`
+
+You can then start the RestFlow executable with a -c flag to use the RestFlow 
+server. The script expects the RestFlow jar file to be in the same directory as
+the script. However, you can create a symbolic link to the executable for 
+example in /usr/local/bin; then the RestFlow script will trace back the symlink 
+and find the jar next to its original location.
+
+
+Example:
+
+# Make sure you have the RestFlow jar located next to the scripts. You can i
+# symlink the scripts to your favorite bin dir (eg., /usr/local/bin) without 
+# copying the jar file over since the script will trace back the symlink to it's
+# original location.
+
+q@polaris:~/RestFlow$ ls 
+HelloWorld-2.yaml  RESTFLOW_SECRET        start-daemon.bash
+HelloWorld.yaml    RestFlow-0.1.jar       start-daemon.tcsh
+README            client-server-test.sh  start-daemon.win_cmd
+
+q@polaris:~/RestFlow$ `./start-daemon.bash`
+ 
+# To run a workflow via this server, add -c to the RestFlow command line
+# The first run will have log4J enabled; further runs won't.
+q@polaris:~/RestFlow$ ./RestFlow -c -f classpath:samples/hello/hello1.yml
+Hello World!
+ 
+# Create a symbolic link from RestFlow to /usr/local/RestFlow:
+ln -s `pwd`/RestFlow /usr/local/bin/RestFlow
+ 
+# Now, you can run restflow workflows via the common sha-bang convention. Start
+# the workflow definition  with "#!/usr/local/bin/RestFlow -f" in the first 
+# line, make the file executable and you can run the workflow as a client from
+# any place. An example workflow (HelloWorld.yml) is inside the current
+# directory.
+# 
+# If you use -c inside the workflow script, make sure that you have the 
+# environmental variables RESTFLOW_SERVER_PORT and RESTFLOW_SECRET set to be 
+# able to connect to the RestFlow server.
+ 
+# To stop the server issue --server-stop
+q@polaris:~/RestFlow$ ./RestFlow -c --server-stop                        
+Stopping Server.
+ 
+ 

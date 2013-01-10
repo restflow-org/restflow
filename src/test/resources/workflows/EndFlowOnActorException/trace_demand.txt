@@ -1,0 +1,11 @@
+*** Node step counts ***
+EndFlowOnActorException: 1
+EndFlowOnActorException.GenerateIntegerSequence: 3
+EndFlowOnActorException.RenderIntegerSequence: 2
+EndFlowOnActorException.ThrowExceptionOnThirdStep: 3
+*** Published resources ***
+generatedValue/1: 1
+generatedValue/2: 2
+generatedValue/3: 3
+repeatedValue/1: 1
+repeatedValue/2: 2

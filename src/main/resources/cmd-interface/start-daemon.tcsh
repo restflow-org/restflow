@@ -1,0 +1,21 @@
+#!/bin/bash
+
+LOCATION=`readlink "$0"`
+DIR=`dirname "$LOCATION"`
+# Start RestFlow in the background and send its output to file descriptor 3
+exec 3< <(java -jar "$DIR"/RestFlow-0.1.jar --server-shell TCSH -s --server-secret)
+
+# Read the output of wminput line by line until one line contains DONE
+while read line; do
+   case "$line" in
+   *DONE*)
+      break
+      ;;
+   *)
+      echo $line
+      ;;
+   esac
+done <&3
+# Close the file descriptor
+exec 3<&-
+

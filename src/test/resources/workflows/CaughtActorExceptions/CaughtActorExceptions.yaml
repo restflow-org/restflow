@@ -1,0 +1,61 @@
+
+imports:
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: CaughtActorExceptions
+    type: Workflow
+    properties:
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref ThrowExceptionOnThirdStep
+        - !ref RenderIntegerSequence
+    
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 8
+      outflows:
+        value: /generatedValue
+
+  - id: ThrowExceptionOnThirdStep
+    type: GroovyActorNode
+    properties:
+      actor.step:
+        if (STEP == 1) {
+          throw new NullPointerException("Error on first step!");
+        } else if (STEP == 3) {
+          throw new ClassNotFoundException("Error on third step!");
+        } else if (STEP == 5) {
+          throw new ClassCastException("Error on fifth step!");
+        } else if (STEP == 7) {
+          outValue = null;
+        } else {
+          outValue = inValue;
+        }
+      inflows:
+        inValue: /generatedValue
+      outflows:
+        outValue: /repeatedValue
+      exceptions:
+        java.lang.Exception: stderr:/exceptions/{inValue}/Exception
+        org.restflow.exceptions.NullOutputException: stderr:/exceptions/{inValue}/NullOutputException
+        java.lang.NullPointerException: /exceptions/{inValue}/NullPointerException
+        java.lang.ClassCastException: stdout:/exceptions/{inValue}/ClassCastException
+
+  - id: RenderIntegerSequence
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /repeatedValue

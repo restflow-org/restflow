@@ -1,0 +1,46 @@
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: Greeter
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref InputGreetingAndName
+    - !ref RenderGreeting
+    - !ref EmphasizeGreeting
+    inputs: 
+      greeting:
+        default: Hello
+        description: Greeting to use
+      name:
+        description: Person to greet
+        
+- id: InputGreetingAndName
+  type: InPortal
+  properties:
+    outflows: 
+      greeting: /theGreeting/
+      name: /personToGreet/
+      
+- id: EmphasizeGreeting
+  type: GroovyActorNode
+  properties:
+    actor.step:  |
+      greetingMessage = greeting + " " + name + "!"
+    inflows:
+      greeting: /theGreeting/
+      name: /personToGreet/
+    outflows:
+      greetingMessage: /messageToRender/
+      
+- id: RenderGreeting
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter
+    inflows:
+      message: /messageToRender/

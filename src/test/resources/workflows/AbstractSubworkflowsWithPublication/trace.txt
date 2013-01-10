@@ -1,0 +1,14 @@
+*** Node step counts ***
+WA: 1
+WA.NB: 3
+WA.NB.ND: 9
+*** Published resources ***
+/foo/1/output/1: ND_1
+/foo/1/output/2: ND_2
+/foo/1/output/3: ND_3
+/foo/2/output/1: ND_1
+/foo/2/output/2: ND_2
+/foo/2/output/3: ND_3
+/foo/3/output/1: ND_1
+/foo/3/output/2: ND_2
+/foo/3/output/3: ND_3

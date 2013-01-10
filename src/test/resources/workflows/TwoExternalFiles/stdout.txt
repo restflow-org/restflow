@@ -1,0 +1,9 @@
+hello
+hello
+goodbye
+*** Render file one first ***
+hello
+*** Render file one second ***
+hello
+*** Render file two ***
+goodbye

@@ -1,0 +1,63 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 10
+      outflows: 
+        value: /counter/value/
+
+  - id: DiscardIntegersOutsideDesiredRange
+    type: Node
+    properties:   
+      actor: !ref IntegerBandpassFilter
+      constants:
+        min: 3
+        max: 7
+      inflows:
+        input: /counter/value/
+      outflows: 
+        output: /counter/filtered/
+
+  - id: RenderIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /counter/filtered/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: IntegerFilter
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+#     director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref GenerateIntegerSequence
+        - !ref DiscardIntegersOutsideDesiredRange
+        - !ref RenderIntegers
+    

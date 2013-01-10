@@ -1,0 +1,16 @@
+/generatedValue/1: '1'
+/exceptions/1/NullPointerException: Error on first step!
+/generatedValue/2: '2'
+/repeatedValue/1: '2'
+/generatedValue/3: '3'
+/exceptions/3/Exception: Error on third step!
+/generatedValue/4: '4'
+/repeatedValue/2: '4'
+/generatedValue/5: '5'
+/exceptions/5/ClassCastException: Error on fifth step!
+/generatedValue/6: '6'
+/repeatedValue/3: '6'
+/generatedValue/7: '7'
+/exceptions/7/NullOutputException: Null data produced on non-nullable output 'outValue' of actor CaughtActorExceptions.ThrowExceptionOnThirdStep:(inner bean)
+/generatedValue/8: '8'
+/repeatedValue/4: '8'

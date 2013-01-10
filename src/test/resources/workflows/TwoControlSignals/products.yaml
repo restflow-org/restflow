@@ -1,0 +1,9 @@
+/signalOne/1: '1'
+/signalTwo/1: '4'
+CreateGreeting.value/1: hello
+/signalOne/2: '2'
+/signalTwo/2: '5'
+CreateGreeting.value/2: hello
+/signalOne/3: '3'
+/signalTwo/3: '6'
+CreateGreeting.value/3: hello

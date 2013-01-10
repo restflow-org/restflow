@@ -1,0 +1,13 @@
+Spreadsheet 45 Sample DRT110 Pin 1
+Spreadsheet 45 Sample DRT240 Pin 3
+Spreadsheet 45 Sample DRT322 Pin 4
+Spreadsheet 45 Sample DRT225 Pin 5
+Spreadsheet 45 Sample DRT542 Pin 9
+Spreadsheet 45 Sample DRT010 Pin 6
+Spreadsheet 45 Sample DRT250 Pin 17
+Spreadsheet 45 Sample DRT035 Pin 8
+Spreadsheet 195 Sample ABC11 Pin 9
+Spreadsheet 195 Sample ABC40 Pin 17
+Spreadsheet 195 Sample ABC22 Pin 5
+Spreadsheet 195 Sample ABC25 Pin 3
+Spreadsheet 195 Sample ABC24 Pin 19

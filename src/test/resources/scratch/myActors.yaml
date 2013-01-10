@@ -1,0 +1,56 @@
+ 
+imports:
+ 
+ - classpath:/common/types.yaml
+ - classpath:/common/scriptActors.yaml
+
+components:
+
+- id: MultipleConcatenator
+  type: GroovyActor
+  properties:
+    step: |
+      concatenatedString = stringOne
+      for (i in 1..count) {
+        concatenatedString += stringTwo
+      }
+    inputs:
+      stringOne:
+      stringTwo:
+      count: 1
+    outputs:
+      concatenatedString:
+  
+ 
+- id: BashMultipleConcatenator
+  type: BashScriptActor
+  properties:
+    step: |
+      concatenatedString="${stringOne}"
+      for ((i=1; i<=$count; i++))
+        do
+          concatenatedString="${concatenatedString}${stringTwo}"
+        done
+    inputs:
+      stringOne:
+      stringTwo:
+      count: 1
+    outputs:
+      concatenatedString:
+
+
+- id: BashTextBlock
+  type: BashScriptActor
+  properties:
+    step: |
+      echo "HELLO THIS IS MY BASH SCRIPT!"
+         cat << END
+      value=${value}
+      	!!
+      END
+      text=$value
+    inputs:
+      value:
+    outputs:
+      text:
+        

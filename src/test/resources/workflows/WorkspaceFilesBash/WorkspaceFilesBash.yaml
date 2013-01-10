@@ -1,0 +1,50 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/bash/bashActor.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  ######################################################
+  
+  - id: PrintWorkspaceFileFromFile
+    type: BashActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        echo "PrintWorkspaceFileFromFile:"
+        cat $file
+        echo
+        echo
+      actor.inputs:
+        file:
+          type: File
+      inflows:
+        file: workspace:/workspaceFile.txt
+        
+  - id: PrintWorkspaceFileFromString
+    type: BashActorNode
+    properties: 
+      actor.usesStepDirectory: true
+      actor.step: |
+        echo "PrintWorkspaceFileFromString:"
+        echo $text
+        echo
+      inflows:
+        text: workspace:/workspaceFile.txt
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: WorkspaceFilesBash
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes: 
+        - !ref PrintWorkspaceFileFromFile
+        - !ref PrintWorkspaceFileFromString

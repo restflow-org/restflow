@@ -1,0 +1,246 @@
+
+imports:
+
+- /common/types.yaml
+
+components:
+
+- id: ConstantSource
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.ConstantSource
+    inputs: 
+      value:
+    outputs: 
+      value:
+
+- id: IntegerConstantSource
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.ConstantSource
+    inputs: 
+      value:
+    outputs: 
+      value:
+    types:
+      value: Integer
+      output: Integer
+
+- id: ListSource
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.ListSource}
+    inputs: 
+      inputList:
+        type: List<Number>
+    outputs: 
+      outputList:
+
+- id: SingleUnitBuffer
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.ConstantSource
+    inputs: 
+      value:
+    outputs: 
+      value:
+    state:
+      value:
+  
+- id: SingleUnitIntegerBuffer
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.ConstantSource
+    inputs: 
+      value:
+    outputs: 
+      value:
+    state:
+      value:
+    types:
+      value: Integer
+      output: Integer
+    
+- id: StringConcatenator
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.StringConcatenator
+    inputs:
+      stringOne:
+        type: String
+      stringTwo:
+        type: String
+    outputs: 
+      concatenatedString:
+
+- id: PrintStreamWriter
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.PrintStreamMessageWriter}
+    stepMethod: renderMessage
+    inputs:
+      message:
+        type: String
+      outputImmediately:
+      outputAtWrapup:
+      name:
+    state:
+      printStream:
+      bufferedStream:
+
+- id: Counter
+  type: JavaActor
+  properties: 
+    wrappedBean: !bean {className: org.restflow.beans.InputCounter}
+    inputs: 
+      input:
+    outputs:
+      count:
+    state:
+      count:
+
+- id: IntegerSequenceGenerator
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.Ramp}
+    inputs:
+      initial: 
+        default: 1
+      step: 
+        default: 1
+      max: 
+        default: 1
+    outputs:
+      value:
+        nullable: true
+    state:
+      value:
+      first:
+        
+- id: Adder
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.Adder
+    stepMethod: add
+    inputs: 
+      a:
+      b:
+    outputs: 
+      sum:
+        
+- id: SerialAdder
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.SerialAdder}
+    stepMethod: add
+    inputs: 
+      addend:
+    outputs: 
+      sum:
+    stateful: true
+        
+- id: Multiplier
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.Multiplier
+    stepMethod: multiply
+    inputs: 
+      a:
+        type: Number
+        default: 1
+      b:
+        type: Number
+        default: 1
+    outputs: 
+      product:
+
+- id: Averager
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.Averager
+    stepMethod: computeAverage
+    inputs: 
+      valueList: 
+        type: List<Number>
+    outputs: 
+      average:
+        
+- id: IntegerBandpassFilter
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.IntegerFilter
+    inputs: 
+      min:
+      max:
+      input:
+    outputs: 
+      output:   
+        
+- id: IntegerStreamMerger
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.IntegerStreamMerger}
+    stepMethod: selectLowerValue
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:
+    state:
+      a:
+      b:  
+      
+- id: IntegerStreamMergerNoDuplicates
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.IntegerStreamMergerNoDuplicates}
+    stepMethod: selectLowerValue
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:
+    state:
+      a:
+      b:
+      first:
+      last:
+
+- id: ListDisassembler
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.ListDisassembler}
+    inputs:
+      list:
+        defaultReadiness: false
+    outputs:
+      item: 
+    state:
+      index:
+      list:
+
+- id: MapDisassembler
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.MapDisassembler}
+    inputs:
+      map:
+    outputs:
+      item:
+      key:
+    state:
+      iterator:
+      map:      
+      

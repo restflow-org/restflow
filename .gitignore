@@ -1,0 +1,5 @@
+.svn
+*.class
+*.jar
+*.war
+*.ear

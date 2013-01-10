@@ -1,0 +1,52 @@
+
+imports:
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: UncaughtActorException
+    type: Workflow
+    properties:
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref ThrowExceptionOnThirdStep
+        - !ref RenderIntegerSequence
+    
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 5
+      outflows:
+        value: generatedValue
+
+  - id: ThrowExceptionOnThirdStep
+    type: GroovyActorNode
+    properties:
+      actor.step:
+        if (STEP < 3) {
+          outValue = inValue;
+        } else {
+          throw new Exception("More than three steps!");
+        }
+      inflows:
+        inValue: generatedValue
+      outflows:
+        outValue: repeatedValue
+      exceptions:
+        java.lang.NullPointerException:  /exceptions/{inValue}/Exception
+
+  - id: RenderIntegerSequence
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: repeatedValue

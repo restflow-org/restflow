@@ -1,0 +1,96 @@
+namespace:
+
+imports:
+  - classpath:common/support.yaml
+  - classpath:common/directors.yaml
+  - classpath:common/types.yaml
+
+beans:
+
+  - id: MysqlAuthorParser 
+    className: org.restflow.beans.TextScanner
+    properties: 
+      template:
+      - "{author[]:AUTHOR}"
+      tags:
+        BOOK: >
+          .<id>{id:INT}</id>.
+          .<title>{title}</title>.
+          .<publisher>{publisher}</publisher>.
+        AUTHOR: >
+          .<author>.
+          .<first>{first}</first>.
+          .<last>{last}</last>.
+          .<books>.{books[]:BOOK}.</books>.
+          .</author>.
+      absorbWhiteSpaceSymbol: "."
+
+  - id: ConvertAuthorToYaml
+    className: org.restflow.actors.GroovyActor
+    singleton: false
+    properties:
+      settings:
+        parser: !lref MysqlAuthorParser
+      inputs: 
+        textIn: 
+          default: |
+            <?xml version="1.0"?>
+            <author>
+              <first>Roger</first>
+              <last>Zelazny</last>
+              <books>
+              <id>1</id>
+              <title>Lord_of_light</title>
+              <publisher>Eos</publisher>
+              <id>2</id>
+              <title>Doors_of_his_face</title>
+              <publisher>IBooks,_Inc.</publisher>
+              </books>
+            </author>
+            <author>
+              <first>Isaac</first>
+              <last>Asimov</last>
+              <books>
+              <id>1</id>
+              <title>Caves_of_Steel</title>
+              <publisher>DoubleDay</publisher>
+              <id>2</id>
+              <title>Foundation</title>
+              <publisher>Gnome_Press</publisher>
+              </books>
+            </author>          
+      step: |
+        parser.compile();
+        parsed = parser.search (textIn);
+
+        import org.yaml.snakeyaml.Yaml;
+        import org.yaml.snakeyaml.DumperOptions; 
+        DumperOptions options = new DumperOptions();
+        options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
+        Yaml yaml = new Yaml(options);
+        print yaml.dump(parsed);
+        
+      outputs:
+        parsed:
+    
+  - id: TestConversion
+    type: Node
+    properties: 
+      actor: !ref ConvertAuthorToYaml
+      outflows:
+        parsed: /parsed/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: TextScanner
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+      director: !ref DemandDrivenDirector
+#      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref TestConversion
+    

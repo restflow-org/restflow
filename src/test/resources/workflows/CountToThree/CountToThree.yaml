@@ -1,0 +1,50 @@
+
+imports:
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 3
+      outflows:
+        value:
+
+
+  - id: RenderIntegerSequence
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: GenerateIntegerSequence.value
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: CountToThree
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref RenderIntegerSequence
+    

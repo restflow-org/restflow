@@ -1,0 +1,6 @@
+<%:LOG_STAMP%> Evaluating sample DRT110.
+<%:LOG_STAMP%> Sample DRT110 rejected due to low quality score of 1.
+<%:LOG_STAMP%> Evaluating sample DRT240.
+<%:LOG_STAMP%> Requesting 5 images for sample DRT240.
+<%:LOG_STAMP%> Evaluating sample DRT322.
+<%:LOG_STAMP%> Requesting 6 images for sample DRT322.

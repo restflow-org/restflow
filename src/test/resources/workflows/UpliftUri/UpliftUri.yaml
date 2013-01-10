@@ -1,0 +1,92 @@
+imports:
+
+- classpath:/common/types.yaml
+- classpath:/common/directors.yaml
+- actors:actors.yaml
+
+components:
+
+- id: UpliftUri
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+    - !ref MakeProducts
+    - !ref ProductFilter
+    - !ref UpliftAndPublishData   
+    - !ref PrintItems 
+
+- id: MakeProducts
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+        - /person/Scott/zip_94304/A: Zebra
+        - /person/Joe/zip_95356/B: Acrobat
+        - /dont/publish/this/one: dud
+    outflows:
+      value: /allProducts
+
+
+- id: ProductFilter
+  type: GroovyActorNode
+  properties:   
+    inflows:
+      inProduct: /allProducts      
+    constants:
+      uriTemplate: /person/{name}/zip_{zip}/{grade}
+      productName: person
+    actor.step: |
+    
+      def uri = inProduct.keySet().iterator().next();
+      def p = inProduct[uri];      
+      product = [:]
+      product[productName]=p;
+    
+      import org.springframework.web.util.UriTemplate;
+      
+      UriTemplate template = new UriTemplate(uriTemplate);
+      if ( ! template.matches( uri ) ) {
+        _status.disableOutput("product");
+      } else {
+        _status.enableOutput("product");
+        def uriVars = template.match (uri);
+        
+        def matches = true;
+        uriVars.each { key,val -> 
+          if (val.contains("/")) {
+              _status.disableOutput("product");
+          } else {
+            product[key] = val;
+          }
+        }
+      }        
+    outflows:
+      product: /productMap
+
+- id: UpliftAndPublishData
+  type: Node
+  properties:
+    actor: !inline
+      className: org.restflow.beans.MapSplitter
+    inflows: 
+      map: /productMap 
+    outflows:
+      person: /uplifted/name/{name}/zip/{zip}/grade/{grade}
+      name: /name
+      zip: /zip
+      grade: /grade
+
+
+- id: PrintItems
+  type: Node
+  properties: 
+    actor: !ref PrintStreamWriter
+    constants:
+      name: Flattened map
+      outputAtWrapup: true
+    inflows: 
+      message: /uplifted/name/{name}/zip/{zip}/grade/{grade}  
+      
+      

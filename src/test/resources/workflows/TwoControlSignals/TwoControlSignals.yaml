@@ -1,0 +1,65 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: TwoControlSignals
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateFirstControlSignal
+        - !ref CreateSecondControlSignal
+        - !ref CreateGreeting
+        - !ref RenderGreeting
+
+  - id: CreateFirstControlSignal
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - 1
+          - 2
+          - 3
+      outflows:
+        value: control:/signalOne
+        
+  - id: CreateSecondControlSignal
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - 4
+          - 5
+          - 6
+      outflows:
+        value: control:/signalTwo
+
+  - id: CreateGreeting
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      constants:
+        value: hello
+      inflows:
+        enableOne: control:/signalOne
+        enableTwo: control:/signalTwo
+      outflows:
+        value:
+  
+  - id: RenderGreeting
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: RenderGreeting
+        outputAtWrapup: true
+      inflows:
+        message: CreateGreeting.value
+

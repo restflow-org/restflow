@@ -1,0 +1,13 @@
+-------------------- Terminal output ----------------------
+${stdoutRecording}
+--------------------- Error messages ----------------------
+${stderrRecording}
+------------------------- Trace ---------------------------
+*** Node firing counts ***
+${workflow.traceRecorder.stepCounts}
+*** Published resources ***
+${workflow.traceRecorder.publishedData}
+"*** Workflow graph ***
+${workflow.traceRecorder.workflowGraphAsString}
+*** Workflow run events ***
+${workflow.traceRecorder.runEventsAsString}

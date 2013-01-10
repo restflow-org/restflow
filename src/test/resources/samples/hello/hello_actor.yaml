@@ -1,0 +1,11 @@
+imports:
+
+- classpath:/common/types.yaml
+
+components:
+
+- id: HelloWorld
+  type: GroovyActor
+  properties:
+    step: |
+      print "Hello World!"

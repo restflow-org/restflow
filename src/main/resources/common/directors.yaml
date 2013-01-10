@@ -1,0 +1,39 @@
+
+components:
+
+- id: DemandDrivenDirector
+  className: org.restflow.directors.DemandDrivenDirector
+  singleton: false
+
+- id: DataDrivenDirector
+  className: org.restflow.directors.DataDrivenDirector
+  singleton: false
+
+- id: MTDataDrivenDirector
+  className: org.restflow.directors.MTDataDrivenDirector
+  singleton: false
+
+- id: PublishSubscribeDirector
+  className: org.restflow.directors.PublishSubscribeDirector
+  singleton: false
+
+- id: JobDependencyDirector
+  className: org.restflow.directors.PublishSubscribeDirector
+  singleton: false
+  properties:
+    nodesStepOnce: true
+    
+- id: Publisher
+  className: org.restflow.directors.Publisher
+  singleton: false
+    
+- id: BufferedPublisher
+  className: org.restflow.directors.BufferedPublisher
+  singleton: false
+  
+- id: DataDrivenJobDependencyDirector
+  className: org.restflow.directors.DataDrivenDirector
+  singleton: false
+  properties: 
+    nodesStepOnce: true
+ 

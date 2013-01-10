@@ -1,0 +1,149 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/scriptActors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: SubscribeWithLocalPaths
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref CreateDirectoryOfFiles
+        - !ref AccessOneFile
+        - !ref PrintRepublishedFileContents
+        - !ref PrintOriginalFileContents
+        - !ref CreateStringData
+        - !ref MixDirectoryAndFileLocalPaths
+        - !ref OutputDirectory
+          
+  - id: CreateDirectoryOfFiles
+    type: BashActorNode
+    properties:
+      actor.usesStepDirectory: true
+      actor.step: |
+      
+        # make two directories in the step scratch directory
+        # the first will be published, the second not
+        mkdir directoryOne
+        mkdir directoryTwo
+        
+        # go into the first directory and make new files
+        cd directoryOne
+        echo "This is file one" > file1.txt
+        echo "This is file two" > file2.txt
+        
+        # make a third directory inside the first one
+        mkdir directoryThree
+        
+        # and make a third file in it
+        cd directoryThree
+        echo "This is file three" > file3.txt
+
+        # recursively publish the first directory and its contents
+        outputDir="directoryOne"
+        
+      actor.outputs:
+        outputDir:
+          type: File
+      outflows:
+        outputDir: file:/directories/{STEP}/directoryOne
+
+  - id: AccessOneFile
+    type: BashActorNode
+    properties:
+      actor.usesStepDirectory: true
+      actor.step: |
+      
+        // enter the directory we subscribed to
+        cd localDirectory
+        cd myDirectoryOne
+        
+        // print the contents of the two text files in it
+        cat file1.txt
+        cat file2.txt
+        
+        // republish the contents of the file in directoryThree subdirectory 
+        fileThree="/localDirectory/myDirectoryOne/directoryThree/file3.txt"
+        
+      actor.inputs:
+        directory:
+          path: localDirectory/myDirectoryOne
+        n:
+      inflows:
+        directory: file:/directories/{n}/directoryOne
+      actor.outputs:
+        fileThree:
+          type: File
+      outflows:
+        fileThree: file:/files/{STEP}/file.txt
+
+  - id: PrintRepublishedFileContents
+    type: GroovyActorNode
+    properties: 
+      actor.step: |
+        println fileThree.text;
+      actor.inputs:
+        fileThree:
+          type: File
+          path: whatchamacallit/fileThreeCopy.txt
+      inflows:
+        fileThree: file:/files/{}/file.txt
+
+  - id: PrintOriginalFileContents
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: GreetingStream
+        outputAtWrapup: false
+        outputImmediately: true
+      inflows:
+        message: /directories/{blahblah}/directoryOne/directoryThree/file3.txt
+
+
+  - id: CreateStringData
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        string = "This is a string\n";
+      outflows:
+        string: /string
+
+  - id: MixDirectoryAndFileLocalPaths
+    type: BashActorNode
+    properties:
+      actor.usesStepDirectory: true
+      actor.step: |
+      
+        // enter the directory we subscribed to
+        cd localDirectory/myDirectoryOne
+        
+        // print the contents of the two text files in it
+        cat file1.txt
+        cat file2.txt
+        cat myFile3.txt
+        cat string.txt
+        
+      actor.inputs:
+        directory:
+          path: localDirectory/myDirectoryOne
+        file: 
+          path: localDirectory/myDirectoryOne/myFile3.txt
+        n:
+        string:
+          type: File
+          path: localDirectory/myDirectoryOne/string.txt
+      inflows:
+        file:  /directories/{}/directoryOne/directoryThree/file3.txt
+        directory: /directories/{n}/directoryOne
+        string: /string
+
+  - id: OutputDirectory
+    type: OutPortal
+    properties:
+      inflows: 
+        out: file:/directories/{}/directoryOne

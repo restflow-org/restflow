@@ -1,0 +1,55 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  ######################################################
+  
+  - id: LoadEnvironment
+    type: GroovyActorNode
+    properties:
+      inflows:
+        environment_script: workspace:/Environment/setup_env.csh
+      actor.step: |
+        envText = "${environment_script}".execute().text
+        env = envText.split ('\n');
+      outflows: 
+        env: /environment/ready/  
+  
+  - id: UseEnvironment
+    type: GroovyActorNode
+    properties:
+      inflows:
+        envout_script: workspace:/Environment/output.tcl
+        env: /environment/ready/
+      actor.step: |
+        println env
+        output = "${envout_script}".execute(env,new File('/home/scottm')).text
+      outflows:
+        output: /output
+
+#test.tcl (in /home/scottm
+#env/usr/bin/modulecmd tcsh load test;
+## the next line restarts using tclsh \
+#exec tclsh "$0" "$@"
+#global env
+#puts $env(flex_wARP_python)
+#
+#
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: Environment
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes: 
+        - !ref LoadEnvironment
+        - !ref UseEnvironment

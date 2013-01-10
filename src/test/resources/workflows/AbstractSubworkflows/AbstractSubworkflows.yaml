@@ -1,0 +1,43 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+  - classpath:/workflows/NestedWorkflow/NestedWorkflow.yaml
+
+components:
+
+- id: WA
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+      - !ref NB
+      
+- id: NB
+  type: Node
+  properties: 
+    sequences:
+      iteration: 
+        - 1
+        - 2
+        - 3
+    nestedUriPrefix: NB{STEP}
+    actor: !ref WC
+
+- id: WC
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+      - !ref ND
+
+- id: ND
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter    
+    sequences:
+      message:
+        - ND_1
+        - ND_2
+        - ND_3

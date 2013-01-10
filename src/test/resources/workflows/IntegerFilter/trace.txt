@@ -1,0 +1,21 @@
+*** Node step counts ***
+IntegerFilter: 1
+IntegerFilter.DiscardIntegersOutsideDesiredRange: 10
+IntegerFilter.GenerateIntegerSequence: 11
+IntegerFilter.RenderIntegers: 5
+*** Published resources ***
+/counter/filtered/1: 3
+/counter/filtered/2: 4
+/counter/filtered/3: 5
+/counter/filtered/4: 6
+/counter/filtered/5: 7
+/counter/value/1: 1
+/counter/value/10: 10
+/counter/value/2: 2
+/counter/value/3: 3
+/counter/value/4: 4
+/counter/value/5: 5
+/counter/value/6: 6
+/counter/value/7: 7
+/counter/value/8: 8
+/counter/value/9: 9

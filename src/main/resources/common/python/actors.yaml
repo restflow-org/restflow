@@ -1,0 +1,239 @@
+imports:
+
+- classpath:/common/python/pythonActor.yaml
+
+components:
+
+- id: Adder
+  type: PythonActor
+  properties:
+    step: |
+      sum = a + b
+    inputs:
+      a: 
+        default: 0
+      b: 
+        default: 0
+    outputs: 
+      sum:
+    types:
+      a: Integer
+      b: Integer
+      sum: Integer
+      
+- id: ConstantSource
+  type: PythonActor
+  properties:
+    step: |
+      output=value;
+    inputs: 
+      value:
+    outputs: 
+      value:
+
+- id: IntegerConstantSource
+  type: PythonActor
+  properties:
+    step: |
+      output=value;
+    inputs: 
+      value:
+    outputs: 
+      value:
+    types:
+      value: Integer
+      output: Integer
+
+- id: Counter
+  type: PythonActor
+  properties:
+    initialize:
+      count = 0
+    step: |
+      count += 1      
+    inputs: 
+      input:
+    outputs:
+      count:
+    state:
+      count:
+    types:
+      count: Integer 
+
+- id: IntegerBandpassFilter
+  type: PythonActor
+  properties:
+    step: |
+      if input >= min and input <= max:
+        output = input
+      else:
+        disableOutput("output")
+    inputs: 
+      min:
+      max:
+      input:
+    outputs: 
+      output:
+    types:
+      input: Integer
+      min: Integer
+      max: Integer
+      output: Integer
+              
+- id: IntegerSequenceGenerator
+  type: PythonActor
+  properties:
+    initialize: |
+      nextValue = initial
+    step: |
+      value = nextValue
+      nextValue = nextValue + step
+      if value > max:
+        disableOutput("value")
+    state:
+      nextValue:
+    inputs:
+      initial: 
+        default: 1
+      step:
+        default: 1
+      max: 
+        default: 1
+    outputs:
+      value:
+    types:
+      initial: Integer
+      step: Integer
+      max: Integer
+      value: Integer
+      nextValue: Integer
+      
+
+- id: IntegerStreamMergerNoDuplicates
+  type: PythonActor
+  properties:
+    initialize: |
+      _last = 0
+      _first = 1
+      enableInput("a")
+      enableInput("b")
+    step: |
+      if a == None and b == None:
+        disableOutput("c")
+      elif a == None:
+        c = b
+        enableInput("b")
+      elif b == None:
+        c = a
+        enableInput("a")
+      elif a < b:
+        c = a
+        enableInput("a")
+      elif a > b:
+        c = b
+        enableInput("b")
+      elif a == b:
+        c = a
+        enableInput("a")
+        enableInput("b")
+      
+      if c != None:
+        if _first:
+          _last = c
+          _first = 0
+        else:
+          if c == _last:
+            disableOutput("c")
+          else:
+            _last = c
+    inputs: 
+      a:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+      b:
+        optional: true
+        nullable: true
+        defaultReadiness: false
+    outputs: 
+      c:
+    state: 
+      a:
+      b:
+      _last:
+      _first:
+    types:
+      a: Integer
+      b: Integer
+      c: Integer
+      _last: Integer
+      _first: Boolean
+
+- id: Multiplier
+  type: PythonActor
+  properties:
+    step: product = a * b
+    inputs: 
+      a:
+      b:
+    outputs: 
+      product:
+    types:
+      a: Number
+      b: Number
+      product: Number
+
+- id: PrintStreamWriter
+  type: PythonActor
+  properties:
+    initialize: |
+      buffer = ''
+    step: |
+      if buffer == '':
+        buffer = message
+      else:
+        buffer += '_NEWLINE_' + message      
+      if outputImmediately:
+        print(message)
+    wrapup: |
+      if outputAtWrapup:
+        if name != None:  print('*** %s ***' % name)
+        buffer = buffer.replace('_NEWLINE_', '\n')
+        print buffer
+    inputs:
+      name:
+      message:
+      outputImmediately: 
+        default: true
+      outputAtWrapup: 
+        default: false
+    state:
+      name:
+      buffer:
+      outputAtWrapup:
+    types:
+      buffer: String
+      name: String
+      message: String
+      outputImmediately: Boolean
+      outputAtWrapup: Boolean
+
+- id: SingleUnitBuffer
+  type: ConstantSource
+
+- id: SingleUnitIntegerBuffer
+  type: IntegerConstantSource
+
+- id: StringConcatenator
+  type: PythonActor
+  properties:
+    step: |
+      concatenatedString = stringOne + stringTwo
+    inputs:
+      stringOne:
+      stringTwo:
+    outputs: 
+      concatenatedString:
+    types:
+      stringOne: String
+      stringTwo: String

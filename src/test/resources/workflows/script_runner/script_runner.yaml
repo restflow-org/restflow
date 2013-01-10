@@ -1,0 +1,105 @@
+
+namespace:
+
+imports:
+
+  - classpath:/common/support.yaml
+  - classpath:/common/actors.yaml
+  - classpath:/common/directors.yaml
+  
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+
+  - id: AuthSession
+    type: ssrl.beans.AuthSession
+    properties:
+      sessionId: "#{systemEnvironment['AUTH.SESSION']}"
+      userName: "#{systemEnvironment['AUTH.USERNAME']}"
+
+  - id: impRunner
+    type: ssrl.impersonation.factory.ImpersonCommandFactory
+    properties:
+      defaultScriptDir: "#{systemEnvironment['WORKSPACE']}/RestFlow/src/test/resources/scripts/"
+      psToProcessConvertor: !!ssrl.util.PsToProcessConvertorLinux []
+      impConfig.impersonHost: localhost
+      impConfig.impersonPort: 61001
+      impConfig.scriptEnv:
+        ISO_DIR: /tmp/iso
+
+  - id: sshRunner
+    type: ssrl.impersonation.factory.SshCommandFactory
+    properties:
+      defaultScriptDir: "#{systemEnvironment['WORKSPACE']}/RestFlow/src/test/resources/scripts/"
+      hostname: smblx28
+
+
+
+  - id: RampBean
+    type: org.restflow.beans.Ramp
+    singleton: false    
+  
+  - id: EchoScriptActor
+    type: org.restflow.actors.ScriptActor
+    singleton: false
+    properties:
+      runner: !local sshRunner
+      parser: !ref system.Support.YamlResult
+      script: echo.tcl
+      session: !local AuthSession
+      inputs:
+        value:
+      outputs:
+        echo:
+
+  #NODES
+
+  - id: GreetingSource
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences: 
+        value: 
+          - Hey there my friend
+          - Hello
+          - Good night
+      outflows:
+        value: /messages/greeting/
+
+  - id: EchoGreeting
+    type: Node
+    properties:   
+      actor: !ref EchoScriptActor
+      inflows: 
+        value: /messages/greeting/
+      outflows:
+        echo: /messages/greeting/echo/
+
+  - id: ValueRenderer
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+      inflows: 
+        message: /messages/greeting/echo/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: workflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+      director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !local GreetingSource
+        - !local EchoGreeting
+        - !local ValueRenderer
+    

@@ -1,0 +1,242 @@
+
+imports:
+  - classpath:support/workflows.yaml
+
+components:
+
+  - id: SimulateDataCollectionParallelAnalysis
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref MergeFeedback
+        - !lref LoadScreeningResults
+        - !lref CalculateStrategy
+        - !lref CollectDataSet
+        - !lref ProcessDataSet
+
+  - id: MergeFeedback
+    type: MergeNode
+    properties:   
+      inflows:
+        input1: /feedback/rejected
+        input2: /dataSet_{id}/
+      outflows: 
+        output: /feedback/merged
+
+  - id: LoadScreeningResults
+    type: GroovyActorNode
+    properties:
+      constants:
+        trigger: true
+      sequences:
+        crystal:               
+          - {sampleId: DRT110, score: 1}
+          - {sampleId: DRT240, score: 3}
+          - {sampleId: DRT322, score: 4}
+          - {sampleId: DRT050, score: 5}
+          - {sampleId: DRT622, score: 3}
+      actor.step: |
+        name = crystal.sampleId; quality = crystal.score
+      actor.inputs:
+        crystal:
+        trigger:
+      actor.outputs:
+        name:
+        quality:
+      inflows:
+        trigger: /feedback/merged
+      outflows:
+        quality: /sample/{name}/quality
+
+  - id: CalculateStrategy
+    type: GroovyActorNode
+    properties: 
+      actor.inputs:
+        name:
+        quality:
+      actor.outputs:
+        id:
+        reject:
+        strategy:
+      actor.step: |
+        log "Evaluating sample $name.";
+        id = name;
+        if (quality < 3) {
+          log "Sample $name rejected due to low quality score of $quality."
+          _status.setOutputEnable('strategy', false);
+          _status.disableOutput('id');
+          reject = id;
+          _status.setOutputEnable('reject', true);
+        } else {
+          _status.setOutputEnable('reject', false);
+          strategy = [numImages: quality + 2, energies: [10000, 11000]];
+          log "Requesting $strategy.numImages images for sample $name."
+        }
+      inflows:
+        quality: /sample/{name}/quality
+      outflows:
+        id: /sample/id
+        strategy: /sample/{name}/strategy
+        reject: /feedback/rejected
+      enableLog: true
+
+  - id: CollectDataSet
+    type: Node
+    properties: 
+      actor: !ref DataSetCollector
+      nestedUriPrefix: /sample/{id}/data
+      inflows:
+        runDefinition: /sample/{id}/strategy
+        sampleName: /sample/id
+      outflows:
+        dataSet: /dataSet_{id}/
+
+  - id: DataSetCollector
+    type: ParallelWorkflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref CollectData_Inputs
+        - !lref CollectData_CollectImage
+        - !lref CollectData_TransformImage
+        - !lref CollectData_LogImage
+        - !lref CollectData_Outputs
+      inputs:
+        sampleName:
+        runDefinition:
+      outputs:
+        dataSet:
+
+  - id: CollectData_Inputs
+    type: InPortal
+    properties:
+      outflows:
+        sampleName: /sample 
+        runDefinition: /strategy
+
+  - id: CollectData_CollectImage
+    type: Node
+    properties: 
+      actor: !ref DataCollector
+      inflows:
+        sampleId: /sample
+        runDefinition: /strategy
+      outflows:
+        rawImage: file:/raw/{energy}/{sampleId}_{frame}.raw
+        done: /done
+      
+  - id: CollectData_TransformImage
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        correctedImage = Double.parseDouble(rawImage.text) * 2.0;
+      inflows:
+        rawImage: /raw/{eV}/{sampleId}_{frameNumber}.raw
+      outflows:
+        correctedImage: file:/corrected/{sampleId}_{eV}_{frameNumber}.img
+
+  - id: CollectData_LogImage
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        log "Sample $sampleId    Energy $beamEnergy    Image $frameNumber    Average intensity: $image.text"
+      actor.inputs:
+        image:
+        sampleId:
+        beamEnergy:
+        frameNumber:
+      inflows:
+        image: file:/corrected/{sampleId}_{beamEnergy}_{frameNumber}.img
+      enableLog: true
+
+  - id: CollectData_Outputs
+    type: OutPortal
+    properties:
+      inflows: 
+        dataSet: /sample/
+
+  - id: ProcessDataSet
+    type: Node
+    properties: 
+      actor: !ref DataSetProcessor
+      nestedUriPrefix: /sample/{id}/processed
+      inflows:
+        dataSet: /dataSet_{id}/
+      maxConcurrency: 2
+
+  - id: DataSetProcessor
+    type: ParallelWorkflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref ProcessData_Inputs
+        - !lref ProcessData_IntegrateImages
+      inputs:
+        dataSet:
+
+  - id: ProcessData_Inputs
+    type: InPortal
+    properties:
+      outflows:
+        dataSet: /dataSet
+
+  - id: ProcessData_IntegrateImages
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        log "Integrating images for data set id ${dataSetID}...";
+        Thread.sleep(1000);
+        log "Done integrating data set ${dataSetID}.";
+        integrated = "integrated data for ${dataSetID}";
+      inflows:
+        dataSetID: /dataSet
+      outflows:
+        integrated: file:/{dataSetID}.mtz
+      enableLog: true
+
+  - id: DataCollector
+    type: GroovyActor
+    properties:
+      usesStepDirectory: true
+      initialize: |
+        random = null;
+        _status.enableInputs();
+      step: |
+        if (random == null) random = new Random(sampleId.hashCode());
+        frame = String.format("%03d",imageCnt + 1);
+        energy = runDefinition.energies[energyCnt];
+        rawImage = new File(_status.getStepDirectory(), "raw_" + energy + "_" + frame + ".img");
+        Thread.sleep(1);
+        rawImage << random.nextInt(10000)/100.0;
+        _status.disableOutput("done");
+        if (imageCnt > runDefinition.numImages -1) {
+          imageCnt = 0; energyCnt ++;
+          if (energyCnt > runDefinition.energies.size() - 1) {
+              _status.enableInputs();
+              imageCnt = 0; energyCnt = 0;
+              done = sampleId;
+              _status.enableOutput("done");
+          }
+        } else {
+          imageCnt++;
+        }
+      state:
+        imageCnt: 0
+        energyCnt: 0
+        random:
+      inputs:
+        sampleId:
+          defaultReadiness: false
+        runDefinition:
+          defaultReadiness: false
+          type: Map
+      outputs:
+        frame:
+          type: Integer
+        energy:
+          type: Double
+        rawImage:
+          type: File
+        done:
+          type: String

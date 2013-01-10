@@ -1,0 +1,27 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: RenderContext
+    type: GroovyActorNode
+    properties: 
+      actor.step: |
+        println runPath
+        println basePath
+        println importMap   
+      inflows:
+        runPath: context:/run
+        basePath: context:/base
+        importMap: context:/import-map
+
+  - id: DisplayContext
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref RenderContext

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse-pydev version="1.0"?>
+
+<pydev_project>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">jython 2.5</pydev_property>
+<pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
+<path>/RestFlow/python</path>
+<path>/RestFlow/bin</path>
+<path>/RestFlow/lib/test/ModelGrep.jar</path>
+<path>/RestFlow/lib/test/YamlSpringLoader.jar</path>
+<path>/RestFlow/lib/test/avalon-framework.jar</path>
+<path>/RestFlow/lib/test/commons-beanutils.jar</path>
+<path>/RestFlow/lib/test/commons-collections.jar</path>
+<path>/RestFlow/lib/test/commons-io.jar</path>
+<path>/RestFlow/lib/test/commons-lang.jar</path>
+<path>/RestFlow/lib/test/commons-logging.jar</path>
+<path>/RestFlow/lib/test/groovy-all.jar</path>
+<path>/RestFlow/lib/test/h2.jar</path>
+<path>/RestFlow/lib/test/jopt-simple.jar</path>
+<path>/RestFlow/lib/test/junit.jar</path>
+<path>/RestFlow/lib/test/log4j.jar</path>
+<path>/RestFlow/lib/test/logkit.jar</path>
+<path>/RestFlow/lib/test/servlet-api.jar</path>
+<path>/RestFlow/lib/test/snakeyaml.jar</path>
+<path>/RestFlow/lib/test/spring-asm.jar</path>
+<path>/RestFlow/lib/test/spring-beans.jar</path>
+<path>/RestFlow/lib/test/spring-context.jar</path>
+<path>/RestFlow/lib/test/spring-core.jar</path>
+<path>/RestFlow/lib/test/spring-expression.jar</path>
+<path>/RestFlow/lib/test/xstream.jar</path>
+<path>/RestFlow/lib/runtime/ModelGrep.jar</path>
+<path>/RestFlow/lib/runtime/YamlSpringLoader.jar</path>
+<path>/RestFlow/lib/runtime/avalon-framework.jar</path>
+<path>/RestFlow/lib/runtime/commons-beanutils.jar</path>
+<path>/RestFlow/lib/runtime/commons-collections.jar</path>
+<path>/RestFlow/lib/runtime/commons-io.jar</path>
+<path>/RestFlow/lib/runtime/commons-lang.jar</path>
+<path>/RestFlow/lib/runtime/commons-logging.jar</path>
+<path>/RestFlow/lib/runtime/groovy-all.jar</path>
+<path>/RestFlow/lib/runtime/h2.jar</path>
+<path>/RestFlow/lib/runtime/jopt-simple.jar</path>
+<path>/RestFlow/lib/runtime/junit.jar</path>
+<path>/RestFlow/lib/runtime/log4j.jar</path>
+<path>/RestFlow/lib/runtime/logkit.jar</path>
+<path>/RestFlow/lib/runtime/servlet-api.jar</path>
+<path>/RestFlow/lib/runtime/snakeyaml.jar</path>
+<path>/RestFlow/lib/runtime/spring-asm.jar</path>
+<path>/RestFlow/lib/runtime/spring-beans.jar</path>
+<path>/RestFlow/lib/runtime/spring-context.jar</path>
+<path>/RestFlow/lib/runtime/spring-core.jar</path>
+<path>/RestFlow/lib/runtime/spring-expression.jar</path>
+<path>/RestFlow/lib/runtime/xstream.jar</path>
+<path>/RestFlow/target/RestFlow-standalone.jar</path>
+<path>/RestFlow/jcip-annotations.jar</path>
+</pydev_pathproperty>
+</pydev_project>

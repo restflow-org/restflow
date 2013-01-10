@@ -1,0 +1,39 @@
+namespace:
+
+  organization: ssrl
+  module: parsers
+
+components:
+
+  - id: GetImageHeader
+    className: org.restflow.beans.TextScanner
+    properties: 
+      absorbWhiteSpaceSymbol: "~"
+      template:
+      - OVERLOAD_CUTOFF       {overloadCutoff:INT}
+      - HEADER_BYTES          {headerBytes:INT}
+      - DIM                   {dim:INT}
+      - BYTE_ORDER            {byteOrder:STRING}
+      - TYPE                  {type:STRING}
+      - SIZE1                 {size1:INT}
+      - SIZE2                 {size2:INT}
+      - PIXEL_SIZE            {pixelSize:FLOAT}
+      - BIN                   {binning}
+      - ADC                   {adc}
+      - DETECTOR_SN           {serialNo}
+      - TIME                  {time:FLOAT}
+      - DISTANCE              {distance}
+      - PHI                   {phi:FLOAT}
+      - OSC_START             {oscStart:FLOAT}
+      - OSC_RANGE             {oscRange:FLOAT}
+      - WAVELENGTH            {wavelength:FLOAT}
+      - BEAM_CENTER_X         {beamCenterX:FLOAT}
+      - BEAM_CENTER_Y         {beamCenterY:FLOAT}
+      - ACC_TIME              {accTime:INT}
+      - CREV                  {:INT}
+      - BIN_TYPE              {binType}
+#      - PIXEL SIZE           {pixelSize:INT}
+#      - OSCILLATION RANGE    {oscRange:FLOAT}
+#      - EXPOSURE TIME        {exposureTime:FLOAT}
+      - TWO THETA             {theta:FLOAT}
+#      - BEAM CENTRE          {beamCenterX:FLOAT} {beamCenterY:FLOAT}

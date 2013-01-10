@@ -1,0 +1,20 @@
+PrintWorkspaceFileOneFromFile:
+File one line 1
+File one line 2
+File one line 3
+
+PrintWorkspaceFileOneFromString:
+File one line 1
+File one line 2
+File one line 3
+
+PrintWorkspaceFileTwoFromFile:
+File two line 1
+File two line 2
+File two line 3
+
+PrintWorkspaceFileTwoFromString:
+File two line 1
+File two line 2
+File two line 3
+

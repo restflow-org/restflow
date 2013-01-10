@@ -1,0 +1,15 @@
+EndNode initializing
+StartNode starting to step
+StartNode received 5
+StartNode finished stepping
+LeftBranchNode starting to step
+LeftBranchNode received 6
+LeftBranchNode finished stepping
+RightBranchNode starting to step
+RightBranchNode received 6
+RightBranchNode finished stepping
+EndNode starting to step
+Left value  = 7
+Right value = 7
+EndNode finished stepping.
+EndNode wrapping up.

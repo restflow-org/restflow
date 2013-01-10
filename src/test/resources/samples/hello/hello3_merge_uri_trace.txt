@@ -1,0 +1,10 @@
+*** Node step counts ***
+HelloWorld: 1
+HelloWorld.CreateGreeting1: 1
+HelloWorld.CreateGreeting2: 1
+HelloWorld.CreateGreeting3: 1
+HelloWorld.RenderGreeting: 3
+*** Published resources ***
+/messages/greeting/1: Hello World
+/messages/greeting/2: Good Afternoon, Cosmos
+/messages/greeting/3: Good night, and good luck

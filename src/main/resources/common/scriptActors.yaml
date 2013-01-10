@@ -1,0 +1,4 @@
+
+imports:
+
+- classpath:/common/bash/bashActor.yaml

@@ -1,0 +1,1089 @@
+#############################################################
+##                     phenix.xtriage                      ##
+##                                                         ##
+##     P.H. Zwart, R.W. Grosse-Kunstleve & P.D. Adams      ##
+##                                                         ##
+#############################################################
+#phil __OFF__
+
+Date 2010-07-13 Time 12:13:46 PDT -0700 (1279048426.10 s)
+
+
+##-------------------------------------------##
+## WARNING:                                  ##
+## Number of residues unspecified            ##
+##-------------------------------------------##
+
+
+Effective parameters: 
+#phil __ON__
+scaling {
+  input {
+    asu_contents {
+      n_residues = None
+      n_bases = None
+      n_copies_per_asu = None
+    }
+    xray_data {
+      file_name = "point1.mtz"
+      obs_labels = None
+      calc_labels = None
+      unit_cell = 111.2770004 111.2770004 517.0629883 90 90 120
+      space_group = "P 3"
+      high_resolution = None
+      low_resolution = None
+      reference {
+        data {
+          file_name = None
+          labels = None
+          unit_cell = None
+          space_group = None
+        }
+        structure {
+          file_name = None
+        }
+      }
+    }
+    parameters {
+      reporting {
+        verbose = 1
+        log = "logfile.log"
+        ccp4_style_graphs = True
+      }
+      misc_twin_parameters {
+        missing_symmetry {
+          sigma_inflation = 1.25
+        }
+        twinning_with_ncs {
+          perform_analyses = False
+          n_bins = 7
+        }
+        twin_test_cuts {
+          low_resolution = 10
+          high_resolution = None
+          isigi_cut = 3
+          completeness_cut = 0.85
+        }
+      }
+    }
+    optional {
+      hklout = None
+      hklout_type = mtz sca *mtz_or_sca
+      label_extension = "massaged"
+      aniso {
+        action = *remove_aniso None
+        final_b = *eigen_min eigen_mean user_b_iso
+        b_iso = None
+      }
+      outlier {
+        action = *extreme basic beamstop None
+        parameters {
+          basic_wilson {
+            level = 1e-06
+          }
+          extreme_wilson {
+            level = 0.01
+          }
+          beamstop {
+            level = 0.001
+            d_min = 10
+          }
+        }
+      }
+      symmetry {
+        action = detwin twin *None
+        twinning_parameters {
+          twin_law = None
+          fraction = None
+        }
+      }
+    }
+  }
+  gui {
+    result_file = None
+  }
+}
+#phil __END__
+
+
+Symmetry, cell and reflection file content summary
+
+Miller array info: point1.mtz:I,SIGI,merged
+Observation type: xray.amplitude
+Type of data: double, size=206284
+Type of sigmas: double, size=206284
+Number of Miller indices: 206284
+Anomalous flag: False
+Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+Space group: P 3 (No. 143)
+Systematic absences: 0
+Centric reflections: 0
+Resolution range: 29.7774 2.31113
+Completeness in resolution range: 0.657833
+Completeness with d_max=infinity: 0.657504
+
+##----------------------------------------------------##
+##                    Basic statistics                ##
+##----------------------------------------------------##
+
+
+Matthews coefficient and Solvent content statistics
+
+Number of residues unknown, assuming 50% solvent content
+
+----------------------------------------------------------------
+|              Best guess : 6763  residues in the asu          |
+----------------------------------------------------------------
+Completeness and data strength analyses
+
+  The following table lists the completeness in various resolution
+  ranges, after applying a I/sigI cut. Miller indices for which
+  individual I/sigI values are larger than the value specified in
+  the top row of the table, are retained, while other intensities
+  are discarded. The resulting completeness profiles are an indication
+  of the strength of the data.
+
+
+----------------------------------------------------------------------------------------
+| Res. Range   | I/sigI>1  | I/sigI>2  | I/sigI>3  | I/sigI>5  | I/sigI>10 | I/sigI>15 |
+----------------------------------------------------------------------------------------
+| 29.78 - 5.69 | 49.5%     | 0.7%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  5.69 - 4.52 | 48.2%     | 0.5%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  4.52 - 3.95 | 48.1%     | 0.5%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  3.95 - 3.59 | 48.7%     | 0.4%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  3.59 - 3.33 | 49.5%     | 0.2%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  3.33 - 3.14 | 47.2%     | 0.2%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  3.14 - 2.98 | 41.9%     | 0.1%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.98 - 2.85 | 35.2%     | 0.1%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.85 - 2.74 | 29.7%     | 0.1%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.74 - 2.65 | 24.3%     | 0.0%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.65 - 2.56 | 21.2%     | 0.0%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.56 - 2.49 | 17.8%     | 0.0%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.49 - 2.42 | 14.4%     | 0.0%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+|  2.42 - 2.36 | 10.5%     | 0.0%      | 0.0%      | 0.0%      | 0.0%      | 0.0%      |
+----------------------------------------------------------------------------------------
+
+  The completeness of data for which I/sig(I)>3.00, exceeds  85%
+  for resolution ranges lower than 4.00A.
+  As we do not want to throw away too much data, the resolution for
+  analyzing the intensity statistics will be limited to 3.50A.
+
+
+
+Maximum likelihood isotropic Wilson scaling 
+ML estimate of overall B value of None:
+-38.17 A**(-2)
+Estimated -log of scale factor of None:
+-5.86
+
+
+Maximum likelihood anisotropic Wilson scaling 
+ML estimate of overall B_cart value of None:
+-41.54,  0.00, -0.00
+      -41.54, -0.00
+             -33.78
+
+Equivalent representation as U_cif: 
+-0.53, -0.26, -0.00
+       -0.53,  0.00
+              -0.43
+
+Eigen analyses of B-cart:
+                 Value   Vector
+Eigenvector 1 : -33.775  (-0.00, -0.00,  1.00)
+Eigenvector 2 : -41.540  ( 0.46,  0.89,  0.00)
+Eigenvector 3 : -41.540  ( 0.89, -0.46, -0.00)
+
+ML estimate of  -log of scale factor of None:
+-5.87
+Correcting for anisotropy in the data
+
+Some basic intensity statistics follow.
+
+
+
+Low resolution completeness analyses 
+
+ The following table shows the completeness
+ of the data to 5 Angstrom.
+unused:         - 29.7779 [   0/157 ] 0.000
+bin  1: 29.7779 - 10.6237 [3104/3105] 1.000
+bin  2: 10.6237 -  8.4969 [3069/3069] 1.000
+bin  3:  8.4969 -  7.4420 [3079/3079] 1.000
+bin  4:  7.4420 -  6.7703 [3146/3146] 1.000
+bin  5:  6.7703 -  6.2899 [3075/3075] 1.000
+bin  6:  6.2899 -  5.9221 [3071/3071] 1.000
+bin  7:  5.9221 -  5.6276 [3077/3077] 1.000
+bin  8:  5.6276 -  5.3841 [3108/3108] 1.000
+bin  9:  5.3841 -  5.1780 [3094/3094] 1.000
+bin 10:  5.1780 -  5.0002 [3044/3044] 1.000
+unused:  5.0002 -         [   0/0   ]
+
+
+
+Mean intensity analyses 
+ Analyses of the mean intensity. 
+ Inspired by: Morris et al. (2004). J. Synch. Rad.11, 56-59.
+ The following resolution shells are worrisome: 
+------------------------------------------------
+| d_spacing | z_score | compl. | <Iobs>/<Iexp> |
+------------------------------------------------
+|    7.453  |  13.31  |   1.00 |     1.723     |
+|    6.742  |  25.16  |   1.00 |     2.214     |
+|    6.201  |  24.34  |   1.00 |     2.132     |
+|    5.773  |   7.80  |   1.00 |     1.306     |
+|    5.130  |   7.95  |   1.00 |     0.754     |
+|    4.879  |  13.20  |   1.00 |     0.585     |
+|    4.662  |  15.83  |   1.00 |     0.490     |
+|    4.472  |  17.41  |   1.00 |     0.458     |
+|    4.303  |  15.32  |   1.00 |     0.564     |
+|    4.152  |  14.13  |   1.00 |     0.647     |
+|    4.016  |   6.58  |   1.00 |     0.848     |
+|    3.780  |   5.14  |   1.00 |     0.886     |
+|    3.676  |   8.54  |   1.00 |     1.212     |
+|    3.581  |   7.80  |   1.00 |     1.191     |
+|    3.492  |  29.17  |   0.99 |     1.864     |
+|    3.410  |  11.93  |   0.98 |     1.280     |
+|    3.333  |  20.44  |   0.97 |     1.497     |
+|    3.262  |  16.93  |   0.94 |     1.394     |
+|    3.194  |  18.47  |   0.91 |     1.444     |
+|    3.131  |  17.52  |   0.88 |     1.428     |
+|    3.071  |  19.75  |   0.83 |     1.507     |
+|    3.015  |  21.61  |   0.79 |     1.574     |
+|    2.962  |  20.89  |   0.75 |     1.537     |
+|    2.911  |  17.85  |   0.69 |     1.434     |
+|    2.863  |  19.89  |   0.65 |     1.488     |
+|    2.817  |  14.17  |   0.61 |     1.319     |
+|    2.773  |  10.68  |   0.58 |     1.236     |
+|    2.732  |  14.99  |   0.54 |     1.370     |
+|    2.692  |  15.82  |   0.50 |     1.417     |
+|    2.654  |   7.35  |   0.47 |     1.181     |
+|    2.454  |   8.76  |   0.29 |     0.821     |
+|    2.425  |  13.17  |   0.25 |     0.732     |
+|    2.397  |  12.48  |   0.21 |     0.728     |
+|    2.370  |  14.62  |   0.18 |     0.670     |
+|    2.344  |  11.75  |   0.07 |     0.646     |
+------------------------------------------------
+
+ Possible reasons for the presence of the reported
+ unexpected low or elevated mean intensity in
+ a given resolution bin are :
+ - missing overloaded or weak reflections
+ - suboptimal data processing
+ - satellite (ice) crystals
+ - NCS
+ - translational pseudo symmetry (detected elsewhere)
+ - outliers (detected elsewhere)
+ - ice rings (detected elsewhere)
+ - other problems
+ Note that the presence of abnormalities
+ in a certain region of reciprocal space might
+ confuse the data validation algorithm throughout
+ a large region of reciprocal space, even though
+ the data are acceptable in those areas.
+
+
+
+Possible outliers 
+  Inspired by: Read, Acta Cryst. (1999). D55, 1759-1764
+
+ Acentric reflections:
+
+-----------------------------------------------------------------
+| d_space |      H     K     L |  |E|  | p(wilson) | p(extreme) |
+-----------------------------------------------------------------
+|   3.678 |      0,   17, -107 |  3.82 |  4.48e-07 |   8.73e-02 |
+|   3.905 |      0,   17,  -96 |  5.06 |  7.90e-12 |   1.61e-06 |
+|   2.402 |      0,   17,  195 |  3.87 |  3.19e-07 |   6.29e-02 |
+|   3.509 |      0,   20, -101 |  4.16 |  3.05e-08 |   6.19e-03 |
+|   3.975 |      0,   21,  -65 | 25.30 |  0.00e+00 |   0.00e+00 |
+|   3.990 |      0,   21,  -64 |  9.16 |  0.00e+00 |   0.00e+00 |
+|   2.744 |      0,   21,  151 |  6.94 |  0.00e+00 |   0.00e+00 |
+|   2.704 |      1,    1,  191 |  7.12 |  0.00e+00 |   0.00e+00 |
+|   3.913 |      1,   16,  -98 |  6.10 |  1.11e-16 |   2.26e-11 |
+|   3.649 |      1,   17, -106 |  4.32 |  7.89e-09 |   1.61e-03 |
+|   3.931 |      1,   21,  -63 |  4.92 |  3.21e-11 |   6.54e-06 |
+|   3.541 |      1,   22,  -82 |  3.89 |  2.77e-07 |   5.48e-02 |
+|   3.498 |      1,   23,   77 |  6.38 |  0.00e+00 |   0.00e+00 |
+|   2.856 |      1,   33,   21 |  5.71 |  6.55e-15 |   1.33e-09 |
+|   3.749 |      2,   17,  -98 |  3.87 |  3.24e-07 |   6.39e-02 |
+|   4.010 |      2,   20,  -62 |  4.40 |  3.99e-09 |   8.12e-04 |
+|   2.442 |      2,   20,  179 |  4.08 |  6.13e-08 |   1.24e-02 |
+|   3.458 |      2,   25,  -53 |  6.90 |  0.00e+00 |   0.00e+00 |
+|   3.457 |      2,   26,  -36 | 15.97 |  0.00e+00 |   0.00e+00 |
+|   2.395 |      3,    1,  215 |  3.92 |  2.08e-07 |   4.14e-02 |
+|   2.716 |      3,   16,  165 |  4.31 |  8.34e-09 |   1.70e-03 |
+|   4.269 |      3,   17,  -68 |  3.81 |  5.02e-07 |   9.71e-02 |
+|   4.259 |      3,   18,  -60 |  4.60 |  6.26e-10 |   1.27e-04 |
+|   3.557 |      3,   19,  -94 |  3.88 |  2.92e-07 |   5.77e-02 |
+|   3.650 |      3,   20,  -81 |  6.17 |  0.00e+00 |   0.00e+00 |
+|   3.365 |      3,   21,   94 |  4.10 |  4.97e-08 |   1.01e-02 |
+|   3.867 |      3,   23,  -20 |  4.59 |  7.17e-10 |   1.46e-04 |
+|   2.460 |      3,   24,  159 |  3.97 |  1.47e-07 |   2.94e-02 |
+|   3.460 |      3,   26,  -19 |  4.33 |  6.99e-09 |   1.42e-03 |
+|   3.463 |      3,   26,  -18 |  4.93 |  2.75e-11 |   5.59e-06 |
+|   2.686 |      3,   34,   24 | 11.12 |  0.00e+00 |   0.00e+00 |
+|   2.666 |      4,   11, -180 |  6.14 |  0.00e+00 |   0.00e+00 |
+|   2.369 |      4,   13,  202 |  7.04 |  0.00e+00 |   0.00e+00 |
+|   4.181 |      4,   16,  -75 |  4.25 |  1.49e-08 |   3.03e-03 |
+|   3.456 |      4,   20,  -90 |  5.53 |  5.07e-14 |   1.03e-08 |
+|   3.538 |      4,   23,  -55 |  4.30 |  9.68e-09 |   1.97e-03 |
+|   3.516 |      4,   25,  -17 |  4.16 |  3.08e-08 |   6.25e-03 |
+|   2.493 |      4,   36,   33 | 15.38 |  0.00e+00 |   0.00e+00 |
+|   2.671 |      5,    9, -182 |  3.83 |  4.15e-07 |   8.11e-02 |
+|   2.904 |      5,   11, -161 |  4.59 |  7.04e-10 |   1.43e-04 |
+|   3.589 |      5,   12, -119 |  4.26 |  1.29e-08 |   2.63e-03 |
+|   3.372 |      5,   14,  123 |  4.03 |  9.01e-08 |   1.82e-02 |
+|   2.431 |      5,   14,  192 |  4.46 |  2.31e-09 |   4.69e-04 |
+|   2.981 |      5,   15, -144 |  4.18 |  2.66e-08 |   5.41e-03 |
+|   3.115 |      5,   16, -131 |  4.38 |  4.69e-09 |   9.54e-04 |
+|   3.430 |      5,   17, -106 |  5.26 |  9.16e-13 |   1.87e-07 |
+|   3.670 |      5,   22,  -45 |  5.13 |  3.86e-12 |   7.86e-07 |
+|   2.723 |      5,   22,  135 |  4.93 |  2.77e-11 |   5.65e-06 |
+|   3.513 |      5,   23,  -49 |  4.14 |  3.57e-08 |   7.24e-03 |
+|   3.521 |      5,   23,  -48 |  4.05 |  7.53e-08 |   1.52e-02 |
+|   3.721 |      5,   23,   -7 |  7.51 |  0.00e+00 |   0.00e+00 |
+|   3.446 |      5,   23,   57 |  4.54 |  1.16e-09 |   2.35e-04 |
+|   3.462 |      5,   25,    0 |  5.12 |  4.19e-12 |   8.54e-07 |
+|   3.462 |      5,   25,    1 |  4.42 |  3.37e-09 |   6.86e-04 |
+|   3.029 |      5,   29,    6 |  6.36 |  0.00e+00 |   0.00e+00 |
+|   2.649 |      6,   11, -178 |  3.82 |  4.49e-07 |   8.75e-02 |
+|   2.674 |      6,   11, -176 |  3.92 |  2.18e-07 |   4.34e-02 |
+|   3.014 |      6,   15, -139 |  4.81 |  9.27e-11 |   1.89e-05 |
+|   3.177 |      6,   15, -128 |  8.29 |  0.00e+00 |   0.00e+00 |
+|   2.724 |      6,   19,  146 |  6.95 |  0.00e+00 |   0.00e+00 |
+|   3.722 |      6,   21,  -44 |  3.84 |  3.91e-07 |   7.66e-02 |
+|   3.923 |      6,   21,    3 |  9.17 |  0.00e+00 |   0.00e+00 |
+|   3.922 |      6,   21,    5 |  7.01 |  0.00e+00 |   0.00e+00 |
+|   3.920 |      6,   21,    6 | 14.63 |  0.00e+00 |   0.00e+00 |
+|   3.472 |      6,   23,  -44 |  3.88 |  2.88e-07 |   5.70e-02 |
+|   3.492 |      6,   23,  -41 |  5.22 |  1.43e-12 |   2.92e-07 |
+|   3.511 |      6,   23,  -38 |  4.69 |  2.89e-10 |   5.89e-05 |
+|   3.463 |      6,   24,  -23 | 11.13 |  0.00e+00 |   0.00e+00 |
+|   3.467 |      6,   24,  -22 |  7.07 |  0.00e+00 |   0.00e+00 |
+|   3.160 |      6,   27,   -9 |  3.94 |  1.86e-07 |   3.71e-02 |
+|   3.059 |      6,   28,   11 |  7.97 |  0.00e+00 |   0.00e+00 |
+|   2.451 |      7,    1,  207 |  4.15 |  3.29e-08 |   6.68e-03 |
+|   2.441 |      7,    8,  200 |  3.94 |  1.85e-07 |   3.69e-02 |
+|   3.525 |      7,   15, -103 |  3.85 |  3.58e-07 |   7.03e-02 |
+|   3.545 |      7,   23,   -1 |  4.89 |  4.20e-11 |   8.56e-06 |
+|   2.697 |      7,   31,   38 |  5.01 |  1.29e-11 |   2.63e-06 |
+|   3.956 |      8,   18,  -42 |  7.85 |  0.00e+00 |   0.00e+00 |
+|   3.590 |      8,   21,  -37 |  3.93 |  1.96e-07 |   3.92e-02 |
+|   3.609 |      8,   21,  -34 |  4.03 |  9.14e-08 |   1.84e-02 |
+|   3.458 |      8,   22,  -39 |  7.12 |  0.00e+00 |   0.00e+00 |
+|   3.469 |      8,   22,  -37 |  5.21 |  1.64e-12 |   3.34e-07 |
+|   2.501 |      8,   22,  148 |  5.16 |  2.65e-12 |   5.41e-07 |
+|   2.680 |      9,    8, -176 |  5.19 |  2.04e-12 |   4.15e-07 |
+|   2.887 |      9,   16, -135 |  3.88 |  2.79e-07 |   5.53e-02 |
+|   3.505 |      9,   16,  -89 |  5.71 |  6.66e-15 |   1.36e-09 |
+|   3.116 |      9,   16,  117 |  4.43 |  3.02e-09 |   6.15e-04 |
+|   2.739 |      9,   18, -139 |  3.88 |  3.00e-07 |   5.92e-02 |
+|   2.524 |      9,   19, -156 |  3.93 |  2.01e-07 |   4.02e-02 |
+|   3.454 |      9,   21,  -44 |  6.78 |  0.00e+00 |   0.00e+00 |
+|   3.479 |      9,   22,   11 |  9.20 |  0.00e+00 |   0.00e+00 |
+|   3.477 |      9,   22,   12 |  5.81 |  2.22e-15 |   4.52e-10 |
+|   2.690 |     10,    8, -173 | 14.04 |  0.00e+00 |   0.00e+00 |
+|   2.702 |     10,    8, -172 |  6.11 |  1.11e-16 |   2.26e-11 |
+|   3.293 |     10,   14,  110 |  3.82 |  4.59e-07 |   8.92e-02 |
+|   2.730 |     10,   15, -149 |  4.69 |  2.72e-10 |   5.53e-05 |
+|   2.697 |     10,   16, -148 |  3.96 |  1.51e-07 |   3.03e-02 |
+|   2.973 |     10,   17,  119 |  3.93 |  1.90e-07 |   3.79e-02 |
+|   3.877 |     10,   18,   20 |  4.74 |  1.69e-10 |   3.44e-05 |
+|   3.711 |     10,   18,   45 |  9.73 |  0.00e+00 |   0.00e+00 |
+|   3.496 |     10,   19,  -56 |  4.37 |  5.28e-09 |   1.07e-03 |
+|   3.178 |     10,   24,   10 |  4.22 |  1.77e-08 |   3.60e-03 |
+|   2.364 |     11,    8,  200 |  3.86 |  3.46e-07 |   6.81e-02 |
+|   3.359 |     11,   10,  119 |  3.86 |  3.47e-07 |   6.83e-02 |
+|   3.326 |     11,   10,  121 |  4.52 |  1.29e-09 |   2.63e-04 |
+|   3.217 |     11,   11,  124 |  4.57 |  8.49e-10 |   1.73e-04 |
+|   3.487 |     11,   18,   59 |  4.05 |  7.69e-08 |   1.55e-02 |
+|   3.493 |     11,   19,   45 |  4.31 |  8.40e-09 |   1.71e-03 |
+|   3.463 |     11,   19,   49 |  6.04 |  1.11e-16 |   2.26e-11 |
+|   3.472 |     11,   20,  -29 |  3.91 |  2.22e-07 |   4.43e-02 |
+|   3.458 |     11,   20,   32 |  4.52 |  1.38e-09 |   2.81e-04 |
+|   3.191 |     11,   23,  -16 | 10.25 |  0.00e+00 |   0.00e+00 |
+|   2.482 |     11,   30,   67 | 21.39 |  0.00e+00 |   0.00e+00 |
+|   3.457 |     12,    7,  120 |  3.93 |  1.98e-07 |   3.96e-02 |
+|   3.516 |     12,   11, -101 |  5.09 |  5.44e-12 |   1.11e-06 |
+|   3.928 |     12,   16,  -17 |  5.00 |  1.38e-11 |   2.82e-06 |
+|   2.674 |     12,   18, -133 |  5.19 |  2.00e-12 |   4.07e-07 |
+|   3.655 |     12,   18,  -18 |  4.09 |  5.55e-08 |   1.12e-02 |
+|   3.679 |     12,   18,   -8 |  3.94 |  1.81e-07 |   3.62e-02 |
+|   3.530 |     12,   18,   42 |  5.06 |  7.89e-12 |   1.61e-06 |
+|   3.471 |     12,   18,   50 |  6.39 |  0.00e+00 |   0.00e+00 |
+|   3.500 |     12,   19,  -27 |  4.02 |  9.88e-08 |   1.99e-02 |
+|   3.526 |     12,   19,  -20 |  8.46 |  0.00e+00 |   0.00e+00 |
+|   3.558 |     12,   19,   -4 |  6.14 |  0.00e+00 |   0.00e+00 |
+|   2.672 |     12,   20, -122 |  4.31 |  8.66e-09 |   1.76e-03 |
+|   3.168 |     12,   22,   31 |  9.95 |  0.00e+00 |   0.00e+00 |
+|   4.416 |     13,    4,   83 |  7.87 |  0.00e+00 |   0.00e+00 |
+|   3.914 |     13,    9,   83 |  9.40 |  0.00e+00 |   0.00e+00 |
+|   3.451 |     13,    9,  109 |  4.12 |  4.38e-08 |   8.88e-03 |
+|   3.165 |     13,   13,  110 |  4.48 |  1.97e-09 |   4.01e-04 |
+|   3.642 |     13,   16,   44 |  4.70 |  2.53e-10 |   5.15e-05 |
+|   3.542 |     13,   17,   42 |  4.06 |  6.77e-08 |   1.37e-02 |
+|   3.506 |     13,   17,   47 |  3.94 |  1.82e-07 |   3.64e-02 |
+|   3.498 |     13,   17,   48 |  4.11 |  4.43e-08 |   8.98e-03 |
+|   3.490 |     13,   17,   49 |  4.20 |  2.15e-08 |   4.36e-03 |
+|   2.678 |     14,    5, -170 |  5.92 |  5.55e-16 |   1.13e-10 |
+|   3.920 |     14,    5,   95 |  7.67 |  0.00e+00 |   0.00e+00 |
+|   3.898 |     14,    5,   96 |  4.30 |  9.38e-09 |   1.91e-03 |
+|   3.154 |     14,    5,  136 |  3.90 |  2.57e-07 |   5.11e-02 |
+|   3.541 |     14,    8,  103 |  4.24 |  1.56e-08 |   3.17e-03 |
+|   3.507 |     14,    8,  105 |  6.37 |  0.00e+00 |   0.00e+00 |
+|   3.458 |     14,   10,  -99 |  4.21 |  1.93e-08 |   3.92e-03 |
+|   3.708 |     14,   10,   83 |  4.47 |  2.10e-09 |   4.27e-04 |
+|   3.455 |     14,   11,   94 |  5.97 |  3.33e-16 |   6.78e-11 |
+|   3.471 |     14,   12,   87 |  4.18 |  2.53e-08 |   5.13e-03 |
+|   3.268 |     14,   14,   90 |  3.97 |  1.39e-07 |   2.79e-02 |
+|   3.497 |     14,   16,   49 |  6.01 |  2.22e-16 |   4.52e-11 |
+|   3.489 |     14,   16,   50 |  7.59 |  0.00e+00 |   0.00e+00 |
+|   3.175 |     14,   16,   84 |  6.34 |  0.00e+00 |   0.00e+00 |
+|   3.583 |     14,   17,    3 |  4.12 |  4.25e-08 |   8.62e-03 |
+|   3.488 |     14,   17,   34 |  8.98 |  0.00e+00 |   0.00e+00 |
+|   2.672 |     14,   17,  129 |  5.82 |  2.00e-15 |   4.07e-10 |
+|   3.247 |     14,   18,  -56 |  4.63 |  5.12e-10 |   1.04e-04 |
+|   2.673 |     14,   21, -103 |  6.76 |  0.00e+00 |   0.00e+00 |
+|   3.972 |     15,    4,   91 |  4.73 |  1.99e-10 |   4.04e-05 |
+|   2.630 |     15,    6, -169 |  4.02 |  9.21e-08 |   1.86e-02 |
+|   3.593 |     15,    6,  103 |  5.39 |  2.49e-13 |   5.08e-08 |
+|   3.680 |     15,    7,   94 |  6.89 |  0.00e+00 |   0.00e+00 |
+|   3.491 |     15,    7,  105 |  3.82 |  4.54e-07 |   8.82e-02 |
+|   3.678 |     15,   10,   78 |  4.42 |  3.26e-09 |   6.63e-04 |
+|   3.504 |     16,    3,  113 |  7.89 |  0.00e+00 |   0.00e+00 |
+|   3.594 |     16,    4,  105 |  4.58 |  7.50e-10 |   1.53e-04 |
+|   2.766 |     16,    4,  159 |  4.60 |  6.64e-10 |   1.35e-04 |
+|   3.673 |     16,    6,   93 | 15.21 |  0.00e+00 |   0.00e+00 |
+|   2.720 |     16,    6,  158 |  5.99 |  2.22e-16 |   4.52e-11 |
+|   2.708 |     16,    6,  159 |  4.85 |  5.84e-11 |   1.19e-05 |
+|   3.454 |     16,    7,  102 |  8.78 |  0.00e+00 |   0.00e+00 |
+|   3.358 |     16,    8,  104 |  4.02 |  9.73e-08 |   1.96e-02 |
+|   3.368 |     16,   15,   53 | 25.12 |  0.00e+00 |   0.00e+00 |
+|   2.674 |     16,   15,  129 |  6.27 |  0.00e+00 |   0.00e+00 |
+|   2.714 |     16,   21,  -81 |  7.36 |  0.00e+00 |   0.00e+00 |
+|   2.682 |     16,   25,  -17 |  5.58 |  2.96e-14 |   6.04e-09 |
+|   2.384 |     16,   27,   79 |  7.02 |  0.00e+00 |   0.00e+00 |
+|   2.380 |     16,   27,   80 |  7.45 |  0.00e+00 |   0.00e+00 |
+|   3.457 |     17,    3,  111 |  4.64 |  4.61e-10 |   9.39e-05 |
+|   2.667 |     17,    6, -159 | 11.79 |  0.00e+00 |   0.00e+00 |
+|   3.652 |     17,    7,   83 |  4.39 |  4.40e-09 |   8.95e-04 |
+|   3.622 |     17,    7,   85 |  4.32 |  7.93e-09 |   1.61e-03 |
+|   3.486 |     17,    8,   89 |  3.89 |  2.59e-07 |   5.14e-02 |
+|   3.490 |     17,    9,   83 |  4.29 |  9.88e-09 |   2.01e-03 |
+|   3.438 |     17,    9,   87 |  5.52 |  6.06e-14 |   1.23e-08 |
+|   3.704 |     17,   11,  -48 |  7.76 |  0.00e+00 |   0.00e+00 |
+|   3.452 |     17,   12,   64 |  5.36 |  3.25e-13 |   6.61e-08 |
+|   3.028 |     17,   12,  104 |  4.21 |  2.02e-08 |   4.10e-03 |
+|   3.697 |     17,   13,   -3 |  4.58 |  7.60e-10 |   1.55e-04 |
+|   3.698 |     17,   13,   -2 |  3.98 |  1.33e-07 |   2.66e-02 |
+|   3.697 |     17,   13,    3 |  5.59 |  2.65e-14 |   5.40e-09 |
+|   3.697 |     17,   13,    4 |  4.59 |  6.81e-10 |   1.39e-04 |
+|   3.474 |     17,   13,   51 |  5.94 |  4.44e-16 |   9.04e-11 |
+|   2.706 |     17,   20,   83 |  5.45 |  1.25e-13 |   2.55e-08 |
+|   2.599 |     17,   22,  -81 |  5.68 |  9.77e-15 |   1.99e-09 |
+|   2.604 |     17,   22,  -80 |  3.91 |  2.36e-07 |   4.69e-02 |
+|   2.675 |     17,   22,  -66 |  5.41 |  1.94e-13 |   3.96e-08 |
+|   2.630 |     17,   22,   75 | 10.66 |  0.00e+00 |   0.00e+00 |
+|   3.543 |     18,    2,  104 |  4.15 |  3.37e-08 |   6.84e-03 |
+|   3.556 |     18,    3,  100 |  4.08 |  5.76e-08 |   1.17e-02 |
+|   3.474 |     18,   10,  -69 |  4.38 |  4.67e-09 |   9.51e-04 |
+|   3.468 |     18,   14,   -1 |  4.86 |  5.79e-11 |   1.18e-05 |
+|   3.685 |     19,    3,   86 | 10.72 |  0.00e+00 |   0.00e+00 |
+|   3.533 |     19,    5,   87 |  4.07 |  6.55e-08 |   1.32e-02 |
+|   3.462 |     19,    5,   92 |  4.17 |  2.76e-08 |   5.60e-03 |
+|   2.665 |     19,    8,  145 |  3.89 |  2.59e-07 |   5.14e-02 |
+|   3.734 |     20,    1,   84 |  5.18 |  2.19e-12 |   4.46e-07 |
+|   2.553 |     20,    2, -168 |  4.65 |  4.23e-10 |   8.61e-05 |
+|   3.679 |     20,    4,   74 |  4.49 |  1.80e-09 |   3.66e-04 |
+|   4.043 |     21,    1,   55 |  3.93 |  1.99e-07 |   3.97e-02 |
+|   4.016 |     21,    1,   57 |  4.17 |  2.77e-08 |   5.63e-03 |
+|   3.988 |     21,    1,   59 |  4.09 |  5.40e-08 |   1.09e-02 |
+|   3.903 |     21,    1,   65 |  6.64 |  0.00e+00 |   0.00e+00 |
+|   3.526 |     21,    4,   77 |  4.71 |  2.36e-10 |   4.81e-05 |
+|   3.676 |     22,    1,   72 | 13.82 |  0.00e+00 |   0.00e+00 |
+|   3.637 |     22,    2,   70 |  3.89 |  2.60e-07 |   5.17e-02 |
+|   3.466 |     22,    4,   73 |  6.14 |  0.00e+00 |   0.00e+00 |
+|   3.472 |     22,    5,   66 |  3.83 |  4.40e-07 |   8.58e-02 |
+|   2.727 |     22,   18,  -36 |  4.18 |  2.49e-08 |   5.05e-03 |
+|   3.468 |     23,    3,   69 |  4.35 |  5.80e-09 |   1.18e-03 |
+|   3.452 |     23,    4,   64 |  7.52 |  0.00e+00 |   0.00e+00 |
+|   2.514 |     23,   20,  -48 |  4.38 |  4.53e-09 |   9.22e-04 |
+|   3.464 |     24,    3,   58 |  4.34 |  6.58e-09 |   1.34e-03 |
+|   3.167 |     25,    7,   47 |  5.98 |  3.33e-16 |   6.78e-11 |
+|   3.138 |     25,    7,   52 |  4.93 |  2.73e-11 |   5.56e-06 |
+|   2.537 |     25,   10, -116 |  4.46 |  2.33e-09 |   4.74e-04 |
+|   2.727 |     25,   11,  -81 |  4.23 |  1.69e-08 |   3.43e-03 |
+|   2.718 |     25,   13,   63 |  5.34 |  4.02e-13 |   8.19e-08 |
+|   2.714 |     25,   13,   64 |  3.90 |  2.39e-07 |   4.76e-02 |
+|   3.511 |     26,    1,  -38 |  5.93 |  5.55e-16 |   1.13e-10 |
+|   3.465 |     26,    1,   45 |  4.72 |  2.08e-10 |   4.24e-05 |
+|   2.695 |     27,   13,   29 |  3.95 |  1.73e-07 |   3.45e-02 |
+|   2.586 |     27,   15,   29 |  4.05 |  7.64e-08 |   1.54e-02 |
+|   2.444 |     28,    7, -123 |  5.68 |  9.33e-15 |   1.90e-09 |
+|   2.725 |     28,   10,   50 |  4.40 |  3.80e-09 |   7.73e-04 |
+|   2.727 |     28,   11,  -32 |  6.86 |  0.00e+00 |   0.00e+00 |
+|   2.693 |     30,    8,   47 |  4.73 |  1.92e-10 |   3.91e-05 |
+|   2.523 |     30,   13,    3 |  4.77 |  1.34e-10 |   2.73e-05 |
+|   2.425 |     30,   15,  -11 |  7.93 |  0.00e+00 |   0.00e+00 |
+|   3.039 |     31,    1,   19 | 16.39 |  0.00e+00 |   0.00e+00 |
+|   3.037 |     31,    1,   20 |  4.91 |  3.37e-11 |   6.87e-06 |
+|   2.860 |     31,    1,   64 |  4.58 |  8.00e-10 |   1.63e-04 |
+|   2.854 |     31,    1,   65 | 17.89 |  0.00e+00 |   0.00e+00 |
+|   2.742 |     33,    3,   33 |  4.16 |  3.10e-08 |   6.28e-03 |
+-----------------------------------------------------------------
+
+ p(wilson)  : 1-(1-exp[-|E|^2]) 
+ p(extreme) : 1-(1-exp[-|E|^2])^(n_acentrics)
+ p(wilson) is the probability that an E-value of the specified
+ value would be observed if it were selected at random
+ the given data set.
+ p(extreme) is the probability that the largest |E| value is 
+ larger or equal than the observed largest |E| value.
+
+ Both measures can be used for outlier detection. p(extreme)
+ takes into account the size of the dataset.
+
+
+ Centric reflections:
+
+            None 
+
+
+Ice ring related problems
+
+ The following statistics were obtained from ice-ring 
+ insensitive resolution ranges 
+  mean bin z_score      : 12.41
+      ( rms deviation   : 7.12 )
+  mean bin completeness : 0.70
+     ( rms deviation   : 0.33 )
+
+ The following table shows the z-scores 
+ and completeness in ice-ring sensitive areas.
+ Large z-scores and high completeness in these 
+ resolution ranges might be a reason to re-assess
+ your data processsing if ice rings were present.
+
+------------------------------------------------
+| d_spacing | z_score | compl. | Rel. Ice int. |
+------------------------------------------------
+|    3.897  |   4.49  |   1.00 |     1.000     |
+|    3.669  |   7.80  |   1.00 |     0.750     |
+|    3.441  |  11.93  |   0.98 |     0.530     |
+|    2.671  |   7.35  |   0.47 |     0.170     |
+------------------------------------------------
+
+ Abnormalities in mean intensity or completeness at
+ resolution ranges with a relative ice ring intensity
+ lower than 0.10 will be ignored.
+
+ No ice ring related problems detected.
+ If ice rings were present, the data does not look
+ worse at ice ring related d_spacings as compared
+ to the rest of the data set.
+
+
+
+
+Basic analyses completed
+
+##----------------------------------------------------##
+##                   Twinning Analyses                ##
+##----------------------------------------------------##
+
+
+
+Using data between 10.00 to 3.50 Angstrom.
+
+Determining possible twin laws.
+
+The following twin laws have been found:
+
+--------------------------------------------------------------------------------
+| Type | Axis   | R metric (%) | delta (le Page) | delta (Lebedev) | Twin law  |
+--------------------------------------------------------------------------------
+|   M  | 2-fold | 0.000        | 0.000           | 0.000           | -h,-k,l   |
+|   M  | 2-fold | 0.000        | 0.000           | 0.000           | h,-h-k,-l |
+|   M  | 2-fold | 0.000        | 0.000           | 0.000           | -k,-h,-l  |
+--------------------------------------------------------------------------------
+M:  Merohedral twin law
+PM: Pseudomerohedral twin law
+
+  3 merohedral twin operators found
+  0 pseudo-merohedral twin operators found
+In total,   3 twin operator were found
+
+
+ The presence of twin laws indicates the following: 
+        The symmetry of the lattice (unit cell) is higher (has more elements) 
+        than the point group of the assigned space group.
+
+ There are four likely scenarios associated with the presence of twin laws: 
+    i.  The assigned space group is incorrect (too low).
+   ii.  The assigned space group is correct and the data *is not* twinned.
+  iii.  The assigned space group is correct and the data *is* twinned.
+   iv.  The assigned space group is not correct (too low) and at the same time, the data *is* twinned.
+
+ Xtriage tries to distinguish between these cases by inspecting the intensity statistics.
+ It never hurts to carefully inspect statistics yourself and make sure that the automated 
+ interpretation is correct.
+
+
+
+Details of automated twin law derivation
+----------------------------------------
+Below, the results of the coset decomposition are given. 
+Each coset represents a single twin law, and all symmetry equivalent twin laws are given.
+For each coset, the operator in (x,y,z) and (h,k,l) notation are given. 
+The direction of the axis (in fractional coordinates), the type and possible offsets are given as well.
+Furthermore, the result of combining a certain coset with the input space group is listed.  
+This table can be usefull when comparing twin laws generated by xtriage with those listed in lookup tables
+In the table subgroup H denotes the *presumed intensity symmetry*. Group G is the symmetry of the lattice.
+
+Left cosets of :
+  subgroup  H: P 3
+  and group G: P 6 2 2
+
+  Coset number :     0   (all operators from H)
+
+               x,y,z                 h,k,l   Rotation:    1 ; direction:  (0, 0, 0) ; screw/glide:    (0,0,0)
+            -y,x-y,z              k,-h-k,l   Rotation:    3 ; direction:  (0, 0, 1) ; screw/glide:    (0,0,0)
+           -x+y,-x,z              -h-k,h,l   Rotation:    3 ; direction:  (0, 0, 1) ; screw/glide:    (0,0,0)
+
+  Coset number :     1   (H+coset[1] = P 6)
+
+             -x,-y,z               -h,-k,l   Rotation:    2 ; direction:  (0, 0, 1) ; screw/glide:    (0,0,0)
+             x-y,x,z              h+k,-h,l   Rotation:    6 ; direction:  (0, 0, 1) ; screw/glide:    (0,0,0)
+            y,-x+y,z              -k,h+k,l   Rotation:    6 ; direction:  (0, 0, 1) ; screw/glide:    (0,0,0)
+
+  Coset number :     2   (H+coset[2] = P 3 2 1)
+
+           x-y,-y,-z             h,-h-k,-l   Rotation:    2 ; direction:  (1, 0, 0) ; screw/glide:    (0,0,0)
+          -x,-x+y,-z             -h-k,k,-l   Rotation:    2 ; direction:  (0, 1, 0) ; screw/glide:    (0,0,0)
+              y,x,-z                k,h,-l   Rotation:    2 ; direction:  (1, 1, 0) ; screw/glide:    (0,0,0)
+
+  Coset number :     3   (H+coset[3] = P 3 1 2)
+
+            -y,-x,-z              -k,-h,-l   Rotation:    2 ; direction: (-1, 1, 0) ; screw/glide:    (0,0,0)
+           -x+y,y,-z             -h,h+k,-l   Rotation:    2 ; direction:  (1, 2, 0) ; screw/glide:    (0,0,0)
+            x,x-y,-z             h+k,-k,-l   Rotation:    2 ; direction:  (2, 1, 0) ; screw/glide:    (0,0,0)
+
+Note that if group H is centered (C,P,I,F), elements corresponding to centering operators are omitted.
+(This is because internally the calculations are done with the symmetry of the reduced cell)
+
+
+
+
+
+
+Splitting data in centrics and acentrics
+  Number of centrics  : 0
+  Number of acentrics : 86341
+
+ Patterson analyses
+------------------
+
+ Largest Patterson peak with length larger than 15 Angstrom 
+
+ Frac. coord.        :    0.047    0.444    0.008
+ Distance to origin  :   47.229
+ Height (origin=100) :    1.347
+ p_value(height)     :    1.000e+00
+
+
+   The reported p_value has the following meaning:
+     The probability that a peak of the specified height
+     or larger is found in a Patterson function of a
+     macro molecule that does not have any translational
+     pseudo symmetry is equal to  1.000e+00.
+     p_values smaller than 0.05 might indicate
+     weak translational pseudo symmetry, or the self vector of
+     a large anomalous scatterer such as Hg, whereas values
+     smaller than 1e-3 are a very strong indication for
+     the presence of translational pseudo symmetry.
+
+
+
+
+Systematic absences
+-------------------
+
+The following table gives information about systematic absences.
+
+For each operator, the reflections are split in three classes:
+
+  Absent    : Reflections that are absent for this operator.
+  Non Absent: Reflection of the same type (i.e. (0,0,l)) as above, but they should be present.
+  Complement: All other reflections.
+
+For each class, the <I/sigI> is reported, as well as the number of
+'violations'. A 'violation' is designated as a reflection for which a
+I/sigI criterion is not met. The criteria are
+
+  Absent violation     : I/sigI > 3.0
+  Non Absent violation : I/sigI < 3.0
+  Complement violation : I/sigI < 3.0
+
+Operators with low associated violations for *both* absent and non absent
+reflections, are likely to be true screw axis or glide planes. Both the
+number of violations and their percentages are given.  The number of
+violations within the 'complement' class, can be used as a comparison for
+the number of violations in the non-absent class.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+| Operator | absent under operator  |          | not absent under operator  |              | all other reflections     |          |          |
+|          |  <I/sigI> (violations) | n absent |  <I/sigI> (violations)     | n not absent |  <I/sigI> (violations)    | n compl  |  Score   |
+----------------------------------------------------------------------------------------------------------------------------------------------
+| 3_0 (c)  |     0.00  (0,  0.0%)   |        0 |     1.29  (96, 100.0%)     |       96     |     1.27  (86245, 100.0%) |    86245 | 1.64e+00 |
+| 3_1 (c)  |     1.28  (0,  0.0%)   |       64 |     1.30  (32, 100.0%)     |       32     |     1.27  (86245, 100.0%) |    86245 | 1.85e+00 |
+| 3_2 (c)  |     1.28  (0,  0.0%)   |       64 |     1.30  (32, 100.0%)     |       32     |     1.27  (86245, 100.0%) |    86245 | 1.85e+00 |
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Analyses of the absences table indicates a number of likely space group
+candidates, which are listed below. For each space group, the number of
+absent violations are listed under the '+++' column. The number of present
+violations (weak reflections) are listed under '---'. The last column is a
+likelihood based score for the particular space group.  Note that
+enantiomorphic spacegroups will have equal scores. Also, if absences were
+removed while processing the data, they will be regarded as missing
+information, rather then as enforcing that absence in the space group choices.
+
+
+------------------------------------------------------------------------------------
+| space group | n absent | <Z>_absent | <Z/sigZ>_absent | +++ | ---  | score       |
+------------------------------------------------------------------------------------
+| P 3         | 0        |     0.00   |     0.00        |  0  |  96  |  0.000e+00  |
+| P 31        | 64       |     1.98   |     1.28        |  0  |  32  |  2.161e-01  |
+| P 32        | 64       |     1.98   |     1.28        |  0  |  32  |  2.161e-01  |
+------------------------------------------------------------------------------------
+
+
+
+
+Wilson ratio and moments 
+
+Acentric reflections 
+   <I^2>/<I>^2    :1.894   (untwinned: 2.000; perfect twin 1.500)
+   <F>^2/<F^2>    :0.872   (untwinned: 0.785; perfect twin 0.885)
+   <|E^2 - 1|>    :0.566   (untwinned: 0.736; perfect twin 0.541)
+
+
+
+NZ test (0<=z<1) to detect twinning and possible translational NCS
+
+
+-----------------------------------------------
+|  Z  | Nac_obs | Nac_theo | Nc_obs | Nc_theo |
+-----------------------------------------------
+| 0.0 |   0.000 |    0.000 |  0.000 |   0.000 |
+| 0.1 |   0.001 |    0.095 |  0.000 |   0.248 |
+| 0.2 |   0.025 |    0.181 |  0.000 |   0.345 |
+| 0.3 |   0.082 |    0.259 |  0.000 |   0.419 |
+| 0.4 |   0.165 |    0.330 |  0.000 |   0.474 |
+| 0.5 |   0.263 |    0.394 |  0.000 |   0.520 |
+| 0.6 |   0.361 |    0.451 |  0.000 |   0.561 |
+| 0.7 |   0.450 |    0.503 |  0.000 |   0.597 |
+| 0.8 |   0.530 |    0.551 |  0.000 |   0.629 |
+| 0.9 |   0.599 |    0.593 |  0.000 |   0.657 |
+| 1.0 |   0.659 |    0.632 |  0.000 |   0.683 |
+-----------------------------------------------
+| Maximum deviation acentric      :  0.177    |
+| Maximum deviation centric       :  0.683    |
+|                                             |
+| <NZ(obs)-NZ(twinned)>_acentric  : -0.078    |
+| <NZ(obs)-NZ(twinned)>_centric   : -0.467    |
+-----------------------------------------------
+
+
+ L test for acentric data
+
+ using difference vectors (dh,dk,dl) of the form: 
+(2hp,2kp,2lp)
+  where hp, kp, and lp are random signed integers such that 
+  2 <= |dh| + |dk| + |dl| <= 8 
+
+  Mean |L|   :0.304  (untwinned: 0.500; perfect twin: 0.375)
+  Mean  L^2  :0.137  (untwinned: 0.333; perfect twin: 0.200)
+
+  The distribution of |L| values indicates a twin fraction of
+  0.00. Note that this estimate is not as reliable as obtained
+  via a Britton plot or H-test if twin laws are available. 
+
+
+
+---------------------------------------------
+ Analysing possible twin law :  -h,-k,l
+---------------------------------------------
+
+
+Results of the H-test on acentric data: 
+
+ (Only 50.0% of the strongest twin pairs were used)
+
+mean |H| : 0.387   (0.50: untwinned; 0.0: 50% twinned)
+mean H^2 : 0.209   (0.33: untwinned; 0.0: 50% twinned)
+Estimation of twin fraction via mean |H|: 0.113
+Estimation of twin fraction via cum. dist. of H: 0.096
+
+
+
+Britton analyses
+
+  Extrapolation performed on  0.21 < alpha < 0.495 
+  Estimated twin fraction: 0.178
+  Correlation: 0.9950
+
+R vs R statistic:
+  R_abs_twin = <|I1-I2|>/<|I1+I2|>
+  Lebedev, Vagin, Murshudov. Acta Cryst. (2006). D62, 83-95
+
+   R_abs_twin observed data   : 0.400
+
+  R_sq_twin = <(I1-I2)^2>/<(I1+I2)^2>
+   R_sq_twin observed data    : 0.365
+  No calculated data available.
+  R_twin for calculated data not determined.
+
+
+Maximum Likelihood twin fraction determination
+    Zwart, Read, Grosse-Kunstleve & Adams, to be published.
+
+
+   The estimated twin fraction is equal to 0.022
+
+
+---------------------------------------------
+ Analysing possible twin law :  h,-h-k,-l
+---------------------------------------------
+
+
+Results of the H-test on acentric data: 
+
+ (Only 50.0% of the strongest twin pairs were used)
+
+mean |H| : 0.362   (0.50: untwinned; 0.0: 50% twinned)
+mean H^2 : 0.193   (0.33: untwinned; 0.0: 50% twinned)
+Estimation of twin fraction via mean |H|: 0.138
+Estimation of twin fraction via cum. dist. of H: 0.116
+
+
+
+Britton analyses
+
+  Extrapolation performed on  0.22 < alpha < 0.495 
+  Estimated twin fraction: 0.182
+  Correlation: 0.9953
+
+R vs R statistic:
+  R_abs_twin = <|I1-I2|>/<|I1+I2|>
+  Lebedev, Vagin, Murshudov. Acta Cryst. (2006). D62, 83-95
+
+   R_abs_twin observed data   : 0.391
+
+  R_sq_twin = <(I1-I2)^2>/<(I1+I2)^2>
+   R_sq_twin observed data    : 0.336
+  No calculated data available.
+  R_twin for calculated data not determined.
+
+
+Maximum Likelihood twin fraction determination
+    Zwart, Read, Grosse-Kunstleve & Adams, to be published.
+
+
+   The estimated twin fraction is equal to 0.022
+
+
+---------------------------------------------
+ Analysing possible twin law :  -k,-h,-l
+---------------------------------------------
+
+
+Results of the H-test on acentric data: 
+
+ (Only 50.0% of the strongest twin pairs were used)
+
+mean |H| : 0.369   (0.50: untwinned; 0.0: 50% twinned)
+mean H^2 : 0.197   (0.33: untwinned; 0.0: 50% twinned)
+Estimation of twin fraction via mean |H|: 0.131
+Estimation of twin fraction via cum. dist. of H: 0.108
+
+
+
+Britton analyses
+
+  Extrapolation performed on  0.23 < alpha < 0.495 
+  Estimated twin fraction: 0.188
+  Correlation: 0.9955
+
+R vs R statistic:
+  R_abs_twin = <|I1-I2|>/<|I1+I2|>
+  Lebedev, Vagin, Murshudov. Acta Cryst. (2006). D62, 83-95
+
+   R_abs_twin observed data   : 0.396
+
+  R_sq_twin = <(I1-I2)^2>/<(I1+I2)^2>
+   R_sq_twin observed data    : 0.364
+  No calculated data available.
+  R_twin for calculated data not determined.
+
+
+Maximum Likelihood twin fraction determination
+    Zwart, Read, Grosse-Kunstleve & Adams, to be published.
+
+
+   The estimated twin fraction is equal to 0.022
+
+
+
+Exploring higher metric symmetry
+
+The point group of data as dictated by the space group is P 3
+The point group in the niggli setting is P 3
+The point group of the lattice is P 6 2 2
+A summary of R values for various possible point groups follow.
+
+----------------------------------------------------------------------------------------------
+| Point group | mean R_used | max R_used | mean R_unused | min R_unused | BIC       | choice |
+----------------------------------------------------------------------------------------------
+| P 3         | None        | None       | 0.396         | 0.391        | 4.907e+05 |        |
+| P 6 2 2     | 0.396       | 0.400      | None          | None         | 1.429e+05 | <---   |
+| P 3 2 1     | 0.391       | 0.391      | 0.398         | 0.396        | 2.659e+05 |        |
+| P 6         | 0.400       | 0.400      | 0.393         | 0.391        | 2.517e+05 |        |
+| P 3 1 2     | 0.396       | 0.396      | 0.396         | 0.391        | 2.592e+05 |        |
+----------------------------------------------------------------------------------------------
+
+R_used: mean and maximum R value for symmetry operators *used* in this point group
+R_unused: mean and minimum R value for symmetry operators *not used* in this point group
+An automated point group suggestion is made on the basis of the BIC (Bayesian information criterion).
+
+
+The likely point group of the data is: P 6 2 2
+
+Possible space groups in this point group are:
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 6 2 2 (No. 177)
+
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 61 2 2 (No. 178)
+
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 65 2 2 (No. 179)
+
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 62 2 2 (No. 180)
+
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 64 2 2 (No. 181)
+
+   Unit cell: (111.277, 111.277, 517.063, 90, 90, 120)
+   Space group: P 63 2 2 (No. 182)
+
+
+Note that this analysis does not take into account the effects of twinning.
+If the data are (almost) perfectly twinned, the symmetry will appear to be
+higher than it actually is.
+
+
+
+-------------------------------------------
+Merging in *suggested* point group P 6 2 2 
+-------------------------------------------
+
+R-linear = sum(abs(data - mean(data))) / sum(abs(data))
+R-square = sum((data - mean(data))**2) / sum(data**2)
+In these sums single measurements are excluded.
+                           Redundancy       Mean      Mean
+                         Min  Max   Mean  R-linear  R-square
+unused:        - 9.9988
+bin  1: 9.9988 - 6.7631    1    4  3.385    0.3339    0.1783
+bin  2: 6.7631 - 5.6773    1    4  3.523    0.3522    0.1992
+bin  3: 5.6773 - 5.0647    1    4  3.571    0.3151    0.1570
+bin  4: 5.0647 - 4.6526    1    4  3.607    0.3278    0.1704
+bin  5: 4.6526 - 4.3485    1    4  3.628    0.3506    0.1957
+bin  6: 4.3485 - 4.1109    1    4  3.647    0.4158    0.2725
+bin  7: 4.1109 - 3.9180    1    4  3.664    0.4348    0.2955
+bin  8: 3.9180 - 3.7569    1    4  3.689    0.4627    0.3324
+bin  9: 3.7569 - 3.6194    1    4  3.673    0.5202    0.4058
+bin 10: 3.6194 - 3.5000    1    4  3.689    0.5565    0.4541
+unused: 3.5000 -
+
+Suggesting various space group choices on the basis of systematic absence analyses
+
+
+Analyses of the absences table indicates a number of likely space group
+candidates, which are listed below. For each space group, the number of
+absent violations are listed under the '+++' column. The number of present
+violations (weak reflections) are listed under '---'. The last column is a
+likelihood based score for the particular space group.  Note that
+enantiomorphic spacegroups will have equal scores. Also, if absences were
+removed while processing the data, they will be regarded as missing
+information, rather then as enforcing that absence in the space group choices.
+
+
+------------------------------------------------------------------------------------
+| space group | n absent | <Z>_absent | <Z/sigZ>_absent | +++ | ---  | score       |
+------------------------------------------------------------------------------------
+| P 6 2 2     | 0        |     0.00   |     0.00        |  0  |  96  |  0.000e+00  |
+| P 63 2 2    | 48       |     2.51   |     1.27        |  0  |  48  |  1.961e-01  |
+| P 62 2 2    | 64       |     2.79   |     1.28        |  0  |  32  |  2.602e-01  |
+| P 64 2 2    | 64       |     2.79   |     1.28        |  0  |  32  |  2.602e-01  |
+| P 61 2 2    | 80       |     2.77   |     1.29        |  0  |  16  |  3.331e-01  |
+| P 65 2 2    | 80       |     2.77   |     1.29        |  0  |  16  |  3.331e-01  |
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+Twinning and intensity statistics summary (acentric data):
+
+Statistics independent of twin laws
+  <I^2>/<I>^2 : 1.894
+  <F>^2/<F^2> : 0.872
+  <|E^2-1|>   : 0.566
+  <|L|>, <L^2>: 0.304, 0.137
+  Multivariate Z score L-test: 25.378
+
+ The multivariate Z score is a quality measure of the given
+ spread in intensities. Good to reasonable data are expected
+ to have a Z score lower than 3.5.
+ Large values can indicate twinning, but small values do not
+ necessarily exclude it.
+
+
+
+Statistics depending on twin laws
+------------------------------------------------------------------
+| Operator  | type | R obs. | Britton alpha | H alpha | ML alpha |
+------------------------------------------------------------------
+| -h,-k,l   |   M  | 0.400  | 0.178         | 0.096   | 0.022    |
+| h,-h-k,-l |   M  | 0.391  | 0.182         | 0.116   | 0.022    |
+| -k,-h,-l  |   M  | 0.396  | 0.188         | 0.108   | 0.022    |
+------------------------------------------------------------------
+
+Patterson analyses
+  - Largest peak height   : 1.347
+   (corresponding p value : 1.00000)
+
+
+The largest off-origin peak in the Patterson function is 1.35% of the 
+height of the origin peak. No significant pseudotranslation is detected.
+
+The results of the L-test indicate that the intensity statistics
+are significantly different than is expected from good to reasonable,
+untwinned data.
+As there are twin laws possible given the crystal symmetry, twinning could
+be the reason for the departure of the intensity statistics from normality.
+It might be worthwhile carrying out refinement with a twin specific target function.
+
+Note that the symmetry of the intensities suggest that the assumed space group
+is too low. As twinning is however suspected, it is not immediuatly clear if this
+is the case. Carefull reprocessing and (twin)refinement for all cases might resolve
+this question.
+
+-------------------------------------------------------------------------------

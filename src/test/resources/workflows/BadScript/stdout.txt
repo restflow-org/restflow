@@ -1,0 +1,53 @@
+java.lang.Exception: invalid command name "output"
+    while executing
+"output = $value"
+    ("uplevel" body line 2)
+    invoked from within
+"uplevel 1 { #The following is invalid tcl code to generate an error for unit tests!
+output = $value
+ } "
+    (procedure "__doStep" line 1)
+    invoked from within
+"__doStep "
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:513)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:107)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:52)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:192)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:200)
+	at Script1.run(Script1.groovy:109)
+	at org.restflow.actors.GroovyActor.runGroovyScript(GroovyActor.java:226)
+	at org.restflow.actors.GroovyActor.step(GroovyActor.java:155)
+	at org.restflow.nodes.ActorWorkflowNode._fire(ActorWorkflowNode.java:200)
+	at org.restflow.nodes.ActorWorkflowNode.trigger(ActorWorkflowNode.java:105)
+	at org.restflow.directors.DataDrivenDirector.runWorkflow(DataDrivenDirector.java:55)
+	at org.restflow.actors.Workflow.step(Workflow.java:153)
+	at org.restflow.WorkflowRunner$1.execute(WorkflowRunner.java:405)
+	at org.restflow.util.StdoutRecorder.recordExecution(StdoutRecorder.java:135)
+	at org.restflow.WorkflowRunner.run(WorkflowRunner.java:401)
+	at org.restflow.WorkflowTestCase._runWorkflow(WorkflowTestCase.java:233)
+	at org.restflow.WorkflowTestCase$1.execute(WorkflowTestCase.java:171)
+	at org.restflow.util.StdoutRecorder.recordExecution(StdoutRecorder.java:135)
+	at org.restflow.WorkflowTestCase._loadAndRunWorkflow(WorkflowTestCase.java:168)
+	at org.restflow.WorkflowTestCase._loadAndRunWorkflow(WorkflowTestCase.java:127)
+	at org.restflow.TestWorkflowsTcl.test_FailedScript_TclActor_DataDrivenDirector(TestWorkflowsTcl.java:75)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at junit.framework.TestCase.runTest(TestCase.java:164)
+	at junit.framework.TestCase.runBare(TestCase.java:130)
+	at junit.framework.TestResult$1.protect(TestResult.java:106)
+	at junit.framework.TestResult.runProtected(TestResult.java:124)
+	at junit.framework.TestResult.run(TestResult.java:109)
+	at junit.framework.TestCase.run(TestCase.java:120)
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:130)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)

@@ -1,0 +1,11 @@
+namespace:
+
+  organization: system
+  module: Support
+
+components:
+
+#Turn on postprocessors
+- id: Required
+  className: org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor
+

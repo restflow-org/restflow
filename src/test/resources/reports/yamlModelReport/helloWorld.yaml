@@ -1,0 +1,68 @@
+
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateGreetingFiles
+    - !ref EmphasizeGreeting
+    reports:
+      summary:  !ref SummaryReport
+        
+- id: SummaryReport
+  type: YamlReporter
+  properties:
+    description: "show a summary report in yaml format"
+    structure:
+      myMap:
+        innerMap: 
+          g1: g1
+          stdout: stdout
+        g2: g2
+        g3: g3
+      myList:
+      - g1
+      - g2
+      - g3
+      g1: g1
+      fileContents: g1FileContents
+    inflows:
+        g1: /messages/emphasizedGreeting/1
+        g2: /messages/emphasizedGreeting/2
+        g3: /messages/emphasizedGreeting/3    
+        g1FileContents: /messages/1/greeting.txt
+    includeStdout: true
+
+- id: CreateGreetingFiles
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+      - Hello World
+      - Good Afternoon, Cosmos
+      - Good night, and good luck
+    outflows:
+      value: file:/messages/{STEP}/greeting.txt
+
+- id: EmphasizeGreeting
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      println "entered EmphasizedGreeting"
+      stringOne = stringOneFile.text; //read the file
+      concatenatedString = stringOne + stringTwo;
+    inflows:
+      stringOneFile: file:/messages/{STEP}/greeting.txt
+    constants:
+      stringTwo: '!!'
+    outflows:
+      concatenatedString: /messages/emphasizedGreeting/
+      

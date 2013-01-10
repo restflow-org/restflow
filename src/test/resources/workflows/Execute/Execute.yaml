@@ -1,0 +1,38 @@
+imports:
+
+  - classpath:/common/scriptActors.yaml
+  - classpath:/common/groovy/actors.yaml
+  - classpath:/common/bash/actors.yaml
+  - classpath:/common/directors.yaml
+  - classpath:/common/types.yaml 
+  - classpath:/common/support.yaml
+
+components:
+
+# nodes
+
+  - id: ExecuteFortran
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        cmd = ['sh', '-c', 'testf.out' ]
+        def env =['PATH=/home/scottm/workspace_blank/RestFlow/src/test/resources/workflows/Execute/']
+        ProcessBuilder pb = new ProcessBuilder(cmd).redirectErrorStream(true).environment((String[])env.toArray());
+        p = pb.start()
+        
+        p.withWriter { w ->
+        	w.write("one\n")
+        	w.write("two\n")
+        }
+
+        outtext = p.text
+        println outtext
+        assert outtext == " First input value: one     \n Second input value: two     \n";
+
+# workflow
+  - id: Execute
+    type: Workflow
+    properties: 
+      director: !ref JobDependencyDirector
+      nodes:
+        - !ref ExecuteFortran

@@ -1,0 +1,84 @@
+imports:
+
+- classpath:/common/groovy/actors.yaml
+- classpath:/common/directors.yaml
+- classpath:/common/types.yaml 
+- classpath:/common/support.yaml
+
+components:
+
+- id: Ant
+  type: Workflow
+  properties: 
+    director: !ref PublishSubscribeDirector
+    nodes:
+    - !lref Compile
+    - !ref DestDir
+    - !ref DepDir
+    - !ref SrcDir
+
+- id: SrcDir
+  type: Node
+  properties: 
+    constants:
+      value: src/main/java
+    actor: !ref ConstantSource
+    outflows:
+      output:
+
+- id: DestDir
+  type: Node
+  properties: 
+    constants:
+      value: classes
+    actor: !ref ConstantSource
+    outflows:
+      output:
+
+- id: DepDir
+  type: Node
+  properties: 
+    constants:
+      value: lib
+    actor: !ref ConstantSource
+    outflows:
+      output:
+
+- id: Compile
+  type: GroovyActorNode
+  properties: 
+    inflows:
+      sourcedir: SrcDir.output
+      destdir: DestDir.output
+      classpath: DepDir.output
+    actor: !ref Javac
+
+- id: Javac
+  type: GroovyActor
+  properties:
+    settings:
+      target: '1.6'
+      source: '1.6'
+      debug: "source,lines,vars"      
+    inputs:
+      sourcedir: 
+      destdir: 
+      deprecation:
+      classpath: 
+      bootclasspath:
+      extdirs:
+      optimize:
+      encoding:
+      depend:
+      verbose:
+      failonerror:
+      includeantruntime:
+      includejavaruntime:
+      compiler:
+    step: |
+      def ant = new AntBuilder()
+      // lets just call one task
+      ant.echo("hello")    
+    outputs: 
+      outputList:
+  

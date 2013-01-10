@@ -1,0 +1,65 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: AddOneToPreviousInteger
+    type: Node
+    properties:   
+      actor: !ref Adder
+      constants:
+        a: 1
+        b: 2
+      inflows:
+        b: /filtered/
+      outflows:
+        sum: /sum/
+
+  - id: DiscardIntegersGreaterThanMax
+    type: Node
+    properties:   
+      actor: !ref IntegerBandpassFilter
+      endFlowOnNoOutput: true
+      constants:
+        min: 1
+        max: 7
+      inflows:
+        input: /sum/
+      outflows: 
+        output: /filtered/
+
+  - id: RenderIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows:
+        message: /filtered/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: AdderLoop
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+#     director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref AddOneToPreviousInteger
+        - !ref DiscardIntegersGreaterThanMax
+        - !ref RenderIntegers
+    

@@ -1,0 +1,61 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNull: true
+      constants:
+        initial: 1
+        step: 1
+        max: 6
+      outflows:
+        value: /integers/
+
+  - id: AddSequentialIntegers
+    type: Node
+    properties:   
+      actor: !ref SerialAdder
+      inflows:
+        addend: /integers/
+      outflows:
+        sum: /sums/
+
+  - id: RenderSums
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /sums/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: AddSerially
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref AddSequentialIntegers
+        - !ref RenderSums
+    

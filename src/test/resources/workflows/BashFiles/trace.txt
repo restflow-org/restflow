@@ -1,0 +1,12 @@
+*** Node step counts ***
+BashFiles: 1
+BashFiles.AppendString: 3
+BashFiles.CreateScratchFile: 3
+BashFiles.PrintOutputFile: 3
+*** Published resources ***
+file:/messages/appended_1.txt
+file:/messages/appended_2.txt
+file:/messages/appended_3.txt
+file:/messages/scratch_1.txt
+file:/messages/scratch_2.txt
+file:/messages/scratch_3.txt

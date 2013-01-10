@@ -1,0 +1,12 @@
+----------------------------------------------------
+*** Node step counts ***
+workflow/GenerateValues: 3
+workflow/RenderSquares: 3
+workflow/Square: 3
+*** Published resources ***
+/value/1: 1
+/value/2: 2
+/value/3: 3
+/square/1: 1
+/square/2: 4
+/square/3: 9

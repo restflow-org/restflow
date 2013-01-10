@@ -1,0 +1,135 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: ConditionalRouting
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes: 
+        - !ref CreateIntegerSequence
+        - !ref Saturate
+        - !ref RenderSaturatedIntegers
+
+  # create a sequence of integers
+  - id: CreateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      endFlowOnNoOutput: true
+      sequences: 
+        value:
+          - 1
+          - 3
+          - 13
+          - 5
+          - 60
+          - 9
+          - 15
+          - 2
+      outflows: 
+        value: /integers
+  
+  # use the Saturate subworkflow to replace integers with 10 if larger than 10
+  - id: Saturate
+    type: Node
+    properties:   
+      actor: !ref SaturateIntegers
+      nestedUriPrefix: /Saturate{STEP}
+      inflows:
+        inValue: /integers
+      outflows: 
+        outValue: /saturated
+
+  # print out the integer stream with values larger than 10 replaced by 10
+  - id: RenderSaturatedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /saturated/
+
+###################################
+
+  - id: SaturateIntegers
+    type: Workflow
+    properties:
+      #director: !ref PublishSubscribeDirector
+      director: !ref DataDrivenDirector
+      #director: !ref MTDataDrivenDirector
+      inputs:
+        inValue:
+      outputs:
+        outValue:
+      nodes: 
+        - !ref InputInteger
+        - !ref Switch
+        - !ref SaturateInteger
+        - !ref Merge
+        - !ref OutputSaturatedInteger
+        
+  # import the original integer
+  - id: InputInteger
+    type: InPortal
+    properties:
+      outflows:
+        inValue: /original
+
+  # route the original input value either to the merge node if less or equal to the 
+  # saturation value or to the saturation actor if greater than the saturation value
+  - id: Switch
+    type: GroovyActorNode
+    properties:
+      stepsOnce: true
+      actor.step: |
+        if (input < 10) {
+          under = input;
+          _status.disableOutput("over");
+        } else {
+          over = input;
+          _status.disableOutput("under");
+        }
+      inflows: 
+        input: /original
+      outflows: 
+        under: /allowedInteger
+        over: /oversizedInteger
+        
+  # replace input values with the saturation value
+  - id: SaturateInteger
+    type: GroovyActorNode
+    properties:   
+      stepsOnce: true
+      actor.step: |
+        output = 10;
+      inflows:
+        input: /oversizedInteger
+      outflows: 
+        output: /saturatedInteger
+
+  # receive either the original value or its saturated replacement
+  # and send it to the outportal 
+  - id: Merge
+    type: MergeNode
+    properties:   
+      stepsOnce: true
+      inflows:
+        input1: /allowedInteger
+        input2: /saturatedInteger
+      outflows: 
+        output: /merged
+    
+  # output the potentially updated value
+  - id: OutputSaturatedInteger
+    type: OutPortal
+    properties:
+      inflows:
+        outValue: /merged
+ 

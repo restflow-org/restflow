@@ -1,0 +1,88 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: NestedOneShotInflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateMultipliers
+        - !ref DoMultiplications
+
+  - id: CreateMultipliers
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - 5
+          - 10
+          - 15
+      outflows:
+        value: /multiplier
+
+  - id: DoMultiplications
+    type: Node
+    properties:
+      actor: !ref SubworkflowWithOneShotInflow
+      nestedUriPrefix: /Sub{RUN}
+      inflows:
+        multiplier: /multiplier
+
+  - id: SubworkflowWithOneShotInflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref ImportSingletonData
+        - !ref CreateSequenceOfData
+        - !ref MultiplySequenceDataBySingleton
+        - !ref RenderProducts
+
+  - id: ImportSingletonData
+    type: InPortal
+    properties:   
+      outflows:
+        multiplier: /multiplier
+
+  - id: CreateSequenceOfData
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - 3
+          - 8
+          - 2
+      outflows:
+        value: /multiplicand
+
+  - id: MultiplySequenceDataBySingleton
+    type: GroovyActorNode
+    properties:   
+      actor.step: 
+        c = a * b
+      inflows:
+        a: 
+          expression: /multiplier
+          receiveOnce: true
+        b: /multiplicand
+      outflows:
+        c: /product
+  
+  - id: RenderProducts
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: RenderGreeting
+        outputAtWrapup: true
+      inflows:
+        message: /product
+

@@ -1,0 +1,31 @@
+*** Node step counts ***
+IntegerStreamMerge: 1
+IntegerStreamMerge.CreateFirstIntegerSequence: 6
+IntegerStreamMerge.CreateSecondIntegerSequence: 6
+IntegerStreamMerge.MergeTwoIntegerSequences: 11
+IntegerStreamMerge.RenderFirstIntegerSequence: 6
+IntegerStreamMerge.RenderMergedIntegerSequence: 11
+IntegerStreamMerge.RenderSecondIntegerSequence: 5
+*** Published resources ***
+/stream/merged/1: 1
+/stream/merged/10: 10
+/stream/merged/11: 15
+/stream/merged/2: 2
+/stream/merged/3: 3
+/stream/merged/4: 4
+/stream/merged/5: 5
+/stream/merged/6: 6
+/stream/merged/7: 6
+/stream/merged/8: 8
+/stream/merged/9: 9
+/stream/one/1: 1
+/stream/one/2: 3
+/stream/one/3: 5
+/stream/one/4: 6
+/stream/one/5: 9
+/stream/one/6: 15
+/stream/two/1: 2
+/stream/two/2: 4
+/stream/two/3: 6
+/stream/two/4: 8
+/stream/two/5: 10

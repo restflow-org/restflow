@@ -1,0 +1,71 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: CreateGreetings
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences: 
+        value: 
+          - Hey there my friend
+          - Hello
+          - Good night
+      outflows:
+        value: file:/messages/greeting_{STEP}.txt
+
+  - id: CreateEmphases
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences:
+        value: 
+          - "!"
+          - "!!"
+          - "!!!"
+      outflows:
+        value: /messages/emphasis/
+
+  - id: EmphasizeGreeting
+    type: Node
+    properties:
+      actor: !ref StringConcatenator  
+      inflows:
+        stringOne: file:/messages/greeting_{}.txt
+        stringTwo: /messages/emphasis/
+      outflows:
+        concatenatedString: /messages/emphasizedGreeting/
+
+  - id: RenderEmphasizedGreeting
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter  
+      constants:
+        name: GreetingStream
+        outputAtWrapup: true
+      inflows:
+        message: /messages/emphasizedGreeting/
+
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: BasicFiles
+    type: Workflow
+    properties:
+      nodes:
+        - !ref CreateGreetings
+        - !ref CreateEmphases
+        - !ref EmphasizeGreeting
+        - !ref RenderEmphasizedGreeting
+    

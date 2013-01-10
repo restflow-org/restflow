@@ -1,0 +1,25 @@
+*** Node step counts ***
+workflow/GenerateHostList: 3
+workflow/QueryHost: 3
+*** Published resources ***
+/hosts/1: smblx28
+/hosts/2: bl92c
+/hosts/3: bl91c
+/remoteHostVariable/1: 
+smblx28.slac.stanford.edu
+
+/remoteHostVariable/2: 
+bl92c.slac.stanford.edu
+
+/remoteHostVariable/3: 
+bl91c.slac.stanford.edu
+
+/remotePathVariable/1: 
+/home/scottm/bin:/home/sw/rhel4/i386/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:.
+
+/remotePathVariable/2: 
+/home/scottm/bin:/home/sw/rhel5/x86_64/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/NX/bin:/home/www/templates/mosflm-scala:/home/www/templates/xds:.
+
+/remotePathVariable/3: 
+/home/scottm/bin:/home/sw/rhel5/x86_64/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/NX/bin:/home/www/templates/mosflm-scala:/home/www/templates/xds:.
+

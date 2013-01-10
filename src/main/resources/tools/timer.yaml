@@ -1,0 +1,117 @@
+namespace:
+
+  module: Tools
+  organization: restflow
+
+imports:
+
+- classpath:/common/directors.yaml
+- classpath:/common/types.yaml 
+
+types:
+
+- id: ActorLoaderReuseTraceRecorder
+  type: JavaActor
+  properties:
+    wrappedBean: !bean {className: org.restflow.beans.ActorLoader}
+    stepMethod: load
+    inputs: 
+      actorName:
+      restflowFile:
+      importMap:
+    outputs: 
+      actor:
+
+
+components:
+
+- id: Timer
+  type: Workflow
+  properties: 
+    director: !ref PublishSubscribeDirector
+    inputs:
+      workflowName:
+      restflowFile:
+    nodes:
+    - !lref Inputs  
+    - !lref WorkflowLoader
+    - !lref StartTimer
+    - !lref RunWorkflow
+    - !lref EndTimer
+    - !lref CalcTotalTime
+
+- id: Inputs
+  type: InPortal
+  properties:
+    outflows:
+      workflowName: /workflowName/
+      restflowFile: /restflowFile/
+
+- id: StartTimer
+  type: Node
+  properties:
+    actor: !inline 
+      type: SystemTime
+    outflows:
+      time: /start/ms
+
+- id: WorkflowLoader
+  type: Node
+  properties:
+    actor: !inline 
+      type: restflow.Tools.ActorLoaderReuseTraceRecorder
+    inflows:
+      start_seconds: control:/start/ms
+      actorName: /workflowName/
+      restflowFile: /restflowFile
+      importMap: context:/import-map          
+    outflows:
+      actor: /actor/
+    exceptions:
+      java.lang.Exception: stderr:/exception/load/
+
+- id: RunWorkflow
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      actor.configure();
+      actor.initialize();
+      actor.loadInputValues(_inputs);
+      actor.loadStateValues([:]);
+      actor.step();
+      actor.wrapup();
+      actor.dispose();      
+      
+      done=true;
+    inflows:
+      actor: /actor/
+    outflows:
+      done: /done
+    exceptions:
+      java.lang.Exception: stderr:/exception/run/
+
+- id: EndTimer
+  type: Node
+  properties:
+    actor: !inline 
+      type: SystemTime
+    inflows:
+      done: control:/done    
+    outflows:
+      time: /end/ms
+      
+
+- id: CalcTotalTime
+  type: GroovyActorNode
+  properties:
+    stepsOnce: true
+    actor.step: |
+      totalTime = "Execution time " + (endTime - startTime) + " ms";
+    inflows:
+      startTime: /start/ms
+      endTime: /end/ms
+    outflows:
+      totalTime: stdout:/totalTime/ms
+    exceptions:
+      java.lang.Exception: stderr:/exception/calcTime/      
+      

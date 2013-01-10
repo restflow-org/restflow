@@ -1,0 +1,83 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+  - classpath:/workflows/Incrementer/Incrementer.yaml
+
+components:
+
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 5
+        step: 7
+        max: 20
+      outflows:
+        value: /counter/delta{step}/{STEP}
+
+  - id: IncrementByDefaultStepSize
+    type: Node
+    properties: 
+      actor: !ref ssrl.Sub.Incrementer
+      nestedUriPrefix: /subworkflow1/delta{delta}/step{STEP}/
+      inflows:
+        value: /counter/delta{delta}/{}
+      outflows:
+        out: /incrementedValue1/
+        step: /step/
+      
+  - id: IncrementByThree
+    type: Node
+    properties: 
+      actor: !ref ssrl.Sub.Incrementer
+      nestedUriPrefix: /IncByThree{STEP}
+      constants:
+        step: 3
+      inflows:
+        value: /incrementedValue1/
+      outflows:
+        out: /incrementedValue2/
+
+  - id: RenderIncrementedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: MessageStream
+        outputAtWrapup: true
+      inflows:
+        message: /incrementedValue2/
+
+  - id: RenderFirstStepSize
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: StepStream
+        outputAtWrapup: true
+      inflows:
+        message: /step/
+
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: NestedWorkflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref IncrementByDefaultStepSize
+        - !ref IncrementByThree
+        - !ref RenderIncrementedIntegers
+        - !ref RenderFirstStepSize
+    
+    

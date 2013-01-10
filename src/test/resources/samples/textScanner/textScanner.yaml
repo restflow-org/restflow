@@ -1,0 +1,79 @@
+namespace:
+
+imports:
+  - classpath:common/support.yaml
+  - classpath:common/directors.yaml
+
+beans:
+
+  - id: ImageHeaderParser 
+    className: org.restflow.beans.TextScanner
+    properties: 
+      template:
+      - |
+        OVERLOAD_CUTOFF       {:INT}
+        HEADER_BYTES          {:INT}
+        DIM                   {:INT}
+        BYTE_ORDER            {:STRING}
+        TYPE                  {:STRING}
+        SIZE1                 {size_x}
+        SIZE2                 {size_y}
+        PIXEL_SIZE            0.102588
+        BIN                   {:STRING}
+        ADC                   fast
+        DETECTOR_SN           {serial_no}
+      - TIME                  {time}
+      - DISTANCE              {distance}
+      - PHI                   {phi}
+      - OSC_START             {osc_start}
+      - OSC_RANGE             {osc_range}
+      - WAVELENGTH            {wavelength}
+      - BEAM_CENTER_X         {beam_center_x}
+      - BEAM_CENTER_Y         {beam_center_y}
+      - ACC_TIME              {:INT}
+      - CREV                  1
+      - BIN_TYPE              HW
+      - PIXEL SIZE            {pixel_size}
+      - OSCILLATION RANGE     {osc_range}
+      - EXPOSURE TIME         {exposure_time}
+      - TWO THETA             {theta}
+      - BEAM CENTRE           157.5 157.5
+
+
+  - id: ImageHeaderReader
+    className: org.restflow.actors.GroovyActor
+    singleton: false
+    properties:
+      private:
+        parser: !lref ImageHeaderParser
+      inputs: 
+        textIn: |
+          DISTANCE               350.0
+      outputs:
+        parsed:
+      step: |
+        parser.compile();
+        parsed = parser.search (textIn);
+        println parsed
+    
+  - id: ReadImageHeaders
+    className: org.restflow.actors.ActorWorkflowNode
+    properties: 
+      actor: !ref ImageHeaderReader
+      outflows:
+        parsed: /parsed/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: TextScanner
+    className: org.restflow.actors.Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+      director: !ref DemandDrivenDirector
+#      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref ReadImageHeaders
+    

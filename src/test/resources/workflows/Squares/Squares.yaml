@@ -1,0 +1,61 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: GenerateValues
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences: 
+        value: 
+          - 1
+          - 2
+          - 3
+      outflows:
+        value: /value/
+
+  - id: Square
+    type: Node
+    properties:   
+      actor: !ref Multiplier
+      inflows:
+        a: /value/
+        b: /value/        
+      outflows: 
+        product: /square/
+
+  - id: RenderSquares
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /square/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: Squares
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateValues
+        - !ref Square
+        - !ref RenderSquares
+    

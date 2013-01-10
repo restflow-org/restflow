@@ -1,0 +1,35 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: CreateGreeting
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      constants:
+        value: hello
+      outflows:
+        value:
+  
+  - id: RenderGreeting
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: RenderGreeting
+        outputAtWrapup: true
+      inflows:
+        message: CreateGreeting.value
+
+  - id: HelloWorld
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateGreeting
+        - !ref RenderGreeting

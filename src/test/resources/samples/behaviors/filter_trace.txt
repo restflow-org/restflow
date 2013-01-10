@@ -1,0 +1,21 @@
+*** Node step counts ***
+Filter: 1
+Filter.CountToTen: 11
+Filter.FilterNumbers: 10
+Filter.PrintNumbers: 5
+*** Published resources ***
+/filtered/numbers/1: 3
+/filtered/numbers/2: 4
+/filtered/numbers/3: 5
+/filtered/numbers/4: 6
+/filtered/numbers/5: 7
+/raw/numbers/1: 1
+/raw/numbers/10: 10
+/raw/numbers/2: 2
+/raw/numbers/3: 3
+/raw/numbers/4: 4
+/raw/numbers/5: 5
+/raw/numbers/6: 6
+/raw/numbers/7: 7
+/raw/numbers/8: 8
+/raw/numbers/9: 9

@@ -1,0 +1,60 @@
+components:
+
+- id: FileProtocol
+  className: org.restflow.data.FileProtocol
+  singleton: true
+
+- id: DirectProtocol
+  className: org.restflow.data.DirectProtocol
+  singleton: true
+
+- id: DataProtocol
+  className: org.restflow.data.DataProtocol
+  singleton: true
+
+- id: StdoutProtocol
+  className: org.restflow.data.StdoutProtocol
+  singleton: true
+
+- id: StderrProtocol
+  className: org.restflow.data.StderrProtocol
+  singleton: true
+
+- id: LogProtocol
+  className: org.restflow.data.LogProtocol
+  singleton: true
+  properties:
+    logName: log.txt
+
+- id: WorkspaceProtocol
+  className: org.restflow.data.WorkspaceProtocol
+  properties:
+
+- id: ControlProtocol
+  className: org.restflow.data.ControlProtocol
+  singleton: true
+
+- id: ContextProtocol
+  className: org.restflow.data.ContextProtocol
+  singleton: true
+
+- id: ClasspathProtocol
+  className: org.restflow.data.ClasspathProtocol
+  singleton: true
+
+- id: DefaultProtocolRegistry
+  className: org.restflow.data.ProtocolRegistry
+  singleton: true
+  properties:
+    protocols:
+      data: !ref DataProtocol
+      stdout: !ref StdoutProtocol
+      stderr: !ref StderrProtocol
+      file: !ref FileProtocol
+      direct: !ref DirectProtocol
+      log:  !ref LogProtocol
+      workspace: !ref WorkspaceProtocol
+      control: !ref ControlProtocol
+      context: !ref ContextProtocol
+      classpath: !ref ClasspathProtocol
+    default: !ref DataProtocol

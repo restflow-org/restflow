@@ -1,0 +1,69 @@
+
+imports:
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  ######################################################
+  
+  - id: GroovyMultiplier
+    type: GroovyActor
+    properties:
+      step: product=a*b
+      inputs: 
+        a:
+        b:
+      outputs: 
+        product:
+  
+  - id: GenerateValues
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences: 
+        value: 
+          - 1
+          - 2
+          - 3
+      outflows:
+        value: /value/
+
+  - id: Square
+    type: Node
+    properties:   
+      actor: !ref GroovyMultiplier
+      inflows:
+        a: /value/
+        b: /value/        
+      outflows: 
+        product: /square/
+
+  - id: RenderSquares
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: /square/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: GroovyWorkflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateValues
+        - !ref Square
+        - !ref RenderSquares
+    

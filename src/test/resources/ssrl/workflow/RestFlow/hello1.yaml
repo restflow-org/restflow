@@ -1,0 +1,30 @@
+imports:
+
+- classpath:/common/groovy/actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateGreeting
+    - !ref RenderGreeting
+
+- id: CreateGreeting
+  type: Node
+  properties:  
+    actor: !ref ConstantSource
+    constants:
+      value: Hello World!
+    outflows:
+      value: /messages/greeting/
+ 
+- id: RenderGreeting
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter
+    inflows:
+      message: /messages/greeting/

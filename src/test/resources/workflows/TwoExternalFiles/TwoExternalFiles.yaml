@@ -1,0 +1,47 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+  
+  - id: RenderFileOneFirst
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Render file one first
+        outputAtWrapup: true
+      inflows:
+        message: file:src/test/resources/workflows/TwoExternalFiles/file1.txt
+
+  - id: RenderFileOneSecond
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Render file one second
+        outputAtWrapup: true
+      inflows:
+        message: file:src/test/resources/workflows/TwoExternalFiles/file1.txt
+
+  - id: RenderFileTwo
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Render file two
+        outputAtWrapup: true
+      inflows:
+        message: file:src/test/resources/workflows/TwoExternalFiles/file2.txt
+
+  - id: TwoExternalFiles
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref RenderFileOneFirst
+        - !ref RenderFileOneSecond
+        - !ref RenderFileTwo

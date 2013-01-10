@@ -1,0 +1,16 @@
+*** Node step counts ***
+BasicFiles: 1
+BasicFiles.CreateEmphases: 3
+BasicFiles.CreateGreetings: 3
+BasicFiles.EmphasizeGreeting: 3
+BasicFiles.RenderEmphasizedGreeting: 3
+*** Published resources ***
+/messages/emphasis/1: !
+/messages/emphasis/2: !!
+/messages/emphasis/3: !!!
+/messages/emphasizedGreeting/1: Hey there my friend!
+/messages/emphasizedGreeting/2: Hello!!
+/messages/emphasizedGreeting/3: Good night!!!
+file:/messages/greeting_1.txt
+file:/messages/greeting_2.txt
+file:/messages/greeting_3.txt

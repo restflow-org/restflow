@@ -1,0 +1,96 @@
+
+imports:
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: CreateGreetings
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      repeatValues: false
+      sequences: 
+        value:
+          - Hey there
+          - Hello
+          - Hi
+      outflows: 
+        value: /messages/greeting/
+
+  - id: EmphasizeGreeting
+    type: Node
+    properties:
+      actor: !ref StringConcatenator
+      constants:
+        stringTwo: "!!"
+      inflows: 
+        stringOne: /messages/greeting/
+      outflows: 
+        concatenatedString: /messages/emphasizedGreeting1/
+
+  - id: FurtherEmphasizeGreeting
+    type: Node
+    properties: 
+      actor: !ref StringConcatenator
+      repeatValues: true
+      sequences:
+        stringTwo:
+          - " :-)"
+          - "!!!"
+      inflows:
+        stringOne: /messages/emphasizedGreeting1/
+      outflows:
+        concatenatedString: /messages/emphasizedGreeting2/
+  
+  - id: RenderDoublyEmphasizedGreeting
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Value stream
+        outputAtWrapup: true
+      inflows:
+        message: /messages/emphasizedGreeting2/
+
+  - id: CountGreetings
+    type: Node
+    properties:   
+      actor: !ref Counter
+      inflows:
+        input: /messages/emphasizedGreeting2/
+      outflows: 
+        count: /messages/count/
+
+  - id: RenderGreetingCount
+    type: Node
+    properties:
+      constants:
+        name: Count stream
+        outputAtWrapup: true
+      actor: !ref PrintStreamWriter
+      inflows: 
+        message: /messages/count/
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: BranchingWorkflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreateGreetings
+        - !ref EmphasizeGreeting
+        - !ref FurtherEmphasizeGreeting
+        - !ref RenderDoublyEmphasizedGreeting
+        - !ref CountGreetings
+        - !ref RenderGreetingCount

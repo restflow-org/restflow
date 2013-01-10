@@ -1,0 +1,14 @@
+*** Node step counts ***
+AddSerially.AddSequentialIntegers: 3
+AddSerially.GenerateIntegerSequence: 6
+AddSerially.RenderSums: 3
+*** Published resources ***
+/integers/1: 1
+/integers/2: 2
+/integers/3: 3
+/integers/4: 4
+/integers/5: 5
+/integers/6: 6
+/sums/1: 3
+/sums/2: 7
+/sums/3: 11

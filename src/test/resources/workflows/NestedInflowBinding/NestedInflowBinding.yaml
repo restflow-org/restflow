@@ -1,0 +1,40 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: NestedInflowBinding
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref CreatePackets
+        - !ref RenderPackets
+        
+  - id: CreatePackets
+    type: GroovyActorNode
+    properties:
+      actor.step: |
+        crystal  = "Crystal";
+        score    = "Score";
+        strategy = "Strategy";
+      outflows:
+        crystal: /{spreadsheetId1}/{group1}/{sample1}/
+        score: /{spreadsheetId2}/{group2}/{sample2}/score
+        strategy: /{spreadsheetId3}/{group3}/{sample3}/strategy
+          
+  - id: RenderPackets
+    type: GroovyActorNode
+    properties: 
+      actor.step: |
+        println crystal;
+        println score;
+        println strategy;
+      inflows:
+        crystal: /{spreadsheetId1}/{group1}/{sample1}/
+        score: /{spreadsheetId2}/{group2}/{sample2}/score
+        strategy: /{spreadsheetId3}/{group3}/{sample3}/strategy

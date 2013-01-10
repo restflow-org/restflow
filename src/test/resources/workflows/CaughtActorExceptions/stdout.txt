@@ -1,0 +1,10 @@
+2
+4
+java.lang.ClassCastException: Error on fifth step!
+6
+8
+*** ValueStream ***
+2
+4
+6
+8

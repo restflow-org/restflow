@@ -1,0 +1,136 @@
+
+namespace:
+
+imports:
+
+  - classpath:/common/support.yaml
+  - classpath:/common/actors.yaml
+  - classpath:/common/directors.yaml
+  
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+
+  - id: AuthSession
+    type: ssrl.beans.AuthSession
+    properties:
+      sessionId: "#{systemEnvironment['AUTH.SESSION']}"
+      userName: "#{systemEnvironment['AUTH.USERNAME']}"
+
+  - id: impRunner
+    type: ssrl.impersonation.factory.ImpersonCommandFactory
+    properties:
+      defaultScriptDir: "#{systemEnvironment['WORKSPACE']}/RestFlow/src/test/resources/scripts/"
+      psToProcessConvertor: !!ssrl.util.PsToProcessConvertorLinux []
+      impConfig.impersonHost: localhost
+      impConfig.impersonPort: 61001
+      impConfig.scriptEnv:
+        ISO_DIR: /tmp/iso
+
+  - id: sshRunner
+    type: ssrl.impersonation.factory.SshCommandFactory
+    singleton: false
+    properties:
+      defaultScriptDir: "#{systemEnvironment['WORKSPACE']}/RestFlow/src/test/resources/scripts/"
+      hostname: smblx28
+
+  - id: sshSystemRunner
+    type: ssrl.impersonation.factory.SshCommandFactory
+    properties:
+      defaultScriptDir: ""
+      hostname: smblx28
+
+  - id: RampBean
+    type: org.restflow.beans.Ramp
+    singleton: false    
+
+  - id: ResultMapper
+    type: ssrl.impersonation.result.ResultMapper
+    properties:
+      keyName: value 
+      parser: !ref system.Support.ResultLogger
+  
+
+  - id: RemoteEnvironmentReader
+    type: org.restflow.actors.ScriptActor
+    singleton: false
+    properties:
+      parser: !local system.Support.YamlResult
+#      script: cvs status /usr/local/dcs/dcsconfig
+      script: env.tcl
+      session: !local AuthSession
+      runner: !ref sshRunner
+        
+  - id: WrappedRemoteEnvironmentReader
+    type: org.restflow.actors.JavaActor
+    singleton: false
+    properties:
+      wrappedBean: !ref RemoteEnvironmentReader
+      inputs:
+        runner.hostname:
+      outputs:
+        outputs(env): 
+      fireMethodName: fire
+    
+
+  #NODES
+  - id: GenerateHostList
+    type: Node
+    properties:   
+      actor: !ref ConstantSource
+      sequences: 
+        value: 
+          - smblx28
+          - bl92c
+          - bl91c        
+      outflows:
+        value: /hosts/
+        
+  - id: QueryHost
+    type: Node
+    properties:   
+      actor: !ref WrappedRemoteEnvironmentReader
+      inflows: 
+        runner.hostname: /hosts/
+      outflows:
+        outputs(env).HOST: /remoteHostVariable/
+        outputs(env).PATH: /remotePathVariable/
+
+
+  - id: ReportHost
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+      inflows: 
+        message: /remoteHostVariable
+
+  - id: ReportPath
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+      inflows: 
+        message: /remotePathVariable
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: workflow
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+#     director: !ref DemandDrivenDirector
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !local GenerateHostList
+        - !local QueryHost
+        - !local ReportHost
+        - !local ReportPath

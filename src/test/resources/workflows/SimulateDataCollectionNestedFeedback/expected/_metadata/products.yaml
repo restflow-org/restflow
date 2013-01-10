@@ -1,0 +1,132 @@
+/sample/DRT110/quality: '1'
+/feedback/rejected/1: DRT110
+/CalculateStrategy/log/1: |
+  Evaluating sample DRT110.
+  Sample DRT110 rejected due to low quality score of 1.
+/feedback/merged/1: DRT110
+/sample/DRT240/quality: '3'
+/sample/id/1: DRT240
+/CalculateStrategy/log/2: |
+  Evaluating sample DRT240.
+  Requesting 5 images for sample DRT240.
+/sample/DRT240/strategy: '{numImages=5, energies=[10000, 11000]}'
+/sample/DRT240/data/strategy: '{numImages=5, energies=[10000, 11000]}'
+/sample/DRT240/data/sample: DRT240
+/sample/DRT240/data/raw/10000/DRT240_001.raw: !file /sample/DRT240/data/raw/10000/DRT240_001.raw
+/sample/DRT240/data/corrected/DRT240_10000_001.img: !file /sample/DRT240/data/corrected/DRT240_10000_001.img
+/sample/DRT240/data/LogImage/log/1: |
+  Sample DRT240    Energy 10000    Image 001    Average intensity: 121.96
+/sample/DRT240/data/raw/10000/DRT240_002.raw: !file /sample/DRT240/data/raw/10000/DRT240_002.raw
+/sample/DRT240/data/corrected/DRT240_10000_002.img: !file /sample/DRT240/data/corrected/DRT240_10000_002.img
+/sample/DRT240/data/LogImage/log/2: |
+  Sample DRT240    Energy 10000    Image 002    Average intensity: 183.84
+/sample/DRT240/data/raw/10000/DRT240_003.raw: !file /sample/DRT240/data/raw/10000/DRT240_003.raw
+/sample/DRT240/data/corrected/DRT240_10000_003.img: !file /sample/DRT240/data/corrected/DRT240_10000_003.img
+/sample/DRT240/data/LogImage/log/3: |
+  Sample DRT240    Energy 10000    Image 003    Average intensity: 36.3
+/sample/DRT240/data/raw/10000/DRT240_004.raw: !file /sample/DRT240/data/raw/10000/DRT240_004.raw
+/sample/DRT240/data/corrected/DRT240_10000_004.img: !file /sample/DRT240/data/corrected/DRT240_10000_004.img
+/sample/DRT240/data/LogImage/log/4: |
+  Sample DRT240    Energy 10000    Image 004    Average intensity: 140.68
+/sample/DRT240/data/raw/10000/DRT240_005.raw: !file /sample/DRT240/data/raw/10000/DRT240_005.raw
+/sample/DRT240/data/corrected/DRT240_10000_005.img: !file /sample/DRT240/data/corrected/DRT240_10000_005.img
+/sample/DRT240/data/LogImage/log/5: |
+  Sample DRT240    Energy 10000    Image 005    Average intensity: 181.72
+/sample/DRT240/data/raw/10000/DRT240_006.raw: !file /sample/DRT240/data/raw/10000/DRT240_006.raw
+/sample/DRT240/data/corrected/DRT240_10000_006.img: !file /sample/DRT240/data/corrected/DRT240_10000_006.img
+/sample/DRT240/data/LogImage/log/6: |
+  Sample DRT240    Energy 10000    Image 006    Average intensity: 67.5
+/sample/DRT240/data/raw/11000/DRT240_001.raw: !file /sample/DRT240/data/raw/11000/DRT240_001.raw
+/sample/DRT240/data/corrected/DRT240_11000_001.img: !file /sample/DRT240/data/corrected/DRT240_11000_001.img
+/sample/DRT240/data/LogImage/log/7: |
+  Sample DRT240    Energy 11000    Image 001    Average intensity: 3.7
+/sample/DRT240/data/raw/11000/DRT240_002.raw: !file /sample/DRT240/data/raw/11000/DRT240_002.raw
+/sample/DRT240/data/corrected/DRT240_11000_002.img: !file /sample/DRT240/data/corrected/DRT240_11000_002.img
+/sample/DRT240/data/LogImage/log/8: |
+  Sample DRT240    Energy 11000    Image 002    Average intensity: 155.74
+/sample/DRT240/data/raw/11000/DRT240_003.raw: !file /sample/DRT240/data/raw/11000/DRT240_003.raw
+/sample/DRT240/data/corrected/DRT240_11000_003.img: !file /sample/DRT240/data/corrected/DRT240_11000_003.img
+/sample/DRT240/data/LogImage/log/9: |
+  Sample DRT240    Energy 11000    Image 003    Average intensity: 193.8
+/sample/DRT240/data/raw/11000/DRT240_004.raw: !file /sample/DRT240/data/raw/11000/DRT240_004.raw
+/sample/DRT240/data/corrected/DRT240_11000_004.img: !file /sample/DRT240/data/corrected/DRT240_11000_004.img
+/sample/DRT240/data/LogImage/log/10: |
+  Sample DRT240    Energy 11000    Image 004    Average intensity: 13.78
+/sample/DRT240/data/raw/11000/DRT240_005.raw: !file /sample/DRT240/data/raw/11000/DRT240_005.raw
+/sample/DRT240/data/corrected/DRT240_11000_005.img: !file /sample/DRT240/data/corrected/DRT240_11000_005.img
+/sample/DRT240/data/LogImage/log/11: |
+  Sample DRT240    Energy 11000    Image 005    Average intensity: 120.76
+/sample/DRT240/data/done/1: DRT240
+/sample/DRT240/data/raw/11000/DRT240_006.raw: !file /sample/DRT240/data/raw/11000/DRT240_006.raw
+/sample/DRT240/data/corrected/DRT240_11000_006.img: !file /sample/DRT240/data/corrected/DRT240_11000_006.img
+/sample/DRT240/data/LogImage/log/12: |
+  Sample DRT240    Energy 11000    Image 006    Average intensity: 159.78
+/feedback/completed/1: DRT240
+/feedback/merged/2: DRT240
+/sample/DRT322/quality: '4'
+/sample/id/2: DRT322
+/CalculateStrategy/log/3: |
+  Evaluating sample DRT322.
+  Requesting 6 images for sample DRT322.
+/sample/DRT322/strategy: '{numImages=6, energies=[10000, 11000]}'
+/sample/DRT322/data/strategy: '{numImages=6, energies=[10000, 11000]}'
+/sample/DRT322/data/sample: DRT322
+/sample/DRT322/data/raw/10000/DRT322_001.raw: !file /sample/DRT322/data/raw/10000/DRT322_001.raw
+/sample/DRT322/data/corrected/DRT322_10000_001.img: !file /sample/DRT322/data/corrected/DRT322_10000_001.img
+/sample/DRT322/data/LogImage/log/1: |
+  Sample DRT322    Energy 10000    Image 001    Average intensity: 177.18
+/sample/DRT322/data/raw/10000/DRT322_002.raw: !file /sample/DRT322/data/raw/10000/DRT322_002.raw
+/sample/DRT322/data/corrected/DRT322_10000_002.img: !file /sample/DRT322/data/corrected/DRT322_10000_002.img
+/sample/DRT322/data/LogImage/log/2: |
+  Sample DRT322    Energy 10000    Image 002    Average intensity: 164.16
+/sample/DRT322/data/raw/10000/DRT322_003.raw: !file /sample/DRT322/data/raw/10000/DRT322_003.raw
+/sample/DRT322/data/corrected/DRT322_10000_003.img: !file /sample/DRT322/data/corrected/DRT322_10000_003.img
+/sample/DRT322/data/LogImage/log/3: |
+  Sample DRT322    Energy 10000    Image 003    Average intensity: 98.92
+/sample/DRT322/data/raw/10000/DRT322_004.raw: !file /sample/DRT322/data/raw/10000/DRT322_004.raw
+/sample/DRT322/data/corrected/DRT322_10000_004.img: !file /sample/DRT322/data/corrected/DRT322_10000_004.img
+/sample/DRT322/data/LogImage/log/4: |
+  Sample DRT322    Energy 10000    Image 004    Average intensity: 176.42
+/sample/DRT322/data/raw/10000/DRT322_005.raw: !file /sample/DRT322/data/raw/10000/DRT322_005.raw
+/sample/DRT322/data/corrected/DRT322_10000_005.img: !file /sample/DRT322/data/corrected/DRT322_10000_005.img
+/sample/DRT322/data/LogImage/log/5: |
+  Sample DRT322    Energy 10000    Image 005    Average intensity: 19.14
+/sample/DRT322/data/raw/10000/DRT322_006.raw: !file /sample/DRT322/data/raw/10000/DRT322_006.raw
+/sample/DRT322/data/corrected/DRT322_10000_006.img: !file /sample/DRT322/data/corrected/DRT322_10000_006.img
+/sample/DRT322/data/LogImage/log/6: |
+  Sample DRT322    Energy 10000    Image 006    Average intensity: 38.98
+/sample/DRT322/data/raw/10000/DRT322_007.raw: !file /sample/DRT322/data/raw/10000/DRT322_007.raw
+/sample/DRT322/data/corrected/DRT322_10000_007.img: !file /sample/DRT322/data/corrected/DRT322_10000_007.img
+/sample/DRT322/data/LogImage/log/7: |
+  Sample DRT322    Energy 10000    Image 007    Average intensity: 195.02
+/sample/DRT322/data/raw/11000/DRT322_001.raw: !file /sample/DRT322/data/raw/11000/DRT322_001.raw
+/sample/DRT322/data/corrected/DRT322_11000_001.img: !file /sample/DRT322/data/corrected/DRT322_11000_001.img
+/sample/DRT322/data/LogImage/log/8: |
+  Sample DRT322    Energy 11000    Image 001    Average intensity: 7.5
+/sample/DRT322/data/raw/11000/DRT322_002.raw: !file /sample/DRT322/data/raw/11000/DRT322_002.raw
+/sample/DRT322/data/corrected/DRT322_11000_002.img: !file /sample/DRT322/data/corrected/DRT322_11000_002.img
+/sample/DRT322/data/LogImage/log/9: |
+  Sample DRT322    Energy 11000    Image 002    Average intensity: 45.72
+/sample/DRT322/data/raw/11000/DRT322_003.raw: !file /sample/DRT322/data/raw/11000/DRT322_003.raw
+/sample/DRT322/data/corrected/DRT322_11000_003.img: !file /sample/DRT322/data/corrected/DRT322_11000_003.img
+/sample/DRT322/data/LogImage/log/10: |
+  Sample DRT322    Energy 11000    Image 003    Average intensity: 185.64
+/sample/DRT322/data/raw/11000/DRT322_004.raw: !file /sample/DRT322/data/raw/11000/DRT322_004.raw
+/sample/DRT322/data/corrected/DRT322_11000_004.img: !file /sample/DRT322/data/corrected/DRT322_11000_004.img
+/sample/DRT322/data/LogImage/log/11: |
+  Sample DRT322    Energy 11000    Image 004    Average intensity: 48.52
+/sample/DRT322/data/raw/11000/DRT322_005.raw: !file /sample/DRT322/data/raw/11000/DRT322_005.raw
+/sample/DRT322/data/corrected/DRT322_11000_005.img: !file /sample/DRT322/data/corrected/DRT322_11000_005.img
+/sample/DRT322/data/LogImage/log/12: |
+  Sample DRT322    Energy 11000    Image 005    Average intensity: 133.16
+/sample/DRT322/data/raw/11000/DRT322_006.raw: !file /sample/DRT322/data/raw/11000/DRT322_006.raw
+/sample/DRT322/data/corrected/DRT322_11000_006.img: !file /sample/DRT322/data/corrected/DRT322_11000_006.img
+/sample/DRT322/data/LogImage/log/13: |
+  Sample DRT322    Energy 11000    Image 006    Average intensity: 169.08
+/sample/DRT322/data/done/1: DRT322
+/sample/DRT322/data/raw/11000/DRT322_007.raw: !file /sample/DRT322/data/raw/11000/DRT322_007.raw
+/sample/DRT322/data/corrected/DRT322_11000_007.img: !file /sample/DRT322/data/corrected/DRT322_11000_007.img
+/sample/DRT322/data/LogImage/log/14: |
+  Sample DRT322    Energy 11000    Image 007    Average intensity: 182.08
+/feedback/completed/2: DRT322
+/feedback/merged/3: DRT322

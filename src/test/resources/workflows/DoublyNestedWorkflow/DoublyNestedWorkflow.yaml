@@ -1,0 +1,26 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+  - classpath:/workflows/NestedWorkflow/NestedWorkflow.yaml
+
+components:
+
+  - id: RunNestedWorkflow
+    type: Node
+    properties: 
+      sequences:
+        iteration: 
+          - 1
+          - 2
+          - 3
+      actor: !ref NestedWorkflow
+      nestedUriPrefix: /sub/{iteration}
+  
+  - id: DoublyNestedWorkflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref RunNestedWorkflow

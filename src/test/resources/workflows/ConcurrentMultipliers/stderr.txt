@@ -1,0 +1,6 @@
+Starting multiplication 1
+Completing multiplication 1
+Starting multiplication 2
+Completing multiplication 2
+Starting multiplication 3
+Completing multiplication 3

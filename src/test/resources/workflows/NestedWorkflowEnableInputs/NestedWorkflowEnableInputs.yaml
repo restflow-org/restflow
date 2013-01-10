@@ -1,0 +1,91 @@
+
+imports:
+
+  - classpath:/common/java/actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+
+  - id: NestedWorkflowEnableInputs
+    type: Workflow
+    properties:
+      director: !ref DataDrivenDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref Increment
+        - !ref RenderIncrementedIntegers
+
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 5
+        step: 7
+        max: 20
+      outflows:
+        value: /counter/
+
+  - id: Increment
+    type: Node
+    properties: 
+      actor: !ref Incrementer
+      nestedUriPrefix: /subworkflow{STEP}/
+      inflows:
+        value: /counter/
+      outflows:
+        out: /incrementedValue/
+
+  - id: RenderIncrementedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: MessageStream
+        outputAtWrapup: true
+      inflows:
+        message: /incrementedValue/
+        
+  - id: Incrementer
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref Inputs
+        - !lref IncrementInputValueByTen
+        - !lref Outputs
+      inputs:
+        value: 
+          default: 0
+        step:
+          default: 10
+        
+  - id: Inputs
+    type: InPortal
+    properties:
+      outflows: 
+        value: /value
+        step: /step
+
+  - id: IncrementInputValueByTen
+    type: GroovyActorNode
+    properties: 
+      stepsOnce: true
+      actor.step: |
+        sum = a + b;
+        _status.disableInput("b");
+      inflows:
+        a: /value
+        b: /step
+      outflows:
+        sum: /incrementedValue/
+
+  - id: Outputs
+    type: OutPortal
+    properties:
+      inflows: 
+        out: /incrementedValue/
+        step: /step
+ 

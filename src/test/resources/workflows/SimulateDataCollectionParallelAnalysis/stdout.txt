@@ -1,0 +1,71 @@
+<%:LOG_STAMP%> Evaluating sample DRT110.
+<%:LOG_STAMP%> Sample DRT110 rejected due to low quality score of 1.
+<%:LOG_STAMP%> Evaluating sample DRT240.
+<%:LOG_STAMP%> Requesting 5 images for sample DRT240.
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 001    Average intensity: 121.96
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 002    Average intensity: 183.84
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 003    Average intensity: 36.3
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 004    Average intensity: 140.68
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 005    Average intensity: 181.72
+<%:LOG_STAMP%> Sample DRT240    Energy 10000    Image 006    Average intensity: 67.5
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 001    Average intensity: 3.7
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 002    Average intensity: 155.74
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 003    Average intensity: 193.8
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 004    Average intensity: 13.78
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 005    Average intensity: 120.76
+<%:LOG_STAMP%> Sample DRT240    Energy 11000    Image 006    Average intensity: 159.78
+<%:LOG_STAMP%> Evaluating sample DRT322.
+<%:LOG_STAMP%> Integrating images for data set id DRT240...
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 001    Average intensity: 177.18
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 002    Average intensity: 164.16
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 003    Average intensity: 98.92
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 004    Average intensity: 176.42
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 005    Average intensity: 19.14
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 006    Average intensity: 38.98
+<%:LOG_STAMP%> Sample DRT322    Energy 10000    Image 007    Average intensity: 195.02
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 001    Average intensity: 7.5
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 002    Average intensity: 45.72
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 003    Average intensity: 185.64
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 004    Average intensity: 48.52
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 005    Average intensity: 133.16
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 006    Average intensity: 169.08
+<%:LOG_STAMP%> Sample DRT322    Energy 11000    Image 007    Average intensity: 182.08
+<%:LOG_STAMP%> Evaluating sample DRT050.
+<%:LOG_STAMP%> Requesting 7 images for sample DRT050.
+<%:LOG_STAMP%> Integrating images for data set id DRT322...
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 001    Average intensity: 118.38
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 002    Average intensity: 155.8
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 003    Average intensity: 74.6
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 004    Average intensity: 76.62
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 005    Average intensity: 17.4
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 006    Average intensity: 60.06
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 007    Average intensity: 180.5
+<%:LOG_STAMP%> Sample DRT050    Energy 10000    Image 008    Average intensity: 19.76
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 001    Average intensity: 141.96
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 002    Average intensity: 0.9
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 003    Average intensity: 142.16
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 004    Average intensity: 18.92
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 005    Average intensity: 50.04
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 006    Average intensity: 10.08
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 007    Average intensity: 173.08
+<%:LOG_STAMP%> Sample DRT050    Energy 11000    Image 008    Average intensity: 47.7
+<%:LOG_STAMP%> Evaluating sample DRT622.
+<%:LOG_STAMP%> Requesting 5 images for sample DRT622.
+<%:LOG_STAMP%> Done integrating data set DRT240.
+<%:LOG_STAMP%> Integrating images for data set id DRT050...
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 001    Average intensity: 14.54
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 002    Average intensity: 165.06
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 003    Average intensity: 127.0
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 004    Average intensity: 4.84
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 005    Average intensity: 192.9
+<%:LOG_STAMP%> Sample DRT622    Energy 10000    Image 006    Average intensity: 78.46
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 001    Average intensity: 136.56
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 002    Average intensity: 159.9
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 003    Average intensity: 159.02
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 004    Average intensity: 93.1
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 005    Average intensity: 36.24
+<%:LOG_STAMP%> Sample DRT622    Energy 11000    Image 006    Average intensity: 49.0
+<%:LOG_STAMP%> Done integrating data set DRT322.
+<%:LOG_STAMP%> Integrating images for data set id DRT622...
+<%:LOG_STAMP%> Done integrating data set DRT050.
+<%:LOG_STAMP%> Done integrating data set DRT622.

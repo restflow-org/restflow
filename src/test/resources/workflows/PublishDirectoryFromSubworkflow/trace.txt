@@ -1,0 +1,21 @@
+*** Node step counts ***
+PublishDirectoryFromSubworkflow: 1
+PublishDirectoryFromSubworkflow.AccessOneFile: 1
+PublishDirectoryFromSubworkflow.PrintOriginalFileContents: 1
+PublishDirectoryFromSubworkflow.PrintRepublishedFileContents: 1
+PublishDirectoryFromSubworkflow.PublishDirectoryNode: 1
+PublishDirectoryFromSubworkflow.PublishDirectoryNode.CreateDirectoryOfFiles: 1
+PublishDirectoryFromSubworkflow.PublishDirectoryNode.OutputDirectory: 1
+*** Published resources ***
+file:/files/1/f2.txt
+file:/files/1/file.txt
+file:/sub/directories/1/directoryOne
+file:/sub/directories/1/directoryOne/directoryThree
+file:/sub/directories/1/directoryOne/directoryThree/file3.txt
+file:/sub/directories/1/directoryOne/file1.txt
+file:/sub/directories/1/directoryOne/file2.txt
+file:/top/1/directoryOne
+file:/top/1/directoryOne/directoryThree
+file:/top/1/directoryOne/directoryThree/file3.txt
+file:/top/1/directoryOne/file1.txt
+file:/top/1/directoryOne/file2.txt

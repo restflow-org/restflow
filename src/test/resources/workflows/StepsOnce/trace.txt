@@ -1,0 +1,10 @@
+*** Node step counts ***
+StepsOnce: 1
+StepsOnce.CreateEmphases: 1
+StepsOnce.CreateGreetings: 1
+StepsOnce.EmphasizeGreeting: 1
+StepsOnce.RenderEmphasizedGreeting: 1
+*** Published resources ***
+/messages/emphasis: !
+/messages/emphasizedGreeting/1: Hello!
+file:/messages/greeting.txt

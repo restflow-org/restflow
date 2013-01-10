@@ -1,0 +1,44 @@
+
+imports:
+
+- classpath:/common/types.yaml
+
+components:
+
+- id: ShellCommandActor
+  type: GroovyActor
+  properties:
+    step: |
+      Process process = command.execute();
+      output = process.text;
+    inputs:
+      command:
+    outputs:
+      output:
+ 
+- id: PerlScript
+  type: GroovyActor
+  properties:
+    step: |
+      command = 'perl -';
+      Process process = command.execute();
+      process << script;
+      process << "__END__";
+      process.out.close()
+      output = process.text;
+    inputs:
+      script:
+    outputs:
+      output:
+
+- id: PythonScript
+  type: GroovyActor
+  properties:
+    step: |
+      command = ['python', '-c', script];
+      Process process = command.execute();
+      output = process.text;
+    inputs:
+      script:
+    outputs:
+      output:

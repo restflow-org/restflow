@@ -1,0 +1,13 @@
+*** Node step counts ***
+FilesFromStrings: 1
+FilesFromStrings.AppendString: 3
+FilesFromStrings.CreateFile: 3
+FilesFromStrings.PrintFile: 3
+FilesFromStrings.PrintText: 3
+*** Published resources ***
+file:/files/appended_1.txt
+file:/files/appended_2.txt
+file:/files/appended_3.txt
+file:/files/file_1.txt
+file:/files/file_2.txt
+file:/files/file_3.txt

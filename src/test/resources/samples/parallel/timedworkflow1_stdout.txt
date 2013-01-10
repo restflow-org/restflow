@@ -1,0 +1,2 @@
+Left value  = 5
+Right value = 5

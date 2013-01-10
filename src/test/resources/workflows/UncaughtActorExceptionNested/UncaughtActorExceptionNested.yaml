@@ -1,0 +1,84 @@
+
+imports:
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: UncaughtActorExceptionNested
+    type: Workflow
+    properties:
+      nodes:
+        - !ref GenerateOuterIntegers
+        - !ref RepeatIntegers
+        - !ref RenderRepeatedIntegers
+
+  - id: GenerateOuterIntegers
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 10
+        step: 10
+        max: 50
+      outflows:
+        value: generatedValue
+
+  - id: RepeatIntegers
+    type: Node
+    properties:   
+      actor: !ref RepeaterWorkflow
+      nestedUriPrefix: /Sub{STEP}
+      inflows:
+        inValue: generatedValue
+      outflows:
+        outValue: repeatedValue
+
+  - id: RenderRepeatedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: ValueStream
+        outputAtWrapup: true
+      inflows: 
+        message: repeatedValue
+        
+        
+  - id: RepeaterWorkflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref InputInteger
+        - !ref ThrowExceptionOnThirdStep
+        - !ref OutputRepeatedInteger
+
+    
+  - id: InputInteger
+    type: InPortal
+    properties:
+      outflows:
+        inValue: /original
+
+  - id: ThrowExceptionOnThirdStep
+    type: GroovyActorNode
+    properties:
+      stepsOnce: true
+      actor.step:
+        if (inValue != 30) {
+          outValue = inValue;
+        } else {
+          throw new Exception("Value of 30 not allowed!");
+        }
+      inflows:
+        inValue: /original
+      outflows:
+        outValue: /repeated
+
+  - id: OutputRepeatedInteger
+    type: OutPortal
+    properties:
+      inflows:
+        outValue: /repeated

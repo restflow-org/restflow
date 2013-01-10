@@ -1,0 +1,24 @@
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  - id: BadNode
+    type: Node
+    properties:   
+      actor: !ref BadActor
+      constants:
+        value: hello
+      outflows:
+        output:
+
+  - id: BadScript
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes: 
+        - !ref BadNode

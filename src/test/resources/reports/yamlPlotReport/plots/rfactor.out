@@ -1,0 +1,10 @@
+plotname: R-factor vs. cycle
+axis_x: cycle
+axis_y: stat
+name_x0: Cycle
+name_y0: R-factor
+name_y1: R-free
+x0: 0 1 2 3 4 5
+y0: 0.3768 0.2999 0.2677 0.2530 0.2453 0.2414
+y1: 0.3683 0.3071 0.2795 0.2666 0.2592 0.2550
+

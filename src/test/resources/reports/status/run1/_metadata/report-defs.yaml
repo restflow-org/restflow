@@ -1,0 +1,18 @@
+
+status: !!org.restflow.reporter.UnixProcessStatusReporter {description: null}
+plots: !!org.restflow.reporter.GroovyTemplateReporter {description: null}
+
+#types:
+#    
+#- id: GroovyTemplateReporter
+#  className: org.restflow.reporter.GroovyTemplateReporter
+#  singleton: false
+#
+#components:
+#
+#- id: status
+#  type: GroovyTemplateReporter
+#  
+#- id: plots
+#  type: GroovyTemplateReporter
+  

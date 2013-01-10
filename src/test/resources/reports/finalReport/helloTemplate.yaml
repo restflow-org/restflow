@@ -1,0 +1,34 @@
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref DataDrivenDirector
+    nodes:
+    - !ref CreateName
+    - !inline
+         type: OutPortal
+         properties:
+           inflows: 
+             name: /name/
+    outputs:
+      name:
+    finalReporter: !inline
+      className: org.restflow.reporter.GroovyTemplateReporter
+      properties:
+        template: Hello ${outputs.name}!
+
+
+- id: CreateName
+  type: Node
+  properties:  
+    actor: !ref ConstantSource
+    constants:
+      value: World
+    outflows:
+      value: /name/

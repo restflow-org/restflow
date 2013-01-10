@@ -1,0 +1,66 @@
+namespace:
+
+  module: Visualize
+
+imports:
+
+- classpath:/common/directors.yaml
+- classpath:/common/types.yaml 
+
+components:
+
+- id: WorkflowGraph
+  type: Workflow
+  properties: 
+    director: !ref PublishSubscribeDirector
+    inputs:
+      workflowName:
+      restflowFile:
+    nodes:
+    - !lref Inputs  
+    - !lref WorkflowLoader
+    - !lref GenerateDot
+
+- id: Inputs
+  type: InPortal
+  properties:
+    outflows:
+      workflowName: /workflowName/
+      restflowFile: /restflowFile/
+
+- id: WorkflowLoader
+  type: Node
+  properties:
+    actor: !inline 
+      type: ActorLoader
+    inflows:
+      actorName: /workflowName/
+      restflowFile: /restflowFile
+      importMap: context:/import-map
+    constants:
+      director: !ref PublishSubscribeDirector
+      runDirectory: context:/run
+    outflows:
+      actor: /actor/
+    exceptions:
+      java.lang.Exception: stderr:/exception/load/
+
+
+- id: GenerateDot
+  type: Node
+  properties:
+    actor: !inline
+      className: org.restflow.actors.GroovyTemplateActor 
+    constants:
+      _template: !resource classpath:ssrl/restflow/templates/dotWorkflow.txt
+    inflows:
+      workflow: /actor/
+    outflows:
+      view: stdout:/dot-file
+    exceptions:
+      java.lang.Exception: stderr:/exception/generateDot/
+
+      
+      
+      
+      

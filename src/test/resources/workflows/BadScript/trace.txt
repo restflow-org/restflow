@@ -1,0 +1,4 @@
+*** Node step counts ***
+BadScript: 1
+BadScript.BadNode: 1
+*** Published resources ***

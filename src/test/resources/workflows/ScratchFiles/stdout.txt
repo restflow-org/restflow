@@ -1,0 +1,7 @@
+This is file 1 with an add-on.
+This is file 2 with an add-on.
+This is file 3 with an add-on.
+*** GreetingStream ***
+This is file 1 with an add-on.
+This is file 2 with an add-on.
+This is file 3 with an add-on.

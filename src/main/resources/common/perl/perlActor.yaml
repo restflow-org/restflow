@@ -1,0 +1,132 @@
+
+imports:
+
+- classpath:/common/types.yaml
+
+types:
+
+- id: PerlActor
+  type: GroovyActor
+  properties:
+    wrapperScript: |
+      //////////////////////////////////////////////////////////////////
+      // Groovy code for running a perl script, passing the script input
+      // variables by prepending the step script with set commands and 
+      // retrieving script outputs by appending print commands that 
+      // render output variables in YAML.
+
+      // create a delimiter for separating script output from YAML block
+      String OUTPUT_DELIMITER='__END_PERL_SCRIPT_OUTPUT__'
+
+      // prepare script fragment to copy input values to shell variables
+      String inputVars = "";
+      for (key in _states.keySet()) {
+        inputVars += "\$" + key + "=\'" + _states.get(key) + "\';\n";
+      }
+      for (key in _inputs.keySet()) {
+        inputVars += "\$" + key + "=\'" + _inputs.get(key) + "\';\n";
+      }
+      if (_status.getStepDirectory() != null) {
+        inputVars += "chdir " + _status.getStepDirectory() + ";\n";
+      }
+
+      // prepare script fragment to render output variables in YAML
+      String outputVars = "\nprint \"${OUTPUT_DELIMITER}\\n\";\n";
+      for (name in _outputs) {
+        outputVars += "print " + "\"" + name + ": \\\"\$" + name + "\\\"\\n\";\n";
+      }
+
+      for (name in _states.keySet()) {
+        outputVars += "print " + "\"" + name + ": \\\"\$" + name + "\\\"\\n\";\n";
+      }
+      
+      for (name in ["enabledInputs", "disabledInputs", "enabledInputs", "disabledOutputs"]) {
+        outputVars += "print " + "\"" + name + ": \\\"\$" + name + "\\\"\\n\";\n";
+      }
+      
+      String functions = 
+        "sub disableOutput { \$disabledOutputs=\"\$disabledOutputs  \$_[0]\";}\n" +
+        "sub enableInput { \$enabledInputs=\"\$enabledInputs  \$_[0]\";}\n" +
+        "sub disableInput { \$disabledInputs=\"\$disabledInputs  \$_[0]\";}\n" +
+        "sub enableOutput { \$enabledOutputs=\"\$enabledOutputs  \$_[0]\";}\n";
+      
+      // bracket step script with data binding script fragments
+      script = functions + inputVars + _script + "\n" + outputVars;
+
+      //File file = new File("script.pl");
+      //file << "**************************************\n";
+      //file << script;
+            
+      // run perl and feed the script to it through standard input
+      command = 'perl -';
+      def process;
+      if ( binding.variables.containsKey("env") ) {
+         process = command.execute(env,_status.getStepDirectory());
+      } else {
+         process = command.execute();
+      }
+      process << script;
+      process << "__END__";
+      process.out.close()
+
+      // capture the standard output from the run of the script
+      completeOutput = process.text;
+      
+      // find the beginning of the script output delimiter
+      int delimiterStart = completeOutput.lastIndexOf(OUTPUT_DELIMITER);
+      
+      // extract script output preceding delimiter and send to terminal
+      stdout = completeOutput.substring(0, delimiterStart);
+      stdoutWithCorrectLineSeparators = stdout.replace("\n", System.getProperty("line.separator"));
+      System.out.print(stdoutWithCorrectLineSeparators);
+  
+      // extract yaml output following delimiter
+      int yamlStart = delimiterStart + OUTPUT_DELIMITER.length();        
+      yamlOutput = completeOutput.substring(yamlStart);
+      
+      // parse the yaml block and save output variable values in map
+      import org.yaml.snakeyaml.Yaml;
+      Yaml yaml = new Yaml();
+      def outputMap = (Map) yaml.load(yamlOutput);  
+      outputMap.each { 
+        if (it.value == "null") {
+          setProperty(it.key, null);
+        } else if (_type.get(it.key) == "File") {
+          setProperty(it.key, new File(_status.getStepDirectory(), it.value));
+        } else {
+          setProperty(it.key, it.value)
+        }
+      }
+      String enabledInputs = outputMap.get("enabledInputs");
+      if (enabledInputs != null) {
+        for (name in enabledInputs.split(" ")) {
+          _status.enableInput(name);
+        }
+      }
+      String enabledOutputs = outputMap.get("enabledOutputs");
+      if (enabledOutputs != null) {
+        for (name in enabledOutputs.split(" ")) {
+          _status.enableOutput(name);
+        }
+      }
+      String disabledInputs = outputMap.get("disabledInputs");
+      if (disabledInputs != null) {
+        for (name in disabledInputs.split(" ")) {
+          _status.disableInput(name);
+        }
+      }
+      String disabledOutputs = outputMap.get("disabledOutputs");
+      if (disabledOutputs != null) {
+        for (name in disabledOutputs.split(" ")) {
+          _status.disableOutput(name);
+        }
+      }    
+ 
+      //////////////////////////////////////////////////////////////////
+
+- id: PerlActorNode
+  type: Node
+  properties:
+    actor: !inline
+      type: PerlActor
+ 

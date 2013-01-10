@@ -1,0 +1,6 @@
+#!/bin/bash
+
+LOCATION=`readlink -f "$0"`
+DIR=`dirname "$LOCATION"`
+java -jar "$DIR"/RestFlow-0.1.jar $*
+

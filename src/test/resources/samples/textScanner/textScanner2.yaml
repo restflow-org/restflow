@@ -1,0 +1,71 @@
+namespace:
+
+imports:
+  - classpath:common/support.yaml
+  - classpath:common/directors.yaml
+  - classpath:common/types.yaml
+
+beans:
+
+  - id: MysqlAuthorParser 
+    className: org.restflow.beans.TextScanner
+    properties: 
+      absorbWhiteSpaceSymbol: "~"
+      template:
+      -  "Author: {first} {last}"
+      -  "{books[]:BOOK}"
+      tags:
+        BOOK: "| ~ {id:INT} ~ | ~ {title:STRING} ~ | ~ {publisher:STRING} ~ |"
+
+
+  - id: ConvertAuthorToYaml
+    className: org.restflow.actors.GroovyActor
+    singleton: false
+    properties:
+      settings:
+        parser: !lref MysqlAuthorParser
+      inputs: 
+        textIn: 
+          default: |
+            Author: Roger Zelazny
+            
+            +-----------+-------------------------+------------------+
+            |  ID       |  title                  | publisher        |
+            +-----------+-------------------------+------------------+
+            |   1       |   Lord_of_light         |           Eos    |
+            |   2       |   Doors_of_his_face     |  IBooks,_Inc.    |
+            +-----------+-------------------------+------------------+
+      step: |
+        parser.compile();
+        parsed = parser.search (textIn);
+        
+        import org.yaml.snakeyaml.Yaml;
+        import org.yaml.snakeyaml.DumperOptions; 
+        DumperOptions options = new DumperOptions();
+        options.setLineBreak(DumperOptions.LineBreak.getPlatformLineBreak());
+        Yaml yaml = new Yaml(options);
+        print yaml.dump(parsed);
+      outputs:
+        parsed:
+    
+  - id: TestConversion
+    type: Node
+    properties: 
+      actor: !ref ConvertAuthorToYaml
+      outflows:
+        parsed: /parsed/
+        
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: TextScanner
+    type: Workflow
+    properties:
+#     director: !ref DataDrivenDirector
+      director: !ref DemandDrivenDirector
+#      director: !ref PublishSubscribeDirector
+      nodes:
+        - !lref TestConversion
+    

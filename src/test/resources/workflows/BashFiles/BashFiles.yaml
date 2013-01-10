@@ -1,0 +1,65 @@
+
+imports:
+
+  - actors:actors.yaml
+  - classpath:/common/scriptActors.yaml
+  - classpath:/common/directors.yaml
+
+components:
+
+  ######################################################
+  # declaration of workflow nodes
+  # (serve to instantiate actors and wire them together)
+  ######################################################
+  
+  - id: CreateScratchFile
+    type: BashActorNode
+    properties:
+      actor.usesStepDirectory: true
+      actor.step: |
+        echo -n "This is file $input" > scratch.txt
+        outputFile="scratch.txt"
+      actor.outputs:
+        outputFile:
+          type: File
+      outflows:
+        outputFile: file:/messages/scratch_{STEP}.txt
+      sequences:
+        input: 
+          - 1
+          - 2
+          - 3
+
+  - id: AppendString
+    type: GroovyActorNode
+    properties:
+      actor.step:
+        concatenatedString = stringOneFile.text + stringTwo;
+      inflows:
+        stringOneFile: file:/messages/scratch_{STEP}.txt
+      constants: 
+        stringTwo: " with an add-on." 
+      outflows:
+        concatenatedString: file:/messages/appended_{STEP}.txt
+
+  - id: PrintOutputFile
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: GreetingStream
+        outputAtWrapup: true
+      inflows:
+        message: file:/messages/appended_{STEP}.txt
+
+  #############################
+  # declaration of the workflow
+  #############################
+   
+  - id: BashFiles
+    type: Workflow
+    properties:
+      nodes:
+        - !ref CreateScratchFile
+        - !ref AppendString
+        - !ref PrintOutputFile
