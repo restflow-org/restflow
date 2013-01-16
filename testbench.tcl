@@ -1,11 +1,15 @@
 
 set TARGET_DIR 					target
-set RESTFLOW_STANDALONE_JAR 	${TARGET_DIR}/RestFlow-standalone.jar
-set RESTFLOW_JAR				${TARGET_DIR}/RestFlow-min.jar
+set RESTFLOW_STANDALONE_JAR 	${TARGET_DIR}/RestFlow-0.4-jar-with-dependencies.jar
+set RESTFLOW_JAR				${TARGET_DIR}/RestFlow-0.4.jar
 set RESTFLOW_TESTS_DIR			src/test/java
 set RESTFLOW_TESTS_DIR_DEPTH	[llength [split $RESTFLOW_TESTS_DIR "/"]]
 set JUNIT_MAIN_CLASS			junit.textui.TestRunner 
 set TCL_FILE_PATH_SEPARATOR 	"/"
+
+set MAIN_CLASSES ${TARGET_DIR}/classes
+set TEST_CLASSES ${TARGET_DIR}/test-classes
+set JAR_DEPENDENCY_DIR ${TARGET_DIR}/dependency
 
 source exec_pipeline.tcl
 
@@ -39,10 +43,6 @@ proc help {} {
 	puts "                                 dependencies resolved through ant should be used"
 	puts "                                 when running or testing RestFlow."
 	puts ""
-	puts "use eclipse                      Specifies that the classes built by Eclipse and the"
-	puts "                                 dependencies resolved through Eclipse should be used"
-	puts "                                 when running or testing RestFlow."
-	puts ""
 	puts "use jar                          Specifies that the latest RestFlow jar, the test clases"
 	puts "                                 compiled by ant, and the dependencies resolved through"
 	puts "                                 ant should be used when running or testing RestFlow."
@@ -58,31 +58,28 @@ proc use {arg} {
 
 	global RESTFLOW_STANDALONE_JAR
 	global RESTFLOW_JAR
+    global MAIN_CLASSES
+    global TEST_CLASSES
+    global JAR_DEPENDENCY_DIR
 	global restflow_command
 	global restflow_classpath
 	
 	switch $arg {
 	
 		ant {
-			set restflow_classpath 	[make_search_path {classes/main classes/test src/main/resources src/test/resources lib/runtime/*}]
+			set restflow_classpath 	[make_search_path [list $MAIN_CLASSES $TEST_CLASSES ${JAR_DEPENDENCY_DIR}/*]]
 			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
 			puts "Using ant-built classes for running and testing RestFlow"
 		}
 		
-		eclipse {
-			set restflow_classpath 	[make_search_path [list bin src/main/resources src/test/resources lib/runtime/*]]
-			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
-			puts "Using Eclipse-built classes for running and testing RestFlow"
-		}
-		
 		jar {
-			set restflow_classpath 	[make_search_path [list $RESTFLOW_JAR classes/test src/test/resources lib/runtime/*]]
+			set restflow_classpath 	[make_search_path [list $TEST_CLASSES $RESTFLOW_JAR] ]
 			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
 			puts "Using RestFlow jar for running and testing RestFlow"
 		}
 		
 		standalonejar {
-			set restflow_classpath 	[make_search_path [list $RESTFLOW_STANDALONE_JAR classes/test src/test/resources]]
+			set restflow_classpath 	[make_search_path [list $TEST_CLASSES $RESTFLOW_STANDALONE_JAR]]
 			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
 			puts "Using self-contained RestFlow jar for running and testing RestFlow"
 		}

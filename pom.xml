@@ -128,7 +128,6 @@
       <groupId>ssrl</groupId>
       <artifactId>YamlSpringLoader</artifactId>
       <version>2.7</version>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>ssrl</groupId>
@@ -165,18 +164,60 @@
 
 <build>
     <plugins>
+
+    <!-- Copy the dependency jars into the target/dependency directory -->
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    <!-- Add the manifest file to the jar and force classpath to the dependency directory to automatically include the dependency jars-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>org.restflow.RestFlow</mainClass>
+               <classpathPrefix>dependency/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
+
+
+      </plugin>
+
+    <!-- Make a standalone jar file -->
        <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>fully.qualified.MainClass</mainClass>
+                        <mainClass>org.restflow.RestFlow</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>
                     <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
             </configuration>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals>
+            <goal>single</goal>
+          </goals>
+        </execution>
+      </executions>
         </plugin>
     </plugins>
 </build>
