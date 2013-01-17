@@ -12,7 +12,7 @@ import org.restflow.metadata.BasicTraceRecorder;
 import org.restflow.metadata.TraceRecorder;
 import org.restflow.util.Contract;
 
-import ssrl.yaml.spring.YamlBeanDefinitionReader;
+import org.restflow.yaml.spring.YamlBeanDefinitionReader;
 
 public class ParallelWorkflow extends Workflow {
 	

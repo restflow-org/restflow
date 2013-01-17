@@ -13,7 +13,7 @@ import org.restflow.data.Uri;
 import org.restflow.directors.Director;
 import org.restflow.metadata.MetadataManager;
 
-import ssrl.yaml.spring.YamlBeanDefinitionReader;
+import org.restflow.yaml.spring.YamlBeanDefinitionReader;
 
 /**
  * Provides a bean for loading workflow & actor definitions from within a 

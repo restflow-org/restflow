@@ -14,9 +14,9 @@
   <version>0.4</version>
     <repositories>
         <repository>
-        <id>ssrl</id>
+        <id>org.restflow</id>
         <name>SSRL repository</name>
-        <url>http://smb.slac.stanford.edu/ivy/release</url>
+        <url>http://smb.slac.stanford.edu/maven/release</url>
         </repository>
     </repositories>
   <dependencies>
@@ -125,9 +125,9 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>ssrl</groupId>
+      <groupId>org.restflow</groupId>
       <artifactId>YamlSpringLoader</artifactId>
-      <version>2.7</version>
+      <version>2.7.1</version>
     </dependency>
     <dependency>
       <groupId>ssrl</groupId>

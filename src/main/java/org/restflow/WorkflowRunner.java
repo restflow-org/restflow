@@ -30,7 +30,7 @@ import org.restflow.util.ImmutableMap;
 import org.restflow.util.PortableIO;
 import org.restflow.util.StdoutRecorder;
 
-import ssrl.yaml.spring.YamlBeanDefinitionReader;
+import org.restflow.yaml.spring.YamlBeanDefinitionReader;
 
 public class WorkflowRunner {
 
