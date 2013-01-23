@@ -22,9 +22,9 @@ public class TestRestFlow extends RestFlowTestCase {
 	// uncomment the following line to test RestFlow against classes last compiled by Eclipse
 	// along with RestFlow's dependencies obtained via the ivy ant target
 	// TODO make this static field final and refactor TestRestFlowServer to not require write access to it
-	public static String RestFlowInvocationCommand = "java -classpath bin" +
+	public static String RestFlowInvocationCommand = "java -classpath target/classes" +
 											  System.getProperty("path.separator") + 
-											  "lib/runtime/* org.restflow.RestFlow";
+											  "target/dependency/* org.restflow.RestFlow";
 	
 	public void testHelloWorld() throws IOException, InterruptedException {
 		System.out.println(RestFlowInvocationCommand);

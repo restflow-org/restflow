@@ -330,8 +330,8 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		builder.appendVariableYamlPrintStatement("var_with_string_type", "String");
 		
 		assertEquals(
-			"print 'var_with_string_type: ', 'null' if var_with_string_type==None else '\"%s\"' % var_with_string_type"		+ EOL,
-			builder.toString()
+				"print 'var_with_string_type: ', (\"\\\"%s\\\"\" % var_with_string_type, '~')[var_with_string_type==None]" +EOL, 	
+				builder.toString()
 		);		
 	}
 
@@ -342,7 +342,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		builder.appendVariableYamlPrintStatement("var_with_integer_type", "Integer");
 		
 		assertEquals(
-			"print 'var_with_integer_type: ', 'null' if var_with_integer_type==None else var_with_integer_type"		+ EOL,
+			"print 'var_with_integer_type: ', (var_with_integer_type, 'null')[var_with_integer_type==None]"		+ EOL,
 			builder.toString()
 		);		
 	}
@@ -354,7 +354,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		builder.appendVariableYamlPrintStatement("var_with_boolean_type", "Boolean");
 		
 		assertEquals(
-			"print 'var_with_boolean_type: ', \"true\" if var_with_boolean_type else \"false\""		+ EOL,
+			"print 'var_with_boolean_type: ', (\"false\", \"true\")[var_with_boolean_type==True]"		+ EOL,
 			builder.toString()
 		);		
 	}

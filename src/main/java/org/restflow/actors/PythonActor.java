@@ -140,30 +140,38 @@ public class PythonActor extends AugmentedScriptActor {
 		}
 
 		private ScriptBuilder _appendNonstringVariableYamlPrinter(String name) {
-			_script.append(		"print '"		)
-				   .append(		name			)
-				   .append( 	": ', "			)
-				   .append(		"'null' if "	)
-				   .append(		name			)
-				   .append(		"==None else "	)
-				   .append(		name			)
-				   .append(		EOL				);	
+			_script.append(	"print '"		)
+				.append(	name			)
+				.append(	": ', ("		)
+				.append(	name			)
+				.append(	", 'null')["	)
+				.append(	name			)
+				.append(	"==None]"		)
+				.append(	EOL				);	
 			return this;
 		}
 
 		private ScriptBuilder _appendStringVariableYamlPrinter(String name) {
-			_script.append(		"print '"		)
-				   .append(		name			)
-				   .append( 	": ', "			)
-				   .append(		"'null' if "	)
-				   .append(		name			)
-				   .append(		"==None else "	)
-				   .append( 	"'\"%s\"' % "	)
-				   .append(		name			)
-				   .append(		EOL				);
+			_script.append(	"print '"					)
+				.append(	name						)
+				.append(	": ', (\"\\\"%s\\\"\" % "	)
+				.append(	name						)
+				.append(	", '~')["					)
+				.append(	name						)
+				.append(	"==None]"					)
+				.append(	EOL							);	
 			return this;
 		}
 
+		public ActorScriptBuilder _appendNullStringYamlPrintStatement(String name) {
+			_script.append(	"print '"		)
+				.append(	name			)
+				.append(	": null'"		)
+				.append(	EOL				);
+			return this;
+		}
+		
+		
 		public ActorScriptBuilder appendNonNullStringYamlPrintStatement(String name) {
 			_script.append(		"print '"		)
 				   .append(		name			)
@@ -175,12 +183,12 @@ public class PythonActor extends AugmentedScriptActor {
 
 		
 		private ScriptBuilder _appendBooleanVariableYamlPrinter(String name) {
-			_script.append(		"print '"			)
-				   .append(		name				)
-				   .append( 	": ', \"true\" if "	)
-				   .append(		name				)
-				   .append( 	" else \"false\""	)
-				   .append(		EOL					);	
+			_script.append(		"print '"						)
+				   .append(		name							)
+				   .append( 	": ', (\"false\", \"true\")["	)
+				   .append(     name							)
+				   .append(		"==True]"						)
+				   .append(		EOL								);	
 			return this;
 		}
 

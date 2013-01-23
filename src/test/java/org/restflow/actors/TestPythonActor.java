@@ -145,7 +145,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			"" 																							+ EOL +
 			"# render output variables as yaml" 														+ EOL +
-			"print 'greeting: ', 'null' if greeting==None else '\"%s\"' % greeting"						+ EOL +
+			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, \'~\')[greeting==None]"								+ EOL +
 			"" 																							+ EOL +
 			"# render actor output control variables as yaml" 											+ EOL +
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs" 											+ EOL +
@@ -192,7 +192,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			""							 																+ EOL +
 			"# render state variables as yaml" 															+ EOL +
-			"print 'greeting: ', 'null' if greeting==None else '\"%s\"' % greeting"						+ EOL +
+			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, '~')[greeting==None]"							+ EOL +
 			"" 																							+ EOL
 			, actor._getAugmentedStepScript());
 		
@@ -263,7 +263,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print '__END_OF_SCRIPT_OUTPUT__'"															+ EOL +
 			""																							+ EOL +
 			"# render output variables as yaml"															+ EOL +
-			"print 'z: ', 'null' if z==None else z"														+ EOL +
+			"print 'z: ', (z, 'null')[z==None]"															+ EOL +
 			""																							+ EOL +
 			"# render actor input control variables as yaml"											+ EOL +
 			"print 'enabledInputs: \"%s\"' % enabledInputs"												+ EOL +
