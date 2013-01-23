@@ -48,7 +48,7 @@ components:
       restflowFile: /restflowFile/
 
 - id: StartTimer
-  type: Node
+  type: Step
   properties:
     actor: !inline 
       type: SystemTime
@@ -56,7 +56,7 @@ components:
       time: /start/ms
 
 - id: WorkflowLoader
-  type: Node
+  type: Step
   properties:
     actor: !inline 
       type: restflow.Tools.ActorLoaderReuseTraceRecorder
@@ -80,7 +80,7 @@ components:
       actor.loadStateValues([:]);
       actor.step();
       actor.wrapup();
-      actor.dispose();      
+      actor.dispose();
       
       done=true;
     inflows:
@@ -91,7 +91,7 @@ components:
       java.lang.Exception: stderr:/exception/run/
 
 - id: EndTimer
-  type: Node
+  type: Step
   properties:
     actor: !inline 
       type: SystemTime

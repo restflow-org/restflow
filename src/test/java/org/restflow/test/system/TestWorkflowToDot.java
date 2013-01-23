@@ -96,7 +96,7 @@ public class TestWorkflowToDot extends RestFlowTestCase {
 		s.addDefaultTags();
 		s.setAbsorbWhiteSpaceSymbol("~");
 		List<String> params = new Vector<String>();
-		params.add("{workflowOutput:TEXT_BLOCK}Execution time ~ {time} ~ ms");
+		params.add("{workflowOutput:TEXT_BLOCK}*** Hamming Sequence ***{sequence:TEXT_BLOCK}Execution time ~ {time:INT} ~ ms");
 		s.setTemplate(params);
 		s.compile();
 		Map<String,Object> result = s.search( actualOutput );

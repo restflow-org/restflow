@@ -12,6 +12,7 @@ import org.restflow.data.ProtocolRegistry;
 import org.restflow.data.Uri;
 import org.restflow.directors.Director;
 import org.restflow.metadata.MetadataManager;
+import org.restflow.metadata.TraceRecorder;
 
 import org.restflow.yaml.spring.YamlBeanDefinitionReader;
 
@@ -52,6 +53,7 @@ public class ActorLoader  {
 			if (_context == null) {
 				_createNewContext();
 			}
+			TraceRecorder traceRecorder = _context.getTraceRecorder();			
 
 			_actor = (Actor) _context.getBean(_actorName);
 
@@ -69,6 +71,10 @@ public class ActorLoader  {
 			}
 			
 			_actor.elaborate();
+			// store workflow graph in trace DB if provided and not running a standalone actor
+			if (_actor instanceof Workflow) {
+				traceRecorder.recordWorkflowGraph((Workflow)_actor);
+			}			
 			//_actor.configure();
 			//_actor.initialize();
 
