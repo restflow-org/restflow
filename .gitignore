@@ -8,3 +8,4 @@ lib/
 target/
 classes/
 .settings/
+!src/test/resources/ssrl/workflow/RestFlow/TestUtil.class
