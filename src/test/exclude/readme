@@ -1,0 +1,1 @@
+This directory is here to hold a .class file which is used to demonstrate addition of classpath to a restflow execution.  The .class file should not be added to the jar otherwise the test will fail.

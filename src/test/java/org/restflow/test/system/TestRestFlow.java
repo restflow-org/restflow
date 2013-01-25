@@ -28,6 +28,7 @@ public class TestRestFlow extends RestFlowTestCase {
 											  "target/dependency/* org.restflow.RestFlow";
 	
 	public void testHelloWorld() throws IOException, InterruptedException {
+		System.out.println(RestFlowInvocationCommand);
 		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "", 
@@ -183,11 +184,12 @@ public class TestRestFlow extends RestFlowTestCase {
 	public void testClassPath() throws IOException, InterruptedException {
 		// not including the class path
 		String workflow = "src/test/resources/ssrl/workflow/RestFlow/TestCp"+WorkflowRunner.YAML_EXTENSION;
+		
+		
 		verifyRunRegexp(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "",
 				  "",
-				  ".ERROR. GroovyActor - Runtime error in groovy script of actor .inner bean. of TestCP.Actor during step.*" +
-				  	"Actor TestCP.Actor..inner bean. threw exception: groovy.lang.MissingPropertyException: " +
+				   	"Actor TestCP.Actor..inner bean. threw exception: groovy.lang.MissingPropertyException: " +
 				  	"No such property: TestUtil for class: Script1.*" + 
 				  	"groovy.lang.MissingPropertyException: No such property: TestUtil for class: Script1.*"
 				  	
