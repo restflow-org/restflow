@@ -4,6 +4,7 @@
  */
 package org.restflow.test.system;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.restflow.RestFlow;
@@ -27,7 +28,6 @@ public class TestRestFlow extends RestFlowTestCase {
 											  "target/dependency/* org.restflow.RestFlow";
 	
 	public void testHelloWorld() throws IOException, InterruptedException {
-		System.out.println(RestFlowInvocationCommand);
 		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "", 
@@ -195,7 +195,7 @@ public class TestRestFlow extends RestFlowTestCase {
 
 
 		// including the class path
-		verifyRunExact(RestFlowInvocationCommand + " -cp src/test/resources/ssrl/workflow/RestFlow -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
+		verifyRunExact(RestFlowInvocationCommand + " -cp src/test/exclude -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "",
 				  "42" + EOL,
 				  "");
