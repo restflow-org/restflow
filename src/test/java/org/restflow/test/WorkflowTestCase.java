@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
 import org.restflow.RestFlow;
 import org.restflow.WorkflowRunner;
 import org.restflow.actors.Workflow;
@@ -46,10 +47,28 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		System.gc();
+/*		while (systemMemoryLow()) {
+			System.out.println("System memory low.  Sleeping");
+			Thread.sleep(1000);
+		}*/
 		_useWorkingDirectory = false;
 		_resourceMap = new HashMap<String, String>();
 		_finalReporter = new JunitFinalReporter();
 		_teeLogToStandardOutput = true;
+	}
+	
+	private boolean systemMemoryLow() {
+		
+		long freeMemory = Runtime.getRuntime().freeMemory();
+		long maxMemory = Runtime.getRuntime().maxMemory();
+		float percentFree = (float)Math.abs(freeMemory - maxMemory) / (float)maxMemory * 100;
+		
+		System.out.println("Runtime memory percent remaining: " + percentFree);
+		if (percentFree <50) {
+			return true;
+		}
+			
+		return false;
 	}
 
 	protected void assertFileResourcesMatchExactly(String resourcePath) throws Exception {
