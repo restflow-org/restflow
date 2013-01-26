@@ -1,12 +1,14 @@
 
 package org.restflow.test.system;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.restflow.beans.TextScanner;
 import org.restflow.directors.DemandDrivenDirector;
+import org.restflow.reporter.JunitFinalReporter;
 import org.restflow.test.WorkflowTestCase;
 
 
@@ -14,8 +16,14 @@ public class TestWorkflows extends WorkflowTestCase {
 
 	public TestWorkflows() {
 		super("src/test/resources/workflows/");
+		
 	}
 
+	public void setUp() throws Exception {
+		super.setUp();
+		org.restflow.RestFlow.enableLog4J();	
+	}	
+	
 	public void test_OrderedConcurrentMultipliers_MTDataDrivenDirector() throws Exception {
 
 		_useWorkingDirectory();
@@ -109,7 +117,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertFileResourcesMatchExactly("files");
 	}
 
-	public void test_CaughtActorExceptions_PublishSubscribeDirector() throws Exception {
+	public void test_CaughtActorExceptions_PublishSubscribeDirector() throws Exception {	
 		configureForBeanActor();
 		_useWorkingDirectory();
 		_loadAndRunWorkflow("CaughtActorExceptions", _publishSubscribeDirector());
@@ -135,7 +143,9 @@ public class TestWorkflows extends WorkflowTestCase {
 		
 		try {
 			_loadAndRunWorkflow("UncaughtActorExceptionNested", _dataDrivenDirector());
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.err.println(e);
+		}
 		
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
