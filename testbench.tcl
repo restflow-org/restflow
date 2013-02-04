@@ -1,7 +1,8 @@
 
 set TARGET_DIR 					target
-set RESTFLOW_STANDALONE_JAR 	${TARGET_DIR}/RestFlow-0.4-jar-with-dependencies.jar
-set RESTFLOW_JAR				${TARGET_DIR}/RestFlow-0.4.jar
+set RESTFLOW_STANDALONE_JAR 	${TARGET_DIR}/RestFlow-1.0-jar-with-dependencies.jar
+set RESTFLOW_JAR				${TARGET_DIR}/RestFlow-1.0.jar
+set RESTFLOW_DEPENDENCIES       ${TARGET_DIR}/dependency
 set RESTFLOW_TESTS_DIR			src/test/java
 set RESTFLOW_TESTS_DIR_DEPTH	[llength [split $RESTFLOW_TESTS_DIR "/"]]
 set JUNIT_MAIN_CLASS			junit.textui.TestRunner 
@@ -19,7 +20,7 @@ proc help {} {
 	puts ""
 	puts "Command                          Description"
 	puts "----------------------------     ---------------------------------------------------"
-	puts "ant <target>                     Runs the specified ant target defined in build.xml."
+	puts "mvn <target>                     Runs the specified maven goal."
 	puts ""
 	puts "output enable                    Enable display of output from successful tests."
 	puts ""
@@ -39,16 +40,16 @@ proc help {} {
 	puts "test dir <directory path>        Run the JUnit tests in all classes in the" 
 	puts "                                 specified directory and its subdirectories."
 	puts ""
-	puts "use ant                          Specifies that the classes built by ant and the"
-	puts "                                 dependencies resolved through ant should be used"
+	puts "use class                        Specifies that the classes built by maven and the"
+	puts "                                 dependencies resolved through maven should be used"
 	puts "                                 when running or testing RestFlow."
 	puts ""
 	puts "use jar                          Specifies that the latest RestFlow jar, the test clases"
-	puts "                                 compiled by ant, and the dependencies resolved through"
-	puts "                                 ant should be used when running or testing RestFlow."
+	puts "                                 compiled by maven, and the dependencies resolved through"
+	puts "                                 maven should be used when running or testing RestFlow."
 	puts ""
 	puts "use standalonejar                Specifies that the latest self-contained RestFlow jar"
-	puts "                                 and test classes compiled by ant should be used when"
+	puts "                                 and test classes compiled by maven should be used when"
 	puts "                                 running or testing RestFlow."
 	puts ""
 	
@@ -66,14 +67,14 @@ proc use {arg} {
 	
 	switch $arg {
 	
-		ant {
+		class {
 			set restflow_classpath 	[make_search_path [list $MAIN_CLASSES $TEST_CLASSES ${JAR_DEPENDENCY_DIR}/*]]
 			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
-			puts "Using ant-built classes for running and testing RestFlow"
+			puts "Using classes for running and testing RestFlow"
 		}
 		
 		jar {
-			set restflow_classpath 	[make_search_path [list $TEST_CLASSES $RESTFLOW_JAR] ]
+			set restflow_classpath 	[make_search_path [list $TEST_CLASSES $RESTFLOW_JAR ${JAR_DEPENDENCY_DIR}/*] ]
 			set restflow_command 	[concat java -cp $restflow_classpath org.restflow.RestFlow]
 			puts "Using RestFlow jar for running and testing RestFlow"
 		}
@@ -361,8 +362,8 @@ proc print_prompt {} {
 	flush stdout
 }
 
-proc ant {args} {
-	set command "ant $args"
+proc mvn {args} {
+	set command "mvn $args"
 	exec_background_pipeline $command 1
 }
 
@@ -379,7 +380,7 @@ proc reload {} {
 #run src/test/resources/org/restflow/RestFlow/hello1.yaml -w HelloWorld
 #run src/test/resources/org/restflow/RestFlow/hello1.yaml
 
-use ant
+use class
 
 fconfigure stdin -buffering line -blocking 0
 fconfigure stdout -buffering line -blocking 0
