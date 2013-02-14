@@ -94,7 +94,7 @@ public class ParallelWorkflow extends Workflow {
 			throw new Exception("Must have at least one Actor defined in workflow script.");
 		}
 
-		ParallelWorkflow workflow = (ParallelWorkflow) context.getBean(_name);
+		ParallelWorkflow workflow = (ParallelWorkflow) context.getBean(_beanName);
 		workflow.enableRun();
 		
 		// set node name of workflow so that its name those of its child nodes match 
