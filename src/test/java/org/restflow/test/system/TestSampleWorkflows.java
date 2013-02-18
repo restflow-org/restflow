@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestSampleWorkflows extends WorkflowTestCase {
 	
 	public TestSampleWorkflows() {
-		super("src/test/resources/samples/");
+		super("src/main/resources/samples/");
 	}
 	
 //	public void testHelloWorldInputFromStdin() throws IOException, InterruptedException {
