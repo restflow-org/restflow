@@ -1,6 +1,6 @@
 imports:
 
-- actors:actors.yaml
+- classpath:/common/groovy/actors.yaml
 - classpath:/common/directors.yaml
 
 components: 
@@ -55,7 +55,7 @@ components:
     actor: !ref PrintStreamWriter
     inflows:
       message: /messages/emphasizedGreeting/
-      
+  
 - id: MultipleConcatenator
   type: GroovyActor
   properties:
