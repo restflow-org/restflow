@@ -1,0 +1,111 @@
+namespace:
+
+  module: Visualize
+
+imports:
+
+- classpath:/common/java/actors.yaml
+- classpath:/common/directors.yaml
+- classpath:/common/types.yaml 
+- classpath:/common/support.yaml
+
+types:
+
+- id: GroovyActorLogNode
+  type: GroovyActorNode
+  properties:
+    enableLog: true  
+
+components:
+
+- id: WorkflowHierarchy
+  type: Workflow
+  properties: 
+    director: !ref MTDataDrivenDirector
+    inputs:
+      workflowName:
+      restflowFile:
+    nodes:
+    - !lref Inputs  
+    - !lref WorkflowLoader
+    - !lref GenerateHeirarchy
+
+- id: Inputs
+  type: InPortal
+  properties:
+    outflows:
+      workflowName: /workflowName/
+      restflowFile: /restflowFile/
+
+
+- id: WorkflowLoader
+  type: Node
+  properties:
+    maxConcurrency: 1
+    ordered: false
+    actor: !inline 
+      type: ActorLoader
+    constants:      
+      director: !ref PublishSubscribeDirector
+      runDirectory: context:/run   
+    inflows:
+      actorName: /workflowName/
+      restflowFile: /restflowFile
+      importMap: context:/import-map
+    outflows:
+      actor: /actor/{actorName}
+    exceptions:
+      java.lang.Exception: stderr:/exception/load/
+
+
+- id: GenerateHeirarchy
+  type: GroovyActorNode
+  properties:
+    maxConcurrency: 1
+    actor.step: |
+      import org.yaml.snakeyaml.*;
+      println "$workflow.beanName"
+      //add a method to WorkflowNode to strip off preceding namespace and module on node names.    
+
+      
+      def generateWorkflowLevel () {
+        def level = ["workflows":[:],"nodes":[]]
+        return level;
+      }
+
+
+      def generateHierarchy (actor) {
+        def hierarchy = generateWorkflowLevel();
+        //println hierarchy;
+        actor.nodes.each() { node ->
+          //println node.name;
+          if ( node.hidden ) return;  //don't display buffer nodes
+          def isWorkflow = false;
+          if ( node instanceof org.restflow.nodes.InPortal ) return;
+          if ( node instanceof org.restflow.nodes.OutPortal ) return;
+          if ( node instanceof org.restflow.nodes.NonDeterministicMerge ) return;
+          if ( node.actor instanceof org.restflow.actors.Workflow ) {
+            hierarchy["workflows"]["$node.name"] = generateHierarchy(node.actor);	  	
+          } else {
+            hierarchy["nodes"].add(node.beanName);
+          }
+        }
+        return hierarchy;
+      }
+      view = generateHierarchy(workflow);
+      DumperOptions options = new DumperOptions();
+      options.setWidth(100);
+      options.setIndent(2);
+      options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+      Yaml yaml = new Yaml(options);
+
+
+      println yaml.dump(view);
+    inflows:
+      workflow: /actor/{actorName}
+    outflows:
+      view: file:/dot-file/{actorName}.dot
+    exceptions:
+      java.lang.Exception: stderr:/exception/generateDot/
+
+      
