@@ -11,24 +11,20 @@ imports:
 
 types:
 
-- id: GroovyActorLogNode
-  type: GroovyActorNode
-  properties:
-    enableLog: true  
-
 components:
 
 - id: WorkflowHierarchy
   type: Workflow
   properties: 
-    director: !ref MTDataDrivenDirector
+    director: !ref PublishSubscribeDirector
     inputs:
       workflowName:
       restflowFile:
     nodes:
     - !lref Inputs  
     - !lref WorkflowLoader
-    - !lref GenerateHeirarchy
+    - !lref GenerateHierarchy
+    - !lref HierarchyToHtml
 
 - id: Inputs
   type: InPortal
@@ -58,10 +54,11 @@ components:
       java.lang.Exception: stderr:/exception/load/
 
 
-- id: GenerateHeirarchy
+- id: GenerateHierarchy
   type: GroovyActorNode
   properties:
     maxConcurrency: 1
+    actor.usesStepDirectory: true      
     actor.step: |
       import org.yaml.snakeyaml.*;
       println "$workflow.beanName"
@@ -69,10 +66,9 @@ components:
 
       
       def generateWorkflowLevel () {
-        def level = ["workflows":[:],"nodes":[]]
+        def level = []
         return level;
       }
-
 
       def generateHierarchy (actor) {
         def hierarchy = generateWorkflowLevel();
@@ -84,28 +80,64 @@ components:
           if ( node instanceof org.restflow.nodes.InPortal ) return;
           if ( node instanceof org.restflow.nodes.OutPortal ) return;
           if ( node instanceof org.restflow.nodes.NonDeterministicMerge ) return;
+          def easyNode = [:]
           if ( node.actor instanceof org.restflow.actors.Workflow ) {
-            hierarchy["workflows"]["$node.name"] = generateHierarchy(node.actor);	  	
+            easyNode["$node.beanName"]= generateHierarchy(node.actor);
           } else {
-            hierarchy["nodes"].add(node.beanName);
+            easyNode["$node.beanName"]= node.actor.beanName;
           }
+          hierarchy.add(easyNode);
         }
         return hierarchy;
       }
-      view = generateHierarchy(workflow);
+      structure = generateHierarchy(workflow);
       DumperOptions options = new DumperOptions();
       options.setWidth(100);
       options.setIndent(2);
       options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
       Yaml yaml = new Yaml(options);
-
-
-      println yaml.dump(view);
+      println yaml.dump(structure);
     inflows:
       workflow: /actor/{actorName}
     outflows:
-      view: file:/dot-file/{actorName}.dot
+      structure: /hierarchy/{actorName}/
     exceptions:
       java.lang.Exception: stderr:/exception/generateDot/
 
       
+- id: HierarchyToHtml
+  type: Node
+  properties:
+    inflows:
+      structure: /hierarchy/{actorName}/
+    actor: !inline
+      className: org.restflow.actors.GroovyTemplateActor
+    actor.usesStepDirectory: true      
+    constants:
+      _template: |
+        <%
+        def renderWorkflow ( nodes ) {
+          println "<ul>"
+          nodes.each() { node ->
+            println "<li>"
+            if ( node instanceof Map) {
+              node.each { k,v -> 
+                println k
+                if ( v instanceof String  || v instanceof GString) {
+                  println v
+                } else {
+                  renderWorkflow( v );
+                }
+              }
+            }
+            println "</li>"
+          }
+          println "</ul>"
+        }
+        renderWorkflow(structure);
+        %>
+    outflows:
+      struct: file:/{actorName}/hierarchy.html
+
+
+
