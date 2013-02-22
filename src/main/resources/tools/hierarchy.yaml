@@ -23,6 +23,11 @@ components:
     nodes:
     - !lref Inputs  
     - !lref WorkflowLoader
+    - !lref GenerateFlatWorkflowList
+    - !lref GenerateDot
+    - !lref ConvertDotToPostScript
+    - !lref ConvertPostscriptToGif
+    - !lref StepForEachWorkflow
     - !lref GenerateHierarchy
 
 - id: Inputs
@@ -52,6 +57,95 @@ components:
     exceptions:
       java.lang.Exception: stderr:/exception/load/
 
+- id: GenerateFlatWorkflowList
+  type: GroovyActorNode
+  properties:
+    inflows:
+      workflow: /actor/{actorName}
+    actor.step: |
+        workflows = [:]
+
+        def generateHierarchy (actor) {
+          actor.nodes.each() { node ->
+            if ( node.hidden ) return;
+            if ( node instanceof org.restflow.nodes.InPortal ) return;
+            if ( node instanceof org.restflow.nodes.OutPortal ) return;
+            if ( node instanceof org.restflow.nodes.NonDeterministicMerge ) return;
+            if ( node.actor instanceof org.restflow.actors.Workflow ) {
+              workflows[ "$node.actor.beanName" ] = node.actor;
+              generateHierarchy( node.actor );
+            }
+          } 
+        }
+        generateHierarchy(workflow);
+    outflows:
+      workflows: /workflows/{actorName}/
+
+- id: StepForEachWorkflow
+  type: Node
+  properties:
+    inflows:
+      map: /workflows/{actorName}/
+    actor: !ref MapDisassembler
+    outflows:
+      item: /workflow_obj/{key}/object
+
+
+- id: GenerateDot
+  type: Node
+  properties:
+    maxConcurrency: 1
+    actor: !inline
+      className: org.restflow.actors.GroovyTemplateActor
+    constants:
+      _template: !resource classpath:ssrl/restflow/templates/dotWorkflow.txt
+    inflows:
+      workflow: /workflow_obj/{actorName}/object
+    outflows:
+      view: file:/dot-file/{actorName}.dot
+    exceptions:
+      java.lang.Exception: stderr:/exception/generateDot/
+
+- id: ConvertDotToPostScript
+  type: GroovyActorNode
+  properties:
+    maxConcurrency: 1
+    inflows:
+      dot: file:/dot-file/{workflow}.dot
+    actor.usesStepDirectory: true
+    actor.inputs:
+      workflow:
+      dot:    
+    actor.step: |
+      println workflow
+      def dotCmd = [ 'dot', '-Tps', dot.path, '-o', dot.parent + '/out.ps' ];
+      println dotCmd;
+      ProcessBuilder pb = new ProcessBuilder(dotCmd).redirectErrorStream(true).directory(_status.stepDirectory);
+      postscript = pb.start().text;
+      psFile = new File( _status.stepDirectory.toString() + '/out.ps');
+    outflows:
+      psFile: file:/ps/{workflow}/image.ps
+
+- id: ConvertPostscriptToGif
+  type: GroovyActorNode
+  properties:
+    maxConcurrency: 1
+    inflows:
+      psFile: file:/ps/{workflow}/image.ps
+    actor.usesStepDirectory: true
+    actor.inputs:
+      workflow:
+      psFile:    
+    actor.step: |
+      def gifPath =  _status.stepDirectory.toString() + "/" + workflow + ".gif";
+      def gifCmd = [ 'convert', psFile.path, gifPath ];
+      println gifCmd;
+      ProcessBuilder pb = new ProcessBuilder(gifCmd).redirectErrorStream(true).directory(_status.stepDirectory);
+      println pb.start().text;
+      gifFile = new File( gifPath );
+    outflows:
+      gifFile: file:/gif/{workflow}.gif
+
 
 - id: GenerateHierarchy
   type: Node
@@ -59,7 +153,6 @@ components:
     maxConcurrency: 1
     actor: !inline
       className: org.restflow.actors.GroovyTemplateActor
-    actor.usesStepDirectory: true      
     constants:
       _template: |
         <%
@@ -73,12 +166,13 @@ components:
             println "<li>"
             println node.beanName;
             println "<i>"
-            println node.actor.beanName;
-            println "</i>"
             if ( node.actor instanceof org.restflow.actors.Workflow ) {
+               println "<a href=\"../gif/" + node.actor.beanName + ".gif\">"+ node.actor.beanName +"</a>";
                generateHierarchy(node.actor);
             } else {
+               println node.actor.beanName;
             }
+            println "</i>"
             println "</li>"
           }
           println "</ul>"
@@ -90,7 +184,5 @@ components:
     inflows:
       workflow: /actor/{actorName}
     outflows:
-      structure: file:/hierarchy/{actorName}/
-    exceptions:
-      java.lang.Exception: stderr:/exception/generateDot/
+      structure: file:/hierarchy/{actorName}.html
 
