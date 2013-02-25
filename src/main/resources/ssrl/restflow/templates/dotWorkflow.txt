@@ -16,19 +16,17 @@
     
     workflow.nodes.each() { node ->
       if ( node.hidden ) return;  //don't display buffer nodes
-        def isWorkflow = false;
-        try {
-      		if ( node.actor.class.name == "org.restflow.actors.Workflow" ) {
-      			isWorkflow= true;
-      		}
-      	} catch (Exception e) {};
-      	if (isWorkflow) {
- 		  	println 'node [shape=egg];'
-			println shortName(node) +";"	  	
-      	} else {
-	  		println 'node [shape=ellipse];'
-			println shortName(node) +";"
-		}
+      if (( node instanceof org.restflow.nodes.InPortal ) || 
+         ( node instanceof org.restflow.nodes.OutPortal ) ||
+         ( node instanceof org.restflow.nodes.NonDeterministicMerge )) {
+        println 'node [shape=ellipse];'
+      } else if ( node.actor instanceof org.restflow.actors.Workflow )  {
+        println 'node [shape=egg];'
+      } else {
+        //regular node
+        println 'node [shape=ellipse];'
+      }
+	  println shortName(node) +";"	  	
 	}
     println 'node [shape=box];'
     
@@ -39,7 +37,7 @@
 		node.outflows.each() { key, outflow ->
 			int e;
 			if (edgeShortNames.containsKey(outflow.binding)) {
-				e = edgeShortNames[outflow]
+				e = edgeShortNames[outflow.binding]
 			} else {
 				e = ++edge;
 				edgeShortNames[outflow.binding] = e
