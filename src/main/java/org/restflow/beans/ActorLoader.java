@@ -34,6 +34,7 @@ public class ActorLoader  {
 	private String _runDirectory;
 	private Map<String, String> _importMap;
 	private Director _director;
+	private Boolean _suppressElaboration = false;
 	
 	//output
 	private Actor _actor;
@@ -70,7 +71,9 @@ public class ActorLoader  {
 				_context.setProtocolRegistry(protocolRegistry);
 			}
 			
-			_actor.elaborate();
+			if ( ! getSuppressElaboration() ) {
+				_actor.elaborate();
+			}
 			// store workflow graph in trace DB if provided and not running a standalone actor
 			if (_actor instanceof Workflow) {
 				traceRecorder.recordWorkflowGraph((Workflow)_actor);
@@ -181,7 +184,15 @@ public class ActorLoader  {
 	public void setRunDirectory(String runDirectory) {
 		_runDirectory = runDirectory;
 	}
-	
+
+	public Boolean getSuppressElaboration() {
+		return _suppressElaboration;
+	}
+
+	public void setSuppressElaboration(Boolean suppressElaboration) {
+		this._suppressElaboration = suppressElaboration;
+	}
+
 	
 	
 }
