@@ -88,6 +88,9 @@ types:
       runDirectory:
         optional: true
         nullable: true
+      suppressElaboration:
+        optional: true
+        nullable: false
     outputs: 
       actor:
 
