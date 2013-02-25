@@ -28,7 +28,6 @@ import org.springframework.beans.factory.InitializingBean;
 @ThreadSafe()
 public class GroovyTemplateActor extends AbstractActor {
 	public static final String TEMPLATE_INPUTKEY = "_template";
-	public static final String OUTPUTKEY = "view";
 	
 	@GuardedBy("this") protected Log logger;
 
@@ -60,6 +59,9 @@ public class GroovyTemplateActor extends AbstractActor {
 	
 	public synchronized void configure() throws Exception {
 		super.configure();		
+		if ( _outputSignature.size() != 1 ) {
+			throw new Exception("GroovyTemplateActor must have exactly one output.");
+		}
 		_state = ActorFSM.CONFIGURED;
 	}
 	
@@ -70,26 +72,27 @@ public class GroovyTemplateActor extends AbstractActor {
 	
 	@Override
 	public synchronized void step() throws Exception {
-		
 		super.step();
 
 		SimpleTemplateEngine engine = new SimpleTemplateEngine();
 
-		Map<String,Object> model = new HashMap<String, Object>();
-		
-		for ( String key : _inputSignature.keySet() ) {
-			model.put(key, _inputValues.get(key) );
+		Map<String, Object> model = new HashMap<String, Object>();
+
+		for (String key : _inputSignature.keySet()) {
+			model.put(key, _inputValues.get(key));
 		}
 		bindSpecial(model);
 		bindConstants(model);
-		
-		String template = (String)model.get( TEMPLATE_INPUTKEY );
-		
-		Writable template1 = engine.createTemplate( template ).make( model  );
+
+		String template = (String) model.get(TEMPLATE_INPUTKEY);
+
+		Writable template1 = engine.createTemplate(template).make(model);
 		String view = template1.toString();
 
-		_outputValues.put( OUTPUTKEY, view);
-		
+		for (String key : _outputSignature.keySet()) {
+			_outputValues.put(key, view);
+		}
+
 		_state = ActorFSM.STEPPED;
 	}
 
