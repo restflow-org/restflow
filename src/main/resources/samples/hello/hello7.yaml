@@ -1,8 +1,7 @@
 imports:
 
-- actors:actors.yaml
+- classpath:/common/groovy/actors.yaml
 - classpath:/common/directors.yaml
-- classpath:/common/scriptActors.yaml
 
 components: 
 
@@ -43,9 +42,9 @@ components:
 - id: EmphasizeGreeting
   type: Node
   properties:
-    actor: !ref BashMultipleConcatenator
+    actor: !ref MultipleConcatenator
     constants:
-      count: 3
+      count: 3 
     inflows:
       stringOne: /messages/greeting/
       stringTwo: /messages/emphasis/
@@ -58,21 +57,20 @@ components:
     actor: !ref PrintStreamWriter
     inflows:
       message: /messages/emphasizedGreeting/
-
-       
-- id: BashMultipleConcatenator
-  type: BashActor
+      
+- id: MultipleConcatenator
+  type: GroovyActor
   properties:
     step: |
-      concatenatedString="${stringOne}"
-      for ((i=1; i<=$count; i++))
-        do
-          concatenatedString="${concatenatedString}${stringTwo}"
-        done
+      concatenatedString = stringOne
+      for (i in 1..count) {
+        concatenatedString += stringTwo
+      }
     inputs:
       stringOne:
       stringTwo:
-      count:  
+      count: 
         default: 1
     outputs:
       concatenatedString:
+  

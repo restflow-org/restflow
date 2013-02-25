@@ -1,6 +1,6 @@
 imports:
 
-- actors:actors.yaml
+- classpath:/common/groovy/actors.yaml
 - classpath:/common/directors.yaml
 
 components: 
@@ -42,7 +42,7 @@ components:
 - id: EmphasizeGreeting
   type: Node
   properties:
-    actor: !ref StringConcatenator 
+    actor: !ref MultipleConcatenator
     inflows:
       stringOne: /messages/greeting/
       stringTwo: /messages/emphasis/
@@ -55,3 +55,20 @@ components:
     actor: !ref PrintStreamWriter
     inflows:
       message: /messages/emphasizedGreeting/
+  
+- id: MultipleConcatenator
+  type: GroovyActor
+  properties:
+    step: |
+      concatenatedString = stringOne
+      for (i in 1..count) {
+        concatenatedString += stringTwo
+      }
+    inputs:
+      stringOne:
+      stringTwo:
+      count:
+        default: 1
+    outputs:
+      concatenatedString:
+  

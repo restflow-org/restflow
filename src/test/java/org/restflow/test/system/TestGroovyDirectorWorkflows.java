@@ -10,7 +10,7 @@ public class TestGroovyDirectorWorkflows extends WorkflowTestCase {
 	static String RestFlowInvocationCommand = "java -jar target/RestFlow-0.3.8.jar";
 
 	public TestGroovyDirectorWorkflows() {
-		super("src/test/resources/samples/");
+		super("src/main/resources/samples/");
 	}
 	
 	public void test_Hello1() throws Exception {
