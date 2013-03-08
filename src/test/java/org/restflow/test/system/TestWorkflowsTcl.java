@@ -79,7 +79,7 @@ public class TestWorkflowsTcl extends WorkflowTestCase {
 		
 		//look for the tcl error
 		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor BadScript.BadNode.BadActor threw exception: java.lang.Exception: invalid command name \"output\""));
+				"Actor <BadScript>[BadNode]<BadActor> threw exception: java.lang.Exception: invalid command name \"output\""));
 		assertTrue(_runner.getStderrRecording().contains("while executing"));
 		assertTrue(_runner.getStderrRecording().contains("\"output = $value\""));
 	}

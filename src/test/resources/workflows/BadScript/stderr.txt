@@ -1,4 +1,4 @@
-Actor BadScript.BadNode.BadActor threw exception:
+Actor <BadScript>[BadNode][BadActor] threw exception:
 java.lang.Exception: invalid command name "output"
     while executing
 "output = $value"

@@ -1,12 +1,12 @@
 *** Node step counts ***
-SimulateDataCollectionNested: 1
-SimulateDataCollectionNested.CalculateStrategy: 3
-SimulateDataCollectionNested.CollectDataSets: 2
-SimulateDataCollectionNested.CollectDataSets.CollectImage: 26
-SimulateDataCollectionNested.CollectDataSets.Inputs: 2
-SimulateDataCollectionNested.CollectDataSets.LogImage: 26
-SimulateDataCollectionNested.CollectDataSets.TransformImage: 26
-SimulateDataCollectionNested.LoadScreeningResults: 3
+<SimulateDataCollectionNested>: 1
+<SimulateDataCollectionNested>[CalculateStrategy]: 3
+<SimulateDataCollectionNested>[CollectDataSets]: 2
+<SimulateDataCollectionNested>[CollectDataSets][CollectImage]: 26
+<SimulateDataCollectionNested>[CollectDataSets][Inputs]: 2
+<SimulateDataCollectionNested>[CollectDataSets][LogImage]: 26
+<SimulateDataCollectionNested>[CollectDataSets][TransformImage]: 26
+<SimulateDataCollectionNested>[LoadScreeningResults]: 3
 *** Published resources ***
 /sample/DRT110/quality: 1
 /sample/DRT240/data/sample: DRT240

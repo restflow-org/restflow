@@ -1,8 +1,8 @@
 *** Node step counts ***
-DirectFilesGroovy: 1
-DirectFilesGroovy.AppendString: 3
-DirectFilesGroovy.CreateScratchFile: 3
-DirectFilesGroovy.PrintOutputFile: 3
+<DirectFilesGroovy>: 1
+<DirectFilesGroovy>[AppendString]: 3
+<DirectFilesGroovy>[CreateScratchFile]: 3
+<DirectFilesGroovy>[PrintOutputFile]: 3
 *** Published resources ***
 /messages1/scratch_1.txt
 /messages2/scratch_2.txt

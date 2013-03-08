@@ -80,12 +80,12 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       1         OneShotInflowWorkflow                              OneShotInflowWorkflow           " 	+ EOL +
-				"2      1            2       3         OneShotInflowWorkflow.CreateSequenceData           CreateSequenceData              " 	+ EOL +
-				"3      1            3       3         OneShotInflowWorkflow.MultiplySequenceBySingleton  MultiplySequenceBySingleton     " 	+ EOL +
-				"4      1            4       3         OneShotInflowWorkflow.RenderProducts               RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       1         <OneShotInflowWorkflow>                                      OneShotInflowWorkflow           " 	+ EOL +
+				"2      1            2       3         <OneShotInflowWorkflow>[CreateSequenceData]                  CreateSequenceData              " 	+ EOL +
+				"3      1            3       3         <OneShotInflowWorkflow>[MultiplySequenceBySingleton]         MultiplySequenceBySingleton     " 	+ EOL +
+				"4      1            4       3         <OneShotInflowWorkflow>[RenderProducts]                      RenderProducts                  " 	+ EOL, 
 			trace.dumpNodeTable());
 		
 		assertEquals(
@@ -281,13 +281,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       1         MultiplicationWorkflow                             MultiplicationWorkflow          " 	+ EOL +
-				"2      1            2       1         MultiplicationWorkflow.inportal                    inportal                        " 	+ EOL +
-				"3      1            3       1         MultiplicationWorkflow.outportal                   outportal                       " 	+ EOL +
-				"4      1            4       1         MultiplicationWorkflow.multiplier                  multiplier                      " 	+ EOL +
-				"5      1            5       1         MultiplicationWorkflow.printer                     printer                         " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       1         <MultiplicationWorkflow>                                     MultiplicationWorkflow          " 	+ EOL +
+				"2      1            2       1         <MultiplicationWorkflow>[inportal]                           inportal                        " 	+ EOL +
+				"3      1            3       1         <MultiplicationWorkflow>[outportal]                          outportal                       " 	+ EOL +
+				"4      1            4       1         <MultiplicationWorkflow>[multiplier]                         multiplier                      " 	+ EOL +
+				"5      1            5       1         <MultiplicationWorkflow>[printer]                            printer                         " 	+ EOL, 
 			trace.dumpNodeTable());
 		
 		assertEquals(
@@ -438,10 +438,10 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"NodeName                                           StepNumber ParentNodeID ActorName               PortName IsReference DataTypeID Uri                                                 Value                                               " 	+ EOL +
 				"-------------------------------------------------- ---------- ------------ ----------------------- -------- ----------- ---------- --------------------------------------------------- --------------------------------------------------- " 	+ EOL +
-				"MultiplicationWorkflow                             1                       MultiplicationWorkflow  c        FALSE                                                                      15                                                  " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                b        FALSE                  /multiplicand                                       5                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                a        FALSE                  /multiplier                                         3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  1          1            multiplier_actor        z        FALSE                  /product                                            15                                                  " 	+ EOL,
+				"<MultiplicationWorkflow>                           1                       MultiplicationWorkflow  c        FALSE                                                                      15                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                b        FALSE                  /multiplicand                                       5                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                a        FALSE                  /multiplier                                         3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               1          1            multiplier_actor        z        FALSE                  /product                                            15                                                  " 	+ EOL,
 			trace.dumpNodePublishedResourceView());
 
 		assertEquals(
@@ -513,13 +513,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       3         MultiplicationWorkflow                             MultiplicationWorkflow          " 	+ EOL +
-				"2      1            2       3         MultiplicationWorkflow.inportal                    inportal                        " 	+ EOL +
-				"3      1            3       3         MultiplicationWorkflow.outportal                   outportal                       " 	+ EOL +
-				"4      1            4       3         MultiplicationWorkflow.multiplier                  multiplier                      " 	+ EOL +
-				"5      1            5       3         MultiplicationWorkflow.printer                     printer                         " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       3         <MultiplicationWorkflow>                                     MultiplicationWorkflow          " 	+ EOL +
+				"2      1            2       3         <MultiplicationWorkflow>[inportal]                           inportal                        " 	+ EOL +
+				"3      1            3       3         <MultiplicationWorkflow>[outportal]                          outportal                       " 	+ EOL +
+				"4      1            4       3         <MultiplicationWorkflow>[multiplier]                         multiplier                      " 	+ EOL +
+				"5      1            5       3         <MultiplicationWorkflow>[printer]                            printer                         " 	+ EOL, 
 			trace.dumpNodeTable());
 
 		assertEquals(
@@ -742,18 +742,18 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"NodeName                                           StepNumber ParentNodeID ActorName               PortName IsReference DataTypeID Uri                                                 Value                                               " 	+ EOL +
 				"-------------------------------------------------- ---------- ------------ ----------------------- -------- ----------- ---------- --------------------------------------------------- --------------------------------------------------- " 	+ EOL +
-				"MultiplicationWorkflow                             1                       MultiplicationWorkflow  c        FALSE                                                                      3                                                   " 	+ EOL +
-				"MultiplicationWorkflow                             2                       MultiplicationWorkflow  c        FALSE                                                                      12                                                  " 	+ EOL +
-				"MultiplicationWorkflow                             3                       MultiplicationWorkflow  c        FALSE                                                                      27                                                  " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                b        FALSE                  /multiplicand                                       3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    2          1            InPortal                b        FALSE                  /multiplicand                                       6                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    3          1            InPortal                b        FALSE                  /multiplicand                                       9                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                a        FALSE                  /multiplier                                         1                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    2          1            InPortal                a        FALSE                  /multiplier                                         2                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    3          1            InPortal                a        FALSE                  /multiplier                                         3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  1          1            multiplier_actor        z        FALSE                  /product                                            3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  2          1            multiplier_actor        z        FALSE                  /product                                            12                                                  " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  3          1            multiplier_actor        z        FALSE                  /product                                            27                                                  " 	+ EOL,
+				"<MultiplicationWorkflow>                           1                       MultiplicationWorkflow  c        FALSE                                                                      3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>                           2                       MultiplicationWorkflow  c        FALSE                                                                      12                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>                           3                       MultiplicationWorkflow  c        FALSE                                                                      27                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                b        FALSE                  /multiplicand                                       3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 2          1            InPortal                b        FALSE                  /multiplicand                                       6                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 3          1            InPortal                b        FALSE                  /multiplicand                                       9                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                a        FALSE                  /multiplier                                         1                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 2          1            InPortal                a        FALSE                  /multiplier                                         2                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 3          1            InPortal                a        FALSE                  /multiplier                                         3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               1          1            multiplier_actor        z        FALSE                  /product                                            3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               2          1            multiplier_actor        z        FALSE                  /product                                            12                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               3          1            multiplier_actor        z        FALSE                  /product                                            27                                                  " 	+ EOL,
 			trace.dumpNodePublishedResourceView());
 
 		assertEquals(
@@ -834,13 +834,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       3         MultiplicationWorkflow                             MultiplicationWorkflow          " 	+ EOL +
-				"2      1            2       3         MultiplicationWorkflow.inportal                    inportal                        " 	+ EOL +
-				"3      1            3       3         MultiplicationWorkflow.outportal                   outportal                       " 	+ EOL +
-				"4      1            4       3         MultiplicationWorkflow.multiplier                  multiplier                      " 	+ EOL +
-				"5      1            5       3         MultiplicationWorkflow.printer                     printer                         " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       3         <MultiplicationWorkflow>                                     MultiplicationWorkflow          " 	+ EOL +
+				"2      1            2       3         <MultiplicationWorkflow>[inportal]                           inportal                        " 	+ EOL +
+				"3      1            3       3         <MultiplicationWorkflow>[outportal]                          outportal                       " 	+ EOL +
+				"4      1            4       3         <MultiplicationWorkflow>[multiplier]                         multiplier                      " 	+ EOL +
+				"5      1            5       3         <MultiplicationWorkflow>[printer]                            printer                         " 	+ EOL, 
 			trace.dumpNodeTable());
 		
 		assertEquals(
@@ -1063,18 +1063,18 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"NodeName                                           StepNumber ParentNodeID ActorName               PortName IsReference DataTypeID Uri                                                 Value                                               " 	+ EOL +
 				"-------------------------------------------------- ---------- ------------ ----------------------- -------- ----------- ---------- --------------------------------------------------- --------------------------------------------------- " 	+ EOL +
-				"MultiplicationWorkflow                             1                       MultiplicationWorkflow  c        FALSE                                                                      3                                                   " 	+ EOL +
-				"MultiplicationWorkflow                             2                       MultiplicationWorkflow  c        FALSE                                                                      12                                                  " 	+ EOL +
-				"MultiplicationWorkflow                             3                       MultiplicationWorkflow  c        FALSE                                                                      27                                                  " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                b        FALSE                  /Run1/multiplicand                                  3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    1          1            InPortal                a        FALSE                  /Run1/multiplier                                    1                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  1          1            multiplier_actor        z        FALSE                  /Run1/product                                       3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    2          1            InPortal                b        FALSE                  /Run2/multiplicand                                  6                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    2          1            InPortal                a        FALSE                  /Run2/multiplier                                    2                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  2          1            multiplier_actor        z        FALSE                  /Run2/product                                       12                                                  " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    3          1            InPortal                b        FALSE                  /Run3/multiplicand                                  9                                                   " 	+ EOL +
-				"MultiplicationWorkflow.inportal                    3          1            InPortal                a        FALSE                  /Run3/multiplier                                    3                                                   " 	+ EOL +
-				"MultiplicationWorkflow.multiplier                  3          1            multiplier_actor        z        FALSE                  /Run3/product                                       27                                                  " 	+ EOL,
+				"<MultiplicationWorkflow>                           1                       MultiplicationWorkflow  c        FALSE                                                                      3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>                           2                       MultiplicationWorkflow  c        FALSE                                                                      12                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>                           3                       MultiplicationWorkflow  c        FALSE                                                                      27                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                b        FALSE                  /Run1/multiplicand                                  3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 1          1            InPortal                a        FALSE                  /Run1/multiplier                                    1                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               1          1            multiplier_actor        z        FALSE                  /Run1/product                                       3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 2          1            InPortal                b        FALSE                  /Run2/multiplicand                                  6                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 2          1            InPortal                a        FALSE                  /Run2/multiplier                                    2                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               2          1            multiplier_actor        z        FALSE                  /Run2/product                                       12                                                  " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 3          1            InPortal                b        FALSE                  /Run3/multiplicand                                  9                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[inportal]                 3          1            InPortal                a        FALSE                  /Run3/multiplier                                    3                                                   " 	+ EOL +
+				"<MultiplicationWorkflow>[multiplier]               3          1            multiplier_actor        z        FALSE                  /Run3/product                                       27                                                  " 	+ EOL,
 			trace.dumpNodePublishedResourceView());
 
 		assertEquals(
@@ -1186,18 +1186,18 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       1         TopWF                                              TopWF                           " 	+ EOL +
-				"2      1            2       3         TopWF.TopLevelSequencer                            TopLevelSequencer               " 	+ EOL +
-				"3      1            3       3         TopWF.SubWF                                        SubWF                           " 	+ EOL +
-				"4      3            4       3         TopWF.SubWF.inportal                               inportal                        " 	+ EOL +
-				"5      3            5       3         TopWF.SubWF.DoubleMultipliers                      DoubleMultipliers               " 	+ EOL +
-				"6      3            6       3         TopWF.SubWF.SubSubWF                               SubSubWF                        " 	+ EOL +
-				"7      6            7       3         TopWF.SubWF.SubSubWF.inportal                      inportal                        " 	+ EOL +
-				"8      6            8       9         TopWF.SubWF.SubSubWF.CreateSequenceData            CreateSequenceData              " 	+ EOL +
-				"9      6            9       9         TopWF.SubWF.SubSubWF.MultiplySequenceBySingleton   MultiplySequenceBySingleton     " 	+ EOL +
-				"10     6            10      9         TopWF.SubWF.SubSubWF.RenderProducts                RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       1         <TopWF>                                                      TopWF                           " 	+ EOL +
+				"2      1            2       3         <TopWF>[TopLevelSequencer]                                   TopLevelSequencer               " 	+ EOL +
+				"3      1            3       3         <TopWF>[SubWF]                                               SubWF                           " 	+ EOL +
+				"4      3            4       3         <TopWF>[SubWF][inportal]                                     inportal                        " 	+ EOL +
+				"5      3            5       3         <TopWF>[SubWF][DoubleMultipliers]                            DoubleMultipliers               " 	+ EOL +
+				"6      3            6       3         <TopWF>[SubWF][SubSubWF]                                     SubSubWF                        " 	+ EOL +
+				"7      6            7       3         <TopWF>[SubWF][SubSubWF][inportal]                           inportal                        " 	+ EOL +
+				"8      6            8       9         <TopWF>[SubWF][SubSubWF][CreateSequenceData]                 CreateSequenceData              " 	+ EOL +
+				"9      6            9       9         <TopWF>[SubWF][SubSubWF][MultiplySequenceBySingleton]        MultiplySequenceBySingleton     " 	+ EOL +
+				"10     6            10      9         <TopWF>[SubWF][SubSubWF][RenderProducts]                     RenderProducts                  " 	+ EOL, 
 			trace.dumpNodeTable());
 		
 		assertEquals(
@@ -1214,16 +1214,16 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 			trace.getWorkflowNodesProlog());
 		
 		assertEquals(
-				"TopWF: 1"												+ EOL +
-				"TopWF.SubWF: 3"										+ EOL +
-				"TopWF.SubWF.DoubleMultipliers: 3"						+ EOL +
-				"TopWF.SubWF.SubSubWF: 3"								+ EOL +
-				"TopWF.SubWF.SubSubWF.CreateSequenceData: 9"			+ EOL +
-				"TopWF.SubWF.SubSubWF.MultiplySequenceBySingleton: 9"	+ EOL +
-				"TopWF.SubWF.SubSubWF.RenderProducts: 9"				+ EOL +
-				"TopWF.SubWF.SubSubWF.inportal: 3"						+ EOL +
-				"TopWF.SubWF.inportal: 3"								+ EOL +
-				"TopWF.TopLevelSequencer: 3"							+ EOL,
+				"<TopWF>: 1"												+ EOL +
+				"<TopWF>[SubWF]: 3"										+ EOL +
+				"<TopWF>[SubWF][DoubleMultipliers]: 3"						+ EOL +
+				"<TopWF>[SubWF][SubSubWF]: 3"								+ EOL +
+				"<TopWF>[SubWF][SubSubWF][CreateSequenceData]: 9"			+ EOL +
+				"<TopWF>[SubWF][SubSubWF][MultiplySequenceBySingleton]: 9"	+ EOL +
+				"<TopWF>[SubWF][SubSubWF][RenderProducts]: 9"				+ EOL +
+				"<TopWF>[SubWF][SubSubWF][inportal]: 3"						+ EOL +
+				"<TopWF>[SubWF][inportal]: 3"								+ EOL +
+				"<TopWF>[TopLevelSequencer]: 3"							+ EOL,
 			trace.getNodeStepCountsYaml());
 		
 		assertEquals(
@@ -1480,33 +1480,33 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"1          1      /topmultiplier/1                                    " 		+ EOL +
 				"2          2      /Sub1/subinmultiplier                               " 		+ EOL +
 				"3          3      /Sub1/doubledmultiplier/1                           " 		+ EOL +
-				"4          4      /Sub1subsub1/multiplier                             " 		+ EOL +
-				"5          5      /Sub1subsub1/multiplicand/1                         " 		+ EOL +
-				"6          6      /Sub1subsub1/product/1                              " 		+ EOL +
-				"7          7      /Sub1subsub1/multiplicand/2                         " 		+ EOL +
-				"8          8      /Sub1subsub1/product/2                              " 		+ EOL +
-				"9          9      /Sub1subsub1/multiplicand/3                         " 		+ EOL +
-				"10         10     /Sub1subsub1/product/3                              " 		+ EOL +
+				"4          4      /Sub1/subsub1/multiplier                            " 		+ EOL +
+				"5          5      /Sub1/subsub1/multiplicand/1                        " 		+ EOL +
+				"6          6      /Sub1/subsub1/product/1                             " 		+ EOL +
+				"7          7      /Sub1/subsub1/multiplicand/2                        " 		+ EOL +
+				"8          8      /Sub1/subsub1/product/2                             " 		+ EOL +
+				"9          9      /Sub1/subsub1/multiplicand/3                        " 		+ EOL +
+				"10         10     /Sub1/subsub1/product/3                             " 		+ EOL +
 				"11         11     /topmultiplier/2                                    " 		+ EOL +
 				"12         12     /Sub2/subinmultiplier                               " 		+ EOL +
 				"13         13     /Sub2/doubledmultiplier/1                           " 		+ EOL +
-				"14         14     /Sub2subsub1/multiplier                             " 		+ EOL +
-				"15         15     /Sub2subsub1/multiplicand/1                         " 		+ EOL +
-				"16         16     /Sub2subsub1/product/1                              " 		+ EOL +
-				"17         17     /Sub2subsub1/multiplicand/2                         " 		+ EOL +
-				"18         18     /Sub2subsub1/product/2                              " 		+ EOL +
-				"19         19     /Sub2subsub1/multiplicand/3                         " 		+ EOL +
-				"20         20     /Sub2subsub1/product/3                              " 		+ EOL +
+				"14         14     /Sub2/subsub1/multiplier                            " 		+ EOL +
+				"15         15     /Sub2/subsub1/multiplicand/1                        " 		+ EOL +
+				"16         16     /Sub2/subsub1/product/1                             " 		+ EOL +
+				"17         17     /Sub2/subsub1/multiplicand/2                        " 		+ EOL +
+				"18         18     /Sub2/subsub1/product/2                             " 		+ EOL +
+				"19         19     /Sub2/subsub1/multiplicand/3                        " 		+ EOL +
+				"20         20     /Sub2/subsub1/product/3                             " 		+ EOL +
 				"21         21     /topmultiplier/3                                    " 		+ EOL +
 				"22         22     /Sub3/subinmultiplier                               " 		+ EOL +
 				"23         23     /Sub3/doubledmultiplier/1                           " 		+ EOL +
-				"24         24     /Sub3subsub1/multiplier                             " 		+ EOL +
-				"25         25     /Sub3subsub1/multiplicand/1                         " 		+ EOL +
-				"26         26     /Sub3subsub1/product/1                              " 		+ EOL +
-				"27         27     /Sub3subsub1/multiplicand/2                         " 		+ EOL +
-				"28         28     /Sub3subsub1/product/2                              " 		+ EOL +
-				"29         29     /Sub3subsub1/multiplicand/3                         " 		+ EOL +
-				"30         30     /Sub3subsub1/product/3                              " 		+ EOL,
+				"24         24     /Sub3/subsub1/multiplier                            " 		+ EOL +
+				"25         25     /Sub3/subsub1/multiplicand/1                        " 		+ EOL +
+				"26         26     /Sub3/subsub1/product/1                             " 		+ EOL +
+				"27         27     /Sub3/subsub1/multiplicand/2                        " 		+ EOL +
+				"28         28     /Sub3/subsub1/product/2                             " 		+ EOL +
+				"29         29     /Sub3/subsub1/multiplicand/3                        " 		+ EOL +
+				"30         30     /Sub3/subsub1/product/3                             " 		+ EOL,
 			trace.dumpResourceTable());
 		
 		assertEquals(
@@ -1549,31 +1549,31 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"----------- ---------- --------------------------------------------------- --------------------------------------------------- " 	+ EOL +
 				"FALSE                  /Sub1/doubledmultiplier/1                           10                                                  " 	+ EOL +
 				"FALSE                  /Sub1/subinmultiplier                               5                                                   " 	+ EOL +
-				"FALSE                  /Sub1subsub1/multiplicand/1                         3                                                   " 	+ EOL +
-				"FALSE                  /Sub1subsub1/multiplicand/2                         8                                                   " 	+ EOL +
-				"FALSE                  /Sub1subsub1/multiplicand/3                         2                                                   " 	+ EOL +
-				"FALSE                  /Sub1subsub1/multiplier                             10                                                  " 	+ EOL +
-				"FALSE                  /Sub1subsub1/product/1                              30                                                  " 	+ EOL +
-				"FALSE                  /Sub1subsub1/product/2                              80                                                  " 	+ EOL +
-				"FALSE                  /Sub1subsub1/product/3                              20                                                  " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/multiplicand/1                        3                                                   " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/multiplicand/2                        8                                                   " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/multiplicand/3                        2                                                   " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/multiplier                            10                                                  " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/product/1                             30                                                  " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/product/2                             80                                                  " 	+ EOL +
+				"FALSE                  /Sub1/subsub1/product/3                             20                                                  " 	+ EOL +
 				"FALSE                  /Sub2/doubledmultiplier/1                           20                                                  " 	+ EOL +
 				"FALSE                  /Sub2/subinmultiplier                               10                                                  " 	+ EOL +
-				"FALSE                  /Sub2subsub1/multiplicand/1                         3                                                   " 	+ EOL +
-				"FALSE                  /Sub2subsub1/multiplicand/2                         8                                                   " 	+ EOL +
-				"FALSE                  /Sub2subsub1/multiplicand/3                         2                                                   " 	+ EOL +
-				"FALSE                  /Sub2subsub1/multiplier                             20                                                  " 	+ EOL +
-				"FALSE                  /Sub2subsub1/product/1                              60                                                  " 	+ EOL +
-				"FALSE                  /Sub2subsub1/product/2                              160                                                 " 	+ EOL +
-				"FALSE                  /Sub2subsub1/product/3                              40                                                  " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/multiplicand/1                        3                                                   " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/multiplicand/2                        8                                                   " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/multiplicand/3                        2                                                   " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/multiplier                            20                                                  " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/product/1                             60                                                  " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/product/2                             160                                                 " 	+ EOL +
+				"FALSE                  /Sub2/subsub1/product/3                             40                                                  " 	+ EOL +
 				"FALSE                  /Sub3/doubledmultiplier/1                           30                                                  " 	+ EOL +
 				"FALSE                  /Sub3/subinmultiplier                               15                                                  " 	+ EOL +
-				"FALSE                  /Sub3subsub1/multiplicand/1                         3                                                   " 	+ EOL +
-				"FALSE                  /Sub3subsub1/multiplicand/2                         8                                                   " 	+ EOL +
-				"FALSE                  /Sub3subsub1/multiplicand/3                         2                                                   " 	+ EOL +
-				"FALSE                  /Sub3subsub1/multiplier                             30                                                  " 	+ EOL +
-				"FALSE                  /Sub3subsub1/product/1                              90                                                  " 	+ EOL +
-				"FALSE                  /Sub3subsub1/product/2                              240                                                 " 	+ EOL +
-				"FALSE                  /Sub3subsub1/product/3                              60                                                  " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/multiplicand/1                        3                                                   " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/multiplicand/2                        8                                                   " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/multiplicand/3                        2                                                   " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/multiplier                            30                                                  " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/product/1                             90                                                  " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/product/2                             240                                                 " 	+ EOL +
+				"FALSE                  /Sub3/subsub1/product/3                             60                                                  " 	+ EOL +
 				"FALSE                  /topmultiplier/1                                    5                                                   " 	+ EOL +
 				"FALSE                  /topmultiplier/2                                    10                                                  " 	+ EOL +
 				"FALSE                  /topmultiplier/3                                    15                                                  " 	+ EOL,

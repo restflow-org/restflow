@@ -1,8 +1,8 @@
 *** Node step counts ***
-ControlSignals: 1
-ControlSignals.CreateControlSignal: 3
-ControlSignals.CreateGreeting: 3
-ControlSignals.RenderGreeting: 3
+<ControlSignals>: 1
+<ControlSignals>[CreateControlSignal]: 3
+<ControlSignals>[CreateGreeting]: 3
+<ControlSignals>[RenderGreeting]: 3
 *** Published resources ***
 CreateGreeting.value/1: hello
 CreateGreeting.value/2: hello

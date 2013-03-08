@@ -45,7 +45,8 @@ public interface WorkflowNode extends Comparable<WorkflowNode> {
 	Map<String, Outflow> getOutflows();
 	boolean isHidden();
 	boolean stepsOnce();
-	String getQualifiedName();
+	String getQualifiedWorkflowNodeName();
+	String getWorkflowNodeNameAsUri();
 	
 	/**************************
 	 *     Node lifecycle     *

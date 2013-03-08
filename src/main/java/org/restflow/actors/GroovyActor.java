@@ -194,7 +194,7 @@ public class GroovyActor extends ScriptActor {
 			script.run();
 		} catch (Exception e) {
 			logger.debug("Runtime error in groovy script of actor " + 
-					getName() + " of "+ getNodeName() + " during " + 
+					getName() + " of "+ getQualifiedParentNodeName() + " during " + 
 					_actorStatus.getCallType() );
 			throw e;
 		}		

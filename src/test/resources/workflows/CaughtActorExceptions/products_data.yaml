@@ -12,6 +12,6 @@
 /generatedValue/7: '7'
 /repeatedValue/3: '6'
 /generatedValue/8: '8'
-/exceptions/7/NullOutputException: 'org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output ''outValue'' of actor ''CaughtActorExceptions.ThrowExceptionOnThirdStep.(inner
-  bean)'''
+/exceptions/7/NullOutputException: 'org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output ''outValue'' of actor <CaughtActorExceptions>[ThrowExceptionOnThirdStep]<(inner
+  bean)>'
 /repeatedValue/4: '8'

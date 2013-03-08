@@ -1,14 +1,14 @@
 *** Node step counts ***
-SimulateDataCollectionNestedParallel: 1
-SimulateDataCollectionNestedParallel.CalculateStrategy: 3
-SimulateDataCollectionNestedParallel.CollectDataSets: 2
-SimulateDataCollectionNestedParallel.CollectDataSets.CollectImage: 26
-SimulateDataCollectionNestedParallel.CollectDataSets.Inputs: 2
-SimulateDataCollectionNestedParallel.CollectDataSets.LogImage: 26
-SimulateDataCollectionNestedParallel.CollectDataSets.Outputs: 2
-SimulateDataCollectionNestedParallel.CollectDataSets.TransformImage: 26
-SimulateDataCollectionNestedParallel.LoadScreeningResults: 3
-SimulateDataCollectionNestedParallel.MergeFeedback: 3
+<SimulateDataCollectionNestedParallel>: 1
+<SimulateDataCollectionNestedParallel>[CalculateStrategy]: 3
+<SimulateDataCollectionNestedParallel>[CollectDataSets]: 2
+<SimulateDataCollectionNestedParallel>[CollectDataSets][CollectImage]: 26
+<SimulateDataCollectionNestedParallel>[CollectDataSets][Inputs]: 2
+<SimulateDataCollectionNestedParallel>[CollectDataSets][LogImage]: 26
+<SimulateDataCollectionNestedParallel>[CollectDataSets][Outputs]: 2
+<SimulateDataCollectionNestedParallel>[CollectDataSets][TransformImage]: 26
+<SimulateDataCollectionNestedParallel>[LoadScreeningResults]: 3
+<SimulateDataCollectionNestedParallel>[MergeFeedback]: 3
 *** Published resources ***
 /feedback/completed/1: DRT240
 /feedback/completed/2: DRT322

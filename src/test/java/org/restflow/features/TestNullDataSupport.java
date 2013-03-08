@@ -273,7 +273,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			exception = e;
 		}
 		assertNotNull(exception);
-		assertEquals("Null data produced on non-nullable output 'c' of actor 'buffer'", exception.getMessage());
+		assertEquals("Null data produced on non-nullable output 'c' of actor <buffer>", exception.getMessage());
 	}
 	
 	public void testGroovyActor_DisallowedNullOutput() throws Exception {
@@ -310,7 +310,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			exception = e;
 		}
 		assertNotNull(exception);
-		assertEquals("Null data produced on non-nullable output 'c' of actor 'buffer'", exception.getMessage());
+		assertEquals("Null data produced on non-nullable output 'c' of actor <buffer>", exception.getMessage());
 	}
 	
 	public void testJavaActor_UnsupportedNullInput() throws Exception {

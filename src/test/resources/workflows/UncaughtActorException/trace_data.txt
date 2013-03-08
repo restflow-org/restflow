@@ -1,8 +1,8 @@
 *** Node step counts ***
-UncaughtActorException: 1
-UncaughtActorException.GenerateIntegerSequence: 4
-UncaughtActorException.RenderIntegerSequence: 1
-UncaughtActorException.ThrowExceptionOnThirdStep: 3
+<UncaughtActorException>: 1
+<UncaughtActorException>[GenerateIntegerSequence]: 4
+<UncaughtActorException>[RenderIntegerSequence]: 1
+<UncaughtActorException>[ThrowExceptionOnThirdStep]: 3
 *** Published resources ***
 generatedValue/1: 1
 generatedValue/2: 2

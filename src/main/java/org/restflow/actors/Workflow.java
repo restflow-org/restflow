@@ -3,6 +3,7 @@ package org.restflow.actors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class Workflow extends AbstractActor {
 	@GuardedBy("this") private List<WorkflowNode> 		_nodes;
 	@GuardedBy("this") private Map<String,Reporter> 	_reports;
 	@GuardedBy("this") private List<WorkflowNode> 		_sinks;
-
+	
 	List<UnusedDataRecord> _unusedDataRecords;
 	
 	private Map<String, WorkflowNode> _nameToNodeMap;
@@ -247,9 +248,11 @@ public class Workflow extends AbstractActor {
 		if (_director == null) {
 			throw new Exception("No director specified for workflow " + this);
 		}
+
+		//elaborateMixins();
 		
 		if (_node != null && !_node.stepsOnce() && _prefixVariableCount == 0) {
-			throw new Exception("Nested workflows '" + getNodeName() + 
+			throw new Exception("Nested workflows '" + getQualifiedParentNodeName() + 
 					"' requires a URI prefix with at least one variable unless they step only once.");
 		}
 
@@ -315,7 +318,7 @@ public class Workflow extends AbstractActor {
 		
 		_state = ActorFSM.ELABORATED;
 	}
-	
+
 	public synchronized void configure() throws Exception {
 	
 		Contract.requires(_state == ActorFSM.ELABORATED);
@@ -419,7 +422,7 @@ public class Workflow extends AbstractActor {
 		if (wrapupResultMessage.length() > 0) {
 			System.err.print(
 					"Warning:  Run " + _runCount + " of workflow " + 
-					"'" + getFullyQualifiedName() + "'" + 
+					getFullyQualifiedActorName() + 
 					" wrapped up with unused data packets:" + PortableIO.EOL +
 					 wrapupResultMessage);
 		}
@@ -602,7 +605,7 @@ public class Workflow extends AbstractActor {
 					} else {
 					
 						throw new Exception("No outflow matching inflow expression for node " + 
-							node.getName() + ": " + inExpression);
+							node.getQualifiedWorkflowNodeName() + ": " + inExpression);
 					}
 				} else {
 					for (Outflow outflow : outflows) {
@@ -624,45 +627,48 @@ public class Workflow extends AbstractActor {
 		
 		Contract.requires(_state == ActorFSM.INITIALIZED || _state == ActorFSM.STEPPED);
 		
-		String expandedNestedUriPrefix;
-		if (_runUriPrefix == null) {
-		
-			expandedNestedUriPrefix = "";
-			
-		} else {
-			
-			Map<String,Object> templateVariables = new HashMap<String,Object>(_inputValues);
-			templateVariables.put("RUN", _runCount);
-			templateVariables.put("STEP", _actorStatus.getStepCount());
-			
-			expandedNestedUriPrefix = _runUriPrefix.getExpandedUri(
-					templateVariables, 
-					new Object[templateVariables.size()], 
-					"", 
-					"").toString();
+		if (_runUriPrefix == null || _runUriPrefix.getPath().isEmpty() ) {
+			if ( _node == null ) {
+				//this workflow is top level, no nested uri to preappend				
+				return "";
+			}
+			//the user did not specify a uri prefix for this sub workflow. 
+			_runUriPrefix = new UriTemplate (getName() + "{RUN}_{STEP}");
 		}
 		
-		String nestedUriPrefix = "";
+		//expand the uri prefix with RUN and STEP and other input values. 
+		String expandedNestedUriPrefix;			
+		Map<String,Object> templateVariables = new HashMap<String,Object>(_inputValues);
+		templateVariables.put("RUN", _runCount);
+		templateVariables.put("STEP", _actorStatus.getStepCount());
+			
+		expandedNestedUriPrefix = _runUriPrefix.getExpandedUri(
+				templateVariables, 
+				new Object[templateVariables.size()], 
+				"", 
+				"").toString();
+				
 		
 		if (_node == null) {
-			
-			if (expandedNestedUriPrefix.length() > 0) {
-			
-				nestedUriPrefix = expandedNestedUriPrefix;
-			}
-			
-		} else {			
-			
-			nestedUriPrefix = _node.getUriPrefix();
-			
-			if (expandedNestedUriPrefix.isEmpty()) {
-				nestedUriPrefix += "/" + this.getNodeName();
-			} else {
-				nestedUriPrefix += expandedNestedUriPrefix;
-			}
+			//this workflow is top level, no nested uri to preappend
+			return cleanupUriString(expandedNestedUriPrefix);
 		}
+		
+		//the node holding this workflow has a uri prefix that needs to be preappended
+		//to the expanded prefix for this workflow
+		String parentUriPrefix = _node.getUriPrefix();
+		if ( parentUriPrefix.isEmpty()) {
+			return cleanupUriString(expandedNestedUriPrefix);
+		} 
 
-		return nestedUriPrefix;
+		//add the parent uri prefix to the one just expanded for this node
+		return cleanupUriString(parentUriPrefix + "/" + expandedNestedUriPrefix);			
+	}
+	
+	static private String cleanupUriString ( String uri ) {
+		//String globalUri = "/" + uri;
+		String noDuplicates = (uri.replaceAll("//", "/"));
+		return noDuplicates;
 	}
 
 	private synchronized void _registerPortalInflowsAndOutflows() {
@@ -774,4 +780,5 @@ public class Workflow extends AbstractActor {
 	public WorkflowNode getParentNode() {
 		return _node;
 	}
+
 }

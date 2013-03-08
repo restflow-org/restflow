@@ -186,7 +186,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 	}
 	
 	private void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
-		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedName())
+		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedActorName())
 		  	  .appendBlankLine();
 	}
 	

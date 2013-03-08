@@ -123,7 +123,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 		.inflow("v", "/topmultiplier")
 			
 		.preambleReporter(new GroovyTemplateReporter(
-				"Preamble report for step ${STEP} and run ${RUN} of ${workflow}:" 	+ 
+				"Preamble report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" 	+ 
 				"                          v = ${inputs.get('v')}" 			+ EOL
 			)
 		)
@@ -135,7 +135,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 			.inflow("/topmultiplier", "a", "/subinmultiplier")
 			
 			.preambleReporter(new GroovyTemplateReporter(
-					"Preamble report for step ${STEP} and run ${RUN} of ${workflow}:" 	+
+					"Preamble report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" 	+
 					"              a = ${inputs.get('a')}" 			+ EOL
 				)
 			)
@@ -163,7 +163,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 				.inflow("/scaledmultiplier", "b", "/multiplier")
 				
 				.preambleReporter(new GroovyTemplateReporter(
-						 "Preamble report for step ${STEP} and run ${RUN} of ${workflow}:" +
+						 "Preamble report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" +
 						 "  b = ${inputs.get('b')}" 		+ EOL
 					)
 				)
@@ -186,7 +186,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 					}))
 					
 				.finalReporter(new GroovyTemplateReporter(
-						"Final report for step ${STEP} and run ${RUN} of $workflow:" 	+ 
+						"Final report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" 	+ 
 						 "     b = ${inputs.get('b')}"		+ 
 						 "  c = ${outputs.get('c')}" 	+ EOL
 					)
@@ -198,7 +198,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 			.outflow("/product", "d", "/result")
 			
 			.finalReporter(new GroovyTemplateReporter(
-					"Final report for step ${STEP} and run ${RUN} of $workflow:" 	+
+					"Final report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" 	+
 					 "                 d = ${outputs.get('d')}"	+ EOL
 				)
 			)
@@ -207,7 +207,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 		.outflow("/result", "e")
 		
 		.finalReporter(new GroovyTemplateReporter(
-				"Final report for step ${STEP} and run ${RUN} of $workflow:" 	+
+				"Final report for step ${STEP} and run ${RUN} of ${workflow.fullyQualifiedActorName}:" 	+
 				 "                             e = ${outputs.get('e')}"	+ EOL + EOL
 			)
 		)
@@ -229,47 +229,47 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 		});
 		
 		assertEquals(
-			"Preamble report for step 1 and run 1 of TopWF:                          v = 1"					+ EOL +
-			"Preamble report for step 1 and run 1 of TopWF.SubWF.SubWF:              a = 1"					+ EOL +
-			"Preamble report for step 1 and run 1 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 2"					+ EOL +
+			"Preamble report for step 1 and run 1 of <TopWF>:                          v = 1"					+ EOL +
+			"Preamble report for step 1 and run 1 of <TopWF>[SubWF]<SubWF>:              a = 1"					+ EOL +
+			"Preamble report for step 1 and run 1 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 2"					+ EOL +
 			"16"																							+ EOL +
-			"Final report for step 1 and run 1 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 2  c = 16"			+ EOL +
-			"Preamble report for step 2 and run 2 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 5"					+ EOL +
+			"Final report for step 1 and run 1 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 2  c = 16"			+ EOL +
+			"Preamble report for step 2 and run 2 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 5"					+ EOL +
 			"40"																							+ EOL +
-			"Final report for step 2 and run 2 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 5  c = 40"			+ EOL +
-			"Preamble report for step 3 and run 3 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 30"				+ EOL +
+			"Final report for step 2 and run 2 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 5  c = 40"			+ EOL +
+			"Preamble report for step 3 and run 3 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 30"				+ EOL +
 			"240"																							+ EOL +
-			"Final report for step 3 and run 3 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 30  c = 240"		+ EOL +
-			"Final report for step 1 and run 1 of TopWF.SubWF.SubWF:                 d = 16"				+ EOL +
-			"Final report for step 1 and run 1 of TopWF:                             e = 16"				+ EOL +
+			"Final report for step 3 and run 3 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 30  c = 240"		+ EOL +
+			"Final report for step 1 and run 1 of <TopWF>[SubWF]<SubWF>:                 d = 16"				+ EOL +
+			"Final report for step 1 and run 1 of <TopWF>:                             e = 16"				+ EOL +
 			""																								+ EOL +
-			"Preamble report for step 1 and run 2 of TopWF:                          v = 2"					+ EOL +
-			"Preamble report for step 1 and run 2 of TopWF.SubWF.SubWF:              a = 2"					+ EOL +
-			"Preamble report for step 1 and run 4 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 4"					+ EOL +
+			"Preamble report for step 1 and run 2 of <TopWF>:                          v = 2"					+ EOL +
+			"Preamble report for step 1 and run 2 of <TopWF>[SubWF]<SubWF>:              a = 2"					+ EOL +
+			"Preamble report for step 1 and run 4 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 4"					+ EOL +
 			"32"																							+ EOL +
-			"Final report for step 1 and run 4 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 4  c = 32"			+ EOL +
-			"Preamble report for step 2 and run 5 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 10"				+ EOL +
+			"Final report for step 1 and run 4 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 4  c = 32"			+ EOL +
+			"Preamble report for step 2 and run 5 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 10"				+ EOL +
 			"80"																							+ EOL +
-			"Final report for step 2 and run 5 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 10  c = 80"		+ EOL +
-			"Preamble report for step 3 and run 6 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 60"				+ EOL +
+			"Final report for step 2 and run 5 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 10  c = 80"		+ EOL +
+			"Preamble report for step 3 and run 6 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 60"				+ EOL +
 			"480"																							+ EOL +
-			"Final report for step 3 and run 6 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 60  c = 480"		+ EOL +
-			"Final report for step 1 and run 2 of TopWF.SubWF.SubWF:                 d = 32"				+ EOL +
-			"Final report for step 1 and run 2 of TopWF:                             e = 32"				+ EOL +
+			"Final report for step 3 and run 6 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 60  c = 480"		+ EOL +
+			"Final report for step 1 and run 2 of <TopWF>[SubWF]<SubWF>:                 d = 32"				+ EOL +
+			"Final report for step 1 and run 2 of <TopWF>:                             e = 32"				+ EOL +
 			""																								+ EOL +
-			"Preamble report for step 1 and run 3 of TopWF:                          v = 3"					+ EOL +
-			"Preamble report for step 1 and run 3 of TopWF.SubWF.SubWF:              a = 3"					+ EOL +
-			"Preamble report for step 1 and run 7 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 6"					+ EOL +
+			"Preamble report for step 1 and run 3 of <TopWF>:                          v = 3"					+ EOL +
+			"Preamble report for step 1 and run 3 of <TopWF>[SubWF]<SubWF>:              a = 3"					+ EOL +
+			"Preamble report for step 1 and run 7 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 6"					+ EOL +
 			"48"																							+ EOL +
-			"Final report for step 1 and run 7 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 6  c = 48"			+ EOL +
-			"Preamble report for step 2 and run 8 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 15"				+ EOL +
+			"Final report for step 1 and run 7 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 6  c = 48"			+ EOL +
+			"Preamble report for step 2 and run 8 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 15"				+ EOL +
 			"120"																							+ EOL +
-			"Final report for step 2 and run 8 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 15  c = 120"		+ EOL +
-			"Preamble report for step 3 and run 9 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 90"				+ EOL +
+			"Final report for step 2 and run 8 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 15  c = 120"		+ EOL +
+			"Preamble report for step 3 and run 9 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 90"				+ EOL +
 			"720"																							+ EOL +
-			"Final report for step 3 and run 9 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 90  c = 720"		+ EOL +
-			"Final report for step 1 and run 3 of TopWF.SubWF.SubWF:                 d = 48"				+ EOL +
-			"Final report for step 1 and run 3 of TopWF:                             e = 48"				+ EOL +
+			"Final report for step 3 and run 9 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 90  c = 720"		+ EOL +
+			"Final report for step 1 and run 3 of <TopWF>[SubWF]<SubWF>:                 d = 48"				+ EOL +
+			"Final report for step 1 and run 3 of <TopWF>:                             e = 48"				+ EOL +
 			""																								+ EOL,
 			recorder.getStdoutRecording());
 		
@@ -290,47 +290,47 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 		});
 				
 		assertEquals(
-				"Preamble report for step 1 and run 1 of TopWF:                          v = 1"					+ EOL +
-				"Preamble report for step 1 and run 1 of TopWF.SubWF.SubWF:              a = 1"					+ EOL +
-				"Preamble report for step 1 and run 1 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 2"					+ EOL +
+				"Preamble report for step 1 and run 1 of <TopWF>:                          v = 1"					+ EOL +
+				"Preamble report for step 1 and run 1 of <TopWF>[SubWF]<SubWF>:              a = 1"					+ EOL +
+				"Preamble report for step 1 and run 1 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 2"					+ EOL +
 				"16"																							+ EOL +
-				"Final report for step 1 and run 1 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 2  c = 16"			+ EOL +
-				"Preamble report for step 2 and run 2 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 5"					+ EOL +
+				"Final report for step 1 and run 1 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 2  c = 16"			+ EOL +
+				"Preamble report for step 2 and run 2 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 5"					+ EOL +
 				"40"																							+ EOL +
-				"Final report for step 2 and run 2 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 5  c = 40"			+ EOL +
-				"Preamble report for step 3 and run 3 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 30"				+ EOL +
+				"Final report for step 2 and run 2 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 5  c = 40"			+ EOL +
+				"Preamble report for step 3 and run 3 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 30"				+ EOL +
 				"240"																							+ EOL +
-				"Final report for step 3 and run 3 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 30  c = 240"		+ EOL +
-				"Final report for step 1 and run 1 of TopWF.SubWF.SubWF:                 d = 16"				+ EOL +
-				"Final report for step 1 and run 1 of TopWF:                             e = 16"				+ EOL +
+				"Final report for step 3 and run 3 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 30  c = 240"		+ EOL +
+				"Final report for step 1 and run 1 of <TopWF>[SubWF]<SubWF>:                 d = 16"				+ EOL +
+				"Final report for step 1 and run 1 of <TopWF>:                             e = 16"				+ EOL +
 				""																								+ EOL +
-				"Preamble report for step 2 and run 2 of TopWF:                          v = 2"					+ EOL +
-				"Preamble report for step 1 and run 2 of TopWF.SubWF.SubWF:              a = 2"					+ EOL +
-				"Preamble report for step 1 and run 4 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 4"					+ EOL +
+				"Preamble report for step 2 and run 2 of <TopWF>:                          v = 2"					+ EOL +
+				"Preamble report for step 1 and run 2 of <TopWF>[SubWF]<SubWF>:              a = 2"					+ EOL +
+				"Preamble report for step 1 and run 4 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 4"					+ EOL +
 				"32"																							+ EOL +
-				"Final report for step 1 and run 4 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 4  c = 32"			+ EOL +
-				"Preamble report for step 2 and run 5 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 10"				+ EOL +
+				"Final report for step 1 and run 4 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 4  c = 32"			+ EOL +
+				"Preamble report for step 2 and run 5 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 10"				+ EOL +
 				"80"																							+ EOL +
-				"Final report for step 2 and run 5 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 10  c = 80"		+ EOL +
-				"Preamble report for step 3 and run 6 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 60"				+ EOL +
+				"Final report for step 2 and run 5 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 10  c = 80"		+ EOL +
+				"Preamble report for step 3 and run 6 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 60"				+ EOL +
 				"480"																							+ EOL +
-				"Final report for step 3 and run 6 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 60  c = 480"		+ EOL +
-				"Final report for step 1 and run 2 of TopWF.SubWF.SubWF:                 d = 32"				+ EOL +
-				"Final report for step 2 and run 2 of TopWF:                             e = 32"				+ EOL +
+				"Final report for step 3 and run 6 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 60  c = 480"		+ EOL +
+				"Final report for step 1 and run 2 of <TopWF>[SubWF]<SubWF>:                 d = 32"				+ EOL +
+				"Final report for step 2 and run 2 of <TopWF>:                             e = 32"				+ EOL +
 				""																								+ EOL +
-				"Preamble report for step 3 and run 3 of TopWF:                          v = 3"					+ EOL +
-				"Preamble report for step 1 and run 3 of TopWF.SubWF.SubWF:              a = 3"					+ EOL +
-				"Preamble report for step 1 and run 7 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 6"					+ EOL +
+				"Preamble report for step 3 and run 3 of <TopWF>:                          v = 3"					+ EOL +
+				"Preamble report for step 1 and run 3 of <TopWF>[SubWF]<SubWF>:              a = 3"					+ EOL +
+				"Preamble report for step 1 and run 7 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 6"					+ EOL +
 				"48"																							+ EOL +
-				"Final report for step 1 and run 7 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 6  c = 48"			+ EOL +
-				"Preamble report for step 2 and run 8 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 15"				+ EOL +
+				"Final report for step 1 and run 7 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 6  c = 48"			+ EOL +
+				"Preamble report for step 2 and run 8 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 15"				+ EOL +
 				"120"																							+ EOL +
-				"Final report for step 2 and run 8 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 15  c = 120"		+ EOL +
-				"Preamble report for step 3 and run 9 of TopWF.SubWF.SubSubWF.SubSubWF:  b = 90"				+ EOL +
+				"Final report for step 2 and run 8 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 15  c = 120"		+ EOL +
+				"Preamble report for step 3 and run 9 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:  b = 90"				+ EOL +
 				"720"																							+ EOL +
-				"Final report for step 3 and run 9 of TopWF.SubWF.SubSubWF.SubSubWF:     b = 90  c = 720"		+ EOL +
-				"Final report for step 1 and run 3 of TopWF.SubWF.SubWF:                 d = 48"				+ EOL +
-				"Final report for step 3 and run 3 of TopWF:                             e = 48"				+ EOL +
+				"Final report for step 3 and run 9 of <TopWF>[SubWF][SubSubWF]<SubSubWF>:     b = 90  c = 720"		+ EOL +
+				"Final report for step 1 and run 3 of <TopWF>[SubWF]<SubWF>:                 d = 48"				+ EOL +
+				"Final report for step 3 and run 3 of <TopWF>:                             e = 48"				+ EOL +
 				""																								+ EOL,
 				recorder.getStdoutRecording());
 			
@@ -401,13 +401,13 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 			recorder.getStdoutRecording());
 
 		assertEquals(
-				"TopWorkflow: 1"				+ EOL +
-				"TopWorkflow.TheOnlyNode: 1"	+ EOL,	
+				"<TopWorkflow>: 1"				+ EOL +
+				"<TopWorkflow>[TheOnlyNode]: 1"	+ EOL,	
 			workflow.getReport("MyReport"));
 
 		assertEquals(
-				"TopWorkflow 1"					+ EOL +
-				"TopWorkflow.TheOnlyNode 1" 	+ EOL,
+				"<TopWorkflow> 1"					+ EOL +
+				"<TopWorkflow>[TheOnlyNode] 1" 	+ EOL,
 			workflow.getReport("MyOtherReport"));
 	}
 }

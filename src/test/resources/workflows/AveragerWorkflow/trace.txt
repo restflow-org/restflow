@@ -1,8 +1,8 @@
 *** Node step counts ***
-AveragerWorkflow: 1
-AveragerWorkflow.AverageValues: 1
-AveragerWorkflow.GenerateValueList: 1
-AveragerWorkflow.RenderAverage: 1
+<AveragerWorkflow>: 1
+<AveragerWorkflow>[AverageValues]: 1
+<AveragerWorkflow>[GenerateValueList]: 1
+<AveragerWorkflow>[RenderAverage]: 1
 *** Published resources ***
 /averages/1: 4.0
 /values: [2.6, 5.5, 3.9]

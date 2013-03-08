@@ -75,7 +75,7 @@ public class Trace {
 			while (resultSet.next()) {
 				prologFacts.append(
 						"rf_node(['" 												+ 
-						resultSet.getString("NodeName").replaceAll("\\.", "','") 	+ 
+						splitQualifiedNodeName(resultSet.getString("NodeName")) 	+ 
 						"'])." 														+ 
 						PortableIO.EOL 
 				);
@@ -84,6 +84,18 @@ public class Trace {
 			return prologFacts.toString();
 		}
 	}
+	
+	private String splitQualifiedNodeName(String name) {
+		String noSpecialChars = name.replaceAll("[\\]\\[<>]", " ").trim();
+		String singleWhitespace = noSpecialChars.replaceAll("  ", "','");		
+		return singleWhitespace;
+	}
+
+	private String convertQualifiedNodeNameToPrologName(String name) {
+		String noSpecialChars = name.replaceAll("[\\]\\[<>]", " ").trim();
+		String singleWhitespace = noSpecialChars.replaceAll("  ", ".");		
+		return singleWhitespace;
+	}	
 	
 	public String getWorkflowPortsProlog() throws SQLException {
 		
@@ -98,7 +110,7 @@ public class Trace {
 			while (resultSet.next()) {
 				prologFacts.append(
 						"rf_port('" 															+ 
-						resultSet.getString("NodeName") 										+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("NodeName")) 										+ 
 						"','" 																	+ 
 						resultSet.getString("PortName") 										+ 
 						"'," 																	+
@@ -134,9 +146,9 @@ public class Trace {
 				
 				prologFacts.append(
 						"rf_link('" 								+ 
-						resultSet.getString("SourceNodeName") 		+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("SourceNodeName")) 		+ 
 						"','" 										+ 
-						resultSet.getString("SourcePortName")		+
+						convertQualifiedNodeNameToPrologName(resultSet.getString("SourcePortName"))		+
 						"'," 										+
 						edgeName 									+
 						")."										+ 
@@ -145,9 +157,9 @@ public class Trace {
 				
 				prologFacts.append(
 						"rf_link('" 								+ 
-						resultSet.getString("SinkNodeName")			+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("SinkNodeName"))			+ 
 						"','" 										+ 
-						resultSet.getString("SinkPortName") 		+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("SinkPortName")) 		+ 
 						"'," 										+
 						edgeName 									+
 						")."										+ 
@@ -192,7 +204,7 @@ public class Trace {
 						"rf_event(" 						+
 						resultSet.getString("EventClass")	+
 						",'"								+ 
-						resultSet.getString("NodeName") 	+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("NodeName")) 	+ 
 						"','" 								+ 
 						resultSet.getString("StepNumber")	+ 
 						"','" 								+
@@ -237,7 +249,7 @@ public class Trace {
 						"rf_event(" 														+
 						resultSet.getString("EventClass")									+
 						",'"																+ 
-						resultSet.getString("NodeName") 									+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("NodeName")) 									+ 
 						"','" 																+ 
 						resultSet.getString("StepNumber")									+ 
 						"','" 																+
@@ -269,7 +281,7 @@ public class Trace {
 				
 				prologFacts.append(
 						"rf_step("								+ 
-						resultSet.getString("NodeName") 		+ 
+						convertQualifiedNodeNameToPrologName(resultSet.getString("NodeName")) 		+ 
 						"','" 									+ 
 						resultSet.getString("StepNumber")		+
 						"')."									+ 
@@ -425,7 +437,7 @@ public class Trace {
 					_statement,
 					"Node", 			
 					new String[] {"NodeId", "ParentNodeID", "ActorID", "StepCount", 
-					"NodeName                                          ",
+					"NodeName                                                    ",
 					"LocalNodeName                  "}
 			);
 		}

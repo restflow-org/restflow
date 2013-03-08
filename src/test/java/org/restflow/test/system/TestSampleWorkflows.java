@@ -45,6 +45,7 @@ public class TestSampleWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedStdout("hello3_stdout.txt"), _runner.getStdoutRecording());		
 	}
 
+	
 	public void test_Hello3_merge_uri() throws Exception {
 		configureForGroovyActor();
 		//PublishSubscribeDirector d = new PublishSubscribeDirector();
@@ -66,6 +67,15 @@ public class TestSampleWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedStdout("hello4_stdout.txt"), _runner.getStdoutRecording());		
 	}
 
+	public void test_Hello4Mixin() throws Exception {
+
+		configureForGroovyActor();
+		_loadAndRunWorkflow("hello", "hello4Mixin", _dataDrivenDirector(), "HelloWorld");
+		assertEquals(_getExpectedResultFile("hello4_trace.txt"), _runner.getTraceReport());	
+		assertEquals(_getExpectedStdout("hello4_stdout.txt"), _runner.getStdoutRecording());		
+	}	
+	
+	
 	public void test_Hello5() throws Exception {
 		configureForGroovyActor();
 		_loadAndRunWorkflow("hello", "hello5", _dataDrivenDirector(), "HelloWorld");
@@ -108,6 +118,14 @@ public class TestSampleWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedStdout("nestedworkflow1_incrementer_stdout.txt"), _runner.getStdoutRecording());		
 	}
 
+	public void test_NestedMixinMathWorkflow1() throws Exception {
+		_useWorkingDirectory();
+		configureForGroovyActor();
+		_loadAndRunWorkflow("nested", "nestedIncrementWorkflowWithMultiplierMixin", _dataDrivenDirector(), "TopWorkflow");
+		assertEquals(_getExpectedResultFile("nestedworkflow1_incrementer_trace.txt"),_runner.getTraceReport());;	
+		assertEquals(_getExpectedStdout("nestedworkflow1_incrementer_stdout.txt"), _runner.getStdoutRecording());		
+	}	
+	
 	public void test_NestedWorkflow1() throws Exception {
 		configureForGroovyActor();
 		_loadAndRunWorkflow("nested", "nestedworkflow1", _dataDrivenDirector(), "NestedWorkflow");

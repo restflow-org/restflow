@@ -200,8 +200,8 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 
 		// confirm that no error messages were generated
 		assertEquals(
-				"Warning:  Run 1 of workflow 'ThreeNodeWorkflowWithExcessData' wrapped up with unused data packets:" 	+ EOL + 
-				"1 packet in queue 'c' on node 'MultiplyData' with URI '/offset/2'"										+ EOL,
+				"Warning:  Run 1 of workflow <ThreeNodeWorkflowWithExcessData> wrapped up with unused data packets:" 	+ EOL + 
+				"1 packet in queue 'c' on node [MultiplyData] with URI '/offset/2'"										+ EOL,
 				recorder.getStderrRecording());
 		
 		workflow.wrapup();
@@ -385,10 +385,10 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 
 		// confirm that no error messages were generated
 		assertEquals(
-				"Warning:  Run 1 of workflow 'ThreeNodeWorkflowWithExcessData' wrapped up with unused data packets:" 	+ EOL +
-				"1 packet in inflow 'b' on node 'MultiplyData' with URI '/multiplicand/2'"								+ EOL +
-				"1 packet in queue 'b' on node 'MultiplyData' with URI '/multiplicand/3'" 								+ EOL +
-				"1 packet in inflow 'c' on node 'MultiplyData' with URI '/offset/2'"									+ EOL,
+				"Warning:  Run 1 of workflow <ThreeNodeWorkflowWithExcessData> wrapped up with unused data packets:" 	+ EOL +
+				"1 packet in inflow 'b' on node [MultiplyData] with URI '/multiplicand/2'"								+ EOL +
+				"1 packet in queue 'b' on node [MultiplyData] with URI '/multiplicand/3'" 								+ EOL +
+				"1 packet in inflow 'c' on node [MultiplyData] with URI '/offset/2'"									+ EOL,
 				runRecorder.getStderrRecording());
 
 		
@@ -488,10 +488,10 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 
 		// confirm that no error messages were generated
 		assertEquals(
-			"Warning:  Run 1 of workflow 'ThreeNodeWorkflowWithExcessData' wrapped up with unused data packets:" 	+ EOL +
-			"1 packet in outflow 'output' on node 'BufferNode-for-MultiplyData-b' with URI '/multiplicand/3'" 		+ EOL +
-			"1 packet in inflow 'b' on node 'MultiplyData' with URI '/multiplicand/2'" 								+ EOL +
-			"1 packet in inflow 'c' on node 'MultiplyData' with URI '/offset/2'" 									+ EOL,
+			"Warning:  Run 1 of workflow <ThreeNodeWorkflowWithExcessData> wrapped up with unused data packets:" 	+ EOL +
+			"1 packet in outflow 'output' on node [BufferNode-for-MultiplyData-b] with URI '/multiplicand/3'" 		+ EOL +
+			"1 packet in inflow 'b' on node [MultiplyData] with URI '/multiplicand/2'" 								+ EOL +
+			"1 packet in inflow 'c' on node [MultiplyData] with URI '/offset/2'" 									+ EOL,
 			runRecorder.getStderrRecording());
 
 		// run the workflow while capturing stdout and stderr 

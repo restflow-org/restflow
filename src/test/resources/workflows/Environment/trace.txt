@@ -1,8 +1,8 @@
 *** Node step counts ***
-Environment.LoadEnvironment: 1
-Environment.Source1: 1
-Environment.Source2: 1
-Environment.UseEnvironment: 1
+<Environment>[LoadEnvironment]: 1
+<Environment>[Source1]: 1
+<Environment>[Source2]: 1
+<Environment>[UseEnvironment]: 1
 *** Published resources ***
 /Environment/output.tcl/1: /mnt/exdshome1/scottm/workspace_blank/RestFlow/src/test/resources/workflows/Environment/output.tcl
 /Environment/setup_env.csh/1: /mnt/exdshome1/scottm/workspace_blank/RestFlow/src/test/resources/workflows/Environment/setup_env.csh

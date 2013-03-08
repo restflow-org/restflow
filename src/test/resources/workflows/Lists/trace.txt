@@ -1,9 +1,9 @@
 *** Node step counts ***
-Lists: 1
-Lists.CreateLists: 6
-Lists.FlattenLists: 15
-Lists.PrintItems: 15
-Lists.PrintList: 5
+<Lists>: 1
+<Lists>[CreateLists]: 6
+<Lists>[FlattenLists]: 15
+<Lists>[PrintItems]: 15
+<Lists>[PrintList]: 5
 *** Published resources ***
 /items/1: 1
 /items/10: 10

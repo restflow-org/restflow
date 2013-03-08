@@ -1,7 +1,7 @@
 *** Node step counts ***
-BashProgram: 1
-BashProgram.CreateAndRunScript: 3
-BashProgram.PrintOutputFile: 3
+<BashProgram>: 1
+<BashProgram>[CreateAndRunScript]: 3
+<BashProgram>[PrintOutputFile]: 3
 *** Published resources ***
 file:/messages/output_1.txt
 file:/messages/output_2.txt

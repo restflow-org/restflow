@@ -1,8 +1,8 @@
 *** Node step counts ***
-Filter: 1
-Filter.CountToTen: 11
-Filter.FilterNumbers: 10
-Filter.PrintNumbers: 5
+<Filter>: 1
+<Filter>[CountToTen]: 11
+<Filter>[FilterNumbers]: 10
+<Filter>[PrintNumbers]: 5
 *** Published resources ***
 /filtered/numbers/1: 3
 /filtered/numbers/2: 4

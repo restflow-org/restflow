@@ -1,8 +1,8 @@
 *** Node step counts ***
-Loop: 1
-Loop.AddOne: 11
-Loop.LowPassFilter: 11
-Loop.Print: 10
+<Loop>: 1
+<Loop>[AddOne]: 11
+<Loop>[LowPassFilter]: 11
+<Loop>[Print]: 10
 *** Published resources ***
 /filtered/1: 1
 /filtered/10: 10

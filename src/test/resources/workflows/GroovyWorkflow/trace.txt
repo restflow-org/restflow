@@ -1,8 +1,8 @@
 *** Node step counts ***
-GroovyWorkflow: 1
-GroovyWorkflow.GenerateValues: 3
-GroovyWorkflow.RenderSquares: 3
-GroovyWorkflow.Square: 3
+<GroovyWorkflow>: 1
+<GroovyWorkflow>[GenerateValues]: 3
+<GroovyWorkflow>[RenderSquares]: 3
+<GroovyWorkflow>[Square]: 3
 *** Published resources ***
 /square/1: 1
 /square/2: 4

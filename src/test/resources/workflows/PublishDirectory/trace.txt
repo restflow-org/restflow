@@ -1,10 +1,10 @@
 *** Node step counts ***
-PublishDirectory: 1
-PublishDirectory.AccessOneFile: 1
-PublishDirectory.CreateDirectoryOfFiles: 1
-PublishDirectory.OutputDirectory: 1
-PublishDirectory.PrintOriginalFileContents: 1
-PublishDirectory.PrintRepublishedFileContents: 1
+<PublishDirectory>: 1
+<PublishDirectory>[AccessOneFile]: 1
+<PublishDirectory>[CreateDirectoryOfFiles]: 1
+<PublishDirectory>[OutputDirectory]: 1
+<PublishDirectory>[PrintOriginalFileContents]: 1
+<PublishDirectory>[PrintRepublishedFileContents]: 1
 *** Published resources ***
 file:/directories/1/directoryOne
 file:/directories/1/directoryOne/directoryThree

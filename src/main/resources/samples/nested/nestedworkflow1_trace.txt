@@ -1,13 +1,13 @@
 *** Node step counts ***
-NestedWorkflow: 1
-NestedWorkflow.GenerateIntegerSequence: 6
-NestedWorkflow.IncrementByDefaultIncrement: 5
-NestedWorkflow.IncrementByDefaultIncrement.IncrementInputValue: 5
-NestedWorkflow.IncrementByDefaultIncrement.InputValueAndIncrement: 5
-NestedWorkflow.IncrementByDefaultIncrement.OutputIncrementedValueAndIncrement: 5
-NestedWorkflow.IncrementByDefaultIncrement.RenderInputs: 5
-NestedWorkflow.RenderFirstIncrement: 5
-NestedWorkflow.RenderIncrementedIntegers: 5
+<NestedWorkflow>: 1
+<NestedWorkflow>[GenerateIntegerSequence]: 6
+<NestedWorkflow>[IncrementByDefaultIncrement]: 5
+<NestedWorkflow>[IncrementByDefaultIncrement][IncrementInputValue]: 5
+<NestedWorkflow>[IncrementByDefaultIncrement][InputValueAndIncrement]: 5
+<NestedWorkflow>[IncrementByDefaultIncrement][OutputIncrementedValueAndIncrement]: 5
+<NestedWorkflow>[IncrementByDefaultIncrement][RenderInputs]: 5
+<NestedWorkflow>[RenderFirstIncrement]: 5
+<NestedWorkflow>[RenderIncrementedIntegers]: 5
 *** Published resources ***
 /Increment1/incrementedValue: 2
 /Increment1/inputIncrement: 1

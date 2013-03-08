@@ -99,13 +99,13 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0         OneShotInflowWorkflow                              OneShotInflowWorkflow           " 	+ EOL +
-				"2      1            2       0         OneShotInflowWorkflow.CreateSingletonData          CreateSingletonData             " 	+ EOL +
-				"3      1            3       0         OneShotInflowWorkflow.CreateSequenceData           CreateSequenceData              " 	+ EOL +
-				"4      1            4       0         OneShotInflowWorkflow.MultiplySequenceBySingleton  MultiplySequenceBySingleton     " 	+ EOL +
-				"5      1            5       0         OneShotInflowWorkflow.RenderProducts               RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <OneShotInflowWorkflow>                                      OneShotInflowWorkflow           " 	+ EOL +
+				"2      1            2       0         <OneShotInflowWorkflow>[CreateSingletonData]                 CreateSingletonData             " 	+ EOL +
+				"3      1            3       0         <OneShotInflowWorkflow>[CreateSequenceData]                  CreateSequenceData              " 	+ EOL +
+				"4      1            4       0         <OneShotInflowWorkflow>[MultiplySequenceBySingleton]         MultiplySequenceBySingleton     " 	+ EOL +
+				"5      1            5       0         <OneShotInflowWorkflow>[RenderProducts]                      RenderProducts                  " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		assertEquals(
@@ -212,13 +212,13 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0         OneShotInflowWorkflow                              OneShotInflowWorkflow           " 	+ EOL +
-				"2      1            2       0         OneShotInflowWorkflow.CreatePunctuationSequence    CreatePunctuationSequence       " 	+ EOL +
-				"3      1            3       0         OneShotInflowWorkflow.AppendGreetingWithPunctuatio AppendGreetingWithPunctuation   " 	+ EOL +
-				"4      1            4       0         OneShotInflowWorkflow.PrintAppendedGreeting        PrintAppendedGreeting           " 	+ EOL +
-				"5      1            5       0         OneShotInflowWorkflow.GetGreeting                  GetGreeting                     " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <OneShotInflowWorkflow>                                      OneShotInflowWorkflow           " 	+ EOL +
+				"2      1            2       0         <OneShotInflowWorkflow>[CreatePunctuationSequence]           CreatePunctuationSequence       " 	+ EOL +
+				"3      1            3       0         <OneShotInflowWorkflow>[AppendGreetingWithPunctuation]       AppendGreetingWithPunctuation   " 	+ EOL +
+				"4      1            4       0         <OneShotInflowWorkflow>[PrintAppendedGreeting]               PrintAppendedGreeting           " 	+ EOL +
+				"5      1            5       0         <OneShotInflowWorkflow>[GetGreeting]                         GetGreeting                     " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		assertEquals(
@@ -304,11 +304,11 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 		
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0                                                                                            " 	+ EOL +
-				"2      1            2       0         .anonymous_node_1                                  anonymous_node_1                " 	+ EOL +
-				"3      1            3       0         .anonymous_node_2                                  anonymous_node_2                " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <>                                                                                           " 	+ EOL +
+				"2      1            2       0         <>[anonymous_node_1]                                         anonymous_node_1                " 	+ EOL +
+				"3      1            3       0         <>[anonymous_node_2]                                         anonymous_node_2                " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		
@@ -408,14 +408,14 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 		assertEquals(
 				"NodeId ParentNodeID ActorID StepCount NodeName                                                       LocalNodeName                             " 	+ EOL +
 				"------ ------------ ------- --------- -------------------------------------------------------------- ----------------------------------------- " 	+ EOL +
-				"1                   1       0         MultiplierWorkflow                                             MultiplierWorkflow                        " 	+ EOL +
-				"2      1            2       0         MultiplierWorkflow.CreateSingletonData                         CreateSingletonData                       " 	+ EOL +
-				"3      1            3       0         MultiplierWorkflow.CreateSequenceData                          CreateSequenceData                        " 	+ EOL +
-				"4      1            4       0         MultiplierWorkflow.MultiplyBySingleton                         MultiplyBySingleton                       " 	+ EOL +
-				"5      1            5       0         MultiplierWorkflow.RenderProducts                              RenderProducts                            " 	+ EOL +
-				"6      1            6       0         MultiplierWorkflow.BufferNode-for-MultiplyBySingleton-a        BufferNode-for-MultiplyBySingleton-a      " 	+ EOL +
-				"7      1            6       0         MultiplierWorkflow.BufferNode-for-MultiplyBySingleton-b        BufferNode-for-MultiplyBySingleton-b      " 	+ EOL +
-				"8      1            6       0         MultiplierWorkflow.BufferNode-for-RenderProducts-v             BufferNode-for-RenderProducts-v           " 	+ EOL,
+				"1                   1       0         <MultiplierWorkflow>                                           MultiplierWorkflow                        " 	+ EOL +
+				"2      1            2       0         <MultiplierWorkflow>[CreateSingletonData]                      CreateSingletonData                       " 	+ EOL +
+				"3      1            3       0         <MultiplierWorkflow>[CreateSequenceData]                       CreateSequenceData                        " 	+ EOL +
+				"4      1            4       0         <MultiplierWorkflow>[MultiplyBySingleton]                      MultiplyBySingleton                       " 	+ EOL +
+				"5      1            5       0         <MultiplierWorkflow>[RenderProducts]                           RenderProducts                            " 	+ EOL +
+				"6      1            6       0         <MultiplierWorkflow>[BufferNode-for-MultiplyBySingleton-a]     BufferNode-for-MultiplyBySingleton-a      " 	+ EOL +
+				"7      1            6       0         <MultiplierWorkflow>[BufferNode-for-MultiplyBySingleton-b]     BufferNode-for-MultiplyBySingleton-b      " 	+ EOL +
+				"8      1            6       0         <MultiplierWorkflow>[BufferNode-for-RenderProducts-v]          BufferNode-for-RenderProducts-v           " 	+ EOL,
 			manager.dumpNodeTableWide());
 		
 		assertEquals(
@@ -529,13 +529,13 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0         OneShotInflow                                      OneShotInflow                   " 	+ EOL +
-				"2      1            2       0         OneShotInflow.CreateSingletonData                  CreateSingletonData             " 	+ EOL +
-				"3      1            3       0         OneShotInflow.CreateSequenceData                   CreateSequenceData              " 	+ EOL +
-				"4      1            4       0         OneShotInflow.MultiplySequenceBySingleton          MultiplySequenceBySingleton     " 	+ EOL +
-				"5      1            5       0         OneShotInflow.RenderProducts                       RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <OneShotInflow>                                              OneShotInflow                   " 	+ EOL +
+				"2      1            2       0         <OneShotInflow>[CreateSingletonData]                         CreateSingletonData             " 	+ EOL +
+				"3      1            3       0         <OneShotInflow>[CreateSequenceData]                          CreateSequenceData              " 	+ EOL +
+				"4      1            4       0         <OneShotInflow>[MultiplySequenceBySingleton]                 MultiplySequenceBySingleton     " 	+ EOL +
+				"5      1            5       0         <OneShotInflow>[RenderProducts]                              RenderProducts                  " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		assertEquals(
@@ -661,13 +661,13 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0         OneShotInflow                                      OneShotInflow                   " 	+ EOL +
-				"2      1            2       0         OneShotInflow.CreateSingletonData                  CreateSingletonData             " 	+ EOL +
-				"3      1            3       0         OneShotInflow.CreateSequenceData                   CreateSequenceData              " 	+ EOL +
-				"4      1            4       0         OneShotInflow.MultiplySequenceBySingleton          MultiplySequenceBySingleton     " 	+ EOL +
-				"5      1            5       0         OneShotInflow.RenderProducts                       RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <OneShotInflow>                                              OneShotInflow                   " 	+ EOL +
+				"2      1            2       0         <OneShotInflow>[CreateSingletonData]                         CreateSingletonData             " 	+ EOL +
+				"3      1            3       0         <OneShotInflow>[CreateSequenceData]                          CreateSequenceData              " 	+ EOL +
+				"4      1            4       0         <OneShotInflow>[MultiplySequenceBySingleton]                 MultiplySequenceBySingleton     " 	+ EOL +
+				"5      1            5       0         <OneShotInflow>[RenderProducts]                              RenderProducts                  " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		assertEquals(
@@ -804,18 +804,18 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			manager.dumpActorTable());
 
 		assertEquals(
-				"NodeId ParentNodeID ActorID StepCount NodeName                                           LocalNodeName                   " 	+ EOL +
-				"------ ------------ ------- --------- -------------------------------------------------- ------------------------------- " 	+ EOL +
-				"1                   1       0         TopWF                                              TopWF                           " 	+ EOL +
-				"2      1            2       0         TopWF.TopLevelSequencer                            TopLevelSequencer               " 	+ EOL +
-				"3      1            3       0         TopWF.SubWF                                        SubWF                           " 	+ EOL +
-				"4      3            4       0         TopWF.SubWF.inportal                               inportal                        " 	+ EOL +
-				"5      3            5       0         TopWF.SubWF.DoubleMultipliers                      DoubleMultipliers               " 	+ EOL +
-				"6      3            6       0         TopWF.SubWF.SubSubWF                               SubSubWF                        " 	+ EOL +
-				"7      6            7       0         TopWF.SubWF.SubSubWF.inportal                      inportal                        " 	+ EOL +
-				"8      6            8       0         TopWF.SubWF.SubSubWF.CreateSequenceData            CreateSequenceData              " 	+ EOL +
-				"9      6            9       0         TopWF.SubWF.SubSubWF.MultiplySequenceBySingleton   MultiplySequenceBySingleton     " 	+ EOL +
-				"10     6            10      0         TopWF.SubWF.SubSubWF.RenderProducts                RenderProducts                  " 	+ EOL, 
+				"NodeId ParentNodeID ActorID StepCount NodeName                                                     LocalNodeName                   " 	+ EOL +
+				"------ ------------ ------- --------- ------------------------------------------------------------ ------------------------------- " 	+ EOL +
+				"1                   1       0         <TopWF>                                                      TopWF                           " 	+ EOL +
+				"2      1            2       0         <TopWF>[TopLevelSequencer]                                   TopLevelSequencer               " 	+ EOL +
+				"3      1            3       0         <TopWF>[SubWF]                                               SubWF                           " 	+ EOL +
+				"4      3            4       0         <TopWF>[SubWF][inportal]                                     inportal                        " 	+ EOL +
+				"5      3            5       0         <TopWF>[SubWF][DoubleMultipliers]                            DoubleMultipliers               " 	+ EOL +
+				"6      3            6       0         <TopWF>[SubWF][SubSubWF]                                     SubSubWF                        " 	+ EOL +
+				"7      6            7       0         <TopWF>[SubWF][SubSubWF][inportal]                           inportal                        " 	+ EOL +
+				"8      6            8       0         <TopWF>[SubWF][SubSubWF][CreateSequenceData]                 CreateSequenceData              " 	+ EOL +
+				"9      6            9       0         <TopWF>[SubWF][SubSubWF][MultiplySequenceBySingleton]        MultiplySequenceBySingleton     " 	+ EOL +
+				"10     6            10      0         <TopWF>[SubWF][SubSubWF][RenderProducts]                     RenderProducts                  " 	+ EOL, 
 			manager.dumpNodeTable());
 		
 		assertEquals(

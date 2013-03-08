@@ -148,8 +148,8 @@ public class PortableDB {
 		return buffer.toString();
 	}
 	
-	public static final String dashes = "--------------------------------------------------------------------------";
-	public static final String spaces = "                                                                          ";
+	public static final String dashes = "--------------------------------------------------------------------------------------------------";
+	public static final String spaces = "                                                                                        ";
 
 	public static int[] printHeadings(String columnTitle[], StringBuilder buffer) {
 		

@@ -1,12 +1,12 @@
 *** Node step counts ***
-Hamming: 1
-Hamming.DiscardProductsGreaterThanMax: 27
-Hamming.MergeProductsFiveAndThree: 42
-Hamming.MergeProductsFiveThreeAndTwo: 48
-Hamming.MultiplyByFive: 26
-Hamming.MultiplyByThree: 26
-Hamming.MultiplyByTwo: 26
-Hamming.RenderHammingSequence: 26
+<Hamming>: 1
+<Hamming>[DiscardProductsGreaterThanMax]: 27
+<Hamming>[MergeProductsFiveAndThree]: 42
+<Hamming>[MergeProductsFiveThreeAndTwo]: 48
+<Hamming>[MultiplyByFive]: 26
+<Hamming>[MultiplyByThree]: 26
+<Hamming>[MultiplyByTwo]: 26
+<Hamming>[RenderHammingSequence]: 26
 *** Published resources ***
 /merged/filtered/1: 1
 /merged/filtered/10: 12

@@ -1,10 +1,10 @@
 *** Node step counts ***
-TwoExternalFiles: 1
-TwoExternalFiles.RenderFileOneFirst: 1
-TwoExternalFiles.RenderFileOneSecond: 1
-TwoExternalFiles.RenderFileTwo: 1
-TwoExternalFiles.Source1: 1
-TwoExternalFiles.Source2: 1
+<TwoExternalFiles>: 1
+<TwoExternalFiles>[RenderFileOneFirst]: 1
+<TwoExternalFiles>[RenderFileOneSecond]: 1
+<TwoExternalFiles>[RenderFileTwo]: 1
+<TwoExternalFiles>[Source1]: 1
+<TwoExternalFiles>[Source2]: 1
 *** Published resources ***
 src/test/resources/workflows/TwoExternalFiles/file1.txt: hello
 src/test/resources/workflows/TwoExternalFiles/file2.txt: goodbye

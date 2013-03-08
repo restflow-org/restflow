@@ -1,6 +1,6 @@
 CREATE TABLE Actor (
     ActorID 		identity 		NOT NULL		PRIMARY KEY,
-    ActorName 		varchar(256) 	NULL
+    ActorName 		varchar(1024) 	NULL
 );
 
 CREATE TABLE DataType (
@@ -27,7 +27,7 @@ CREATE TABLE DependencyRule (
 
 CREATE TABLE Node (
     NodeID 			identity		NOT NULL		PRIMARY KEY,
-    NodeName 		varchar(256) 	NOT NULL,
+    NodeName 		varchar(1024) 	NOT NULL,
     LocalNodeName 	varchar(256) 	NOT NULL,
     ParentNodeID 	bigint			NULL			REFERENCES (NodeID),
     ActorID			bigint			NULL			REFERENCES Actor (ActorID),

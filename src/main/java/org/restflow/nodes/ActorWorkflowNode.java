@@ -196,7 +196,7 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 		
 			for (String nodeInputLabel : nodeInflowNames) {
 				if (! inputNames.contains(nodeInputLabel)) {
-					throw new NodeDeclarationException("Actor " + _actor + 
+					throw new NodeDeclarationException("Actor " + _actor.getFullyQualifiedActorName() + 
 							" does not accept input " + "variable \'" +  
 							nodeInputLabel + "'.");
 				}
@@ -231,7 +231,7 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 						throw new NodeDeclarationException("Actor " + _actor + 
 								" does not produce output " + "variable \'" +  
 								outputName + "\' named by node " + 
-								getName() + ".");
+								getQualifiedWorkflowNodeName() + ".");
 					}
 				}
 			}	
@@ -255,13 +255,16 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 	}
 	
 	public void elaborate() throws Exception {
-
+		if (_actor == null) throw new Exception("must set actor property");
+		
+		if (_actor instanceof Workflow) {
+			((Workflow)_actor).assembleMixinInputs();
+		}
+		
 		_constructInflows();
 		_constructOutflows();
 		
 		_configureParameters();
-
-		if (_actor == null) throw new Exception("must set actor property");
 		
 		if (_nestedUriPrefixTemplate != null) { 
 			if (_actor instanceof Workflow) {
@@ -408,7 +411,7 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 		}
 		
 		// do nothing if not all required inputs have arrived
-		if (!_allInputsStaged()) throw new Exception( "Node " + getName() + " does not have all necessary inputs");
+		if (!_allInputsStaged()) throw new Exception( "Node " + getQualifiedWorkflowNodeName() + " does not have all necessary inputs");
 		
 		if (! _applySequenceValuesToInflows()) {
 			_actorCompletionService.shutdown();
@@ -681,8 +684,8 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 		
 		for (String nodeInputLabel : nodeControlInputs) {
 			if (actorInputLabels.contains(nodeInputLabel)) {
-				throw new NodeDeclarationException("Control protocol may not be used on " + getName() + " inflow '" + nodeInputLabel + "', " +
-						"because actor " + _actor + " has an input with the same name.");			}
+				throw new NodeDeclarationException("Control protocol may not be used on " + getQualifiedWorkflowNodeName() + " inflow '" + nodeInputLabel + "', " +
+						"because actor " + _actor.getFullyQualifiedActorName() + " has an input with the same name.");			}
 		}
 	}
 	

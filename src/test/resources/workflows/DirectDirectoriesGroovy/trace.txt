@@ -1,10 +1,10 @@
 *** Node step counts ***
-DirectDirectoriesGroovy: 1
-DirectDirectoriesGroovy.CollectImages: 4
-DirectDirectoriesGroovy.CollectImages.CreateImages: 4
-DirectDirectoriesGroovy.CollectImages.InputImageCount: 4
-DirectDirectoriesGroovy.CollectImages.OutputImageDirectory: 4
-DirectDirectoriesGroovy.PrintFirstImage: 4
+<DirectDirectoriesGroovy>: 1
+<DirectDirectoriesGroovy>[CollectImages]: 4
+<DirectDirectoriesGroovy>[CollectImages][CreateImages]: 4
+<DirectDirectoriesGroovy>[CollectImages][InputImageCount]: 4
+<DirectDirectoriesGroovy>[CollectImages][OutputImageDirectory]: 4
+<DirectDirectoriesGroovy>[PrintFirstImage]: 4
 *** Published resources ***
 /data_set_1/count: 3
 /data_set_1/set_of_3_images/

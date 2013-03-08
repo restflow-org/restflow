@@ -99,8 +99,8 @@ public class TestReceiveOnceInflows extends RestFlowTestCase {
 					recorder.getStdoutRecording());
 		
 				assertEquals(
-					"Warning:  Run 1 of workflow 'OneShotInflow' wrapped up with unused data packets:" 		+ EOL +
-					"1 packet in inflow 'a' on node 'MultiplySequenceBySingleton' with URI '/multiplier'"	+ EOL,
+					"Warning:  Run 1 of workflow <OneShotInflow> wrapped up with unused data packets:" 		+ EOL +
+					"1 packet in inflow 'a' on node [MultiplySequenceBySingleton] with URI '/multiplier'"	+ EOL,
 					recorder.getStderrRecording());
 				
 				// confirm expected published data
@@ -202,9 +202,9 @@ public class TestReceiveOnceInflows extends RestFlowTestCase {
 					recorder.getStdoutRecording());
 		
 				assertEquals(
-					"Warning:  Run 1 of workflow 'TwoTopLevelReceiveOnceInflows' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'a' on node 'MultiplyAndOffset' with URI '/multiplier'" 						+ EOL +
-					"1 packet in inflow 'b' on node 'MultiplyAndOffset' with URI '/multiplicand'"						+ EOL,
+					"Warning:  Run 1 of workflow <TwoTopLevelReceiveOnceInflows> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'a' on node [MultiplyAndOffset] with URI '/multiplier'" 						+ EOL +
+					"1 packet in inflow 'b' on node [MultiplyAndOffset] with URI '/multiplicand'"						+ EOL,
 					recorder.getStderrRecording());
 				
 				// confirm expected published data
@@ -298,9 +298,9 @@ public class TestReceiveOnceInflows extends RestFlowTestCase {
 					recorder.getStdoutRecording());
 		
 				assertEquals(
-					"Warning:  Run 1 of workflow 'TwoTopLevelReceiveOnceInflows' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'a' on node 'MultiplyAndOffset' with URI '/multiplier'" 						+ EOL +
-					"1 packet in inflow 'b' on node 'MultiplyAndOffset' with URI '/property/multiplicand'"				+ EOL,
+					"Warning:  Run 1 of workflow <TwoTopLevelReceiveOnceInflows> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'a' on node [MultiplyAndOffset] with URI '/multiplier'" 						+ EOL +
+					"1 packet in inflow 'b' on node [MultiplyAndOffset] with URI '/property/multiplicand'"				+ EOL,
 					recorder.getStderrRecording());
 				
 				// confirm expected published data
@@ -674,27 +674,27 @@ public class TestReceiveOnceInflows extends RestFlowTestCase {
 				assertEquals(10,  store.take("/Sub1/doubledmultiplier"));
 				assertEquals(20,  store.take("/Sub2/doubledmultiplier"));
 				assertEquals(30,  store.take("/Sub3/doubledmultiplier"));			
-				assertEquals(10,  store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(20,  store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(30,  store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(3,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/3"));
-				assertEquals(3,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/3"));
-				assertEquals(3,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/3"));			
-				assertEquals(30,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(80,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(20,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/3"));
-				assertEquals(60,  store.take("/Sub2/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(160, store.take("/Sub2/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(40,  store.take("/Sub2/TopWF.SubWF.SubSubWF/product/3"));
-				assertEquals(90,  store.take("/Sub3/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(240, store.take("/Sub3/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(60,  store.take("/Sub3/TopWF.SubWF.SubSubWF/product/3"));
+				assertEquals(10,  store.take("/Sub1/SubSubWF1_1/multiplier"));
+				assertEquals(20,  store.take("/Sub2/SubSubWF2_1/multiplier"));
+				assertEquals(30,  store.take("/Sub3/SubSubWF3_1/multiplier"));
+				assertEquals(3,   store.take("/Sub1/SubSubWF1_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub1/SubSubWF1_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub1/SubSubWF1_1/multiplicand/3"));
+				assertEquals(3,   store.take("/Sub2/SubSubWF2_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub2/SubSubWF2_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub2/SubSubWF2_1/multiplicand/3"));
+				assertEquals(3,   store.take("/Sub3/SubSubWF3_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub3/SubSubWF3_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub3/SubSubWF3_1/multiplicand/3"));			
+				assertEquals(30,  store.take("/Sub1/SubSubWF1_1/product/1"));
+				assertEquals(80,  store.take("/Sub1/SubSubWF1_1/product/2"));
+				assertEquals(20,  store.take("/Sub1/SubSubWF1_1/product/3"));
+				assertEquals(60,  store.take("/Sub2/SubSubWF2_1/product/1"));
+				assertEquals(160, store.take("/Sub2/SubSubWF2_1/product/2"));
+				assertEquals(40,  store.take("/Sub2/SubSubWF2_1/product/3"));
+				assertEquals(90,  store.take("/Sub3/SubSubWF3_1/product/1"));
+				assertEquals(240, store.take("/Sub3/SubSubWF3_1/product/2"));
+				assertEquals(60,  store.take("/Sub3/SubSubWF3_1/product/3"));
 				
 				assertTrue(store.isEmpty());
 	
@@ -822,30 +822,30 @@ public class TestReceiveOnceInflows extends RestFlowTestCase {
 				assertEquals(10,  store.take("/Sub1/doubledmultiplier"));
 				assertEquals(20,  store.take("/Sub2/doubledmultiplier"));
 				assertEquals(30,  store.take("/Sub3/doubledmultiplier"));
-				assertEquals(10,  store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(20,  store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(30,  store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplier"));
-				assertEquals(5,  store.take("/Sub1/TopWF.SubWF.SubSubWF/property/offset"));
-				assertEquals(5,  store.take("/Sub2/TopWF.SubWF.SubSubWF/property/offset"));
-				assertEquals(5,  store.take("/Sub3/TopWF.SubWF.SubSubWF/property/offset"));
-				assertEquals(3,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub1/TopWF.SubWF.SubSubWF/multiplicand/3"));
-				assertEquals(3,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub2/TopWF.SubWF.SubSubWF/multiplicand/3"));
-				assertEquals(3,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/1"));
-				assertEquals(8,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/2"));
-				assertEquals(2,   store.take("/Sub3/TopWF.SubWF.SubSubWF/multiplicand/3"));			
-				assertEquals(35,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(85,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(25,  store.take("/Sub1/TopWF.SubWF.SubSubWF/product/3"));
-				assertEquals(65,  store.take("/Sub2/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(165, store.take("/Sub2/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(45,  store.take("/Sub2/TopWF.SubWF.SubSubWF/product/3"));
-				assertEquals(95,  store.take("/Sub3/TopWF.SubWF.SubSubWF/product/1"));
-				assertEquals(245, store.take("/Sub3/TopWF.SubWF.SubSubWF/product/2"));
-				assertEquals(65,  store.take("/Sub3/TopWF.SubWF.SubSubWF/product/3"));
+				assertEquals(10,  store.take("/Sub1/SubSubWF1_1/multiplier"));
+				assertEquals(20,  store.take("/Sub2/SubSubWF2_1/multiplier"));
+				assertEquals(30,  store.take("/Sub3/SubSubWF3_1/multiplier"));
+				assertEquals(5,  store.take("/Sub1/SubSubWF1_1/property/offset"));
+				assertEquals(5,  store.take("/Sub2/SubSubWF2_1/property/offset"));
+				assertEquals(5,  store.take("/Sub3/SubSubWF3_1/property/offset"));
+				assertEquals(3,   store.take("/Sub1/SubSubWF1_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub1/SubSubWF1_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub1/SubSubWF1_1/multiplicand/3"));
+				assertEquals(3,   store.take("/Sub2/SubSubWF2_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub2/SubSubWF2_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub2/SubSubWF2_1/multiplicand/3"));
+				assertEquals(3,   store.take("/Sub3/SubSubWF3_1/multiplicand/1"));
+				assertEquals(8,   store.take("/Sub3/SubSubWF3_1/multiplicand/2"));
+				assertEquals(2,   store.take("/Sub3/SubSubWF3_1/multiplicand/3"));			
+				assertEquals(35,  store.take("/Sub1/SubSubWF1_1/product/1"));
+				assertEquals(85,  store.take("/Sub1/SubSubWF1_1/product/2"));
+				assertEquals(25,  store.take("/Sub1/SubSubWF1_1/product/3"));
+				assertEquals(65,  store.take("/Sub2/SubSubWF2_1/product/1"));
+				assertEquals(165, store.take("/Sub2/SubSubWF2_1/product/2"));
+				assertEquals(45,  store.take("/Sub2/SubSubWF2_1/product/3"));
+				assertEquals(95,  store.take("/Sub3/SubSubWF3_1/product/1"));
+				assertEquals(245, store.take("/Sub3/SubSubWF3_1/product/2"));
+				assertEquals(65,  store.take("/Sub3/SubSubWF3_1/product/3"));
 				
 				assertEquals(0, store.size());
 	

@@ -31,7 +31,7 @@ public class TestPythonActor extends RestFlowTestCase {
 		actor.initialize();
 				
 		assertEquals(
-			"# AUGMENTED STEP SCRIPT FOR ACTOR Hello" 													+ EOL +
+			"# AUGMENTED STEP SCRIPT FOR ACTOR <Hello>" 													+ EOL +
 			"" 																							+ EOL +
 			"# BEGINNING OF ORIGINAL SCRIPT" 															+ EOL +
 			"" 																							+ EOL +
@@ -70,7 +70,7 @@ public class TestPythonActor extends RestFlowTestCase {
 		actor.setInputValue("greeting", "Goodbye");
 		
 		assertEquals(
-			"# AUGMENTED STEP SCRIPT FOR ACTOR Hello" 													+ EOL +
+			"# AUGMENTED STEP SCRIPT FOR ACTOR <Hello>" 													+ EOL +
 			"" 																							+ EOL +
 			"# define functions for enabling and disabling actor inputs" 								+ EOL +
 			"def enableInput(input)      :   global enabledInputs;    enabledInputs   += ' ' + input" 	+ EOL +
@@ -122,7 +122,7 @@ public class TestPythonActor extends RestFlowTestCase {
 		actor.initialize();
 		
 		assertEquals(
-			"# AUGMENTED STEP SCRIPT FOR ACTOR Hello" 													+ EOL +
+			"# AUGMENTED STEP SCRIPT FOR ACTOR <Hello>" 													+ EOL +
 			"" 																							+ EOL +
 			"# define functions for enabling and disabling actor outputs" 								+ EOL +
 			"def enableOutput(output)    :   global enabledOutputs;   enabledOutputs  += ' ' + output" 	+ EOL +
@@ -177,7 +177,7 @@ public class TestPythonActor extends RestFlowTestCase {
 		actor.initialize();
 		
 		assertEquals(
-			"# AUGMENTED STEP SCRIPT FOR ACTOR Hello" 													+ EOL +
+			"# AUGMENTED STEP SCRIPT FOR ACTOR <Hello>" 													+ EOL +
 			"" 																							+ EOL +
 			"# initialize actor state variables" 														+ EOL +
 			"greeting=None" 																			+ EOL +
@@ -228,7 +228,7 @@ public class TestPythonActor extends RestFlowTestCase {
 		actor.setInputValue("y", 12);
 		
 		assertEquals(
-			"# AUGMENTED STEP SCRIPT FOR ACTOR Multiplier"												+ EOL +
+			"# AUGMENTED STEP SCRIPT FOR ACTOR <Multiplier>"												+ EOL +
 			""																							+ EOL +
 			"# define functions for enabling and disabling actor inputs"								+ EOL +
 			"def enableInput(input)      :   global enabledInputs;    enabledInputs   += ' ' + input"	+ EOL +

@@ -299,26 +299,26 @@ public class TestSourceNode extends RestFlowTestCase {
 		assertEquals("!!!!",	_store.take("/run/4/exclamation"));
 		assertEquals("!!!!!",	_store.take("/run/5/exclamation"));
 
-		assertEquals("",		_store.take("/run/0/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!",		_store.take("/run/1/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!",		_store.take("/run/2/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!",		_store.take("/run/3/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!!",	_store.take("/run/4/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!!!",	_store.take("/run/5/EmphasizeGreeting.Emphasize/emphasis"));
+		assertEquals("",		_store.take("/run/0/Emphasize1_1/emphasis"));
+		assertEquals("!",		_store.take("/run/1/Emphasize2_1/emphasis"));
+		assertEquals("!!",		_store.take("/run/2/Emphasize3_1/emphasis"));
+		assertEquals("!!!",		_store.take("/run/3/Emphasize4_1/emphasis"));
+		assertEquals("!!!!",	_store.take("/run/4/Emphasize5_1/emphasis"));
+		assertEquals("!!!!!",	_store.take("/run/5/Emphasize6_1/emphasis"));
 
-		assertEquals("hello",	_store.take("/run/0/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",	_store.take("/run/1/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",	_store.take("/run/2/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",	_store.take("/run/3/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",	_store.take("/run/4/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",	_store.take("/run/5/EmphasizeGreeting.Emphasize/greeting"));
+		assertEquals("hello",	_store.take("/run/0/Emphasize1_1/greeting"));
+		assertEquals("hello",	_store.take("/run/1/Emphasize2_1/greeting"));
+		assertEquals("hello",	_store.take("/run/2/Emphasize3_1/greeting"));
+		assertEquals("hello",	_store.take("/run/3/Emphasize4_1/greeting"));
+		assertEquals("hello",	_store.take("/run/4/Emphasize5_1/greeting"));
+		assertEquals("hello",	_store.take("/run/5/Emphasize6_1/greeting"));
 		
-		assertEquals("hello",		_store.take("/run/0/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!",		_store.take("/run/1/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!",		_store.take("/run/2/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!",	_store.take("/run/3/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!!",	_store.take("/run/4/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!!!",	_store.take("/run/5/EmphasizeGreeting.Emphasize/message"));
+		assertEquals("hello",		_store.take("/run/0/Emphasize1_1/message"));
+		assertEquals("hello!",		_store.take("/run/1/Emphasize2_1/message"));
+		assertEquals("hello!!",		_store.take("/run/2/Emphasize3_1/message"));
+		assertEquals("hello!!!",	_store.take("/run/3/Emphasize4_1/message"));
+		assertEquals("hello!!!!",	_store.take("/run/4/Emphasize5_1/message"));
+		assertEquals("hello!!!!!",	_store.take("/run/5/Emphasize6_1/message"));
 		
 		assertEquals(0, _store.size());
 	}
@@ -431,33 +431,33 @@ public class TestSourceNode extends RestFlowTestCase {
 		assertEquals("!!!!",		_store.take("/run/5/exclamation"));
 		assertEquals("!!!!!",		_store.take("/run/6/exclamation"));
 
-		assertEquals("",			_store.take("/run/1/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!",			_store.take("/run/2/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!",			_store.take("/run/3/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!",			_store.take("/run/4/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!!",		_store.take("/run/5/EmphasizeGreeting.Emphasize/emphasis"));
-		assertEquals("!!!!!",		_store.take("/run/6/EmphasizeGreeting.Emphasize/emphasis"));
+		assertEquals("",			_store.take("/run/1/Emphasize1_1/emphasis"));
+		assertEquals("!",			_store.take("/run/2/Emphasize2_1/emphasis"));
+		assertEquals("!!",			_store.take("/run/3/Emphasize3_1/emphasis"));
+		assertEquals("!!!",			_store.take("/run/4/Emphasize4_1/emphasis"));
+		assertEquals("!!!!",		_store.take("/run/5/Emphasize5_1/emphasis"));
+		assertEquals("!!!!!",		_store.take("/run/6/Emphasize6_1/emphasis"));
 
-		assertEquals("hello",		_store.take("/run/1/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
-		assertEquals("hello",		_store.take("/run/2/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
-		assertEquals("hello",		_store.take("/run/3/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
-		assertEquals("hello",		_store.take("/run/4/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
-		assertEquals("hello",		_store.take("/run/5/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
-		assertEquals("hello",		_store.take("/run/6/EmphasizeGreeting.Emphasize/EmphasizeGreeting.Emphasize.GetGreeting/text"));
+		assertEquals("hello",		_store.take("/run/1/Emphasize1_1/GetGreeting1_1/text"));
+		assertEquals("hello",		_store.take("/run/2/Emphasize2_1/GetGreeting2_1/text"));
+		assertEquals("hello",		_store.take("/run/3/Emphasize3_1/GetGreeting3_1/text"));
+		assertEquals("hello",		_store.take("/run/4/Emphasize4_1/GetGreeting4_1/text"));
+		assertEquals("hello",		_store.take("/run/5/Emphasize5_1/GetGreeting5_1/text"));
+		assertEquals("hello",		_store.take("/run/6/Emphasize6_1/GetGreeting6_1/text"));
 
-		assertEquals("hello",		_store.take("/run/1/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",		_store.take("/run/2/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",		_store.take("/run/3/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",		_store.take("/run/4/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",		_store.take("/run/5/EmphasizeGreeting.Emphasize/greeting"));
-		assertEquals("hello",		_store.take("/run/6/EmphasizeGreeting.Emphasize/greeting"));
+		assertEquals("hello",		_store.take("/run/1/Emphasize1_1/greeting"));
+		assertEquals("hello",		_store.take("/run/2/Emphasize2_1/greeting"));
+		assertEquals("hello",		_store.take("/run/3/Emphasize3_1/greeting"));
+		assertEquals("hello",		_store.take("/run/4/Emphasize4_1/greeting"));
+		assertEquals("hello",		_store.take("/run/5/Emphasize5_1/greeting"));
+		assertEquals("hello",		_store.take("/run/6/Emphasize6_1/greeting"));
 		
-		assertEquals("hello",		_store.take("/run/1/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!",		_store.take("/run/2/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!",		_store.take("/run/3/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!",	_store.take("/run/4/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!!",	_store.take("/run/5/EmphasizeGreeting.Emphasize/message"));
-		assertEquals("hello!!!!!",	_store.take("/run/6/EmphasizeGreeting.Emphasize/message"));
+		assertEquals("hello",		_store.take("/run/1/Emphasize1_1/message"));
+		assertEquals("hello!",		_store.take("/run/2/Emphasize2_1/message"));
+		assertEquals("hello!!",		_store.take("/run/3/Emphasize3_1/message"));
+		assertEquals("hello!!!",	_store.take("/run/4/Emphasize4_1/message"));
+		assertEquals("hello!!!!",	_store.take("/run/5/Emphasize5_1/message"));
+		assertEquals("hello!!!!!",	_store.take("/run/6/Emphasize6_1/message"));
 
 		assertEquals(0, _store.size());
 	}	

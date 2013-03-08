@@ -44,7 +44,7 @@ public class ActorException extends RestFlowException {
 		if (_exception == null) {
 			return super.getMessage();
 		} else {
-			return "Actor " + _actor + " threw exception: " +  _exception;
+			return "Actor " + _actor.getFullyQualifiedActorName() + " threw exception: " +  _exception;
 		}
 	}
 }

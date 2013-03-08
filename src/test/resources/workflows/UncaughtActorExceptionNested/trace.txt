@@ -1,11 +1,11 @@
 *** Node step counts ***
-UncaughtActorExceptionNested: 1
-UncaughtActorExceptionNested.GenerateOuterIntegers: 4
-UncaughtActorExceptionNested.RenderRepeatedIntegers: 1
-UncaughtActorExceptionNested.RepeatIntegers: 3
-UncaughtActorExceptionNested.RepeatIntegers.InputInteger: 3
-UncaughtActorExceptionNested.RepeatIntegers.OutputRepeatedInteger: 2
-UncaughtActorExceptionNested.RepeatIntegers.ThrowExceptionOnThirdStep: 3
+<UncaughtActorExceptionNested>: 1
+<UncaughtActorExceptionNested>[GenerateOuterIntegers]: 4
+<UncaughtActorExceptionNested>[RenderRepeatedIntegers]: 1
+<UncaughtActorExceptionNested>[RepeatIntegers]: 3
+<UncaughtActorExceptionNested>[RepeatIntegers][InputInteger]: 3
+<UncaughtActorExceptionNested>[RepeatIntegers][OutputRepeatedInteger]: 2
+<UncaughtActorExceptionNested>[RepeatIntegers][ThrowExceptionOnThirdStep]: 3
 *** Published resources ***
 /Sub1/original: 10
 /Sub1/repeated: 10

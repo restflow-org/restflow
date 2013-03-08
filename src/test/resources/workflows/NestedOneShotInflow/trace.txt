@@ -1,11 +1,11 @@
 *** Node step counts ***
-NestedOneShotInflow: 1
-NestedOneShotInflow.CreateMultipliers: 3
-NestedOneShotInflow.DoMultiplications: 3
-NestedOneShotInflow.DoMultiplications.CreateSequenceOfData: 9
-NestedOneShotInflow.DoMultiplications.ImportSingletonData: 3
-NestedOneShotInflow.DoMultiplications.MultiplySequenceDataBySingleton: 9
-NestedOneShotInflow.DoMultiplications.RenderProducts: 9
+<NestedOneShotInflow>: 1
+<NestedOneShotInflow>[CreateMultipliers]: 3
+<NestedOneShotInflow>[DoMultiplications]: 3
+<NestedOneShotInflow>[DoMultiplications][CreateSequenceOfData]: 9
+<NestedOneShotInflow>[DoMultiplications][ImportSingletonData]: 3
+<NestedOneShotInflow>[DoMultiplications][MultiplySequenceDataBySingleton]: 9
+<NestedOneShotInflow>[DoMultiplications][RenderProducts]: 9
 *** Published resources ***
 /Sub1/multiplicand/1: 3
 /Sub1/multiplicand/2: 8

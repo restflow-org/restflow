@@ -172,9 +172,9 @@ public class TestRestFlow extends RestFlowTestCase {
 				  
 				  "Hello World!" 						+ EOL +
 				  "*** Node step counts ***" 			+ EOL +
-				  "HelloWorld: 1"						+ EOL +
-				  "HelloWorld.CreateGreeting: 1" 		+ EOL +
-				  "HelloWorld.RenderGreeting: 1" 		+ EOL +
+				  "<HelloWorld>: 1"						+ EOL +
+				  "<HelloWorld>[CreateGreeting]: 1" 		+ EOL +
+				  "<HelloWorld>[RenderGreeting]: 1" 		+ EOL +
 				  "*** Published resources ***" 		+ EOL +
 				  "/messages/greeting: Hello World!" 	+ EOL,
 				  
@@ -189,7 +189,7 @@ public class TestRestFlow extends RestFlowTestCase {
 		verifyRunRegexp(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "",
 				  "",
-				   	"Actor TestCP.Actor..inner bean. threw exception: groovy.lang.MissingPropertyException: " +
+				   	"Actor <TestCP>\\[Actor\\]<\\(inner bean\\)> threw exception: groovy.lang.MissingPropertyException: " +
 				  	"No such property: TestUtil for class: Script1.*" + 
 				  	"groovy.lang.MissingPropertyException: No such property: TestUtil for class: Script1.*"
 				  	

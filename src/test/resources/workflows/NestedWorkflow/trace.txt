@@ -1,16 +1,16 @@
 *** Node step counts ***
-NestedWorkflow: 1
-NestedWorkflow.GenerateIntegerSequence: 4
-NestedWorkflow.IncrementByDefaultStepSize: 3
-NestedWorkflow.IncrementByDefaultStepSize.IncrementInputValueByStep: 3
-NestedWorkflow.IncrementByDefaultStepSize.Inputs: 3
-NestedWorkflow.IncrementByDefaultStepSize.Outputs: 3
-NestedWorkflow.IncrementByThree: 3
-NestedWorkflow.IncrementByThree.IncrementInputValueByStep: 3
-NestedWorkflow.IncrementByThree.Inputs: 3
-NestedWorkflow.IncrementByThree.Outputs: 3
-NestedWorkflow.RenderFirstStepSize: 3
-NestedWorkflow.RenderIncrementedIntegers: 3
+<NestedWorkflow>: 1
+<NestedWorkflow>[GenerateIntegerSequence]: 4
+<NestedWorkflow>[IncrementByDefaultStepSize]: 3
+<NestedWorkflow>[IncrementByDefaultStepSize][ssrl.Sub.IncrementInputValueByStep]: 3
+<NestedWorkflow>[IncrementByDefaultStepSize][ssrl.Sub.Inputs]: 3
+<NestedWorkflow>[IncrementByDefaultStepSize][ssrl.Sub.Outputs]: 3
+<NestedWorkflow>[IncrementByThree]: 3
+<NestedWorkflow>[IncrementByThree][ssrl.Sub.IncrementInputValueByStep]: 3
+<NestedWorkflow>[IncrementByThree][ssrl.Sub.Inputs]: 3
+<NestedWorkflow>[IncrementByThree][ssrl.Sub.Outputs]: 3
+<NestedWorkflow>[RenderFirstStepSize]: 3
+<NestedWorkflow>[RenderIncrementedIntegers]: 3
 *** Published resources ***
 /IncByThree1/incrementedValue: 18
 /IncByThree1/step: 3

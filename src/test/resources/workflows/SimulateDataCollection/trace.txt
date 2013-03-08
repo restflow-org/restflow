@@ -1,10 +1,10 @@
 *** Node step counts ***
-SimulateDataCollection: 1
-SimulateDataCollection.CalculateStrategy: 3
-SimulateDataCollection.CollectDataSet: 26
-SimulateDataCollection.LoadScreeningResults: 3
-SimulateDataCollection.LogAverageSpotIntensity: 26
-SimulateDataCollection.TransformImage: 26
+<SimulateDataCollection>: 1
+<SimulateDataCollection>[CalculateStrategy]: 3
+<SimulateDataCollection>[CollectDataSet]: 26
+<SimulateDataCollection>[LoadScreeningResults]: 3
+<SimulateDataCollection>[LogAverageSpotIntensity]: 26
+<SimulateDataCollection>[TransformImage]: 26
 *** Published resources ***
 /sample/DRT110/quality: 1
 /sample/DRT240/quality: 3

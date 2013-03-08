@@ -206,31 +206,31 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 			if (director == _publishSubscribeDirector) {
 			
 				assertEquals(
-					"Warning:  Run 1 of workflow 'SecondNodeStepsOnce' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/value/2'" 					+ EOL +
-					"1 packet in queue 'original' on node 'valueCopier' with URI '/value/3'"					+ EOL, 
+					"Warning:  Run 1 of workflow <SecondNodeStepsOnce> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/value/2'" 					+ EOL +
+					"1 packet in queue 'original' on node [valueCopier] with URI '/value/3'"					+ EOL, 
 					recorder.getStderrRecording());
 			
 			} else if (director == _dataDrivenDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'SecondNodeStepsOnce' wrapped up with unused data packets:" 			+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valueCopier-original' with URI '/value/3'"	+ EOL + 
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/value/2'" 							+ EOL,
+					"Warning:  Run 1 of workflow <SecondNodeStepsOnce> wrapped up with unused data packets:" 			+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valueCopier-original] with URI '/value/3'"	+ EOL + 
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/value/2'" 							+ EOL,
 					recorder.getStderrRecording());
 				
 			} else if (director == _mtDataDrivenDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'SecondNodeStepsOnce' wrapped up with unused data packets:" 	+ EOL +
-					"2 packets in queue 'original' on node 'valueCopier' with URIs '/value/2', '/value/3'" 		+ EOL, 
+					"Warning:  Run 1 of workflow <SecondNodeStepsOnce> wrapped up with unused data packets:" 	+ EOL +
+					"2 packets in queue 'original' on node [valueCopier] with URIs '/value/2', '/value/3'" 		+ EOL, 
 					recorder.getStderrRecording());
 			
 			}  else if (director == _demandDrivenDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'SecondNodeStepsOnce' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/value/3'" 					+ EOL, 
+					"Warning:  Run 1 of workflow <SecondNodeStepsOnce> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/value/3'" 					+ EOL, 
 					recorder.getStderrRecording());
 			}
 			
@@ -280,31 +280,31 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 			if (director == _publishSubscribeDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'ThirdNodeStepsOnce' wrapped up with unused data packets:"		+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/copy/2'"						+ EOL +
-					"1 packet in queue 'value' on node 'valuePrinter' with URI '/copy/3'"						+ EOL,
+					"Warning:  Run 1 of workflow <ThirdNodeStepsOnce> wrapped up with unused data packets:"		+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/copy/2'"						+ EOL +
+					"1 packet in queue 'value' on node [valuePrinter] with URI '/copy/3'"						+ EOL,
 					recorder.getStderrRecording());
 			
 			} else if (director == _dataDrivenDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'ThirdNodeStepsOnce' wrapped up with unused data packets:"				+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valuePrinter-value' with URI '/copy/3'"		+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/copy/2'"								+ EOL,
+					"Warning:  Run 1 of workflow <ThirdNodeStepsOnce> wrapped up with unused data packets:"				+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valuePrinter-value] with URI '/copy/3'"		+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/copy/2'"								+ EOL,
 					recorder.getStderrRecording());
 				
 			} else if (director == _mtDataDrivenDirector) {
 				
 				assertEquals(
-					"Warning:  Run 1 of workflow 'ThirdNodeStepsOnce' wrapped up with unused data packets:"		+ EOL +
-					"2 packets in queue 'value' on node 'valuePrinter' with URIs '/copy/2', '/copy/3'"			+ EOL,
+					"Warning:  Run 1 of workflow <ThirdNodeStepsOnce> wrapped up with unused data packets:"		+ EOL +
+					"2 packets in queue 'value' on node [valuePrinter] with URIs '/copy/2', '/copy/3'"			+ EOL,
 					recorder.getStderrRecording());
 			
 			} else {
 								
 				assertEquals(
-						"Warning:  Run 1 of workflow 'ThirdNodeStepsOnce' wrapped up with unused data packets:"		+ EOL +
-						"1 packet in inflow 'value' on node 'valuePrinter' with URI '/copy/3'"						+ EOL,
+						"Warning:  Run 1 of workflow <ThirdNodeStepsOnce> wrapped up with unused data packets:"		+ EOL +
+						"1 packet in inflow 'value' on node [valuePrinter] with URI '/copy/3'"						+ EOL,
 						recorder.getStderrRecording());
 			}
 			
@@ -603,17 +603,17 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 						
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub1/value/2'" 			+ EOL +
-					"1 packet in queue 'original' on node 'valueCopier' with URI '/sub1/subsub1/value/3'" 			+ EOL +
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub1/value/2'" 			+ EOL +
+					"1 packet in queue 'original' on node [valueCopier] with URI '/sub1/subsub1/value/3'" 			+ EOL +
 					
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub2/value/2'" 			+ EOL +
-					"1 packet in queue 'original' on node 'valueCopier' with URI '/sub1/subsub2/value/3'" 			+ EOL +
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub2/value/2'" 			+ EOL +
+					"1 packet in queue 'original' on node [valueCopier] with URI '/sub1/subsub2/value/3'" 			+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub3/value/2'" 			+ EOL +
-					"1 packet in queue 'original' on node 'valueCopier' with URI '/sub1/subsub3/value/3'"			+ EOL, 
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub3/value/2'" 			+ EOL +
+					"1 packet in queue 'original' on node [valueCopier] with URI '/sub1/subsub3/value/3'"			+ EOL, 
 					
 					recorder.getStderrRecording());
 			
@@ -621,17 +621,17 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 						
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:" 					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valueCopier-original' with URI '/sub1/subsub1/value/3'" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub1/value/2'" 							+ EOL +
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:" 					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valueCopier-original] with URI '/sub1/subsub1/value/3'" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub1/value/2'" 							+ EOL +
 					
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:" 					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valueCopier-original' with URI '/sub1/subsub2/value/3'" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub2/value/2'"							+ EOL +
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:" 					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valueCopier-original] with URI '/sub1/subsub2/value/3'" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub2/value/2'"							+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:" 					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valueCopier-original' with URI '/sub1/subsub3/value/3'" 	+ EOL +
-					"1 packet in inflow 'original' on node 'valueCopier' with URI '/sub1/subsub3/value/2'" 							+ EOL,
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:" 					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valueCopier-original] with URI '/sub1/subsub3/value/3'" 	+ EOL +
+					"1 packet in inflow 'original' on node [valueCopier] with URI '/sub1/subsub3/value/2'" 							+ EOL,
 					
 					recorder.getStderrRecording());
 				
@@ -639,16 +639,16 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 						
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'original' on node 'valueCopier' with URIs "							+ 
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
+					"2 packets in queue 'original' on node [valueCopier] with URIs "							+ 
 						"'/sub1/subsub1/value/2', '/sub1/subsub1/value/3'"										+ EOL +
 					
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'original' on node 'valueCopier' with URIs " 							+ 
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
+					"2 packets in queue 'original' on node [valueCopier] with URIs " 							+ 
 						"'/sub1/subsub2/value/2', '/sub1/subsub2/value/3'"										+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'original' on node 'valueCopier' with URIs " 							+ 
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
+					"2 packets in queue 'original' on node [valueCopier] with URIs " 							+ 
 						"'/sub1/subsub3/value/2', '/sub1/subsub3/value/3'"										+ EOL,
 						
 					recorder.getStderrRecording());
@@ -740,17 +740,17 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 						
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"		+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub1/copy/2'"				+ EOL +
-					"1 packet in queue 'value' on node 'valuePrinter' with URI '/sub1/subsub1/copy/3'"				+ EOL +
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"		+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub1/copy/2'"				+ EOL +
+					"1 packet in queue 'value' on node [valuePrinter] with URI '/sub1/subsub1/copy/3'"				+ EOL +
 							
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"		+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub2/copy/2'"				+ EOL +
-					"1 packet in queue 'value' on node 'valuePrinter' with URI '/sub1/subsub2/copy/3'"				+ EOL +
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"		+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub2/copy/2'"				+ EOL +
+					"1 packet in queue 'value' on node [valuePrinter] with URI '/sub1/subsub2/copy/3'"				+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"		+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub3/copy/2'"				+ EOL +
-					"1 packet in queue 'value' on node 'valuePrinter' with URI '/sub1/subsub3/copy/3'"				+ EOL,
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"		+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub3/copy/2'"				+ EOL +
+					"1 packet in queue 'value' on node [valuePrinter] with URI '/sub1/subsub3/copy/3'"				+ EOL,
 					
 					 recorder.getStderrRecording());
 	
@@ -758,17 +758,17 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 					
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valuePrinter-value' with URI '/sub1/subsub1/copy/3'"	+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub1/copy/2'"							+ EOL +
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valuePrinter-value] with URI '/sub1/subsub1/copy/3'"	+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub1/copy/2'"							+ EOL +
 					
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valuePrinter-value' with URI '/sub1/subsub2/copy/3'"	+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub2/copy/2'"							+ EOL +
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valuePrinter-value] with URI '/sub1/subsub2/copy/3'"	+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub2/copy/2'"							+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"					+ EOL +
-					"1 packet in outflow 'output' on node 'BufferNode-for-valuePrinter-value' with URI '/sub1/subsub3/copy/3'"	+ EOL +
-					"1 packet in inflow 'value' on node 'valuePrinter' with URI '/sub1/subsub3/copy/2'"							+ EOL,
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"					+ EOL +
+					"1 packet in outflow 'output' on node [BufferNode-for-valuePrinter-value] with URI '/sub1/subsub3/copy/3'"	+ EOL +
+					"1 packet in inflow 'value' on node [valuePrinter] with URI '/sub1/subsub3/copy/2'"							+ EOL,
 					
 					recorder.getStderrRecording());
 				
@@ -776,15 +776,15 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 				
 				assertEquals(
 						
-					"Warning:  Run 1 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'value' on node 'valuePrinter' with URIs " 								+
+					"Warning:  Run 1 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
+					"2 packets in queue 'value' on node [valuePrinter] with URIs " 								+
 						"'/sub1/subsub1/copy/2', '/sub1/subsub1/copy/3'"										+ EOL +	
 					
-					"Warning:  Run 2 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
+					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
 					"2 packets in queue 'value' on node 'valuePrinter' with URIs " 								+
 						"'/sub1/subsub2/copy/2', '/sub1/subsub2/copy/3'"										+ EOL +
 					
-					"Warning:  Run 3 of workflow 'top.sub.subsub[subsub]' wrapped up with unused data packets:"	+ EOL +
+					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
 					"2 packets in queue 'value' on node 'valuePrinter' with URIs " 								+
 						"'/sub1/subsub3/copy/2', '/sub1/subsub3/copy/3'"				 						+ EOL,
 					

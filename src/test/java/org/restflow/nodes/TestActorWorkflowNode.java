@@ -80,7 +80,7 @@ public class TestActorWorkflowNode extends RestFlowTestCase {
 		} catch(IllegalWorkflowSpecException e) {
 			message = e.getMessage();
 		}
-		assertEquals("Actor TestNode.TestActor does not accept input variable 'inputTwo'.", message);
+		assertEquals("Actor [TestNode]<TestActor> does not accept input variable 'inputTwo'.", message);
 	}
 
 	public void testSetInflows_MismatchedInflowAndInputLabels_ControlProtocol() throws Exception {
@@ -149,8 +149,8 @@ public class TestActorWorkflowNode extends RestFlowTestCase {
 		} catch(IllegalWorkflowSpecException e) {
 			message = e.getMessage();
 		}
-		assertEquals("Control protocol may not be used on TestNode inflow 'input', " +
-				"because actor TestNode.TestActor has an input with the same name.", message);
+		assertEquals("Control protocol may not be used on [TestNode] inflow 'input', " +
+				"because actor [TestNode]<TestActor> has an input with the same name.", message);
 	}	
 	
 	private class TestActorBean {}

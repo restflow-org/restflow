@@ -1,12 +1,12 @@
 *** Node step counts ***
-WorkspaceFiles: 1
-WorkspaceFiles.LoadWorkspaceFileOne: 1
-WorkspaceFiles.PrintWorkspaceFileOneFromFile: 1
-WorkspaceFiles.PrintWorkspaceFileOneFromString: 1
-WorkspaceFiles.PrintWorkspaceFileTwoFromFile: 1
-WorkspaceFiles.PrintWorkspaceFileTwoFromString: 1
-WorkspaceFiles.Source1: 1
-WorkspaceFiles.Source2: 1
+<WorkspaceFiles>: 1
+<WorkspaceFiles>[LoadWorkspaceFileOne]: 1
+<WorkspaceFiles>[PrintWorkspaceFileOneFromFile]: 1
+<WorkspaceFiles>[PrintWorkspaceFileOneFromString]: 1
+<WorkspaceFiles>[PrintWorkspaceFileTwoFromFile]: 1
+<WorkspaceFiles>[PrintWorkspaceFileTwoFromString]: 1
+<WorkspaceFiles>[Source1]: 1
+<WorkspaceFiles>[Source2]: 1
 *** Published resources ***
 /text/1: File one line 1 File one line 2 File one line 3
 /workspaceFileOne.txt: File one line 1 File one line 2 File one line 3

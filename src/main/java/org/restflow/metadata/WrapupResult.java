@@ -10,6 +10,8 @@ import org.restflow.data.SingleResourcePacket;
 import org.restflow.nodes.AbstractWorkflowNode;
 import org.restflow.util.PortableIO;
 
+import sun.org.mozilla.javascript.internal.Node;
+
 
 public class WrapupResult {
 
@@ -63,7 +65,7 @@ public class WrapupResult {
 						record.bufferType 							+ 
 						" '" + record.label + "'" 					+ 
 						" on node " 								+
-						"'" + record.nodeName + "' with "			+
+						AbstractWorkflowNode.decorateNodeName(record.nodeName) + " with "			+
 						(multiplePackets ? "URIs" : "URI") 
 						
 				);

@@ -1,8 +1,8 @@
 *** Node step counts ***
-CaughtActorExceptions: 1
-CaughtActorExceptions.GenerateIntegerSequence: 9
-CaughtActorExceptions.RenderIntegerSequence: 4
-CaughtActorExceptions.ThrowExceptionOnThirdStep: 8
+<CaughtActorExceptions>: 1
+<CaughtActorExceptions>[GenerateIntegerSequence]: 9
+<CaughtActorExceptions>[RenderIntegerSequence]: 4
+<CaughtActorExceptions>[ThrowExceptionOnThirdStep]: 8
 *** Published resources ***
 /exceptions/1/NullPointerException: java.lang.NullPointerException: Error on first step!
 /generatedValue/1: 1
@@ -18,5 +18,5 @@ CaughtActorExceptions.ThrowExceptionOnThirdStep: 8
 /repeatedValue/3: 6
 /repeatedValue/4: 8
 stderr:/exceptions/3/Exception: java.lang.ClassNotFoundException: Error on third step!
-stderr:/exceptions/7/NullOutputException: org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output 'outValue' of actor 'CaughtActorExceptions.ThrowExceptionOnThirdStep.(inner bean)'
+stderr:/exceptions/7/NullOutputException: org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output 'outValue' of actor <CaughtActorExceptions>[ThrowExceptionOnThirdStep]<(inner bean)>
 stdout:/exceptions/5/ClassCastException: java.lang.ClassCastException: Error on fifth step!

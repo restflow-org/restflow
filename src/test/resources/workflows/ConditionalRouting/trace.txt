@@ -1,13 +1,13 @@
 *** Node step counts ***
-ConditionalRouting: 1
-ConditionalRouting.CreateIntegerSequence: 8
-ConditionalRouting.RenderSaturatedIntegers: 8
-ConditionalRouting.Saturate: 8
-ConditionalRouting.Saturate.InputInteger: 8
-ConditionalRouting.Saturate.Merge: 8
-ConditionalRouting.Saturate.OutputSaturatedInteger: 8
-ConditionalRouting.Saturate.SaturateInteger: 3
-ConditionalRouting.Saturate.Switch: 8
+<ConditionalRouting>: 1
+<ConditionalRouting>[CreateIntegerSequence]: 8
+<ConditionalRouting>[RenderSaturatedIntegers]: 8
+<ConditionalRouting>[Saturate]: 8
+<ConditionalRouting>[Saturate][InputInteger]: 8
+<ConditionalRouting>[Saturate][Merge]: 8
+<ConditionalRouting>[Saturate][OutputSaturatedInteger]: 8
+<ConditionalRouting>[Saturate][SaturateInteger]: 3
+<ConditionalRouting>[Saturate][Switch]: 8
 *** Published resources ***
 /Saturate1/allowedInteger: 1
 /Saturate1/merged: 1

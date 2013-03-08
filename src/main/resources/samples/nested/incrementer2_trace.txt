@@ -1,9 +1,9 @@
 *** Node step counts ***
-Incrementer: 1
-Incrementer.IncrementInputValue: 1
-Incrementer.InputValueAndIncrement: 1
-Incrementer.OutputIncrementedValueAndIncrement: 1
-Incrementer.RenderInputs: 1
+<ssrl.adders.Incrementer>: 1
+<ssrl.adders.Incrementer>[ssrl.adders.IncrementInputValue]: 1
+<ssrl.adders.Incrementer>[ssrl.adders.InputValueAndIncrement]: 1
+<ssrl.adders.Incrementer>[ssrl.adders.OutputIncrementedValueAndIncrement]: 1
+<ssrl.adders.Incrementer>[ssrl.adders.RenderInputs]: 1
 *** Published resources ***
 /incrementedValue: 1
 /inputIncrement: 1

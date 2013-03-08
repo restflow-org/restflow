@@ -283,7 +283,7 @@ public class BasicTraceRecorder implements TraceRecorder {
 			Long nodeID	= _nodeIdMap.get(node);
 			
 			if (nodeID == null) {
-				nodeID = _writableTrace.identifyNode(node.getQualifiedName());
+				nodeID = _writableTrace.identifyNode(node.getQualifiedWorkflowNodeName());
 				_nodeIdMap.put(node, nodeID);
 			}
 

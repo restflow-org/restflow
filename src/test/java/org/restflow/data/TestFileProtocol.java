@@ -289,17 +289,17 @@ public class TestFileProtocol extends RestFlowTestCase {
 		assertEquals(3, _store.take("/run2/incrementedInputNumber"));
 		assertEquals(4, _store.take("/run3/incrementedInputNumber"));
 		
-		assertEquals(1, _store.take("/run1/top.multiplier/multiplier"));
-		assertEquals(2, _store.take("/run2/top.multiplier/multiplier"));
-		assertEquals(3, _store.take("/run3/top.multiplier/multiplier"));
+		assertEquals(1, _store.take("/run1/multiplier1_1/multiplier"));
+		assertEquals(2, _store.take("/run2/multiplier2_1/multiplier"));
+		assertEquals(3, _store.take("/run3/multiplier3_1/multiplier"));
 
-		assertEquals(2, _store.take("/run1/top.multiplier/multiplicand"));
-		assertEquals(3, _store.take("/run2/top.multiplier/multiplicand"));
-		assertEquals(4, _store.take("/run3/top.multiplier/multiplicand"));
+		assertEquals(2, _store.take("/run1/multiplier1_1/multiplicand"));
+		assertEquals(3, _store.take("/run2/multiplier2_1/multiplicand"));
+		assertEquals(4, _store.take("/run3/multiplier3_1/multiplicand"));
 
-		assertEquals( 2, _store.take("/run1/top.multiplier/product"));
-		assertEquals( 6, _store.take("/run2/top.multiplier/product"));
-		assertEquals(12, _store.take("/run3/top.multiplier/product"));
+		assertEquals( 2, _store.take("/run1/multiplier1_1/product"));
+		assertEquals( 6, _store.take("/run2/multiplier2_1/product"));
+		assertEquals(12, _store.take("/run3/multiplier3_1/product"));
 		
 		assertEquals( 2, _store.take("/run1/outputNumber"));
 		assertEquals( 6, _store.take("/run2/outputNumber"));

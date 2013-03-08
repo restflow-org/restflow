@@ -1,11 +1,11 @@
 *** Node step counts ***
-BranchingWorkflow: 1
-BranchingWorkflow.CountGreetings: 3
-BranchingWorkflow.CreateGreetings: 3
-BranchingWorkflow.EmphasizeGreeting: 3
-BranchingWorkflow.FurtherEmphasizeGreeting: 3
-BranchingWorkflow.RenderDoublyEmphasizedGreeting: 3
-BranchingWorkflow.RenderGreetingCount: 3
+<BranchingWorkflow>: 1
+<BranchingWorkflow>[CountGreetings]: 3
+<BranchingWorkflow>[CreateGreetings]: 3
+<BranchingWorkflow>[EmphasizeGreeting]: 3
+<BranchingWorkflow>[FurtherEmphasizeGreeting]: 3
+<BranchingWorkflow>[RenderDoublyEmphasizedGreeting]: 3
+<BranchingWorkflow>[RenderGreetingCount]: 3
 *** Published resources ***
 /messages/count/1: 1
 /messages/count/2: 2

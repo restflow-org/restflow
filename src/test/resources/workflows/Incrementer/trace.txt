@@ -1,8 +1,8 @@
 *** Node step counts ***
-Incrementer: 1
-Incrementer.IncrementInputValueByStep: 1
-Incrementer.Inputs: 1
-Incrementer.Outputs: 1
+<ssrl.Sub.Incrementer>: 1
+<ssrl.Sub.Incrementer>[ssrl.Sub.IncrementInputValueByStep]: 1
+<ssrl.Sub.Incrementer>[ssrl.Sub.Inputs]: 1
+<ssrl.Sub.Incrementer>[ssrl.Sub.Outputs]: 1
 *** Published resources ***
 /incrementedValue: 10
 /step: 10

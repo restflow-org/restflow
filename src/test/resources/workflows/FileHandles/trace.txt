@@ -1,7 +1,7 @@
 *** Node step counts ***
-FileHandles: 1
-FileHandles.CreateFile: 3
-FileHandles.PrintFile: 3
+<FileHandles>: 1
+<FileHandles>[CreateFile]: 3
+<FileHandles>[PrintFile]: 3
 *** Published resources ***
 file:/messages/file_1.txt
 file:/messages/file_2.txt

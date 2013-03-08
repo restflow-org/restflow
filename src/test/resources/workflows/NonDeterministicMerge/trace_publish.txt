@@ -1,10 +1,10 @@
 *** Node step counts ***
-NonDeterministicMerge: 1
-NonDeterministicMerge.GenerateIntegerSequence1: 4
-NonDeterministicMerge.GenerateIntegerSequence2: 4
-NonDeterministicMerge.GenerateIntegerSequence3: 5
-NonDeterministicMerge.MergeOne: 11
-NonDeterministicMerge.RenderIntegers: 11
+<NonDeterministicMerge>: 1
+<NonDeterministicMerge>[GenerateIntegerSequence1]: 4
+<NonDeterministicMerge>[GenerateIntegerSequence2]: 4
+<NonDeterministicMerge>[GenerateIntegerSequence3]: 5
+<NonDeterministicMerge>[MergeOne]: 11
+<NonDeterministicMerge>[RenderIntegers]: 11
 *** Published resources ***
 /counter/merged/1: 1
 /counter/merged/10: 15

@@ -99,10 +99,10 @@ public class TestTraceQueryMethods_VolatileMetadata  extends WorkflowTestCase {
 			trace.getStepEventsProlog());
 		
 		assertEquals(
-				"DoublerWorkflow: 1"				+ EOL +
-				"DoublerWorkflow.doubler: 1"		+ EOL + 
-				"DoublerWorkflow.inportal: 1"		+ EOL + 
-				"DoublerWorkflow.outportal: 1"		+ EOL,
+				"<DoublerWorkflow>: 1"				+ EOL +
+				"<DoublerWorkflow>[doubler]: 1"		+ EOL + 
+				"<DoublerWorkflow>[inportal]: 1"		+ EOL + 
+				"<DoublerWorkflow>[outportal]: 1"		+ EOL,
 			trace.getNodeStepCountsYaml()
 		);
 		

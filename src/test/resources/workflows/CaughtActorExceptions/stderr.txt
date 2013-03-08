@@ -1,2 +1,2 @@
 java.lang.ClassNotFoundException: Error on third step!
-org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output 'outValue' of actor 'CaughtActorExceptions.ThrowExceptionOnThirdStep.(inner bean)'
+org.restflow.exceptions.NullOutputException: Null data produced on non-nullable output 'outValue' of actor <CaughtActorExceptions>[ThrowExceptionOnThirdStep]<(inner bean)>

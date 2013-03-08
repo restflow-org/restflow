@@ -164,18 +164,18 @@ public class TestParallelWorkflow_YamlStringDefinitions extends RestFlowTestCase
 		assertEquals(
 				"NodeName                                   StepNumber PortName     Uri                Value " 	+ EOL +
 				"------------------------------------------ ---------- ------------ ------------------ ----- " 	+ EOL +
-				"Top.CreateMultipliers                      1          output       /multiplier/1      5     " 	+ EOL +
-				"Top.CreateMultipliers                      2          output       /multiplier/2      10    " 	+ EOL +
-				"Top.CreateMultipliers                      3          output       /multiplier/3      11    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  1          product      /product/1         15    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  2          product      /product/2         30    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  3          product      /product/3         33    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier 1          multiplier   /1/multiplier      5     " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier 2          multiplier   /2/multiplier      10    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier 3          multiplier   /3/multiplier      11    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         1          product      /1/product/1       15    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         2          product      /2/product/1       30    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         3          product      /3/product/1       33    " 	+ EOL, 
+				"<Top>[CreateMultipliers]                   1          output       /multiplier/1      5     " 	+ EOL +
+				"<Top>[CreateMultipliers]                   2          output       /multiplier/2      10    " 	+ EOL +
+				"<Top>[CreateMultipliers]                   3          output       /multiplier/3      11    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow]               1          product      /product/1         15    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow]               2          product      /product/2         30    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow]               3          product      /product/3         33    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][ImportMultipl 1          multiplier   /1/multiplier      5     " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][ImportMultipl 2          multiplier   /2/multiplier      10    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][ImportMultipl 3          multiplier   /3/multiplier      11    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][Multiply]     1          product      /1/product/1       15    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][Multiply]     2          product      /2/product/1       30    " 	+ EOL +
+				"<Top>[MultiplyInSubworkflow][Multiply]     3          product      /3/product/1       33    " 	+ EOL, 
 			trace.dumpTable(
 				"NodePublishedResource",
 				new String [] {"NodeName                                  ", "StepNumber", "PortName    ", "Uri               ", "Value"},
@@ -343,23 +343,23 @@ public class TestParallelWorkflow_YamlStringDefinitions extends RestFlowTestCase
 		);
 		
 		assertMatchesRegexp(
-				"NodeName                                   StepNumber PortName     Uri                Value " 	+ EOL +
-				"------------------------------------------ ---------- ------------ ------------------ ----- " 	+ EOL +
-				"Top.CreateMultipliers                      1          output       /multiplier/1      5     " 	+ EOL +
-				"Top.CreateMultipliers                      2          output       /multiplier/2      10    " 	+ EOL +
-				"Top.CreateMultipliers                      3          output       /multiplier/3      11    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  1          product      /product/1         15    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  2          product      /product/2         30    " 	+ EOL +
-				"Top.MultiplyInSubworkflow                  3          product      /product/3         33    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier .          multiplier   /1/multiplier      5     " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier .          multiplier   /2/multiplier      10    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.ImportMultiplier .          multiplier   /3/multiplier      11    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         .          product      /1/product/1       15    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         .          product      /2/product/1       30    " 	+ EOL +
-				"Top.MultiplyInSubworkflow.Multiply         .          product      /3/product/1       33    " 	+ EOL, 
+				"NodeName                                       StepNumber PortName     Uri                Value " 	+ EOL +
+				"---------------------------------------------- ---------- ------------ ------------------ ----- " 	+ EOL +
+				"<Top>\\[CreateMultipliers\\]                       1          output       /multiplier/1      5     " 	+ EOL +
+				"<Top>\\[CreateMultipliers\\]                       2          output       /multiplier/2      10    " 	+ EOL +
+				"<Top>\\[CreateMultipliers\\]                       3          output       /multiplier/3      11    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]                   1          product      /product/1         15    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]                   2          product      /product/2         30    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]                   3          product      /product/3         33    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[ImportMultiplier\\] .          multiplier   /1/multiplier      5     " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[ImportMultiplier\\] .          multiplier   /2/multiplier      10    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[ImportMultiplier\\] .          multiplier   /3/multiplier      11    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[Multiply\\]         .          product      /1/product/1       15    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[Multiply\\]         .          product      /2/product/1       30    " 	+ EOL +
+				"<Top>\\[MultiplyInSubworkflow\\]\\[Multiply\\]         .          product      /3/product/1       33    " 	+ EOL, 
 			trace.dumpTable(
 				"NodePublishedResource",
-				new String [] {"NodeName                                  ", "StepNumber", "PortName    ", "Uri               ", "Value"},
+				new String [] {"NodeName                                      ", "StepNumber", "PortName    ", "Uri               ", "Value"},
 				"ORDER BY NodeName, PortName, Uri"
 			)
 		);

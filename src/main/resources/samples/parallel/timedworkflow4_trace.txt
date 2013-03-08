@@ -1,9 +1,9 @@
 *** Node step counts ***
-TimedWorkflow: 1
-TimedWorkflow.EndNode: 1
-TimedWorkflow.LeftBranchNode: 1
-TimedWorkflow.RightBranchNode: 1
-TimedWorkflow.StartNode: 1
+<TimedWorkflow>: 1
+<TimedWorkflow>[EndNode]: 1
+<TimedWorkflow>[LeftBranchNode]: 1
+<TimedWorkflow>[RightBranchNode]: 1
+<TimedWorkflow>[StartNode]: 1
 *** Published resources ***
 /left/1: 7
 /right/1: 7

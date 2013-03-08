@@ -734,20 +734,20 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 		assertEquals(4, _store.take("/run3/incrementedInputNumber"));
 		assertNull(     _store.take("/run4/incrementedInputNumber"));
 		
-		assertEquals(1, _store.take("/run1/top.multiplier/multiplier"));
-		assertEquals(2, _store.take("/run2/top.multiplier/multiplier"));
-		assertEquals(3, _store.take("/run3/top.multiplier/multiplier"));
-		assertNull(     _store.take("/run4/top.multiplier/multiplier"));
+		assertEquals(1, _store.take("/run1/multiplier1_1/multiplier"));
+		assertEquals(2, _store.take("/run2/multiplier2_1/multiplier"));
+		assertEquals(3, _store.take("/run3/multiplier3_1/multiplier"));
+		assertNull(     _store.take("/run4/multiplier4_1/multiplier"));
 
-		assertEquals(2, _store.take("/run1/top.multiplier/multiplicand"));
-		assertEquals(3, _store.take("/run2/top.multiplier/multiplicand"));
-		assertEquals(4, _store.take("/run3/top.multiplier/multiplicand"));
-		assertNull(     _store.take("/run4/top.multiplier/multiplicand"));
+		assertEquals(2, _store.take("/run1/multiplier1_1/multiplicand"));
+		assertEquals(3, _store.take("/run2/multiplier2_1/multiplicand"));
+		assertEquals(4, _store.take("/run3/multiplier3_1/multiplicand"));
+		assertNull(     _store.take("/run4/multiplier4_1/multiplicand"));
 
-		assertEquals( 2, _store.take("/run1/top.multiplier/product"));
-		assertEquals( 6, _store.take("/run2/top.multiplier/product"));
-		assertEquals(12, _store.take("/run3/top.multiplier/product"));
-		assertNull(      _store.take("/run4/top.multiplier/product"));
+		assertEquals( 2, _store.take("/run1/multiplier1_1/product"));
+		assertEquals( 6, _store.take("/run2/multiplier2_1/product"));
+		assertEquals(12, _store.take("/run3/multiplier3_1/product"));
+		assertNull(      _store.take("/run4/multiplier4_1/product"));
 		
 		assertEquals( 2, _store.take("/run1/outputNumber"));
 		assertEquals( 6, _store.take("/run2/outputNumber"));
@@ -816,9 +816,9 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			
 			assertEquals(u,   _store.take("/inputNumber"));
 			assertEquals(u+1, _store.take("/incrementedInputNumber"));
-			assertEquals(u,   _store.take("/top.multiplier/multiplier"));
-			assertEquals(u+1, _store.take("/top.multiplier/multiplicand"));
-			assertEquals(v,   _store.take("/top.multiplier/product"));
+			assertEquals(u,   _store.take("multiplier1_1/multiplier"));
+			assertEquals(u+1, _store.take("multiplier1_1/multiplicand"));
+			assertEquals(v,   _store.take("multiplier1_1/product"));
 			assertEquals(v,   _store.take("/outputNumber"));
 			assertEquals(0,   _store.size());
 		}

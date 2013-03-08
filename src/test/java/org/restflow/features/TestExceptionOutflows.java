@@ -97,8 +97,8 @@ public class TestExceptionOutflows extends RestFlowTestCase {
 				recorder.getStdoutRecording());
 	
 			assertEquals(
-				"Warning:  Run 1 of workflow 'OneShotInflow' wrapped up with unused data packets:" 		+ EOL +
-				"1 packet in inflow 'a' on node 'MultiplySequenceBySingleton' with URI '/multiplier'"	+ EOL,
+				"Warning:  Run 1 of workflow <OneShotInflow> wrapped up with unused data packets:" 		+ EOL +
+				"1 packet in inflow 'a' on node [MultiplySequenceBySingleton] with URI '/multiplier'"	+ EOL,
 				recorder.getStderrRecording());
 			
 			// confirm expected published data

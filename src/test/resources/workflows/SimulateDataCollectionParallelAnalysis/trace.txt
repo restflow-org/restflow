@@ -1,17 +1,17 @@
 *** Node step counts ***
-SimulateDataCollectionParallelAnalysis: 1
-SimulateDataCollectionParallelAnalysis.CalculateStrategy: 5
-SimulateDataCollectionParallelAnalysis.CollectDataSet: 4
-SimulateDataCollectionParallelAnalysis.CollectDataSet.CollectData_CollectImage: 54
-SimulateDataCollectionParallelAnalysis.CollectDataSet.CollectData_Inputs: 4
-SimulateDataCollectionParallelAnalysis.CollectDataSet.CollectData_LogImage: 54
-SimulateDataCollectionParallelAnalysis.CollectDataSet.CollectData_Outputs: 4
-SimulateDataCollectionParallelAnalysis.CollectDataSet.CollectData_TransformImage: 54
-SimulateDataCollectionParallelAnalysis.LoadScreeningResults: 5
-SimulateDataCollectionParallelAnalysis.MergeFeedback: 5
-SimulateDataCollectionParallelAnalysis.ProcessDataSet: 4
-SimulateDataCollectionParallelAnalysis.ProcessDataSet.ProcessData_Inputs: 4
-SimulateDataCollectionParallelAnalysis.ProcessDataSet.ProcessData_IntegrateImages: 4
+<SimulateDataCollectionParallelAnalysis>: 1
+<SimulateDataCollectionParallelAnalysis>[CalculateStrategy]: 5
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet]: 4
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet][CollectData_CollectImage]: 54
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet][CollectData_Inputs]: 4
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet][CollectData_LogImage]: 54
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet][CollectData_Outputs]: 4
+<SimulateDataCollectionParallelAnalysis>[CollectDataSet][CollectData_TransformImage]: 54
+<SimulateDataCollectionParallelAnalysis>[LoadScreeningResults]: 5
+<SimulateDataCollectionParallelAnalysis>[MergeFeedback]: 5
+<SimulateDataCollectionParallelAnalysis>[ProcessDataSet]: 4
+<SimulateDataCollectionParallelAnalysis>[ProcessDataSet][ProcessData_Inputs]: 4
+<SimulateDataCollectionParallelAnalysis>[ProcessDataSet][ProcessData_IntegrateImages]: 4
 *** Published resources ***
 /dataSet_DRT050: DRT050
 /dataSet_DRT240: DRT240

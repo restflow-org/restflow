@@ -1,0 +1,62 @@
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+  - workspace:/subIncrementer.yaml
+  - workspace:/multiplierMixin.yaml
+
+components:
+
+  - id: TopWorkflow
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref ApplyFunction
+        - !ref RenderIncrementedIntegers
+
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 5
+      outflows:
+        value: /sequence/
+
+  - id: ApplyFunction
+    type: Node
+    properties:
+      nestedUriPrefix: /IncByDefault{STEP}
+      actor: !ref IncrementerAndMultiplier
+      inflows:
+        value: /sequence/
+      outflows:
+        incrementedValue: /onceIncrementedSequence/
+        appliedIncrement: /firstAppliedIncrement/
+        product: /product
+
+  - id: RenderIncrementedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Once incremented values
+        outputImmediately: false
+        outputAtWrapup: true
+      inflows:
+        message: /onceIncrementedSequence/
+
+
+  - id: IncrementerAndMultiplier
+    type: Workflow
+    properties:
+      director: !ref PublishSubscribeDirector
+      mixins:
+        - !ref Incrementer.Workflow
+        - !ref MultiplierMixin.Workflow

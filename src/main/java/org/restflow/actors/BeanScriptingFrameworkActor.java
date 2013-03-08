@@ -78,7 +78,7 @@ public class BeanScriptingFrameworkActor extends AbstractActor {
 				engine.eval( initialize );
 			} catch (ScriptException ex) {
 				logger.error("Runtime error in JavaScript script of actor " + 
-						getName() + " of "+ getNodeName() + " during " + 
+						getName() + " of "+ getQualifiedParentNodeName() + " during " + 
 						_actorStatus.getCallType() );
 				throw new RuntimeException(ex);
 			}
@@ -118,7 +118,7 @@ public class BeanScriptingFrameworkActor extends AbstractActor {
 				engine.eval( step );
 			} catch (ScriptException ex) {
 				logger.error("Runtime error in JavaScript script of actor " + 
-						getName() + " of "+ getNodeName() + " during " + 
+						getName() + " of "+ getQualifiedParentNodeName() + " during " + 
 						_actorStatus.getCallType() );
 				throw new RuntimeException(ex);
 			}
@@ -154,7 +154,7 @@ public class BeanScriptingFrameworkActor extends AbstractActor {
 				engine.eval( wrapup );
 			} catch (ScriptException ex) {
 				logger.error("Runtime error in JavaScript script of actor " + 
-						getName() + " of "+ getNodeName() + " during " + 
+						getName() + " of "+ getQualifiedParentNodeName() + " during " + 
 						_actorStatus.getCallType() );
 				throw new RuntimeException(ex);
 			}

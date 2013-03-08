@@ -1,7 +1,7 @@
 *** Node step counts ***
-CountToThree: 1
-CountToThree.GenerateIntegerSequence: 4
-CountToThree.RenderIntegerSequence: 3
+<CountToThree>: 1
+<CountToThree>[GenerateIntegerSequence]: 4
+<CountToThree>[RenderIntegerSequence]: 3
 *** Published resources ***
 GenerateIntegerSequence.value/1: 1
 GenerateIntegerSequence.value/2: 2

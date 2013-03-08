@@ -1,9 +1,9 @@
 *** Node step counts ***
-UnorderedConcurrentMultipliers: 1
-UnorderedConcurrentMultipliers.CreateMultiplicands: 101
-UnorderedConcurrentMultipliers.CreateMultipliers: 101
-UnorderedConcurrentMultipliers.MultiplyConcurrently: 100
-UnorderedConcurrentMultipliers.RenderProducts: 100
+<UnorderedConcurrentMultipliers>: 1
+<UnorderedConcurrentMultipliers>[CreateMultiplicands]: 101
+<UnorderedConcurrentMultipliers>[CreateMultipliers]: 101
+<UnorderedConcurrentMultipliers>[MultiplyConcurrently]: 100
+<UnorderedConcurrentMultipliers>[RenderProducts]: 100
 *** Published resources ***
 /multiplicand/1: 1
 /multiplicand/10: 10

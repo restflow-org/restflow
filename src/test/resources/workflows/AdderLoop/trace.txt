@@ -1,8 +1,8 @@
 *** Node step counts ***
-AdderLoop: 1
-AdderLoop.AddOneToPreviousInteger: 6
-AdderLoop.DiscardIntegersGreaterThanMax: 6
-AdderLoop.RenderIntegers: 5
+<AdderLoop>: 1
+<AdderLoop>[AddOneToPreviousInteger]: 6
+<AdderLoop>[DiscardIntegersGreaterThanMax]: 6
+<AdderLoop>[RenderIntegers]: 5
 *** Published resources ***
 /filtered/1: 3
 /filtered/2: 4

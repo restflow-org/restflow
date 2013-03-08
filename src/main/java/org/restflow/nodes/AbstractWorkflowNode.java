@@ -1,5 +1,7 @@
 package org.restflow.nodes;
 
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,7 +15,9 @@ import java.util.Set;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import org.apache.commons.codec.binary.Hex;
 import org.restflow.WorkflowContext;
+import org.restflow.actors.AbstractActor;
 import org.restflow.actors.Workflow;
 import org.restflow.data.ControlProtocol;
 import org.restflow.data.Inflow;
@@ -38,6 +42,7 @@ import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.DigestUtils;
 
 
 /**
@@ -144,22 +149,15 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 		_workflowContext = (WorkflowContext)context;
 	}
 	
+	//Set by spring
 	public void setBeanName(String beanName) {		
-
-		// save the namespace qualified name of this actor
 		_beanName = beanName;
-
-		// extract and save the unqualified name of this actor
-		int finalDotPosition = beanName.lastIndexOf('.');
-		if (finalDotPosition == -1) {
-			setName(_beanName);
-		} else {
-			setName(_beanName.substring(finalDotPosition + 1));
-		}		
-	}	
-	public synchronized void setName(String name) {
-		_name = name;
+		_name=beanName;
 	}
+	
+	public void setName(String name) {		
+		_name=name;
+	}		
 
 	public synchronized void setWorkflow(Workflow workflow) {
 		_workflow = workflow;
@@ -298,24 +296,32 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 		return _beanName;
 	}
 
-	public synchronized String getQualifiedName() {
+	public synchronized String getSha1Name(int length) throws Exception {
+		MessageDigest cript = MessageDigest.getInstance("SHA-1");
+        cript.reset();
+        cript.update(getQualifiedWorkflowNodeName().getBytes("utf8"));
+        String sha1 = new String(Hex.encodeHex(cript.digest())) ;
+        return sha1.substring(0,length);
+	}
 		
+	public synchronized String getQualifiedWorkflowNodeName() {
+	
 		if (_qualifiedName == null) {
 			
 			if (_workflow == null) {
 				
-				_qualifiedName = _name;
+				_qualifiedName = decorateNodeName( _name ) ;
 			
 			} else {
 				
-				StringBuffer buffer = new StringBuffer("." + _name);
+				StringBuffer buffer = new StringBuffer( decorateNodeName( _name ) );
 				
 				WorkflowNode parentNode =_workflow.getParentNode();
 				
 				if (parentNode == null) {
-					buffer.insert(0, _workflow.getName());
+					buffer.insert(0, AbstractActor.decorateActorName(_workflow.getName()) );
 				} else {
-					buffer.insert(0, parentNode.getQualifiedName());
+					buffer.insert(0, parentNode.getQualifiedWorkflowNodeName());
 				}
 
 				_qualifiedName = buffer.toString();
@@ -324,7 +330,30 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 		
 		return _qualifiedName;
 	}
-	
+
+	public synchronized String getWorkflowNodeNameAsUri() {
+			
+		if (_workflow == null) {
+				
+			return _name;
+			
+		} else {
+				
+			StringBuffer buffer = new StringBuffer( _name );
+				
+			WorkflowNode parentNode =_workflow.getParentNode();
+
+			buffer.insert(0, "/" );		
+			if (parentNode == null) {
+				buffer.insert(0, _workflow.getName() );
+			} else {
+				buffer.insert(0, parentNode.getWorkflowNodeNameAsUri() );
+			}
+
+			return buffer.toString();
+		}
+	}
+
 
 	public synchronized Map<String, Outflow> getOutflows() {
 		return new ImmutableMap<String, Outflow>(_outflows);
@@ -760,5 +789,10 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 		return (_isFinished == NodeFinished.TRUE);
 	}
 	
-	
+	static public String decorateNodeName(String name) {
+		StringBuffer buffer = new StringBuffer( "[" );
+		buffer.append(name);
+		buffer.append("]");
+		return buffer.toString();
+	}
 }

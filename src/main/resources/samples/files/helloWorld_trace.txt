@@ -1,8 +1,8 @@
 *** Node step counts ***
-HelloWorld: 1
-HelloWorld.CreateGreetingFiles: 3
-HelloWorld.EmphasizeGreeting: 3
-HelloWorld.RenderGreeting: 3
+<HelloWorld>: 1
+<HelloWorld>[CreateGreetingFiles]: 3
+<HelloWorld>[EmphasizeGreeting]: 3
+<HelloWorld>[RenderGreeting]: 3
 *** Published resources ***
 /messages/emphasizedGreeting/1: Hello World!!
 /messages/emphasizedGreeting/2: Good Afternoon, Cosmos!!

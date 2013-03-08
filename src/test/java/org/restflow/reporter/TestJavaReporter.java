@@ -197,13 +197,13 @@ public class TestJavaReporter extends RestFlowTestCase {
 			recorder.getStdoutRecording());
 
 		assertEquals(
-				"TopWorkflow: 1"							+ EOL +
-				"TopWorkflow.TheOnlyNode: 1" + EOL,	
+				"<TopWorkflow>: 1"							+ EOL +
+				"<TopWorkflow>[TheOnlyNode]: 1" + EOL,	
 			workflow.getReport("MyReport"));
 
 		assertEquals(
-				"TopWorkflow 1"								+ EOL +
-				"TopWorkflow.TheOnlyNode 1" 				+ EOL,	
+				"<TopWorkflow> 1"								+ EOL +
+				"<TopWorkflow>[TheOnlyNode] 1" 				+ EOL,	
 			workflow.getReport("MyOtherReport"));
 	}
 }

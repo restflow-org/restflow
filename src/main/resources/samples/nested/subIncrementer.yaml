@@ -1,0 +1,57 @@
+namespace:
+
+  module: Incrementer
+
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+  
+components:
+
+
+- id: Workflow
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+      - !lref Inputs
+      - !lref Increment
+      - !lref Outputs
+    inputs:
+      value: 
+        default: 0 
+      increment:
+        default: 1
+    outputs:
+      incrementedValue: 
+      appliedIncrement:
+
+
+- id: Inputs
+  type: InPortal
+  properties:
+    outflows: 
+      value: /value/
+      increment: /increment/
+
+- id: Increment
+  type: GroovyActorStep
+  properties: 
+    actor.step: |
+      sum = a + b
+    inflows:
+      a: /value/
+      b: /increment/
+    outflows:
+      sum: /incrementedValue/   
+
+
+- id: Outputs
+  type: OutPortal
+  properties:
+    inflows: 
+      incrementedValue: /incrementedValue/
+      appliedIncrement: /increment/
+

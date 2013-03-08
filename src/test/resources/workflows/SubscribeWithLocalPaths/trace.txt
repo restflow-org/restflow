@@ -1,12 +1,12 @@
 *** Node step counts ***
-SubscribeWithLocalPaths: 1
-SubscribeWithLocalPaths.AccessOneFile: 1
-SubscribeWithLocalPaths.CreateDirectoryOfFiles: 1
-SubscribeWithLocalPaths.CreateStringData: 1
-SubscribeWithLocalPaths.MixDirectoryAndFileLocalPaths: 1
-SubscribeWithLocalPaths.OutputDirectory: 1
-SubscribeWithLocalPaths.PrintOriginalFileContents: 1
-SubscribeWithLocalPaths.PrintRepublishedFileContents: 1
+<SubscribeWithLocalPaths>: 1
+<SubscribeWithLocalPaths>[AccessOneFile]: 1
+<SubscribeWithLocalPaths>[CreateDirectoryOfFiles]: 1
+<SubscribeWithLocalPaths>[CreateStringData]: 1
+<SubscribeWithLocalPaths>[MixDirectoryAndFileLocalPaths]: 1
+<SubscribeWithLocalPaths>[OutputDirectory]: 1
+<SubscribeWithLocalPaths>[PrintOriginalFileContents]: 1
+<SubscribeWithLocalPaths>[PrintRepublishedFileContents]: 1
 *** Published resources ***
 /string: This is a string
 file:/directories/1/directoryOne

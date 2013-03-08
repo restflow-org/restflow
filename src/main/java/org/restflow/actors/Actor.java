@@ -148,6 +148,7 @@ public interface Actor {
 
 	String getBeanName();
 	String getName();
+	String getFullyQualifiedActorName();	
 
 	void setName(String actorName);
 }

@@ -119,7 +119,7 @@ public class UriTemplate extends UriBase {
 		uriBuilder.append(pathSuffix);
 		
 		// create a URI object from the assembled uri string and return
-		String uriString = uriBuilder.toString();
+		String uriString = uriBuilder.toString().replaceAll("//", "/" );
 		Uri uri = new Uri(uriString);
 		return uri;
 	}

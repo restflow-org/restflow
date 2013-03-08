@@ -1,17 +1,17 @@
 *** Node step counts ***
-DoublyNestedWorkflow: 1
-DoublyNestedWorkflow.RunNestedWorkflow: 3
-DoublyNestedWorkflow.RunNestedWorkflow.GenerateIntegerSequence: 12
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByDefaultStepSize: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByDefaultStepSize.IncrementInputValueByStep: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByDefaultStepSize.Inputs: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByDefaultStepSize.Outputs: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByThree: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByThree.IncrementInputValueByStep: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByThree.Inputs: 9
-DoublyNestedWorkflow.RunNestedWorkflow.IncrementByThree.Outputs: 9
-DoublyNestedWorkflow.RunNestedWorkflow.RenderFirstStepSize: 9
-DoublyNestedWorkflow.RunNestedWorkflow.RenderIncrementedIntegers: 9
+<DoublyNestedWorkflow>: 1
+<DoublyNestedWorkflow>[RunNestedWorkflow]: 3
+<DoublyNestedWorkflow>[RunNestedWorkflow][GenerateIntegerSequence]: 12
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByDefaultStepSize]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByDefaultStepSize][ssrl.Sub.IncrementInputValueByStep]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByDefaultStepSize][ssrl.Sub.Inputs]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByDefaultStepSize][ssrl.Sub.Outputs]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByThree]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByThree][ssrl.Sub.IncrementInputValueByStep]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByThree][ssrl.Sub.Inputs]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][IncrementByThree][ssrl.Sub.Outputs]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][RenderFirstStepSize]: 9
+<DoublyNestedWorkflow>[RunNestedWorkflow][RenderIncrementedIntegers]: 9
 *** Published resources ***
 /sub/1/IncByThree1/incrementedValue: 18
 /sub/1/IncByThree1/step: 3

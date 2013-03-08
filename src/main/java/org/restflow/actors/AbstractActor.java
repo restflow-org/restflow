@@ -77,6 +77,10 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 	@GuardedBy("this") protected Map<String,String> 				_variableTypes;
 	@GuardedBy("this") protected Map<String,Object> 				_stateVariables;
 	
+	//inputs and outputs as set by hashmap (typically via yaml)
+	@GuardedBy("this") protected Map<String, Object> 				_inputs;
+	@GuardedBy("this") protected Map<String, Object> 				_outputs;
+	
 	private String _scratchDirectoryPrefix;
 	protected int _runCount; 	// step count since latest call of configure() or reset(),
 								//   unlike 'step' which is step count last call to configure(), reset(), or initialize()
@@ -170,13 +174,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		// save the namespace qualified name of this actor
 		_beanName = beanName;
 
-		// extract and save the unqualified name of this actor
-		int finalDotPosition = beanName.lastIndexOf('.');
-		if (finalDotPosition == -1) {
-			setName(_beanName);
-		} else {
-			setName(_beanName.substring(finalDotPosition + 1));
-		}		
+		setName(beanName);
 	}
 	
 	public String getBeanName() {
@@ -245,9 +243,17 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 
 	
 	public synchronized void setInputs(Map<String, Object> inputs) throws Exception {
-
+		
 		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
 
+		_inputs = inputs;
+		
+		//TODO move following side affect out of the setter
+		addInputsToInputSignature(inputs);
+	}
+
+	private void addInputsToInputSignature(Map<String, Object> inputs)
+			throws RestFlowException {
 		for (String label : inputs.keySet()) {
 			Object value = inputs.get(label);
 			_addInputToSignature(label, value);
@@ -258,6 +264,13 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 
 		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
 		
+		_outputs = outputs;
+		
+		//TODO move following side affect out of the setter		
+		addOutputsToOutputSignature(outputs);
+	}
+
+	private void addOutputsToOutputSignature(Map<String, Object> outputs) {
 		for (String label : outputs.keySet()) {
 			Object value = outputs.get(label);
 			_addOutputToSignature(label, value);
@@ -305,12 +318,17 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
 		return _name;
 	}
-
-	public synchronized String getNodeName() {
+	
+	public synchronized String getQualifiedParentNodeName() {
 		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
-		return _node.getQualifiedName();
+		return _node.getQualifiedWorkflowNodeName();
 	}
 
+	public synchronized String getParentNodeNameAsUri() {
+		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
+		return _node.getWorkflowNodeNameAsUri();
+	}	
+	
 	public synchronized boolean isStateful() {
 		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
 		return _stateful;
@@ -379,24 +397,23 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		}
 	}
 	
-	public synchronized String getFullyQualifiedName() {
+	public synchronized String getFullyQualifiedActorName() {
 		
-		if (_node == null) return _name;
+		if (_node == null) return decorateActorName ( _name );
 		
-		
-		String nodeName = _node.getQualifiedName();
+		String nodeName = _node.getQualifiedWorkflowNodeName();
 		if (nodeName == null || nodeName.equals("")) {
-			return _name;
+			return decorateActorName(_name);
 		} 
 		
-		return nodeName + "[" + _name + "]";
+		return nodeName + decorateActorName(_name);
 	}
 	
 	public synchronized String toString() {
 		if (_node == null) {
 			return _name;
 		} else {
-			return _node.getQualifiedName() + "." + _name;
+			return _node.getQualifiedWorkflowNodeName() + _name;
 		}
 	}
 	
@@ -741,7 +758,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		if (_stepOfScratchDirectory < step || !uriPrefix.equals(_scratchDirectoryPrefix)) {
 			String nodeName;
 			if (_node != null) {
-				nodeName = _node.getQualifiedName();
+				nodeName = _node.getName() + "_" + step+ "_" + _node.getSha1Name(8);
 			} else {
 				nodeName = "top";
 			}
@@ -749,7 +766,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 				//iso9660 file systems do not allow . in directory structure
 				nodeName = nodeName.replaceAll("\\.", "_");
 			}
-			String scratchDirectory = runDirectoryPath + "/scratch/" + uriPrefix +  "/" + nodeName + "_" + step;
+			String scratchDirectory = runDirectoryPath + "/scratch/" + uriPrefix +  "/" + nodeName;
 			_stepDirectory = new File(scratchDirectory);
 			_stepDirectory.mkdirs();
 			_stepOfScratchDirectory = step;
@@ -762,5 +779,21 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 	public int getRunCount() {
 		return _runCount;
 	}
+
+	public Map<String, Object> getInputs() {
+		return _inputs;
+	}
+
+	public Map<String, Object> getOutputs() {
+		return _outputs;
+	}
+	
+	static public String decorateActorName(String name) {
+		StringBuffer buffer = new StringBuffer( "<" );
+		buffer.append(name);
+		buffer.append(">");
+		return buffer.toString();
+	}
+
 }
 

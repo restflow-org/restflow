@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.restflow.WorkflowContext;
+import org.restflow.actors.AbstractActor;
 import org.restflow.actors.Actor;
 import org.restflow.actors.Workflow;
 import org.restflow.data.Inflow;
@@ -855,10 +856,10 @@ public class WritableTrace extends Trace {
 			
 			for (Map.Entry<Inflow,List<Outflow>> entry : workflow.getInflowToOutflowsMap().entrySet()) {
 				Inflow inflow = entry.getKey();
-				Long inflowNodeID = identifyNode(inflow.getNode().getQualifiedName());
+				Long inflowNodeID = identifyNode(inflow.getNode().getQualifiedWorkflowNodeName());
 				Long inflowID = identifyInflow(inflowNodeID, inflow.getLabel());
 				for (Outflow outflow : entry.getValue()) {
-					Long outflowNodeID = identifyNode(outflow.getNode().getQualifiedName());
+					Long outflowNodeID = identifyNode(outflow.getNode().getQualifiedWorkflowNodeName());
 					Long outflowID = identifyOutflow(outflowNodeID, outflow.getLabel());
 					insertChannel(outflowID, inflowID);
 				}
@@ -873,7 +874,7 @@ public class WritableTrace extends Trace {
 			workflowName = "Workflow";
 		}
 		Long topWorkflowID = insertActor(workflowName);
-		long topNodeID = insertNode(workflowName, workflowName, null, topWorkflowID, 0L, false, true);
+		long topNodeID = insertNode( AbstractActor.decorateActorName(workflowName), workflowName, null, topWorkflowID, 0L, false, true);
 		_nodeParentMap.put(topNodeID, null);
 		
 		for (String inputName : workflow.getInputNames()) {
@@ -948,7 +949,7 @@ public class WritableTrace extends Trace {
 				hasChildren = (a instanceof Workflow);
 			}
 			
-			long nodeID = insertNode(node.getQualifiedName(), node.getName(), parentNodeID, actorID, 0L, node.isHidden(), hasChildren);
+			long nodeID = insertNode(node.getQualifiedWorkflowNodeName(), node.getName(), parentNodeID, actorID, 0L, node.isHidden(), hasChildren);
 			_nodeParentMap.put(nodeID, parentNodeID);
 			
 			for (Inflow inflow : node.getNodeInflows()) {
