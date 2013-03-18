@@ -75,6 +75,7 @@ components:
             if ( node.hidden ) return;
             if ( node instanceof org.restflow.nodes.InPortal ) return;
             if ( node instanceof org.restflow.nodes.OutPortal ) return;
+            if ( node instanceof org.restflow.nodes.SourceNode ) return;
             if ( node instanceof org.restflow.nodes.NonDeterministicMerge ) return;
             if ( node.actor instanceof org.restflow.actors.Workflow ) {
               workflows[ "$node.actor.beanName" ] = node.actor;
@@ -168,6 +169,7 @@ components:
             if ( node.hidden ) return;
             if ( node instanceof org.restflow.nodes.InPortal ) return;
             if ( node instanceof org.restflow.nodes.OutPortal ) return;
+            if ( node instanceof org.restflow.nodes.SourceNode ) return;
             if ( node instanceof org.restflow.nodes.NonDeterministicMerge ) return;
             println "<li>"
             println node.beanName;
