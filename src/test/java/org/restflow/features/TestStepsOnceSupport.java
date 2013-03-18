@@ -781,11 +781,11 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 						"'/sub1/subsub1/copy/2', '/sub1/subsub1/copy/3'"										+ EOL +	
 					
 					"Warning:  Run 2 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'value' on node 'valuePrinter' with URIs " 								+
+					"2 packets in queue 'value' on node [valuePrinter] with URIs " 								+
 						"'/sub1/subsub2/copy/2', '/sub1/subsub2/copy/3'"										+ EOL +
 					
 					"Warning:  Run 3 of workflow <top>[sub][subsub]<subsub> wrapped up with unused data packets:"	+ EOL +
-					"2 packets in queue 'value' on node 'valuePrinter' with URIs " 								+
+					"2 packets in queue 'value' on node [valuePrinter] with URIs " 								+
 						"'/sub1/subsub3/copy/2', '/sub1/subsub3/copy/3'"				 						+ EOL,
 					
 					recorder.getStderrRecording());
