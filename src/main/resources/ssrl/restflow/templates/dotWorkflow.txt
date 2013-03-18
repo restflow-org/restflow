@@ -18,6 +18,7 @@
       if ( node.hidden ) return;  //don't display buffer nodes
       if (( node instanceof org.restflow.nodes.InPortal ) || 
          ( node instanceof org.restflow.nodes.OutPortal ) ||
+         ( node instanceof org.restflow.nodes.SourceNode ) ||
          ( node instanceof org.restflow.nodes.NonDeterministicMerge )) {
         println 'node [shape=ellipse];'
       } else if ( node.actor instanceof org.restflow.actors.Workflow )  {
