@@ -12,6 +12,6 @@ import net.jcip.annotations.Immutable;
 public class NullInputException extends ActorException {
 	
 	public NullInputException(Actor actor, String label) {
-		super(actor, "Null data received on non-nullable input '" + label + "' of actor '" + actor + "'");
+		super(actor, "Null data received on non-nullable input '" + label + "' of actor '" + actor.getFullyQualifiedActorName() + "'");
 	}
 }
