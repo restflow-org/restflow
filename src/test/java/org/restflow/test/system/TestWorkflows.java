@@ -150,10 +150,11 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 
-		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor UncaughtActorExceptionNested.RepeatIntegers.RepeaterWorkflow threw exception: " +
+		String err = _runner.getStderrRecording();
+		assertTrue( err.startsWith(
+				"Actor <UncaughtActorExceptionNested>[RepeatIntegers]<RepeaterWorkflow> threw exception: " +
 				"org.restflow.exceptions.ActorException: " + 
-				"Actor UncaughtActorExceptionNested.RepeatIntegers.ThrowExceptionOnThirdStep.(inner bean) threw exception: " +
+				"Actor <UncaughtActorExceptionNested>[RepeatIntegers][ThrowExceptionOnThirdStep]<(inner bean)> threw exception: " +
 				"java.lang.Exception: Value of 30 not allowed!"));
 		
 		assertEquals(_getExpectedProducts(), _runner.getProductsAsString());
@@ -166,7 +167,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedResultFile("trace_data.txt"), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout("stdout_data.txt"), _runner.getStdoutRecording());
 		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor UncaughtActorException.ThrowExceptionOnThirdStep.(inner bean) threw exception: " + 
+				"Actor <UncaughtActorException>[ThrowExceptionOnThirdStep]<(inner bean)> threw exception: " + 
 				"java.lang.Exception: More than three steps!"));
 		assertEquals(_getExpectedProducts("products_data.yaml"), _runner.getProductsAsString());
 	}
@@ -178,7 +179,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor UncaughtActorException.ThrowExceptionOnThirdStep.(inner bean) threw exception: " + 
+				"Actor <UncaughtActorException>[ThrowExceptionOnThirdStep]<(inner bean)> threw exception: " + 
 				"java.lang.Exception: More than three steps!"));
 		assertEquals(_getExpectedProducts("products_publish.yaml"), _runner.getProductsAsString());
 	}
@@ -192,7 +193,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor UncaughtActorException.ThrowExceptionOnThirdStep.(inner bean) threw exception: " + 
+				"Actor <UncaughtActorException>[ThrowExceptionOnThirdStep]<(inner bean)> threw exception: " + 
 				"java.lang.Exception: More than three steps!"));
 		assertEquals(_getExpectedProducts("products_demand.yaml"), _runner.getProductsAsString());
 	}
@@ -201,7 +202,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		configureForBeanActor();
 		_loadAndRunWorkflow("UncaughtActorException", _MTDataDrivenDirector());
 		assertTrue(_runner.getStderrRecording().startsWith(
-				"Actor UncaughtActorException.ThrowExceptionOnThirdStep.(inner bean) threw exception: " + 
+				"Actor <UncaughtActorException>[ThrowExceptionOnThirdStep]<(inner bean)> threw exception: " + 
 				"java.lang.Exception: More than three steps!"));
 	}
 	
