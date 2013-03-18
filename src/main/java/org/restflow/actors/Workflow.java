@@ -64,6 +64,7 @@ public class Workflow extends AbstractActor {
 	@GuardedBy("this") private List<WorkflowNode> 		_nodes;
 	@GuardedBy("this") private Map<String,Reporter> 	_reports;
 	@GuardedBy("this") private List<WorkflowNode> 		_sinks;
+	@GuardedBy("this") private List<Workflow> 		_mixins;
 	
 	List<UnusedDataRecord> _unusedDataRecords;
 	
@@ -249,7 +250,7 @@ public class Workflow extends AbstractActor {
 			throw new Exception("No director specified for workflow " + this);
 		}
 
-		//elaborateMixins();
+		elaborateMixins();
 		
 		if (_node != null && !_node.stepsOnce() && _prefixVariableCount == 0) {
 			throw new Exception("Nested workflows '" + getQualifiedParentNodeName() + 
@@ -319,6 +320,31 @@ public class Workflow extends AbstractActor {
 		_state = ActorFSM.ELABORATED;
 	}
 
+	public void assembleMixinInputs() throws Exception {
+		if ( _mixins != null) {
+			Map<String, Object> inputs = new LinkedHashMap<String,Object>();
+			Map<String, Object> outputs = new LinkedHashMap<String,Object>();			
+			for (Workflow workflow : _mixins) {
+				inputs.putAll( workflow.getInputs() );
+				outputs.putAll( workflow.getOutputs() );				
+			}
+			setInputs(inputs);
+			setOutputs(outputs);			
+		}
+	}	
+	
+	public void elaborateMixins() {
+		//pull in all of the nodes from the mixin workflows
+		List<WorkflowNode> newNodes = new LinkedList<WorkflowNode>();
+		newNodes.addAll(_nodes);
+		if ( _mixins != null) {
+			for (Workflow workflow : _mixins) {
+				newNodes.addAll(workflow.getNodes());
+			}
+		}
+		_nodes = newNodes;
+	}
+	
 	public synchronized void configure() throws Exception {
 	
 		Contract.requires(_state == ActorFSM.ELABORATED);
@@ -781,4 +807,14 @@ public class Workflow extends AbstractActor {
 		return _node;
 	}
 
+	public List<Workflow> getMixins() {
+		return _mixins;
+	}
+
+	public void setMixins(List<Workflow> mixins) {
+		this._mixins = mixins;
+	}
+	
+	
+	
 }
