@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestSampleWorkflowsUnix extends WorkflowTestCase {
 
 	public TestSampleWorkflowsUnix() {
-		super("src/main/resources/samples/");
+		super("samples");
 	}
 	
 	public void test_Hello8() throws Exception {

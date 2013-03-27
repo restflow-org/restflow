@@ -12,7 +12,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestTraceQueryMethods_FileSystemMetadata  extends WorkflowTestCase {
 	
 	public TestTraceQueryMethods_FileSystemMetadata() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 
 	public void test_HelloWorld_BeanActor_PublishSubscribeDirector() throws Exception {

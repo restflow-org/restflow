@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestWorkflowsTcl extends WorkflowTestCase {
 
 	public TestWorkflowsTcl() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 
 	public void test_HelloWorld_TclActor_DataDrivenDirector() throws Exception {

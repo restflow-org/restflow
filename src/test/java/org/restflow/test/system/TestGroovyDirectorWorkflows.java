@@ -10,7 +10,8 @@ public class TestGroovyDirectorWorkflows extends WorkflowTestCase {
 	static String RestFlowInvocationCommand = "java -jar target/RestFlow-0.3.8.jar";
 
 	public TestGroovyDirectorWorkflows() {
-		super("src/main/resources/samples/");
+		super("samples");
+		_resourceDirectory = "/src/main/resources/";		
 	}
 	
 	public void test_Hello1() throws Exception {
@@ -178,7 +179,6 @@ public class TestGroovyDirectorWorkflows extends WorkflowTestCase {
 
 	public void test_NestedWorkflow1() throws Exception {
 		configureForGroovyActor();
-		
 	
 		GroovyDirector director = new GroovyDirector();
 		String pipeline = " GenerateIntegerSequence.step(); IncrementByDefaultIncrement.step(); RenderFirstIncrement.step(); RenderIncrementedIntegers.step(); ";		

@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestWorkflowsPerl extends WorkflowTestCase {
 
 	public TestWorkflowsPerl() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 
 	public void test_HelloWorld_PerlActor_DataDrivenDirector() throws Exception {

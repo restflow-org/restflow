@@ -86,7 +86,7 @@ public class TestRestFlow extends RestFlowTestCase {
 		});
 		
 		String actualOutput = _stdoutRecorder.getStdoutRecording();
-		String expectedOutput = PortableIO.readTextFile("src/test/resources/ssrl/workflow/RestFlow/hammingDot.txt");
+		String expectedOutput = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hammingDot.txt");
 		
 		//assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 		
@@ -95,7 +95,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	
 	
 	public void testHelloWorldInputFromStdin() throws IOException, InterruptedException {
-		String s = PortableIO.readTextFile("src/test/resources/ssrl/workflow/RestFlow/hello1" +WorkflowRunner.YAML_EXTENSION);
+		String s = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hello1" +WorkflowRunner.YAML_EXTENSION);
 		verifyRunExact(RestFlowInvocationCommand + " -base RESTFLOW_TESTRUNS_DIR",
 				  s, 
 				  "Reading Workflow Description from std in:" + EOL +

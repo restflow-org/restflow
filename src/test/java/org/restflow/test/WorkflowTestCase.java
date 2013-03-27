@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
 import org.restflow.RestFlow;
 import org.restflow.WorkflowRunner;
 import org.restflow.actors.Workflow;
@@ -29,15 +28,16 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	private String _directory;
 	private boolean _useWorkingDirectory;
 	public File _runDirectory;
-	private Map<String,String> _resourceMap;
+	protected Map<String,String> _importSchemeToResourceMap;
 	protected Workflow _workflow;
 	protected WorkflowRunner _runner;
 	protected StdoutRecorder _stdoutRecorder;
 	protected Reporter _finalReporter;
 	protected boolean _teeLogToStandardOutput;
+	protected String _resourceDirectory = "/src/test/resources/";
 	
-	public WorkflowTestCase(String parent) {
-		_parentDirectory = parent;
+	public WorkflowTestCase(String parentDirectoryName) {
+		_parentDirectory = parentDirectoryName;
 	}
 	
 	protected void _useWorkingDirectory() {
@@ -52,7 +52,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 			Thread.sleep(1000);
 		}*/
 		_useWorkingDirectory = false;
-		_resourceMap = new HashMap<String, String>();
+		_importSchemeToResourceMap = new HashMap<String, String>();
 		_finalReporter = new JunitFinalReporter();
 		_teeLogToStandardOutput = true;
 	}
@@ -73,7 +73,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	protected void assertFileResourcesMatchExactly(String resourcePath) throws Exception {
 		
-		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath()  + _parentDirectory + _directory + "/expected/");
+		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + _resourceDirectory  + _parentDirectory + "/" + _directory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
 		assertFilesystemResourceValid(expectedRoot, actualRoot, resourcePath);
@@ -81,7 +81,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	protected void assertFileMatchesTemplate(String resourcePath) throws Exception {
 		
-		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath()  + _parentDirectory + _directory + "/expected/");
+		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + "/" + _resourceDirectory+ _parentDirectory + "/" + _directory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
 		assertFilesystemResourceMatchesTemplate(expectedRoot, actualRoot, resourcePath);
@@ -120,38 +120,38 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	
 	protected void configureForGroovyActor() {
-		_resourceMap.put("actors", "classpath:common/groovy/");
-		_resourceMap.put("testActors", "classpath:testActors/groovy/");		
+		_importSchemeToResourceMap.put("actors", "classpath:common/groovy/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/groovy/");		
 	}
 
 	protected void configureForBeanActor() {
-		_resourceMap.put("actors", "classpath:common/java/");
-		_resourceMap.put("testActors", "classpath:testActors/java/");				
+		_importSchemeToResourceMap.put("actors", "classpath:common/java/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/java/");				
 	}
 	
 	protected void configureForBashActor() {
-		_resourceMap.put("actors", "classpath:common/bash/");
-		_resourceMap.put("testActors", "classpath:testActors/bash/");						
+		_importSchemeToResourceMap.put("actors", "classpath:common/bash/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/bash/");						
 	}	
 	
 	protected void configureForPerlActor() {
-		_resourceMap.put("actors", "classpath:common/perl/");
-		_resourceMap.put("testActors", "classpath:testActors/perl/");								
+		_importSchemeToResourceMap.put("actors", "classpath:common/perl/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/perl/");								
 	}
 	
 	protected void configureForPythonActor() {
-		_resourceMap.put("actors", "classpath:common/python/");
-		_resourceMap.put("testActors", "classpath:testActors/python/");						
+		_importSchemeToResourceMap.put("actors", "classpath:common/python/");
+//		_resourceMap.put("testActors", "classpath:testActors/python/");						
 	}
-
+	
 	protected void configureForTclActor() {
-		_resourceMap.put("actors", "classpath:common/tcl/");
-		_resourceMap.put("testActors", "classpath:testActors/tcl/");								
+		_importSchemeToResourceMap.put("actors", "classpath:common/tcl/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/tcl/");								
 	}
 	
 	protected void configureForRestFlowActor() {
-		_resourceMap.put("actors", "classpath:common/restflowActors/");
-		_resourceMap.put("testActors", "classpath:testActors/restflowActors/");								
+		_importSchemeToResourceMap.put("actors", "classpath:common/restflowActors/");
+		_importSchemeToResourceMap.put("testActors", "classpath:testActors/restflowActors/");								
 	}	
 
 	protected void _loadAndRunWorkflow(String name, Director director) throws Exception {
@@ -177,9 +177,9 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 		
 		
-		String workflowFilePath = "file:" + _parentDirectory + _directory + "/" + name + WorkflowRunner.YAML_EXTENSION;
-		String workspaceDirectory = PortableIO.getCurrentDirectoryPath() + _parentDirectory + directory +"/";
-		_resourceMap.put("workspace", "file:" + workspaceDirectory);
+		String workflowFilePath = _parentDirectory + "/" + _directory + "/" + name + WorkflowRunner.YAML_EXTENSION;
+		String workspaceDirectory = PortableIO.getCurrentDirectoryPath() + _resourceDirectory + _parentDirectory + "/" + directory +"/";
+		_importSchemeToResourceMap.put("workspace", "file:" + workspaceDirectory);
 
 		
 		System.out.println( "-----------------------------------------------------------");
@@ -188,7 +188,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		
 		_runner = new WorkflowRunner.Builder()
 				.workflowName(bean)
-				.importSchemeResourceMap(_resourceMap)
+				.importSchemeResourceMap(_importSchemeToResourceMap)
 				.workflowDefinitionPath(workflowFilePath)
 				.runsDirectory( testRunsDirectory )
 				.suppressWorkflowStdout(false)
@@ -225,7 +225,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		
 		_directory = runDirectory;
 			
-		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + _parentDirectory + _directory;
+		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + _resourceDirectory + _parentDirectory + "/" + _directory;
 
 		loadAndRunReport(new File(workflowFilePath), reportName);
 	}
@@ -249,7 +249,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		
 		_directory = runDirectory;
 			
-		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + _parentDirectory + _directory;
+		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + "/" + _parentDirectory + "/" + _directory;
 
 		multiRunReport(new File(workflowFilePath), reportName);
 	}
@@ -288,7 +288,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedResultFile(String filename) throws IOException {
-		return PortableIO.readTextFile(_parentDirectory + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
 	}
 
 	protected String _getExpectedStdout() throws IOException {
@@ -296,7 +296,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedStdout(String filename) throws IOException {
-		return PortableIO.readTextFile(_parentDirectory + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
 	}	
 
 	protected String _getExpectedStderr() throws IOException {
@@ -304,7 +304,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedStderr(String filename) throws IOException {
-		return PortableIO.readTextFile(_parentDirectory + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
 	}
 	
 	protected String _getExpectedProducts() throws IOException {
@@ -312,7 +312,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedProducts(String filename) throws IOException {
-		return PortableIO.readTextFile(_parentDirectory + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
 	}
 
 	

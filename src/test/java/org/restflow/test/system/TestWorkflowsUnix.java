@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.Yaml;
 public class TestWorkflowsUnix extends WorkflowTestCase {
 
 	public TestWorkflowsUnix() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 
 	public void test_PublishDirectory_DataDrivenDirector() throws Exception {

@@ -14,7 +14,7 @@ public class TestReports extends WorkflowTestCase {
 	static String RestFlowInvocationCommand = "java -jar target/RestFlow-0.3.4.jar";
 
 	public TestReports() {
-		super("src/test/resources/reports/");
+		super("reports");
 	}
 	
 	public void test_report() throws Exception {
@@ -188,7 +188,7 @@ public class TestReports extends WorkflowTestCase {
 	
 	public void test_RestFlowMainMultiRunReport() throws Exception {
 
-		String base = PortableIO.getCurrentDirectoryPath() + _parentDirectory + "/multirun/";
+		String base = PortableIO.getCurrentDirectoryPath() + "/src/test/resources/" + _parentDirectory + "/multirun/";
 		test_RestFlowMain(new String[]{"-report","status","-base", base });
 		
 		Yaml yaml = new Yaml();
@@ -202,7 +202,7 @@ public class TestReports extends WorkflowTestCase {
 
 	public void test_RestFlowMainSingleRunReport() throws Exception {
 
-		String base = PortableIO.getCurrentDirectoryPath() + _parentDirectory + "/multirun/";
+		String base = PortableIO.getCurrentDirectoryPath() + "/src/test/resources/"  + _parentDirectory + "/multirun/";
 		test_RestFlowMain(new String[]{"-report","status","-base", base, "-run", "run1" });
 		
 		Yaml yaml = new Yaml();

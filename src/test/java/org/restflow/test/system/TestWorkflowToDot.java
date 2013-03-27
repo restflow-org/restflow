@@ -50,7 +50,7 @@ public class TestWorkflowToDot extends RestFlowTestCase {
 		});
 		
 		String actualOutput = _stdoutRecorder.getStdoutRecording();
-		String expectedOutput = PortableIO.readTextFile("src/test/resources/ssrl/workflow/RestFlow/hammingDot.txt");
+		String expectedOutput = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hammingDot.txt");
 		
 		assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 	}
@@ -70,7 +70,7 @@ public class TestWorkflowToDot extends RestFlowTestCase {
 		});
 		
 		String actualOutput = _stdoutRecorder.getStdoutRecording();
-		String expectedOutput = PortableIO.readTextFile("src/test/resources/ssrl/workflow/RestFlow/helloWorldDot.txt");
+		String expectedOutput = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/helloWorldDot.txt");
 		
 		assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 		
@@ -101,7 +101,7 @@ public class TestWorkflowToDot extends RestFlowTestCase {
 		s.compile();
 		Map<String,Object> result = s.search( actualOutput );
 		
-		String expectedOutput = PortableIO.readTextFile("src/test/resources/ssrl/workflow/RestFlow/hammingStdout.txt");
+		String expectedOutput = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hammingStdout.txt");
 		assertStringsEqualWhenLineEndingsNormalized(expectedOutput , (String)result.get("workflowOutput"));
 
 		Object execTime = result.get("time");

@@ -15,7 +15,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestWorkflows extends WorkflowTestCase {
 
 	public TestWorkflows() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 		
 	}
 

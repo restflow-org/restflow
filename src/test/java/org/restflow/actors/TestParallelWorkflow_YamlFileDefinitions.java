@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestParallelWorkflow_YamlFileDefinitions extends WorkflowTestCase {
 
 	public TestParallelWorkflow_YamlFileDefinitions() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 	
 	public void test_SimulateDataCollectionNestedParallel_DataDrivenDirector() throws Exception {

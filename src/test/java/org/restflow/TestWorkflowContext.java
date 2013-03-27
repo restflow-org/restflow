@@ -17,7 +17,7 @@ public class TestWorkflowContext extends TestCase {
 	public void testImportMappings_FindFileResource() throws Exception {
 		
 		Map<String,String> importMappings = new HashMap<String, String>();
-		importMappings.put("workspace", "file:" + PortableIO.getCurrentDirectoryPath() + "src/test/resources/");
+		importMappings.put("workspace", "file:" + PortableIO.getCurrentDirectoryPath() + "src/main/resources/");
 		
 		WorkflowContext context = new WorkflowContextBuilder()
 			.importMappings(importMappings)
@@ -68,6 +68,8 @@ public class TestWorkflowContext extends TestCase {
 		String valueFromContext = (String)context.getProperty(key);
 		assertEquals("valueofsystemproperty", valueFromContext);
 		assertEquals(valueFromEnv, System.getenv(key));
+		System.clearProperty(key);
+		assertEquals(valueFromEnv, (String)context.getProperty(key));
 	}
 
 	public void testGetProperty_contextPropertyHidesEnvironmentVariable() throws Exception {
