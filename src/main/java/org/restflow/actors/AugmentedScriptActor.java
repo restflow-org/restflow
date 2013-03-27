@@ -2,8 +2,11 @@ package org.restflow.actors;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import org.restflow.data.InputSignatureElement;
 import org.restflow.util.PortableIO;
 import org.restflow.util.PortableIO.StreamSink;
 import org.yaml.snakeyaml.Yaml;
@@ -77,7 +80,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendScriptHeader(augmentedScriptBuilder, "initialize");
 		_appendInputControlFunctions(augmentedScriptBuilder);
 		_appendOutputControlFunctions(augmentedScriptBuilder);
-		_appendActorStateVariableInitializers(augmentedScriptBuilder);
+		_appendActorStateVariableInitializers(augmentedScriptBuilder, true);
 		_appendActorInputVariableInitializers(augmentedScriptBuilder);
 		_appendOriginalScript(augmentedScriptBuilder, _initializeScript);
 		_appendOriginalScriptOutputDelimiter(augmentedScriptBuilder);
@@ -95,7 +98,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		if (_stepScript != null && !_stepScript.trim().isEmpty()) {
 
 			// augment the step script
-			String augmentedStepScript = _getAugmentedStepScript();
+			String augmentedStepScript = getAugmentedStepScript();
 
 			// run the augmented step script
 			String yamlOutput = _runAugmentedScript(augmentedStepScript);
@@ -108,15 +111,15 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 	
-	protected String _getAugmentedStepScript() throws Exception {
+	public String getAugmentedStepScript() throws Exception {
 		
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
 		_appendScriptHeader(augmentedScriptBuilder, "step");
 		_appendInputControlFunctions(augmentedScriptBuilder);
 		_appendOutputControlFunctions(augmentedScriptBuilder);
-		_appendOutputVariableInitializers(augmentedScriptBuilder);
-		_appendActorStateVariableInitializers(augmentedScriptBuilder);
+//		_appendOutputVariableInitializers(augmentedScriptBuilder);
+		_appendActorStateVariableInitializers(augmentedScriptBuilder, true);
 		_appendActorInputVariableInitializers(augmentedScriptBuilder);
 		_appendStepDirectoryEntryCommand(augmentedScriptBuilder);
 		_appendOriginalScript(augmentedScriptBuilder, _stepScript);
@@ -151,7 +154,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
 		_appendScriptHeader(augmentedScriptBuilder, "wrapup");
-		_appendActorStateVariableInitializers(augmentedScriptBuilder);
+		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _wrapupScript);
 		
 		return augmentedScriptBuilder.toString();
@@ -179,62 +182,69 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
 		_appendScriptHeader(augmentedScriptBuilder, "dispose");
-		_appendActorStateVariableInitializers(augmentedScriptBuilder);
+		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _disposeScript);
 
 		return augmentedScriptBuilder.toString();
 	}
 	
-	private void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
+	protected void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
 		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedName())
 		  	  .appendBlankLine();
 	}
 	
-	private void _appendInputControlFunctions(ActorScriptBuilder script) {
+	protected void _appendInputControlFunctions(ActorScriptBuilder script) {
 		if (!_inputSignature.isEmpty()) {
 			script.appendInputControlFunctions()
 			  	  .appendBlankLine();
 		}
 	}
 	
-	private void _appendOutputControlFunctions(ActorScriptBuilder script) {
+	protected void _appendOutputControlFunctions(ActorScriptBuilder script) {
 		if (!_outputSignature.isEmpty()) {
 			script.appendOutputControlFunctions()
 			  	  .appendBlankLine();
 		}
 	}
 
-	private void _appendOutputVariableInitializers(ActorScriptBuilder script) throws Exception {
+	protected void _appendOutputVariableInitializers(ActorScriptBuilder script) throws Exception {
 		if (!_outputSignature.isEmpty()) {
 			script.appendComment("initialize actor outputs to null");
 			for (String name : _outputSignature.keySet()) {
-				script.appendLiteralAssignment(name, null, _variableTypes.get(name));
+				script.appendLiteralAssignment(name, null, _variableTypes.get(name), false, _outputSignature.get(name).isNullable());
 			}
 			script.appendBlankLine();
 		}
 	}
 
-	private void _appendActorStateVariableInitializers(ActorScriptBuilder script) throws Exception {
+	protected void _appendActorStateVariableInitializers(ActorScriptBuilder script, boolean hideInputs) throws Exception {
 		if (!_stateVariables.isEmpty()) {
 			script.appendComment("initialize actor state variables");
-			for (String key : _stateVariables.keySet()) {
-				script.appendLiteralAssignment(key, _stateVariables.get(key), _variableTypes.get(key));
+			Set<String> stateNames = new HashSet<String>(_stateVariables.keySet());
+			if (hideInputs) {
+				stateNames.removeAll(_inputSignature.keySet());
+			}
+			for (String key : stateNames) {
+				InputSignatureElement input = (InputSignatureElement)(_inputSignature.get(key));
+				boolean nullable = input != null && input.isNullable();
+				script.appendLiteralAssignment(key, _stateVariables.get(key), _variableTypes.get(key), true, nullable);
 			}
 			script.appendBlankLine();
 		}
 	}
 	
-	private void _appendActorInputVariableInitializers(ActorScriptBuilder script) throws Exception {
+	protected void _appendActorInputVariableInitializers(ActorScriptBuilder script) throws Exception {
 		if (!_inputSignature.isEmpty()) {
-			script.appendComment("initialize actor input variables");
-			for (String key : _inputSignature.keySet()) {
-				script.appendLiteralAssignment(key, _inputValues.get(key), _variableTypes.get(key));
+			script.appendComment("initialize actor input variables");			
+			Set<String> inputNames = _inputSignature.keySet();
+			for (String key : inputNames) {
+				script.appendLiteralAssignment(key, _inputValues.get(key), _variableTypes.get(key), false, _inputSignature.get(key).isNullable());
 			}
 			script.appendBlankLine();
 		}
 	}
 
-	private void _appendStepDirectoryEntryCommand(ActorScriptBuilder script) {
+	protected void _appendStepDirectoryEntryCommand(ActorScriptBuilder script) {
 		if (_actorStatus.getStepDirectory() != null) {
 			script.appendComment("change working directory to actor step directory")
 				  .appendChangeDirectory(_actorStatus.getStepDirectory().toString())
@@ -242,7 +252,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 	
-	private void _appendOriginalScript(ActorScriptBuilder script,String originalScript) {
+	protected void _appendOriginalScript(ActorScriptBuilder script,String originalScript) {
 		script.appendComment("BEGINNING OF ORIGINAL SCRIPT")
 			  .appendBlankLine()
 			  .appendCode(originalScript)
@@ -251,13 +261,13 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			  .appendBlankLine();
 	}
 	
-	private void _appendOriginalScriptOutputDelimiter(ActorScriptBuilder script) {
+	protected void _appendOriginalScriptOutputDelimiter(ActorScriptBuilder script) {
 		script.appendComment("signal end of output from original script")
 			  .appendPrintStringStatement(_scriptOutputDelimiter)
 			  .appendBlankLine();
 	}
 	
-	private void _appendOutputVariablesYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendOutputVariablesYamlRenderers(ActorScriptBuilder script) {
 		if (! _outputSignature.isEmpty()) {
 			script.appendComment("render output variables as yaml");
 			for (String name : _outputSignature.keySet()) {
@@ -267,7 +277,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 
-	private void _appendStateVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendStateVariableYamlRenderers(ActorScriptBuilder script) {
 		if (!_stateVariables.isEmpty()) {
 			script.appendComment("render state variables as yaml");
 			for (String name : _stateVariables.keySet()) {
@@ -277,7 +287,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 
-	private void _appendInputControlVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendInputControlVariableYamlRenderers(ActorScriptBuilder script) {
 		if (!_inputSignature.isEmpty()) {
 			script.appendComment("render actor input control variables as yaml");
 			for (String name : new String[]{ "enabledInputs", "disabledInputs"}) {
@@ -287,7 +297,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 	
-	private void _appendOutputControlVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendOutputControlVariableYamlRenderers(ActorScriptBuilder script) {
 		if (! _outputSignature.isEmpty()) {
 			script.appendComment("render actor output control variables as yaml");
 			for (String name : new String[]{ "enabledOutputs", "disabledOutputs" }) {
@@ -297,7 +307,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 	
-	private synchronized String _runAugmentedScript(String augmentedScript) throws Exception {
+	protected synchronized String _runAugmentedScript(String augmentedScript) throws Exception {
 
 		String runcommand = getScriptRunCommand();
 		

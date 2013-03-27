@@ -7,7 +7,7 @@ public interface ActorScriptBuilder {
 	ActorScriptBuilder appendComment(String text);
 	ActorScriptBuilder appendInputControlFunctions();
 	ActorScriptBuilder appendOutputControlFunctions();
-	ActorScriptBuilder appendLiteralAssignment(String name, Object value, String type) throws Exception;
+	ActorScriptBuilder appendLiteralAssignment(String name, Object value, String type, boolean mutable, boolean nullable) throws Exception;
 	ActorScriptBuilder appendPrintStringStatement(String string);
 	ActorScriptBuilder appendSeparator();
 	ActorScriptBuilder appendVariableYamlPrintStatement(String name, String type);

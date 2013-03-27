@@ -67,6 +67,7 @@ components:
       if input >= min and input <= max:
         output = input
       else:
+        output = 0
         disableOutput("output")
     inputs: 
       min:

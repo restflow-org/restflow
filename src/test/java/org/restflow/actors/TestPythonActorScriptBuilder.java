@@ -85,7 +85,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_no_type", null, null);
+		builder.appendLiteralAssignment("var_with_no_type", null, null, false, false);
 		assertEquals(
 			"var_with_no_type=None" 			+ EOL,
 			builder.toString()
@@ -96,7 +96,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_no_type", "A string", null);
+		builder.appendLiteralAssignment("var_with_no_type", "A string", null, false, false);
 		assertEquals(
 			"var_with_no_type='A string'" 			+ EOL,
 			builder.toString()
@@ -107,7 +107,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_no_type", 42, null);
+		builder.appendLiteralAssignment("var_with_no_type", 42, null, false, false);
 		assertEquals(
 			"var_with_no_type='42'" 				+ EOL,
 			builder.toString()
@@ -118,7 +118,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_no_type", true, null);
+		builder.appendLiteralAssignment("var_with_no_type", true, null, false, false);
 		assertEquals(
 			"var_with_no_type='true'" 				+ EOL,
 			builder.toString()
@@ -129,7 +129,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_string_type", null, "String");
+		builder.appendLiteralAssignment("var_with_string_type", null, "String", false, false);
 		assertEquals(
 			"var_with_string_type=None" 			+ EOL,
 			builder.toString()
@@ -140,7 +140,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_string_type", "A string", "String");
+		builder.appendLiteralAssignment("var_with_string_type", "A string", "String", false, false);
 		assertEquals(
 			"var_with_string_type='A string'" 		+ EOL,
 			builder.toString()
@@ -151,7 +151,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_string_type", 42, "String");
+		builder.appendLiteralAssignment("var_with_string_type", 42, "String", false, false);
 		assertEquals(
 			"var_with_string_type='42'" 			+ EOL,
 			builder.toString()
@@ -162,7 +162,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_string_type", true, "String");
+		builder.appendLiteralAssignment("var_with_string_type", true, "String", false, false);
 		assertEquals(
 			"var_with_string_type='true'" 			+ EOL,
 			builder.toString()
@@ -173,7 +173,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_integer_type", null, "Integer");
+		builder.appendLiteralAssignment("var_with_integer_type", null, "Integer", false, false);
 		assertEquals(
 			"var_with_integer_type=None" 			+ EOL,
 			builder.toString()
@@ -186,7 +186,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		Exception exception = null;
 		try {
-			builder.appendLiteralAssignment("var_with_integer_type", "A string", "Integer");
+			builder.appendLiteralAssignment("var_with_integer_type", "A string", "Integer", false, false);
 		} catch (Exception e) {
 			exception = e;
 		}
@@ -202,7 +202,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_integer_type", 42, "Integer");
+		builder.appendLiteralAssignment("var_with_integer_type", 42, "Integer", false, false);
 		assertEquals(
 			"var_with_integer_type=42" 				+ EOL,
 			builder.toString()
@@ -215,7 +215,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		Exception exception = null;
 		try {
-			builder.appendLiteralAssignment("var_with_integer_type", true, "Integer");
+			builder.appendLiteralAssignment("var_with_integer_type", true, "Integer", false, false);
 		} catch (Exception e) {
 			exception = e;
 		}
@@ -231,7 +231,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_boolean_type", null, "Boolean");
+		builder.appendLiteralAssignment("var_with_boolean_type", null, "Boolean", false, false);
 		assertEquals(
 			"var_with_boolean_type=None" 			+ EOL,
 			builder.toString()
@@ -244,7 +244,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		Exception exception = null;
 		try {
-			builder.appendLiteralAssignment("var_with_boolean_type", "A string", "Boolean");
+			builder.appendLiteralAssignment("var_with_boolean_type", "A string", "Boolean", false, false);
 		} catch (Exception e) {
 			exception = e;
 		}
@@ -260,7 +260,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_boolean_type", 42, "Boolean");
+		builder.appendLiteralAssignment("var_with_boolean_type", 42, "Boolean", false, false);
 		assertEquals(
 			"var_with_boolean_type=1" 				+ EOL,
 			builder.toString()
@@ -271,7 +271,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_boolean_type", 0, "Boolean");
+		builder.appendLiteralAssignment("var_with_boolean_type", 0, "Boolean", false, false);
 		assertEquals(
 			"var_with_boolean_type=0" 				+ EOL,
 			builder.toString()
@@ -282,7 +282,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_boolean_type", true, "Boolean");
+		builder.appendLiteralAssignment("var_with_boolean_type", true, "Boolean", false, false);
 		assertEquals(
 			"var_with_boolean_type=1" 				+ EOL,
 			builder.toString()
@@ -293,7 +293,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendLiteralAssignment("var_with_boolean_type", false, "Boolean");
+		builder.appendLiteralAssignment("var_with_boolean_type", false, "Boolean", false, false);
 		assertEquals(
 			"var_with_boolean_type=0" 				+ EOL,
 			builder.toString()

@@ -42,7 +42,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			"" 																							+ EOL
-			, actor._getAugmentedStepScript());
+			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
@@ -96,7 +96,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print 'enabledInputs: \"%s\"' % enabledInputs"												+ EOL +
 			"print 'disabledInputs: \"%s\"' % disabledInputs" 											+ EOL +
 			""																							+ EOL
-			, actor._getAugmentedStepScript());
+			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
@@ -132,9 +132,6 @@ public class TestPythonActor extends RestFlowTestCase {
 			"enabledOutputs  = ''" 																		+ EOL +
 			"disabledOutputs = ''" 																		+ EOL +
 			"" 																							+ EOL +
-			"# initialize actor outputs to null" 														+ EOL +
-			"greeting=None" 																			+ EOL +
-			"" 																							+ EOL +
 			"# BEGINNING OF ORIGINAL SCRIPT" 															+ EOL +
 			"" 																							+ EOL +
 			"greeting='Nice to meet you.'" 																+ EOL +
@@ -151,7 +148,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs" 											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
 			""																							+ EOL
-			, actor._getAugmentedStepScript());
+			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
@@ -194,7 +191,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# render state variables as yaml" 															+ EOL +
 			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, '~')[greeting==None]"							+ EOL +
 			"" 																							+ EOL
-			, actor._getAugmentedStepScript());
+			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
@@ -246,9 +243,6 @@ public class TestPythonActor extends RestFlowTestCase {
 			"enabledOutputs  = ''"																		+ EOL +
 			"disabledOutputs = ''"																		+ EOL +
 			""																							+ EOL +
-			"# initialize actor outputs to null"														+ EOL +
-			"z=None"																					+ EOL +
-			""																							+ EOL +
 			"# initialize actor input variables"														+ EOL +
 			"y=12"																						+ EOL +
 			"x=3"																						+ EOL +
@@ -273,7 +267,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs"											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
 			"" 																							+ EOL,
-			actor._getAugmentedStepScript());
+			actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {

@@ -1,8 +1,6 @@
 package org.restflow.nodes;
 
-import org.restflow.actors.GroovyActorBuilder;
 import org.restflow.actors.PythonActorBuilder;
-
 
 public class PythonNodeBuilder extends ActorNodeBuilder {
 	

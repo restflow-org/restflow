@@ -108,9 +108,10 @@ public class TestPythonActorBuilder extends RestFlowTestCase {
 				.inflow("/original", "x")
 				.step(	"import time					"	+ EOL +
 						"import random					"	+ EOL +
-						"print 'Computing 3 *', x		"	+ EOL +
-						"delay = random.random() / 2	"	+ EOL +
+						"print 'Starting 3 *', x		"	+ EOL +
+						"delay = random.random() 	"	+ EOL +
 						"time.sleep(delay)				"	+ EOL +			
+						"print 'Finishing 3 *', x		"	+ EOL +
 						"y = 3 * x						")
 				.outflow("y", "/tripled")
 				.maxConcurrency(6)

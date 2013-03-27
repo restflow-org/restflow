@@ -42,7 +42,8 @@ public class AugmentedTclActor extends AugmentedScriptActor {
 			return this;
 		}
 
-		public ScriptBuilder appendLiteralAssignment(String name, Object value, String type) throws Exception {
+		public ActorScriptBuilder appendLiteralAssignment(String name,
+				Object value, String type, boolean mutable, boolean nullable) throws Exception {
 			_script.append(		"set "	)
 				   .append(		name	)
 				   .append( 	" "		)

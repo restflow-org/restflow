@@ -5,7 +5,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestWorkflowsPython extends WorkflowTestCase {
 
 	public TestWorkflowsPython() {
-		super("src/test/resources/workflows/");
+		super("workflows");
 	}
 
 	public void test_HelloWorld_PythonActor_DataDrivenDirector() throws Exception {

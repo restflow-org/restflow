@@ -42,8 +42,10 @@ public class PythonActor extends AugmentedScriptActor {
 			return this;
 		}
 
-		public ScriptBuilder appendLiteralAssignment(String name, Object value, String type) throws Exception {
-			if (value == null) {
+		@Override
+		public ActorScriptBuilder appendLiteralAssignment(String name, Object value, String type, boolean mutable, boolean nullable) throws Exception {
+
+		if (value == null) {
 				_assignNullLiteral(name);
 			} else if (type == null) {
 				_assignStringLiteral(name, value);
