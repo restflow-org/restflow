@@ -190,6 +190,9 @@
                 <descriptorRefs>
                     <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
+                <descriptors>
+		            <descriptor>src/assemble/tests-assembly.xml</descriptor>
+	            </descriptors>
             </configuration>
       <executions>
         <execution>
