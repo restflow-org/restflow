@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.IOUtils;
 
 public class PortableIO {
 
@@ -27,19 +30,26 @@ public class PortableIO {
 		}
 	}
 
-	public static String readTextFile(String fileName) throws IOException {
-		FileReader fileReader = new FileReader(fileName);
-		String text = readTextFile(fileReader);
+	public static String readTextFileOnClasspath(String path) throws IOException {
+		InputStream stream = PortableIO.class.getClassLoader().getResourceAsStream(path);
+		InputStreamReader reader = new InputStreamReader(stream);
+		String contents = readTextFromReader(reader);
+		return contents;
+	}	
+	
+	public static String readTextFileOnFilesystem(String path) throws IOException {
+		FileReader fileReader = new FileReader(path);
+		String text = readTextFromReader(fileReader);
 		return text;
 	}
 	
 	public static String readTextFile(File file) throws IOException {
 		FileReader fileReader = new FileReader(file);
-		String text = readTextFile(fileReader);
+		String text = readTextFromReader(fileReader);
 		return text;
 	}
 
-	public static String readTextFile(FileReader fileReader) throws IOException {
+	public static String readTextFromReader(InputStreamReader fileReader) throws IOException {
 		
 		BufferedReader reader = new BufferedReader(fileReader);
 

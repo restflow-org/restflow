@@ -64,7 +64,7 @@ public class FileSystemMetadataManager extends BaseMetadataManager {
 	}
 	
 	public String getProductsAsString() throws IOException {
-		return PortableIO.readTextFile(
+		return PortableIO.readTextFileOnFilesystem(
 				_runMetadata.getRunDirectory() + File.separator + PRODUCTS_FILE);
 	}
 
