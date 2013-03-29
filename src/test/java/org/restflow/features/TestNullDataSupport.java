@@ -199,7 +199,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			exception = e;
 		}
 		assertNotNull(exception);
-		assertEquals("Null data received on non-nullable input 'a' of actor 'buffer'", exception.getMessage());
+		assertEquals("Null data received on non-nullable input 'a' of actor <buffer>", exception.getMessage());
 	}
 	
 	public void testGroovyActor_DisallowedNullInput() throws Exception {
@@ -231,7 +231,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			exception = e;
 		}
 		assertNotNull(exception);
-		assertEquals("Null data received on non-nullable input 'a' of actor 'buffer'", exception.getMessage());
+		assertEquals("Null data received on non-nullable input 'a' of actor <buffer>", exception.getMessage());
 	}
 	
 	public void testJavaActor_DisallowedNullOutput() throws Exception {

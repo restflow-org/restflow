@@ -1031,7 +1031,7 @@ public class TestJavaActor extends RestFlowTestCase {
 		assertNotNull(exception);
 		assertEquals("org.restflow.exceptions.NullInputException: " +
 					 "Null data received on non-nullable input 'originalValue' " +
-					 "of actor 'MultiplyActor'", 
+					 "of actor <MultiplyActor>", 
 					 exception.toString());
 	}	
 
