@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.io.StringReader;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.io.IOUtils;
 
 public class PortableIO {
 
@@ -49,6 +48,16 @@ public class PortableIO {
 		return text;
 	}
 
+	public static String localizeLineEndingsInString(String original) throws IOException {
+
+		String corrected = original.replaceAll("\r", "");
+		
+		if (!EOL.equals("\n")) {
+			corrected = corrected.replaceAll("\n", EOL);
+		}
+		return corrected;
+	}
+	
 	public static String readTextFromReader(InputStreamReader fileReader) throws IOException {
 		
 		BufferedReader reader = new BufferedReader(fileReader);

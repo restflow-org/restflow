@@ -73,6 +73,16 @@ components:
     outputs: 
       concatenatedString:
 
+- id: StringLineEndingLocalizer
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.StringLineEndingLocalizer
+    inputs:
+      original:
+        type: String
+    outputs: 
+      final:
+
 - id: PrintStreamWriter
   type: JavaActor
   properties:

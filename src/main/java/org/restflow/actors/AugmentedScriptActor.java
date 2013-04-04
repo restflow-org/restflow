@@ -80,6 +80,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendScriptHeader(augmentedScriptBuilder, "initialize");
 		_appendInputControlFunctions(augmentedScriptBuilder);
 		_appendOutputControlFunctions(augmentedScriptBuilder);
+		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, true);
 		_appendActorInputVariableInitializers(augmentedScriptBuilder);
 		_appendOriginalScript(augmentedScriptBuilder, _initializeScript);
@@ -118,7 +119,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendScriptHeader(augmentedScriptBuilder, "step");
 		_appendInputControlFunctions(augmentedScriptBuilder);
 		_appendOutputControlFunctions(augmentedScriptBuilder);
-//		_appendOutputVariableInitializers(augmentedScriptBuilder);
+		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, true);
 		_appendActorInputVariableInitializers(augmentedScriptBuilder);
 		_appendStepDirectoryEntryCommand(augmentedScriptBuilder);
@@ -154,6 +155,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
 		_appendScriptHeader(augmentedScriptBuilder, "wrapup");
+		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _wrapupScript);
 		
@@ -182,6 +184,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
 		_appendScriptHeader(augmentedScriptBuilder, "dispose");
+		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _disposeScript);
 
@@ -239,6 +242,17 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			Set<String> inputNames = _inputSignature.keySet();
 			for (String key : inputNames) {
 				script.appendLiteralAssignment(key, _inputValues.get(key), _variableTypes.get(key), false, _inputSignature.get(key).isNullable());
+			}
+			script.appendBlankLine();
+		}
+	}
+	
+	protected void _appendActorSettingInitializers(ActorScriptBuilder script) throws Exception {
+		if (!_constants.isEmpty()) {
+			script.appendComment("initialize actor setting");
+			Set<String> settingNames = _constants.keySet();
+			for (String key : settingNames) {
+				script.appendLiteralAssignment(key, _constants.get(key), _variableTypes.get(key), false, false);
 			}
 			script.appendBlankLine();
 		}
@@ -361,10 +375,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			for (Map.Entry<String,Object> entry : outputMap.entrySet()) { 
 				String key = entry.getKey();
 				Object value = entry.getValue();
-				  
+				Object variableType = _variableTypes.get(key);
 				if (value != null && value.equals("null")) {
 					binding.put(key, null);
-				} else if (_variableTypes.get(key) == "File") {
+				} else if (variableType != null && variableType.equals("File")) {
 			    	binding.put(key, new File(_actorStatus.getStepDirectory(), value.toString()));
 			    } else {
 			    	binding.put(key, value);
