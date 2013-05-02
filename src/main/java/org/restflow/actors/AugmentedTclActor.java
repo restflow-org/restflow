@@ -137,5 +137,10 @@ public class AugmentedTclActor extends AugmentedScriptActor {
 		public void appendScriptHeader(ActorScriptBuilder script,
 				String scriptType) {
 		}
+
+		@Override
+		public ActorScriptBuilder appendScriptExitCommend() {
+			return this;
+		}
 	}
 }

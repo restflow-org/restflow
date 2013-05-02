@@ -64,10 +64,10 @@ public class TestWorkflowsPython extends WorkflowTestCase {
 		System.out.println(_runner.getStderrRecording());
 	}	
 	
-	public void test_HammingSequence_PythonActor_DataDrivenDirector() throws Exception {
+	public void test_HammingSequence_PythonActor_MTDataDrivenDirector() throws Exception {
 		configureForPythonActor();
 		
-		_loadAndRunWorkflow("HammingSequence", _dataDrivenDirector());
+		_loadAndRunWorkflow("HammingSequence", _MTDataDrivenDirector());
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout("stdout.txt"), _runner.getStdoutRecording());
 	}	

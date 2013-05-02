@@ -42,7 +42,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			"" 																							+ EOL +
-			"# Serialization of actor outputs"															+ EOL
+			"# Serialization of actor outputs"															+ EOL +
+			"" 																							+ EOL 
 			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
@@ -96,7 +97,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# Serialization of actor outputs" 															+ EOL +
 			"print 'enabledInputs: \"%s\"' % enabledInputs"												+ EOL +
 			"print 'disabledInputs: \"%s\"' % disabledInputs" 											+ EOL +
-			""																							+ EOL
+			""																							+ EOL +
+			"" 																							+ EOL 
 			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
@@ -147,7 +149,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			"" 																							+ EOL +
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs" 											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
-			""																							+ EOL
+			""																							+ EOL +
+			"" 																							+ EOL 
 			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
@@ -190,7 +193,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			""							 																+ EOL +
 			"# Serialization of actor outputs" 															+ EOL +
 			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, '~')[greeting==None]"						+ EOL +
-			"" 																							+ EOL
+			"" 																							+ EOL +
+			"" 																							+ EOL 
 			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
@@ -264,8 +268,9 @@ public class TestPythonActor extends RestFlowTestCase {
 			""																							+ EOL +
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs"											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
-			"" 																							+ EOL,
-			actor.getAugmentedStepScript());
+			"" 																							+ EOL +
+			"" 																							+ EOL
+			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {

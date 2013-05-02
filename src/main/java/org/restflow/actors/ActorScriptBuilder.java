@@ -15,4 +15,5 @@ public interface ActorScriptBuilder {
 	ActorScriptBuilder appendVariableSerializationStatement(String name, String type);
 	ActorScriptBuilder appendNonNullStringVariableSerializationPrintStatement(String name);
 	void appendScriptHeader(ActorScriptBuilder script, String scriptType);
+	ActorScriptBuilder appendScriptExitCommend();
 }

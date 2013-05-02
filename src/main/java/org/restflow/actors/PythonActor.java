@@ -1,7 +1,5 @@
 package org.restflow.actors;
 
-import org.restflow.actors.AugmentedScriptActor.DataSerializationFormat;
-
 public class PythonActor extends AugmentedScriptActor {
 
 	@Override
@@ -246,6 +244,11 @@ public class PythonActor extends AugmentedScriptActor {
 		public void appendScriptHeader(ActorScriptBuilder script,
 				String scriptType) {
 			
+		}
+
+		@Override
+		public ActorScriptBuilder appendScriptExitCommend() {
+			return this;
 		}
 	}
 }

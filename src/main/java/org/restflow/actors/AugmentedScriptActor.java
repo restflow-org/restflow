@@ -93,6 +93,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendInputControlVariableSerializationStatements(augmentedScriptBuilder);
 		_appendOutputControlVariableSerializationStatements(augmentedScriptBuilder);
 		appendSerializationEndStatement(augmentedScriptBuilder);
+		_appendScriptSuffix(augmentedScriptBuilder);
 		
 		return augmentedScriptBuilder.toString();
 	}
@@ -136,6 +137,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendInputControlVariableSerializationStatements(augmentedScriptBuilder);
 		_appendOutputControlVariableSerializationStatements(augmentedScriptBuilder);
 		appendSerializationEndStatement(augmentedScriptBuilder);
+		_appendScriptSuffix(augmentedScriptBuilder);
 		
 		return augmentedScriptBuilder.toString();
 	}
@@ -165,6 +167,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _wrapupScript);
+		_appendScriptSuffix(augmentedScriptBuilder);
 		
 		return augmentedScriptBuilder.toString();
 	}
@@ -194,16 +197,21 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendActorSettingInitializers(augmentedScriptBuilder);
 		_appendActorStateVariableInitializers(augmentedScriptBuilder, false);
 		_appendOriginalScript(augmentedScriptBuilder, _disposeScript);
+		_appendScriptSuffix(augmentedScriptBuilder);
 
 		return augmentedScriptBuilder.toString();
 	}
 	
 	protected void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
 		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedName())
-		  	  .appendBlankLine();
-		script.appendScriptHeader(script, scriptType);
+		  	  .appendBlankLine()
+		  	  .appendScriptHeader(script, scriptType);
 	}
-	
+
+	protected void _appendScriptSuffix(ActorScriptBuilder script) {
+		script.appendScriptExitCommend();
+	}
+
 	protected void _appendInputControlFunctions(ActorScriptBuilder script) {
 		if (!_inputSignature.isEmpty()) {
 			script.appendInputControlFunctions()
@@ -296,6 +304,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 	
 	protected void appendSerializationEndStatement(ActorScriptBuilder sb) {
 		sb.appendSerializationEndStatement();
+		sb.appendBlankLine();
 	}
 	
 	protected void _appendOutputVariableSerializationStatements(ActorScriptBuilder script) {
@@ -336,6 +345,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		}
 	}
 	
+	protected String adjustStderr(String completeStderr) {
+		return completeStderr;
+	}
+	
 	protected synchronized String _runAugmentedScript(String augmentedScript) throws Exception {
 
 		String runcommand = getScriptRunCommand();
@@ -351,7 +364,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		String completeStdout = outputs[0].toString();
 		  
 		String completeStderr = outputs[1].toString();
-		if (!completeStderr.isEmpty()) {
+		
+		String adjustedStderr = adjustStderr(completeStderr);
+		
+		if (!adjustedStderr.isEmpty()) {
 			System.err.println(	">>>>>>>>>>>>>>>>>>>> Error running augmented actor script >>>>>>>>>>>>>>>>>>>>>>"	);
 			System.err.print  (	augmentedScript																		);
 			System.err.println(	"-------------------------------- Error message ---------------------------------"	);
