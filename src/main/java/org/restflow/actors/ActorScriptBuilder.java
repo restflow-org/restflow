@@ -10,6 +10,9 @@ public interface ActorScriptBuilder {
 	ActorScriptBuilder appendLiteralAssignment(String name, Object value, String type, boolean mutable, boolean nullable) throws Exception;
 	ActorScriptBuilder appendPrintStringStatement(String string);
 	ActorScriptBuilder appendSeparator();
-	ActorScriptBuilder appendVariableYamlPrintStatement(String name, String type);
-	ActorScriptBuilder appendNonNullStringYamlPrintStatement(String name);
+	ActorScriptBuilder appendSerializationBeginStatement();
+	ActorScriptBuilder appendSerializationEndStatement();
+	ActorScriptBuilder appendVariableSerializationStatement(String name, String type);
+	ActorScriptBuilder appendNonNullStringVariableSerializationPrintStatement(String name);
+	void appendScriptHeader(ActorScriptBuilder script, String scriptType);
 }

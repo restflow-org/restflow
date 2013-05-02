@@ -41,7 +41,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			"" 																							+ EOL +
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
-			"" 																							+ EOL
+			"" 																							+ EOL +
+			"# Serialization of actor outputs"															+ EOL
 			, actor.getAugmentedStepScript());
 		
 		// run the workflow while capturing stdout and stderr 
@@ -92,7 +93,7 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			"" 																							+ EOL +
-			"# render actor input control variables as yaml" 											+ EOL +
+			"# Serialization of actor outputs" 															+ EOL +
 			"print 'enabledInputs: \"%s\"' % enabledInputs"												+ EOL +
 			"print 'disabledInputs: \"%s\"' % disabledInputs" 											+ EOL +
 			""																							+ EOL
@@ -141,10 +142,9 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			"" 																							+ EOL +
-			"# render output variables as yaml" 														+ EOL +
-			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, \'~\')[greeting==None]"								+ EOL +
+			"# Serialization of actor outputs" 															+ EOL +
+			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, \'~\')[greeting==None]"					+ EOL +
 			"" 																							+ EOL +
-			"# render actor output control variables as yaml" 											+ EOL +
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs" 											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
 			""																							+ EOL
@@ -188,8 +188,8 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script" 												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'" 															+ EOL +
 			""							 																+ EOL +
-			"# render state variables as yaml" 															+ EOL +
-			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, '~')[greeting==None]"							+ EOL +
+			"# Serialization of actor outputs" 															+ EOL +
+			"print 'greeting: ', (\"\\\"%s\\\"\" % greeting, '~')[greeting==None]"						+ EOL +
 			"" 																							+ EOL
 			, actor.getAugmentedStepScript());
 		
@@ -256,14 +256,12 @@ public class TestPythonActor extends RestFlowTestCase {
 			"# signal end of output from original script"												+ EOL +
 			"print '__END_OF_SCRIPT_OUTPUT__'"															+ EOL +
 			""																							+ EOL +
-			"# render output variables as yaml"															+ EOL +
+			"# Serialization of actor outputs"															+ EOL +
 			"print 'z: ', (z, 'null')[z==None]"															+ EOL +
 			""																							+ EOL +
-			"# render actor input control variables as yaml"											+ EOL +
 			"print 'enabledInputs: \"%s\"' % enabledInputs"												+ EOL +
 			"print 'disabledInputs: \"%s\"' % disabledInputs"											+ EOL +
 			""																							+ EOL +
-			"# render actor output control variables as yaml"											+ EOL +
 			"print 'enabledOutputs: \"%s\"' % enabledOutputs"											+ EOL +
 			"print 'disabledOutputs: \"%s\"' % disabledOutputs" 										+ EOL +
 			"" 																							+ EOL,

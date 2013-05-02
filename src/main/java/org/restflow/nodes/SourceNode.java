@@ -37,6 +37,7 @@ public class SourceNode extends AbstractWorkflowNode {
 
 		sourceNode.setName(nodeName);
 		sourceNode.setApplicationContext(_workflowContext);
+//		sourceNode.setHidden(true);
 
 		Protocol inflowProtocol = inflow.getProtocol();
 		sourceNode.setProtocolReader(inflowProtocol.getNewProtocolReader());

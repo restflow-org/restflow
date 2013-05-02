@@ -327,7 +327,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendVariableYamlPrintStatement("var_with_string_type", "String");
+		builder.appendVariableSerializationStatement("var_with_string_type", "String");
 		
 		assertEquals(
 				"print 'var_with_string_type: ', (\"\\\"%s\\\"\" % var_with_string_type, '~')[var_with_string_type==None]" +EOL, 	
@@ -339,7 +339,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendVariableYamlPrintStatement("var_with_integer_type", "Integer");
+		builder.appendVariableSerializationStatement("var_with_integer_type", "Integer");
 		
 		assertEquals(
 			"print 'var_with_integer_type: ', (var_with_integer_type, 'null')[var_with_integer_type==None]"		+ EOL,
@@ -351,7 +351,7 @@ public class TestPythonActorScriptBuilder extends RestFlowTestCase {
 		
 		ActorScriptBuilder builder = new PythonActor.ScriptBuilder();
 		
-		builder.appendVariableYamlPrintStatement("var_with_boolean_type", "Boolean");
+		builder.appendVariableSerializationStatement("var_with_boolean_type", "Boolean");
 		
 		assertEquals(
 			"print 'var_with_boolean_type: ', (\"false\", \"true\")[var_with_boolean_type==True]"		+ EOL,

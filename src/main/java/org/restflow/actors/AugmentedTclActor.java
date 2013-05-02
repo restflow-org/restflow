@@ -11,6 +11,11 @@ public class AugmentedTclActor extends AugmentedScriptActor {
 	public synchronized String getScriptRunCommand() {
 		return "C:\\Tcl\\bin\\tclsh85.exe";
 	}
+	
+	@Override
+	public DataSerializationFormat getOutputSerializationFormat() {
+		return DataSerializationFormat.YAML;
+	}
 
 	public static class ScriptBuilder implements ActorScriptBuilder {
 
@@ -69,7 +74,15 @@ public class AugmentedTclActor extends AugmentedScriptActor {
 			return this;
 		}
 
-		public ScriptBuilder appendVariableYamlPrintStatement(String name, String type) {
+		public ActorScriptBuilder appendSerializationBeginStatement() {
+			return this;
+		}
+		
+		public ActorScriptBuilder appendSerializationEndStatement() {
+			return this;
+		}
+		
+		public ScriptBuilder appendVariableSerializationStatement(String name, String type) {
 			_script.append(		"puts \""	)
 				   .append(		name		)
 				   .append( 	": "		)
@@ -81,41 +94,48 @@ public class AugmentedTclActor extends AugmentedScriptActor {
 		}
 
 		@Override
-		public ActorScriptBuilder appendNonNullStringYamlPrintStatement(
+		public ActorScriptBuilder appendNonNullStringVariableSerializationPrintStatement(
 				String name) {
-			return appendVariableYamlPrintStatement(name, null);
+			return appendVariableSerializationStatement(name, null);
 		}
 
 		public ScriptBuilder appendInputControlFunctions() {
 
-			appendComment("define functions for enabling and disabling actor inputs");
-			appendCode(   "proc enableInput  {input} {global enabledInputs; append enabledInputs  \" $input\" }" );
-			appendCode(   "proc disableInput {input} {global disabledInputs; append disabledInputs \" $input\" }"  );
+			appendComment(	"define functions for enabling and disabling actor inputs");
+			appendCode(   	"proc enableInput  {input} {global enabledInputs; append enabledInputs  \" $input\" }" 	);
+			appendCode(   	"proc disableInput {input} {global disabledInputs; append disabledInputs \" $input\" }"	);
+
 			appendBlankLine();
 
-			appendComment("initialize input control variables");
-			appendCode( "set enabledInputs  {}" );
-			appendCode( "set disabledInputs {}" );
+			appendComment(	"initialize input control variables");
+			appendCode( 	"set enabledInputs  {}" );
+			appendCode( 	"set disabledInputs {}" );
 
 			return this;
 		}
 
 		public ScriptBuilder appendOutputControlFunctions() {
 			
-			appendComment("define functions for enabling and disabling actor outputs");
-			appendCode(   "proc enableOutput  {output} {global enabledOutputs; append enabledOutputs  \" $output\" }" );
-			appendCode(   "proc disableOutput {output} {global disabledOutputs; append disabledOutputs \" $output\" }"  );
+			appendComment(	"define functions for enabling and disabling actor outputs");
+			appendCode(   	"proc enableOutput  {output} {global enabledOutputs; append enabledOutputs  \" $output\" }" );
+			appendCode(   	"proc disableOutput {output} {global disabledOutputs; append disabledOutputs \" $output\" }"  );
+			
 			appendBlankLine();
 
-			appendComment("initialize output control variables");
-			appendCode( "set enabledOutputs  {}" );
-			appendCode( "set disabledOutputs {}" );
+			appendComment(	"initialize output control variables");
+			appendCode(   	"set enabledOutputs  {}" );
+			appendCode( 	"set disabledOutputs {}" );
 			
 			return this;
 		}
 		
 		public String toString() {
 			return _script.toString();
+		}
+
+		@Override
+		public void appendScriptHeader(ActorScriptBuilder script,
+				String scriptType) {
 		}
 	}
 }

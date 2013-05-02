@@ -15,9 +15,12 @@ import org.yaml.snakeyaml.Yaml;
 public abstract class AugmentedScriptActor extends ScriptActor {
 
 	static final protected String  _scriptOutputDelimiter = "__END_OF_SCRIPT_OUTPUT__";
+
+	public enum DataSerializationFormat { YAML, JSON };
 	
 	public abstract ActorScriptBuilder getNewScriptBuilder();
-	public abstract String getScriptRunCommand() ;
+	public abstract String getScriptRunCommand();
+	public abstract DataSerializationFormat getOutputSerializationFormat();
 
 	public synchronized void configure() throws Exception {
 		
@@ -29,10 +32,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			String augmentedConfigureScript = getAugmentedConfigureScript();
 			
 			// run the augmented configure script
-			String yamlOutput = _runAugmentedScript(augmentedConfigureScript);
+			String serializedOutput = _runAugmentedScript(augmentedConfigureScript);
 			
 			// update the actor state based on the augmented script output
-			Map<String,Object> binding = _parseAugmentedScriptYamlOutput(yamlOutput);
+			Map<String,Object> binding = _parseSerializedOutput(serializedOutput);
 			_updateStateVariables(binding);
 		}
 
@@ -62,10 +65,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			String augmentedInitializeScript = _getAugmentedInitializeScript();
 			
 			// run the augmented initialize script
-			String yamlOutput = _runAugmentedScript(augmentedInitializeScript);
+			String serializedOutput = _runAugmentedScript(augmentedInitializeScript);
 			
 			// update the actor state based on the augmented script output
-			Map<String,Object> scriptOutputs = _parseAugmentedScriptYamlOutput(yamlOutput);
+			Map<String,Object> scriptOutputs = _parseSerializedOutput(serializedOutput);
 			_updateInputOutputControlVariables(scriptOutputs);
 			_updateStateVariables(scriptOutputs);
 		}
@@ -85,9 +88,11 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendActorInputVariableInitializers(augmentedScriptBuilder);
 		_appendOriginalScript(augmentedScriptBuilder, _initializeScript);
 		_appendOriginalScriptOutputDelimiter(augmentedScriptBuilder);
-		_appendStateVariableYamlRenderers(augmentedScriptBuilder);
-		_appendInputControlVariableYamlRenderers(augmentedScriptBuilder);
-		_appendOutputControlVariableYamlRenderers(augmentedScriptBuilder);
+		appendSerializationBeginStatement(augmentedScriptBuilder);
+		_appendStateVariableSerializationStatements(augmentedScriptBuilder);
+		_appendInputControlVariableSerializationStatements(augmentedScriptBuilder);
+		_appendOutputControlVariableSerializationStatements(augmentedScriptBuilder);
+		appendSerializationEndStatement(augmentedScriptBuilder);
 		
 		return augmentedScriptBuilder.toString();
 	}
@@ -102,10 +107,10 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			String augmentedStepScript = getAugmentedStepScript();
 
 			// run the augmented step script
-			String yamlOutput = _runAugmentedScript(augmentedStepScript);
+			String serializedOutput = _runAugmentedScript(augmentedStepScript);
 			
 			// update the actor state based on the augmented script output
-			Map<String,Object> scriptOutputs = _parseAugmentedScriptYamlOutput(yamlOutput);
+			Map<String,Object> scriptOutputs = _parseSerializedOutput(serializedOutput);
 			_updateInputOutputControlVariables(scriptOutputs);
 			_updateOutputVariables(scriptOutputs);			
 			_updateStateVariables(scriptOutputs);
@@ -125,10 +130,12 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		_appendStepDirectoryEntryCommand(augmentedScriptBuilder);
 		_appendOriginalScript(augmentedScriptBuilder, _stepScript);
 		_appendOriginalScriptOutputDelimiter(augmentedScriptBuilder);
-		_appendOutputVariablesYamlRenderers(augmentedScriptBuilder);
-		_appendStateVariableYamlRenderers(augmentedScriptBuilder);
-		_appendInputControlVariableYamlRenderers(augmentedScriptBuilder);
-		_appendOutputControlVariableYamlRenderers(augmentedScriptBuilder);
+		appendSerializationBeginStatement(augmentedScriptBuilder);
+		_appendOutputVariableSerializationStatements(augmentedScriptBuilder);
+		_appendStateVariableSerializationStatements(augmentedScriptBuilder);
+		_appendInputControlVariableSerializationStatements(augmentedScriptBuilder);
+		_appendOutputControlVariableSerializationStatements(augmentedScriptBuilder);
+		appendSerializationEndStatement(augmentedScriptBuilder);
 		
 		return augmentedScriptBuilder.toString();
 	}
@@ -194,6 +201,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 	protected void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
 		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedName())
 		  	  .appendBlankLine();
+		script.appendScriptHeader(script, scriptType);
 	}
 	
 	protected void _appendInputControlFunctions(ActorScriptBuilder script) {
@@ -281,41 +289,48 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			  .appendBlankLine();
 	}
 	
-	protected void _appendOutputVariablesYamlRenderers(ActorScriptBuilder script) {
+	protected void appendSerializationBeginStatement(ActorScriptBuilder sb) {
+		sb.appendComment("Serialization of actor outputs");
+		sb.appendSerializationBeginStatement();
+	}
+	
+	protected void appendSerializationEndStatement(ActorScriptBuilder sb) {
+		sb.appendSerializationEndStatement();
+	}
+	
+	protected void _appendOutputVariableSerializationStatements(ActorScriptBuilder script) {
 		if (! _outputSignature.isEmpty()) {
-			script.appendComment("render output variables as yaml");
-			for (String name : _outputSignature.keySet()) {
-			    script.appendVariableYamlPrintStatement(name, _variableTypes.get(name));
+			Set<String> outputNames = new HashSet<String>(_outputSignature.keySet());
+			outputNames.removeAll(_stateVariables.keySet());
+			for (String name : outputNames) {
+			    script.appendVariableSerializationStatement(name, _variableTypes.get(name));
 			}
 			script.appendBlankLine();
 		}
 	}
 
-	protected void _appendStateVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendStateVariableSerializationStatements(ActorScriptBuilder script) {
 		if (!_stateVariables.isEmpty()) {
-			script.appendComment("render state variables as yaml");
 			for (String name : _stateVariables.keySet()) {
-				script.appendVariableYamlPrintStatement(name, _variableTypes.get(name));
+				script.appendVariableSerializationStatement(name, _variableTypes.get(name));
 			}
 			script.appendBlankLine();
 		}
 	}
 
-	protected void _appendInputControlVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendInputControlVariableSerializationStatements(ActorScriptBuilder script) {
 		if (!_inputSignature.isEmpty()) {
-			script.appendComment("render actor input control variables as yaml");
 			for (String name : new String[]{ "enabledInputs", "disabledInputs"}) {
-			    script.appendNonNullStringYamlPrintStatement(name);
+			    script.appendNonNullStringVariableSerializationPrintStatement(name);
 			}
 			script.appendBlankLine();
 		}
 	}
 	
-	protected void _appendOutputControlVariableYamlRenderers(ActorScriptBuilder script) {
+	protected void _appendOutputControlVariableSerializationStatements(ActorScriptBuilder script) {
 		if (! _outputSignature.isEmpty()) {
-			script.appendComment("render actor output control variables as yaml");
 			for (String name : new String[]{ "enabledOutputs", "disabledOutputs" }) {
-			    script.appendNonNullStringYamlPrintStatement(name);
+			    script.appendNonNullStringVariableSerializationPrintStatement(name);
 			}
 			script.appendBlankLine();
 		}
@@ -348,24 +363,59 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		int delimiterStart = completeStdout.lastIndexOf(_scriptOutputDelimiter);
 		
 		String scriptStdout;
-		String yamlOutput;
+		String serializedOutputs;
 		
 		if (delimiterStart == -1) {
 			scriptStdout = completeStdout;
-			yamlOutput = "";
+			serializedOutputs = "";
 		} else {
 			scriptStdout = completeStdout.substring(0, delimiterStart);
-			int yamlStart = delimiterStart + _scriptOutputDelimiter.length();
-			yamlOutput = completeStdout.substring(yamlStart);
+			int serializedOutputStart = delimiterStart + _scriptOutputDelimiter.length();
+			serializedOutputs = completeStdout.substring(serializedOutputStart);
 		}
 		
 		System.out.print(scriptStdout);
 		
-		return yamlOutput;
+		return serializedOutputs;
 	}
 	
-	private synchronized Map<String,Object> _parseAugmentedScriptYamlOutput(String yamlOutput) {
+	private synchronized Map<String,Object> _parseSerializedOutput(String serializedOutput) throws Exception {
+		if (this.getOutputSerializationFormat() == DataSerializationFormat.YAML) {
+			return _parseYamlOutput(serializedOutput);
+		} else if (this.getOutputSerializationFormat() == DataSerializationFormat.JSON) {
+			return _parseJsonOutput(serializedOutput);
+		} else {
+			throw new Exception("Unsupported serialization format");
+		}
+	}
 		
+	private synchronized Map<String,Object> _parseJsonOutput(String jsonOutput) {
+
+		Map<String,Object> binding = new HashMap<String,Object>();
+		  
+//		// parse the yaml block and save output variable values in map
+//		Yaml yaml = new Yaml();
+//		Map<String,Object> outputMap = (Map<String,Object>) yaml.load(yamlOutput);
+//		if (outputMap != null) {
+//			for (Map.Entry<String,Object> entry : outputMap.entrySet()) { 
+//				String key = entry.getKey();
+//				Object value = entry.getValue();
+//				Object variableType = _variableTypes.get(key);
+//				if (value != null && value.equals("null")) {
+//					binding.put(key, null);
+//				} else if (variableType != null && variableType.equals("File")) {
+//			    	binding.put(key, new File(_actorStatus.getStepDirectory(), value.toString()));
+//			    } else {
+//			    	binding.put(key, value);
+//			    }
+//			}
+//		}
+		
+		return binding;
+	}
+
+	private synchronized Map<String,Object> _parseYamlOutput(String yamlOutput) {
+
 		Map<String,Object> binding = new HashMap<String,Object>();
 		  
 		// parse the yaml block and save output variable values in map

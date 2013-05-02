@@ -1,5 +1,7 @@
 package org.restflow.actors;
 
+import org.restflow.actors.AugmentedScriptActor.DataSerializationFormat;
+
 public class PythonActor extends AugmentedScriptActor {
 
 	@Override
@@ -11,7 +13,12 @@ public class PythonActor extends AugmentedScriptActor {
 	public synchronized String getScriptRunCommand() {
 		return "python -";
 	}
-
+	
+	@Override
+	public DataSerializationFormat getOutputSerializationFormat() {
+		return DataSerializationFormat.YAML;
+	}
+	
 	public static class ScriptBuilder implements ActorScriptBuilder {
 
 		private StringBuilder _script = new StringBuilder();
@@ -130,7 +137,15 @@ public class PythonActor extends AugmentedScriptActor {
 			return this;
 		}
 
-		public ScriptBuilder appendVariableYamlPrintStatement(String name, String type) {
+		public ActorScriptBuilder appendSerializationBeginStatement() {
+			return this;
+		}
+		
+		public ActorScriptBuilder appendSerializationEndStatement() {
+			return this;
+		}
+		
+		public ScriptBuilder appendVariableSerializationStatement(String name, String type) {
 			if (type == null || type.equals("String")) {
 				_appendStringVariableYamlPrinter(name);
 			} else if (type.equals("Boolean")) {
@@ -174,7 +189,7 @@ public class PythonActor extends AugmentedScriptActor {
 		}
 		
 		
-		public ActorScriptBuilder appendNonNullStringYamlPrintStatement(String name) {
+		public ActorScriptBuilder appendNonNullStringVariableSerializationPrintStatement(String name) {
 			_script.append(		"print '"		)
 				   .append(		name			)
 				   .append( 	": \"%s\"' % "	)
@@ -225,6 +240,12 @@ public class PythonActor extends AugmentedScriptActor {
 		
 		public String toString() {
 			return _script.toString();
+		}
+
+		@Override
+		public void appendScriptHeader(ActorScriptBuilder script,
+				String scriptType) {
+			
 		}
 	}
 }
