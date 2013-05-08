@@ -342,14 +342,14 @@ public class TestWorkflowsUnix extends WorkflowTestCase {
 		assertStringsEqualWhenLineEndingsNormalized(_getExpectedStdout("stdout.txt"), _runner.getStdoutRecording());
 	}
 	
-	public void test_WorkspaceFilesBash() throws Exception {
-		configureForBashActor();
-		_useWorkingDirectory();
-		
-		_loadAndRunWorkflow("WorkspaceFilesBash", _publishSubscribeDirector());
-		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
-		assertEquals(_getExpectedStdout("stdout.txt"), _runner.getStdoutRecording());
-	}
+//	public void test_WorkspaceFilesBash() throws Exception {
+//		configureForBashActor();
+//		_useWorkingDirectory();
+//		
+//		_loadAndRunWorkflow("WorkspaceFilesBash", _publishSubscribeDirector());
+//		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
+//		assertEquals(_getExpectedStdout("stdout.txt"), _runner.getStdoutRecording());
+//	}
 
 	/*	public void test_Environment_Back_Populate() throws Exception {
 		configureForGroovyActor();
