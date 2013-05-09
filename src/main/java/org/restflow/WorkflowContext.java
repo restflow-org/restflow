@@ -193,7 +193,7 @@ public class WorkflowContext extends GenericApplicationContext {
 	}
 	
 	public static String getUserTemporaryDirectoryPath() {
-		 return System.getProperty("java.io.tmpdir");
+		 return System.getProperty("java.io.tmpdir") + "/" + System.getProperty("user.name");
 	}
 	
 	public String getWorkflowDefinitionString() {
