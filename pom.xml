@@ -265,7 +265,7 @@
           <excludes>
            <!-- <exclude>**/TestRestFlowServer.java</exclude>-->
           </excludes>
-		  <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds>
+		  <forkedProcessTimeoutInSeconds>600</forkedProcessTimeoutInSeconds>
         </configuration>
       </plugin>
   </plugins>
