@@ -1,5 +1,0 @@
-*** Node step counts ***
-TextScanner: 1
-TextScanner.TestConversion: 1
-*** Published resources ***
-/parsed: {books=[{id=1, title=Lord_of_light, publisher=Eos}, {id=2, title=Doors_of_his_face, publisher=IBooks,_Inc.}], last=Zelazny, first=Roger}

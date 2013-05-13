@@ -1,8 +1,0 @@
-id: '12'
-spots: '587'
-fit: dg
-rmsd: '0.257'
-unitCell: {gamma: '120.00', b: '61.16', c: '142.55', alpha: '90.00', a: '61.16', beta: '90.00'}
-metric: '0.2401'
-crystalSystem: hexagonal hP
-volume: '461767'
