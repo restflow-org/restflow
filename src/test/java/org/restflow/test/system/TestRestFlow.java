@@ -24,12 +24,13 @@ public class TestRestFlow extends RestFlowTestCase {
 	// along with RestFlow's dependencies obtained via the ivy ant target
 	// TODO make this static field final and refactor TestRestFlowServer to not require write access to it
 	public static String RestFlowInvocationCommand = "java -classpath target/classes" +
+											  System.getProperty("path.separator") + "target/test-classes" +
 											  System.getProperty("path.separator") + 
 											  "target/dependency/* org.restflow.RestFlow";
 	
 	public void testHelloWorld() throws IOException, InterruptedException {
 		System.out.println(RestFlowInvocationCommand);
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "", 
 				  "Hello World!" + EOL,
@@ -38,7 +39,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	
 	public void testHelloWorld_ValidateOnly() throws IOException, InterruptedException {
 		System.out.println(RestFlowInvocationCommand);
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/hello1"+WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -v -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "", 
 				  "",
@@ -47,7 +48,7 @@ public class TestRestFlow extends RestFlowTestCase {
 
 	public void test_ValidateWorkflow_MissingDirector() throws IOException, InterruptedException {
 		System.out.println(RestFlowInvocationCommand);
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/workflow_missingDirector"+WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/workflow_missingDirector"+WorkflowRunner.YAML_EXTENSION;
 		verifyRunRegexp(RestFlowInvocationCommand + " -v -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "", 
 				  "",
@@ -86,7 +87,7 @@ public class TestRestFlow extends RestFlowTestCase {
 		});
 		
 		String actualOutput = _stdoutRecorder.getStdoutRecording();
-		String expectedOutput = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hammingDot.txt");
+		String expectedOutput = PortableIO.readTextFileOnClasspath("ssrl/workflow/RestFlow/hammingDot.txt");
 		
 		//assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 		
@@ -95,7 +96,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	
 	
 	public void testHelloWorldInputFromStdin() throws IOException, InterruptedException {
-		String s = PortableIO.readTextFileOnFilesystem("src/test/resources/ssrl/workflow/RestFlow/hello1" +WorkflowRunner.YAML_EXTENSION);
+		String s = PortableIO.readTextFileOnClasspath("ssrl/workflow/RestFlow/hello1" +WorkflowRunner.YAML_EXTENSION);
 		verifyRunExact(RestFlowInvocationCommand + " -base RESTFLOW_TESTRUNS_DIR",
 				  s, 
 				  "Reading Workflow Description from std in:" + EOL +
@@ -166,7 +167,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	}
 	
 	public void testTrace() throws IOException, InterruptedException {
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1" + WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/hello1" + WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -t -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR ",
 				  "",
 				  
@@ -182,10 +183,10 @@ public class TestRestFlow extends RestFlowTestCase {
 	}
 	
 	public void testClassPath() throws IOException, InterruptedException {
+		
 		// not including the class path
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/TestCp"+WorkflowRunner.YAML_EXTENSION;
-		
-		
+		String workflow = "classpath:/ssrl/workflow/RestFlow/TestCp" + WorkflowRunner.YAML_EXTENSION;
+			
 		verifyRunRegexp(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "",
 				  "",
@@ -205,7 +206,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	
 	public void testInput() throws IOException, InterruptedException {
 		// not including the class path
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/incrementer1" + WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/incrementer1" + WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR",
 				  "",
 				  "Incrementer received value=0 and increment=1" + EOL,
@@ -233,7 +234,7 @@ public class TestRestFlow extends RestFlowTestCase {
 		// not including the class path
 		
 		String uniqueName = "NamedRun_" + PortableIO.createTimeStampString();
-		String workflow = "src/test/resources/ssrl/workflow/RestFlow/hello1" + WorkflowRunner.YAML_EXTENSION;
+		String workflow = "classpath:/ssrl/workflow/RestFlow/hello1" + WorkflowRunner.YAML_EXTENSION;
 		verifyRunExact(RestFlowInvocationCommand + " -f " + workflow + " -base RESTFLOW_TESTRUNS_DIR -run " + uniqueName,
 				  "", 
 				  "Hello World!" + EOL,
