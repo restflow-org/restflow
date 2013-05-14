@@ -139,10 +139,6 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		_importSchemeToResourceMap.put("testActors", "classpath:testActors/perl/");								
 	}
 	
-	protected void configureForPythonActor() {
-		_importSchemeToResourceMap.put("actors", "classpath:common/python/");
-//		_resourceMap.put("testActors", "classpath:testActors/python/");						
-	}
 	
 	protected void configureForTclActor() {
 		_importSchemeToResourceMap.put("actors", "classpath:common/tcl/");
