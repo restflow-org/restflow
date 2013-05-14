@@ -4,7 +4,6 @@
  */
 package org.restflow.test.system;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.restflow.RestFlow;
@@ -16,13 +15,6 @@ import org.restflow.util.StdoutRecorder;
 
 public class TestRestFlow extends RestFlowTestCase {
 	
-	// uncomment the following line to test RestFlow against the RestFlow jar in target directory
-	//   (must first build RestFlow-0.3.4.jar using 'ant' command in RestFlow directory)
-	//static String RestFlowInvocationCommand = "java -jar target/RestFlow-standalone.jar";
-	
-	// uncomment the following line to test RestFlow against classes last compiled by Eclipse
-	// along with RestFlow's dependencies obtained via the ivy ant target
-	// TODO make this static field final and refactor TestRestFlowServer to not require write access to it
 	public static String RestFlowInvocationCommand = "java -classpath target/classes" +
 											  System.getProperty("path.separator") + "target/test-classes" +
 											  System.getProperty("path.separator") + 
@@ -118,7 +110,6 @@ public class TestRestFlow extends RestFlowTestCase {
 				"------                                  -----------                            " + EOL +
 				"-?, -h                                  show help                              " + EOL +
 				"--base <directory>                      base working directory                 " + EOL +
-				"-c, --client [Integer: remote port]     start as client (default: 0)           " + EOL +
 				"--cp <jar|directory>                    add to classpath                       " + EOL +
 				"--daemon                                Daemonize after header printed         " + EOL +
 				"-f, --workflow-description <file>       (default: -)                           " + EOL +
@@ -132,23 +123,6 @@ public class TestRestFlow extends RestFlowTestCase {
 				"--report <name>                         run report on existing run directory   " + EOL +
 				"                                          (default: )                          " + EOL +
 				"--run <name>                            forces run name                        " + EOL +
-				"-s, --server [Integer: listen port]     start as server (default: 0)           " + EOL +
-				"--server-idle-timeout [Integer:         The server will terminate itself if    " + EOL +
-				"  seconds]                                not used by a client for this time   " + EOL +
-				"                                          span. (default: 3600)                " + EOL +
-				"--server-loop <Integer: num>            number of clients to be served before  " + EOL +
-				"                                          exit.                                " + EOL +
-				"--server-name [hostname]                server to connect to (default:         " + EOL +
-				"                                          localhost)                           " + EOL +
-				"--server-restart                        restart RestFlow server                " + EOL +
-				"--server-restart-name [RestFlow         restart RestFlow server (default:      " + EOL +
-				"  executable]                             RestFlow)                            " + EOL +
-				"--server-secret [Integer: secret]       Simple challenge-response secret. If   " + EOL +
-				"                                          no secret is specified, a random     " + EOL +
-				"                                          number is used.                      " + EOL +
-				"--server-shell [BASH|TCSH|WIN_CMD]      format for environmental variables     " + EOL +
-				"                                          (default: BASH)                      " + EOL +
-				"--server-stop                           stop RestFlow server                   " + EOL +
 				"-t, --enable-trace                      enable trace                           " + EOL +
 				"--to-dot                                output a Graphviz dot file instead of  " + EOL +
 				"                                          running the workflow                 " + EOL +
