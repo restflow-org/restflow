@@ -111,7 +111,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 		stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
 			@Override
 			public void execute() throws Exception {
-				RestFlow.main(new String[]{"-f","classpath:samples/hello/hello_actor.yaml",
+				RestFlow.main(new String[]{"-f","classpath:actors/hello_actor.yaml",
 						"-base", testRunsDir, "-w","HelloWorld" } );		
 			}
 		});
