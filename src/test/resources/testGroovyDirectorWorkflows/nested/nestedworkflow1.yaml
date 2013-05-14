@@ -1,0 +1,64 @@
+imports:
+
+  - classpath:/common/types.yaml
+  - actors:actors.yaml
+  - classpath:/common/directors.yaml
+  - workspace:/incrementer1.yaml
+
+components:
+
+  - id: GenerateIntegerSequence
+    type: Node
+    properties:   
+      actor: !ref IntegerSequenceGenerator
+      endFlowOnNoOutput: true
+      constants:
+        initial: 1
+        step: 1
+        max: 5
+      outflows:
+        value: /sequence/
+
+  - id: IncrementByDefaultIncrement
+    type: Node
+    properties: 
+      nestedUriPrefix: /Increment{STEP}
+      actor: !ref Incrementer
+      inflows:
+        value: /sequence/
+      outflows:
+        incrementedValue: /onceIncrementedSequence/
+        appliedIncrement: /firstAppliedIncrement/
+
+  - id: RenderIncrementedIntegers
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: Once incremented values
+        outputImmediately: false
+        outputAtWrapup: true
+      inflows:
+        message: /onceIncrementedSequence/
+
+  - id: RenderFirstIncrement
+    type: Node
+    properties: 
+      actor: !ref PrintStreamWriter
+      constants:
+        name: First increment values
+        outputImmediately: false
+        outputAtWrapup: true
+      inflows:
+        message: /firstAppliedIncrement/
+
+  - id: NestedWorkflow
+    type: Workflow
+    properties:
+      director: !ref MTDataDrivenDirector
+      nodes:
+        - !ref GenerateIntegerSequence
+        - !ref IncrementByDefaultIncrement
+        - !ref RenderIncrementedIntegers
+        - !ref RenderFirstIncrement
+ 

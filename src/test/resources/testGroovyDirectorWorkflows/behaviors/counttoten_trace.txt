@@ -1,0 +1,15 @@
+*** Node step counts ***
+Count: 1
+Count.CountToTen: 11
+Count.PrintNumber: 10
+*** Published resources ***
+/number/1: 1
+/number/10: 10
+/number/2: 2
+/number/3: 3
+/number/4: 4
+/number/5: 5
+/number/6: 6
+/number/7: 7
+/number/8: 8
+/number/9: 9

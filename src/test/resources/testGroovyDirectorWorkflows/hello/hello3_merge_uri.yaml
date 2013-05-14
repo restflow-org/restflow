@@ -1,0 +1,69 @@
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !inline
+      className: org.restflow.directors.GroovyDirector
+      properties:
+        schedule: |
+          CreateGreeting1.step();
+          RenderGreeting.step();     
+          CreateGreeting2.step();
+          RenderGreeting.step();       
+          CreateGreeting3.step();
+          RenderGreeting.step();                
+    nodes:
+    - !ref CreateGreeting1
+    - !ref CreateGreeting2
+    - !ref CreateGreeting3        
+    - !ref RenderGreeting
+
+- id: CreateGreeting1
+  type: GroovyActorNode
+  properties:   
+    actor.step: |
+      value = 'Hello World';
+      id = 1;
+    actor.outputs:
+      value:
+      id:
+    outflows:
+      value: /messages/greeting/{id}
+      
+- id: CreateGreeting2
+  type: GroovyActorNode
+  properties:   
+    actor.step: |
+      value = 'Good Afternoon, Cosmos';
+      id = 2;
+    actor.outputs:
+      value:
+      id:
+    outflows:
+      value: /messages/greeting/{id}
+
+- id: CreateGreeting3
+  type: GroovyActorNode
+  properties:   
+    actor.step: |
+      value = 'Good night, and good luck';
+      id = 3;
+    actor.outputs:
+      value:
+      id:
+    outflows:
+      value: /messages/greeting/{id}
+
+
+- id: RenderGreeting
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter
+    inflows:
+      message: /messages/greeting/{id}
