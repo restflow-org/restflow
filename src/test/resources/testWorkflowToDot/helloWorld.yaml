@@ -1,0 +1,47 @@
+imports:
+
+- actors:actors.yaml
+- classpath:/common/directors.yaml
+
+components:
+
+- id: HelloWorld
+  type: Workflow
+  properties:
+    director: !ref MTDataDrivenDirector
+    nodes:
+    - !ref CreateGreetingFiles
+    - !ref RenderGreeting
+    - !ref EmphasizeGreeting
+      
+- id: CreateGreetingFiles
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    sequences:
+      value:
+      - Hello World
+      - Good Afternoon, Cosmos
+      - Good night, and good luck
+    outflows:
+      value: file:/messages/{STEP}/greeting.txt
+
+- id: EmphasizeGreeting
+  type: GroovyActorNode
+  properties:
+    actor.step: |
+      stringOne = stringOneFile.text; //read the file
+      concatenatedString = stringOne + stringTwo;
+    inflows:
+      stringOneFile: file:/messages/{STEP}/greeting.txt
+    constants:
+      stringTwo: '!!'
+    outflows:
+      concatenatedString: /messages/emphasizedGreeting/
+      
+- id: RenderGreeting
+  type: Node
+  properties:
+    actor: !ref PrintStreamWriter
+    inflows:
+      message: /messages/emphasizedGreeting/

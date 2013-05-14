@@ -55,14 +55,14 @@ public class TestWorkflowToDot extends RestFlowTestCase {
 		assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 	}
 
-	public void testToDot_WorkflowUsingFileProtocol() throws Exception {
+	public void testWorkflowToDot_FileProtocol() throws Exception {
 
 		StdoutRecorder _stdoutRecorder = new StdoutRecorder(false);
 		_stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
 			@Override
 			public void execute() throws Exception {
 				RestFlow.main(new String[]{
-						"-i","restflowFile=classpath:samples/files/helloWorld.yaml",
+						"-i","restflowFile=classpath:testWorkflowToDot/helloWorld.yaml",
 						"-i","workflowName=HelloWorld",
 						"-f","classpath:tools/dot.yaml",
 						"-base", "RESTFLOW_TESTRUNS_DIR" } );		
