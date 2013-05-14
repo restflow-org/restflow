@@ -23,7 +23,7 @@ public class TestWorkflowContext extends TestCase {
 			.importMappings(importMappings)
 			.build();
 		
-		Resource r = context.getResource("workspace:samples/hello/hello1_stdout.txt");
+		Resource r = context.getResource("workspace:common/types.yaml");
 		File f = r.getFile();
 		assertTrue("Resource not found:" + f.getAbsolutePath(), f.exists());
 	}
