@@ -10,6 +10,7 @@ import org.restflow.beans.TextScanner;
 import org.restflow.directors.DemandDrivenDirector;
 import org.restflow.reporter.JunitFinalReporter;
 import org.restflow.test.WorkflowTestCase;
+import org.yaml.snakeyaml.Yaml;
 
 
 public class TestWorkflows extends WorkflowTestCase {
@@ -826,14 +827,6 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());		
 	}
 	
-//	public void test_AveragerWorkflow_BashActor_DataDrivenDirector() throws Exception {
-//		configureForBashActor();
-//
-//		_loadAndRunWorkflow("AveragerWorkflow", _dataDrivenDirector());
-//		assertEquals(_getExpectedTrace(), _runner.getTraceAsString());;		
-//		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());		
-//	}
-	
 	public void test_BranchingWorkflow_BeanActor_DataDrivenDirector() throws Exception {
 		configureForBeanActor();
 
@@ -1416,4 +1409,42 @@ public class TestWorkflows extends WorkflowTestCase {
 //		assertEquals(_getExpectedTrace(), _runner.getTraceAsString());;
 //		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 //	}
+	
+	public void test_liveReport() throws Exception {
+		configureForGroovyActor();
+		_useWorkingDirectory();
+		//setOutputTemplatePath(null);
+		
+		loadAndRunReport("liveReport", "status");
+		
+		Yaml yaml = new Yaml();
+		Map<String, Object> report = (Map<String,Object>)yaml.load(_stdoutRecorder.getStdoutRecording());
+		//System.out.println(report);
+		
+		Map<String,Object> meta = (Map<String,Object>)report.get("meta");
+		assertEquals("Should have 5 meta entries", 5, meta.size());	
+		
+		assertTrue("Should have host", meta.containsKey("host"));
+		assertTrue("Should have pid", meta.containsKey("pid"));
+		assertTrue("Should have running", meta.containsKey("running"));
+		
+		Map<String,Object> inputs = (Map<String,Object>)report.get("inputs");
+		
+		assertNotNull("should include inputs in model",inputs);
+		assertEquals("Should have 5 inputs entries", inputs.size(),5);	
+		
+		assertEquals("Input file is wrong", "1.0", inputs.get("InputResolution"));
+
+	}
+	
+	public void test_WorkspaceFiles() throws Exception {
+		configureForGroovyActor();
+		_useWorkingDirectory();
+		
+		_loadAndRunWorkflow("WorkspaceFiles", _publishSubscribeDirector());
+		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
+		assertStringsEqualWhenLineEndingsNormalized(_getExpectedStdout("stdout.txt"), _runner.getStdoutRecording());
+	}
+
+
 }

@@ -2,7 +2,6 @@
 imports:
 
   - actors:actors.yaml
-  - classpath:/common/scriptActors.yaml
   - classpath:/common/directors.yaml
 
 components:
