@@ -20,7 +20,6 @@ import org.restflow.metadata.RunMetadata;
 import org.restflow.reporter.MultiRunReporter;
 import org.restflow.reporter.Reporter;
 import org.restflow.reporter.ReporterUtilities;
-import org.restflow.server.ServerOptions;
 import org.restflow.util.ClassPathHacker;
 import org.restflow.util.TestUtilities;
 import org.yaml.snakeyaml.Yaml;
@@ -56,11 +55,6 @@ public class RestFlow {
 				for(Object file : fileNames ) {
 				  ClassPathHacker.addFile((String)file);
 				}
-			}
-
-			
-			if (ServerOptions.handleServerOptions(args, options)) {
-				return null;
 			}
 		
 			String runDirectoryContainer = buildRunDirectoryContainer(options);
@@ -309,37 +303,7 @@ public class RestFlow {
 				acceptsAll(asList("outfile", "output-file"), "yaml input file")
 				.withRequiredArg().describedAs("file of output objects")
 				.ofType(String.class).describedAs("file");					
-				acceptsAll(asList("s", "server"), "start as server")
-						.withOptionalArg().describedAs("listen port")
-						.ofType(Integer.class).defaultsTo(0);
-				acceptsAll(asList("c", "client"), "start as client")
-						.withOptionalArg().describedAs("remote port")
-						.ofType(Integer.class).defaultsTo(0);
-				acceptsAll(asList("server-loop"),
-						"number of clients to be served before exit.")
-						.withRequiredArg().describedAs("num")
-						.ofType(Integer.class);
-				acceptsAll(asList("server-name"), "server to connect to")
-						.withOptionalArg().describedAs("hostname")
-						.ofType(String.class).defaultsTo("localhost");
-				acceptsAll(asList("server-stop"), "stop RestFlow server");
 				acceptsAll(asList("to-dot"), "output a Graphviz dot file instead of running the workflow");
-				acceptsAll(asList("server-restart"), "restart RestFlow server");
-				acceptsAll(asList("server-restart-name"), "restart RestFlow server")
-						.withOptionalArg().describedAs("RestFlow executable").defaultsTo("RestFlow")
-				        .ofType(String.class);
-				acceptsAll(
-						asList("server-secret"),
-						"Simple challenge-response secret. If no secret is specified, a random number is used.")
-						.withOptionalArg().describedAs("secret")
-						.ofType(Integer.class);
-				acceptsAll(asList("server-idle-timeout"),
-						"The server will terminate itself if not used by a client for this time span.")
-						.withOptionalArg().describedAs("seconds")
-						.ofType(Integer.class).defaultsTo(60 * 60);
-				acceptsAll(asList("server-shell"), "format for environmental variables")
-				        .withOptionalArg().describedAs("BASH|TCSH|WIN_CMD").defaultsTo("BASH")
-				        .ofType(String.class);
 				acceptsAll(asList("cp"), "add to classpath")
 				        .withRequiredArg().describedAs("jar|directory")
 				        .ofType(String.class);
