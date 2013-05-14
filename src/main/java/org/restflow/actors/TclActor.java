@@ -1,7 +1,5 @@
 package org.restflow.actors;
 
-import groovy.lang.MissingPropertyException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -12,11 +10,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.restflow.actors.Actor.ActorFSM;
 import org.restflow.data.Outflow;
 import org.restflow.util.Contract;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.yaml.snakeyaml.Yaml;
 
@@ -133,6 +128,7 @@ public class TclActor extends AbstractActor {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public synchronized Map<String, Object> runScript(String wrapper, String script) throws Exception {
 		// ////////////////////////////////////////////////////////////////
 		// Code for running a Tcl script, passing the script input
@@ -406,9 +402,9 @@ public class TclActor extends AbstractActor {
 
 				Object value;
 
-				try {
-					value = binding.get(label);
-				} catch (MissingPropertyException e) {
+				value = binding.get(label);
+				
+				if (value == null && !binding.containsKey(label)) {
 					throw new Exception("Actor " + this
 							+ " did not output a value for " + label);
 				}
