@@ -200,6 +200,7 @@ public class TestSourceNode extends RestFlowTestCase {
 	
 	public void test_SourceNode_NestedWorkflow_ExternalDriver() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("EmphasizeGreeting")
@@ -325,6 +326,7 @@ public class TestSourceNode extends RestFlowTestCase {
 
 	public void test_SourceNode_DoublyNestedWorkflow_ExternalDriver() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("EmphasizeGreeting")
@@ -464,6 +466,7 @@ public class TestSourceNode extends RestFlowTestCase {
 
 	public void test_SourceNode_NestedWorkflow_InternalDriver() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("EmphasizeGreeting")

@@ -21,8 +21,8 @@ public class TestSynchronousActorCompletionService extends RestFlowTestCase {
 	private JavaActor _testActor;
 	private JavaActor _doublerActor;
 	private WorkflowContext _context;
-	
-	
+		
+	@SuppressWarnings("unused")
 	public void setUp() throws Exception {
 		
 		super.setUp();

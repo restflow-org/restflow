@@ -28,6 +28,7 @@ public class TestTopWorkflowNode extends RestFlowTestCase {
 	
 	public void test_WorkflowNode_HelloWorld_OneNode_Java() throws Exception {
 
+		@SuppressWarnings("unused")
 		WorkflowNode topNode = new WorkflowNodeBuilder()
 			.context(_context)			
 			.node(new JavaNodeBuilder()
@@ -63,6 +64,7 @@ public class TestTopWorkflowNode extends RestFlowTestCase {
 	
 	public void test_WorkflowNode_HelloWorld_TwoNodes() throws Exception {
 
+		@SuppressWarnings("unused")
 		WorkflowNode topNode = new WorkflowNodeBuilder()
 			
 			.context(_context)

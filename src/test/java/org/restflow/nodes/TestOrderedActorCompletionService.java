@@ -23,6 +23,7 @@ public class TestOrderedActorCompletionService extends RestFlowTestCase {
 	private JavaActor _doublerActor;
 	private JavaActor _testActor;
 	
+	@SuppressWarnings("unused")
 	public void setUp() throws Exception {
 		
 		super.setUp();
