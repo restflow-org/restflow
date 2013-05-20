@@ -26,6 +26,7 @@ public class TestUnorderedActorCompletionService extends RestFlowTestCase {
 	private WorkflowContext _context;
 	
 	
+	@SuppressWarnings("unused")
 	public void setUp() throws Exception {
 		
 		super.setUp();
@@ -426,7 +427,9 @@ public class TestUnorderedActorCompletionService extends RestFlowTestCase {
 		AsynchronousActorCompletionService service = new UnorderedActorCompletionService(1000);
 		service.start();
 		
+		@SuppressWarnings("unchecked")
 		Collection<Integer> expectedOutputs = new HashBag();
+		@SuppressWarnings("unchecked")
 		Collection<Integer> actualOutputs = new HashBag();
 		
 		for (int i = 0; i < 1000; i++) {
