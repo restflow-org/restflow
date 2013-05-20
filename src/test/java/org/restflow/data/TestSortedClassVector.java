@@ -11,7 +11,6 @@ import org.restflow.exceptions.RestFlowException;
 import org.restflow.test.RestFlowTestCase;
 
 
-@SuppressWarnings("serial")
 public class TestSortedClassVector extends RestFlowTestCase {
 
 	public void testAdd_OrderOne() {
