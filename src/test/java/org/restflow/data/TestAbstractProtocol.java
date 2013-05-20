@@ -18,6 +18,7 @@ public class TestAbstractProtocol extends RestFlowTestCase {
 	private Uri uri;
 	private static final String EOL = PortableIO.EOL;
 	
+	@SuppressWarnings("unused")
 	public void setUp() throws Exception {
 		
 		super.setUp();

@@ -53,6 +53,7 @@ public class TestFileProtocol extends RestFlowTestCase {
 		workflow.initialize();
 		
 		// run the workflow while capturing stdout and stderr 
+		@SuppressWarnings("unused")
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
 			public void execute() throws Exception {workflow.run();}});
 
@@ -105,6 +106,7 @@ public class TestFileProtocol extends RestFlowTestCase {
 		workflow.initialize();
 		
 		// run the workflow while capturing stdout and stderr 
+		@SuppressWarnings("unused")
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
 			public void execute() throws Exception {workflow.run();}});
 
@@ -172,6 +174,7 @@ public class TestFileProtocol extends RestFlowTestCase {
 		workflow.initialize();
 		
 		// run the workflow while capturing stdout and stderr 
+		@SuppressWarnings("unused")
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
 			public void execute() throws Exception {workflow.run();}});
 
@@ -190,6 +193,7 @@ public class TestFileProtocol extends RestFlowTestCase {
 		assertTrue(runDirectory.isDirectory());
 		
 		// get the file listing for the run directory
+		@SuppressWarnings("unused")
 		File[] runFiles = runDirectory.listFiles();
 
 		// check the names, types, and contents of the published files
@@ -215,6 +219,7 @@ public class TestFileProtocol extends RestFlowTestCase {
 			.runDirectory(multirunDirectory)
 			.build();
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("top")
