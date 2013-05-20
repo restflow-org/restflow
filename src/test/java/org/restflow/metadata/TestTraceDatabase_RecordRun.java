@@ -30,6 +30,7 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 	
 	public void testRunWorkflow_TopLevelNodes_AnonymousActors() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 		.name("OneShotInflowWorkflow")
@@ -231,6 +232,7 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 	
 	public void testRunWorkflow_TopLevelNodes_WithWorkflowInputs() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("MultiplicationWorkflow")
@@ -460,6 +462,7 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 	
 	public void testRunWorkflow_TopLevelNodes_WithWorkflowInputs_MultipleRuns_MultipleInitializations() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("MultiplicationWorkflow")
@@ -778,6 +781,7 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 	
 	public void testRunWorkflow_TopLevelNodes_WithWorkflowInputs_MultipleRuns_SingleInitialization() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("MultiplicationWorkflow")
@@ -1100,6 +1104,7 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 	
 	public void testRunWorkflow_DoubleNested() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 		
 		.name("TopWF")

@@ -37,6 +37,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 	
 	public void testLoadWorkflow_TopLevelNodes_AnonymousActors() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 		.name("OneShotInflowWorkflow")
@@ -152,6 +153,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 
 	public void testLoadWorkflow_TopLevelNodes_SourceNode() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 		.name("OneShotInflowWorkflow")
@@ -342,6 +344,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 	
 	public void testLoadWorkflow_TopLevelNodes_DataDrivenDirector() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 		.name("MultiplierWorkflow")
@@ -588,6 +591,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 		
 	public void testLoadWorkflow_TopLevelNodes_NamedActors() throws Exception {
 			
+		@SuppressWarnings("unused")
 		JavaActor singletonDataCreationActor = new JavaActorBuilder()
 			.context(_context)
 			.name("SingletonDataCreator")
@@ -601,6 +605,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 			.name("SequenceDataCreator")
 			.bean(new ConstantActor());
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 		.name("OneShotInflow")
@@ -715,6 +720,7 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 	
 	public void testLoadWorkflow_DoubleNested() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 		
 		.name("TopWF")
