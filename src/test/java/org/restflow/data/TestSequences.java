@@ -19,7 +19,7 @@ public class TestSequences extends RestFlowTestCase {
 		
 		_s = new Sequences();
 		
-		Map<String, List<Object>> sequence = new HashMap();
+		Map<String, List<Object>> sequence = new HashMap<String, List<Object>>();
 		List<Object> s1 = new Vector<Object>();
 		List<Object> s2 = new Vector<Object>();
 		List<Object> s3 = new Vector<Object>();		
@@ -95,7 +95,7 @@ public class TestSequences extends RestFlowTestCase {
 	}	
 	
 	public void testRepeatNotEqualLength() {
-		Map<String, List<Object>> sequence = new HashMap();
+		Map<String, List<Object>> sequence = new HashMap<String, List<Object>>();
 		List<Object> s1 = new Vector<Object>();
 		List<Object> s2 = new Vector<Object>();		
 		s1.add("test s1.1");
