@@ -33,10 +33,6 @@ public class TestAbstractActor extends RestFlowTestCase {
 	private void _setActorInputsViaYaml(String yamlString) throws Exception {
 		actor.setInputs((Map)yaml.load(yamlString));
 	}
-	
-	private void _setActorOutputsViaYaml(String yamlString) throws Exception {
-		actor.setOutputs((Map)yaml.load(yamlString));
-	}
 
 	public void testSetInputs_ViaApiCall_NameOnly_OneInput() throws Exception {
 
