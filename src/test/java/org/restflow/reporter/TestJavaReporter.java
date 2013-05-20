@@ -25,6 +25,7 @@ public class TestJavaReporter extends RestFlowTestCase {
 	
 	public void test_WorkflowReporters_MultipleReporters() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			
 			.context(_context)	
@@ -73,6 +74,7 @@ public class TestJavaReporter extends RestFlowTestCase {
 	
 	public void test_WorkflowReporters_PreambleAndFinalReporters() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			.context(_context)	
 			.node(new JavaNodeBuilder().bean(
@@ -113,6 +115,7 @@ public class TestJavaReporter extends RestFlowTestCase {
 	
 	public void test_WorkflowReporter_TraceQueries() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			
 			.context(_context)

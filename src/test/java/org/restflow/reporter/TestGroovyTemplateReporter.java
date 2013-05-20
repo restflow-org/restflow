@@ -114,6 +114,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 	
 	public void test_WorkflowReporters_DoublyNestedWorkflow_MultiStep() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 		
 		.name("TopWF")
@@ -339,6 +340,7 @@ public class TestGroovyTemplateReporter extends RestFlowTestCase {
 	
 	public void test_WorkflowReporter_TraceQueries() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			
 			.context(_context)

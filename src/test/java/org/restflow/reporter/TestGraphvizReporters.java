@@ -18,12 +18,14 @@ import org.restflow.test.RestFlowTestCase;
 
 public class TestGraphvizReporters extends RestFlowTestCase {
 
+	
 	public void test_GraphvizReporters_SimpleWorkflow() throws Exception {
 		
 		for (Director director : new Director[] {new PublishSubscribeDirector(), new DataDrivenDirector()} ) {
 
 			WorkflowContext context = new WorkflowContextBuilder().build();
 			
+			@SuppressWarnings("unused")
 			final Workflow workflow = new WorkflowBuilder()
 			
 			.name("TopWF")
@@ -102,77 +104,75 @@ public class TestGraphvizReporters extends RestFlowTestCase {
 	
 	public void test_GraphvizReporters_NestedWorkflow() throws Exception {
 		
-		for (Director director : new Director[] {new PublishSubscribeDirector(), new DataDrivenDirector()} ) {
-
-			WorkflowContext context = new WorkflowContextBuilder().build();
-			
-			final 	Workflow workflow = new WorkflowBuilder()
-
-			.name("top")
-			.context(context)
-			.prefix("/run{RUN}")
-			
-			.inflow("u", "/inputNumber")
+		WorkflowContext context = new WorkflowContextBuilder().build();
 		
-			.node(new GroovyNodeBuilder() 
-				.name("incrementer")
-				.inflow("/inputNumber", "m")
-				.stepsOnce()
-				.step("n = m + 1")
-				.outflow("n", "/incrementedInputNumber"))
-			
-			.node(new WorkflowNodeBuilder()
-			
-				.stepsOnce()
-			
-				.name("multiplier")
-				.inflow("/inputNumber", "multiplier", "/multiplier")
-				.inflow("/incrementedInputNumber", "multiplicand", "/multiplicand")
-				
-				.node(new JavaNodeBuilder()
-					.inflow("/multiplier", "x")
-					.inflow("/multiplicand", "y")
-					.stepsOnce()
-					.bean(new CloneableBean() {
-						public int x, y, z;
-						public void step() {z = x * y; System.out.println(x + "*" + y);}
-						})
-					.outflow("z", "/product"))
-				
-				.node(new GroovyNodeBuilder()
-					.inflow("/product", "value")
-					.step("println value"))
-					
-				.outflow("/product", "product", "/outputNumber")
-				)
-				
-			.outflow("/outputNumber", "v")
+		@SuppressWarnings("unused")
+		final Workflow workflow = new WorkflowBuilder()
 
-			.reporter("DotReport", new GraphvizReporter.WorkflowGraphReporter())
+		.name("top")
+		.context(context)
+		.prefix("/run{RUN}")
+		
+		.inflow("u", "/inputNumber")
+	
+		.node(new GroovyNodeBuilder() 
+			.name("incrementer")
+			.inflow("/inputNumber", "m")
+			.stepsOnce()
+			.step("n = m + 1")
+			.outflow("n", "/incrementedInputNumber"))
+		
+		.node(new WorkflowNodeBuilder()
+		
+			.stepsOnce()
+		
+			.name("multiplier")
+			.inflow("/inputNumber", "multiplier", "/multiplier")
+			.inflow("/incrementedInputNumber", "multiplicand", "/multiplicand")
 			
-			.build();
+			.node(new JavaNodeBuilder()
+				.inflow("/multiplier", "x")
+				.inflow("/multiplicand", "y")
+				.stepsOnce()
+				.bean(new CloneableBean() {
+					public int x, y, z;
+					public void step() {z = x * y; System.out.println(x + "*" + y);}
+					})
+				.outflow("z", "/product"))
 			
+			.node(new GroovyNodeBuilder()
+				.inflow("/product", "value")
+				.step("println value"))
+				
+			.outflow("/product", "product", "/outputNumber")
+			)
 			
-			workflow.configure();
-			
-			assertEquals(
-					"digraph Workflow {"													+ EOL +
-					"node1 [label=\"inportal\",shape=ellipse,peripheries=1];"				+ EOL +
-					"node2 [label=\"outportal\",shape=ellipse,peripheries=1];"				+ EOL +
-					"node3 [label=\"incrementer\",shape=ellipse,peripheries=1];"			+ EOL +
-					"node4 [label=\"multiplier\",shape=ellipse,peripheries=2];"				+ EOL +
-					"node5 [label=\"/inputNumber\",shape=box,peripheries=1];"				+ EOL +
-					"node1 -> node5 [label=\"u\"];"											+ EOL +
-					"node6 [label=\"/incrementedInputNumber\",shape=box,peripheries=1];"	+ EOL +
-					"node3 -> node6 [label=\"n\"];"											+ EOL +
-					"node7 [label=\"/outputNumber\",shape=box,peripheries=1];"				+ EOL +
-					"node4 -> node7 [label=\"product\"];"									+ EOL +
-					"node7 -> node2 [label=\"v\"];"											+ EOL +
-					"node5 -> node3 [label=\"m\"];"											+ EOL +
-					"node6 -> node4 [label=\"multiplicand\"];"								+ EOL +
-					"node5 -> node4 [label=\"multiplier\"];"								+ EOL +
-					"}"																		+ EOL,
-				workflow.getReport("DotReport"));
-		}
+		.outflow("/outputNumber", "v")
+
+		.reporter("DotReport", new GraphvizReporter.WorkflowGraphReporter())
+		
+		.build();
+		
+		
+		workflow.configure();
+		
+		assertEquals(
+				"digraph Workflow {"													+ EOL +
+				"node1 [label=\"inportal\",shape=ellipse,peripheries=1];"				+ EOL +
+				"node2 [label=\"outportal\",shape=ellipse,peripheries=1];"				+ EOL +
+				"node3 [label=\"incrementer\",shape=ellipse,peripheries=1];"			+ EOL +
+				"node4 [label=\"multiplier\",shape=ellipse,peripheries=2];"				+ EOL +
+				"node5 [label=\"/inputNumber\",shape=box,peripheries=1];"				+ EOL +
+				"node1 -> node5 [label=\"u\"];"											+ EOL +
+				"node6 [label=\"/incrementedInputNumber\",shape=box,peripheries=1];"	+ EOL +
+				"node3 -> node6 [label=\"n\"];"											+ EOL +
+				"node7 [label=\"/outputNumber\",shape=box,peripheries=1];"				+ EOL +
+				"node4 -> node7 [label=\"product\"];"									+ EOL +
+				"node7 -> node2 [label=\"v\"];"											+ EOL +
+				"node5 -> node3 [label=\"m\"];"											+ EOL +
+				"node6 -> node4 [label=\"multiplicand\"];"								+ EOL +
+				"node5 -> node4 [label=\"multiplier\"];"								+ EOL +
+				"}"																		+ EOL,
+			workflow.getReport("DotReport"));
 	}
 }
