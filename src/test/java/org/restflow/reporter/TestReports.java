@@ -17,6 +17,7 @@ public class TestReports extends WorkflowTestCase {
 		super("reports");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void test_report() throws Exception {
 		configureForGroovyActor();
 		_useWorkingDirectory();
@@ -48,6 +49,7 @@ public class TestReports extends WorkflowTestCase {
 		assertEquals("run directory should be the same",meta.get("runName"),_runDirectory.getName());
 	}		
 
+	@SuppressWarnings("unchecked")
 	public void test_specialGreeting() throws Exception {
 		configureForGroovyActor();
 		_useWorkingDirectory();
@@ -125,6 +127,7 @@ public class TestReports extends WorkflowTestCase {
 		assertEquals(_getExpectedStdout("plotReport_stdout.txt"), _stdoutRecorder.getStdoutRecording());		
 	}			
 	
+	@SuppressWarnings("unchecked")
 	public void test_reportMalformedRun() throws Exception {
 		configureForGroovyActor();
 		_useWorkingDirectory();
@@ -171,6 +174,7 @@ public class TestReports extends WorkflowTestCase {
 		assertEquals("Hello World!", _stdoutRecorder.getStdoutRecording());
 	}	
 	
+	@SuppressWarnings("unchecked")
 	public void test_multiRunReport() throws Exception {
 		configureForGroovyActor();
 		_useWorkingDirectory();
@@ -181,11 +185,12 @@ public class TestReports extends WorkflowTestCase {
 		Iterable<Object> reports = yaml.loadAll(_stdoutRecorder.getStdoutRecording());
 		
 		for (Object obj : reports ) {
-			Map map = (Map)obj;
+			Map<String,Object> map = (Map<String,Object>)obj;
 			assertTrue("should contain meta data",map.containsKey("meta"));		
 		}
 	}		
 	
+	@SuppressWarnings("unchecked")
 	public void test_RestFlowMainMultiRunReport() throws Exception {
 
 		String base = PortableIO.getCurrentDirectoryPath() + "/src/test/resources/" + _parentDirectory + "/multirun/";
@@ -195,11 +200,12 @@ public class TestReports extends WorkflowTestCase {
 		Iterable<Object> reports = yaml.loadAll(_stdoutRecorder.getStdoutRecording());
 		
 		for (Object obj : reports ) {
-			Map map = (Map)obj;
+			Map<String,Object> map = (Map<String,Object>)obj;
 			assertTrue("should contain meta data",map.containsKey("meta"));		
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void test_RestFlowMainSingleRunReport() throws Exception {
 
 		String base = PortableIO.getCurrentDirectoryPath() + "/src/test/resources/"  + _parentDirectory + "/multirun/";
