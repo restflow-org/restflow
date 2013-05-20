@@ -17,6 +17,7 @@ public class TestValidateOnly extends RestFlowTestCase {
 		String workflowFile = "src/test/resources/ssrl/workflow/RestFlow/workflow_fileProtocolWithoutUriVariables" +
 			WorkflowRunner.YAML_EXTENSION;
 
+		@SuppressWarnings("unused")
 		RunMetadata metadata = RestFlow.loadAndRunWorkflow( 
 			new String[]{ "-v", "-f", workflowFile, "-base", "RESTFLOW_TESTRUNS_DIR" } );
 	}

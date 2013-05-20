@@ -23,7 +23,6 @@ import org.restflow.test.RestFlowTestCase;
 public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 
 	private WorkflowContext _context;
-	private WorkflowContext _noopContext;
 	private ConsumableObjectStore _store;
 	
 	public void setUp() throws Exception {
@@ -37,7 +36,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 			})
 			.build();
 
-		_noopContext = new WorkflowContextBuilder()
+		new WorkflowContextBuilder()
 			.store(_store)
 			.recorder(new NoopTraceRecorder())
 			.scheme("nosuffix", new DataProtocol() {
@@ -48,6 +47,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_IsolatedNode_NoOutflowVariables_DataProtocol() throws Exception {
 
+		@SuppressWarnings("unused")
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
 			.context(_context)
 			.inflow("s")
@@ -97,6 +97,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 		node.dispose();
 	}
 
+	@SuppressWarnings("unused")
 	public void test_IsolatedNode_NoOutflowVariables_NoSuffixProtocol() throws Exception {
 
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
@@ -125,6 +126,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_IsolatedNode_NoOutflowVariables_NoSuffixProtocol_StepsOnce() throws Exception {
 
+		@SuppressWarnings("unused")
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
 			.context(_context)
 			.inflow("s")
@@ -164,6 +166,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_IsolatedNode_NoSuffixProtocol_WithOutflowVariable() throws Exception {
 
+		@SuppressWarnings("unused")
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
 			.context(_context)
 			.inflow("i")
@@ -239,6 +242,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_SingleNodeWorkflow_NoOutflowVariables_DataProtocol() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -266,6 +270,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_SingleNodeWorkflow_NoOutflowVariables_NoSuffixProtocol() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -292,6 +297,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_SingleNodeWorkflow_NoOutflowVariables_NoSuffixProtocol_NodeStepsOnce() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("wi", "/input")
@@ -328,6 +334,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 		Director director = new PublishSubscribeDirector();
 		director.setNodesStepOnce(true);
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.director(director)
@@ -361,6 +368,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_SingleNodeWorkflow_WithOutflowVariable() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("wi", "/input")
@@ -394,6 +402,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_SingleNodeWorkflow_WithOutflowVariable_MultiRuns() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.prefix("/run{RUN}")
@@ -446,6 +455,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 
 	public void test_DoublyNestedSingleNodeWorkflow_NoOutflowVariables_DataProtocol() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -483,6 +493,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_DoublyNestedSingleNodeWorkflow_NoOutflowVariables_NoSuffixProtocol() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -518,6 +529,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_DoublyNestedSingleNodeWorkflow_NoOutflowVariables_DataProtocol_NodeStepsOnce() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -559,6 +571,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 		Director director = new PublishSubscribeDirector();
 		director.setNodesStepOnce(true);
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -597,6 +610,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 	
 	public void test_DoublyNestedSingleNodeWorkflow_WithOutflowVariables() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.inflow("i", "/input")
@@ -634,6 +648,7 @@ public class TestOutflowUriVariableRequirement extends RestFlowTestCase {
 
 	public void test_DoublyNestedSingleNodeWorkflow_WithOutflowVariables_MultiRuns() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 			.context(_context)
 			.name("Top")

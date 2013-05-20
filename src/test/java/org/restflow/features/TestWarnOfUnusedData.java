@@ -8,7 +8,6 @@ import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
 import org.restflow.directors.DataDrivenDirector;
 import org.restflow.directors.PublishSubscribeDirector;
-import org.restflow.metadata.WrapupResult;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
 import org.restflow.util.StdoutRecorder;
@@ -30,6 +29,7 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 	
 	public void test_ThreeNodeNoExcessDataWorkflow_PublishSubscribeDirector() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("ThreeNodeWorkflowWithExcessData")
@@ -129,6 +129,7 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 	
 	public void test_ThreeNodeExcessDataWorkflow_OneDisabledInflow_PublishSubscribeDirector() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("ThreeNodeWorkflowWithExcessData")
@@ -224,6 +225,7 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 	
 	public void test_ThreeNodeNoExcessDataWorkflow_OneDisabledInflow_PublishSubscribeDirector() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("ThreeNodeWorkflowWithExcessData")
@@ -317,6 +319,7 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 
 //		WrapupResult.setIgnoreEndOfStreamPackets(false);
 		
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("ThreeNodeWorkflowWithExcessData")
@@ -420,6 +423,7 @@ public class TestWarnOfUnusedData extends RestFlowTestCase {
 
 	public void test_ThreeNodeExcessDataWorkflow_DataDrivenDirector() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 
 			.name("ThreeNodeWorkflowWithExcessData")
