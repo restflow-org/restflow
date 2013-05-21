@@ -78,10 +78,10 @@ public class TestRestFlow extends RestFlowTestCase {
 			}
 		});
 		
-		String actualOutput = _stdoutRecorder.getStdoutRecording();
-		String expectedOutput = PortableIO.readTextFileOnClasspath("ssrl/workflow/RestFlow/hammingDot.txt");
-		
-		//assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
+//		String actualOutput = _stdoutRecorder.getStdoutRecording();
+//		String expectedOutput = PortableIO.readTextFileOnClasspath("ssrl/workflow/RestFlow/hammingDot.txt");
+//		
+//		assertStringsEqualWhenLineEndingsNormalized(expectedOutput , actualOutput);
 		
 	}
 
