@@ -9,7 +9,6 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.restflow.actors.Actor.ActorFSM;
 import org.restflow.data.InputSignatureElement;
 import org.restflow.exceptions.ActorDeclarationException;
 import org.restflow.exceptions.ActorDefinitionException;

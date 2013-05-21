@@ -5,7 +5,6 @@ import java.util.Map;
 import org.restflow.WorkflowContext;
 import org.restflow.data.Protocol;
 import org.restflow.metadata.TraceRecorder;
-import org.restflow.nodes.AbstractWorkflowNode;
 import org.restflow.nodes.WorkflowNode;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

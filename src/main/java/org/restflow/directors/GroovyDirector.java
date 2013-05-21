@@ -16,7 +16,6 @@ import org.restflow.data.Outflow;
 import org.restflow.data.Packet;
 import org.restflow.data.PublishedResource;
 import org.restflow.data.SingleResourcePacket;
-import org.restflow.directors.Director.DirectorFSM;
 import org.restflow.enums.WorkflowModified;
 import org.restflow.metadata.WrapupResult;
 import org.restflow.nodes.ActorWorkflowNode;

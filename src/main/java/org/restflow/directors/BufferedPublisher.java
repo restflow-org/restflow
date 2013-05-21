@@ -15,7 +15,6 @@ import org.restflow.data.Outflow;
 import org.restflow.data.Packet;
 import org.restflow.metadata.WrapupResult;
 import org.restflow.nodes.WorkflowNode;
-import org.restflow.util.PortableIO;
 
 
 public class BufferedPublisher implements Publisher {

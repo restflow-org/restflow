@@ -1,7 +1,6 @@
 package org.restflow.data;
 
 import java.io.File;
-import java.sql.SQLException;
 
 import net.jcip.annotations.Immutable;
 

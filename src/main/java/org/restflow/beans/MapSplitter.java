@@ -3,7 +3,6 @@ package org.restflow.beans;
 import java.util.Map;
 
 import org.restflow.actors.AbstractActor;
-import org.restflow.actors.Actor.ActorFSM;
 import org.restflow.util.Contract;
 
 

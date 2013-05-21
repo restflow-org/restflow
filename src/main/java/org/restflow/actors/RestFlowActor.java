@@ -15,8 +15,6 @@ import org.restflow.metadata.FileSystemMetadataManager;
 import org.restflow.metadata.RunMetadata;
 import org.restflow.util.Contract;
 import org.restflow.util.StdoutRecorder;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.Tag;

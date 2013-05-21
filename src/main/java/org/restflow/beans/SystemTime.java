@@ -1,7 +1,5 @@
 package org.restflow.beans;
 
-import java.util.Date;
-
 public class SystemTime {
 
 	long _time;

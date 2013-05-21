@@ -1,7 +1,5 @@
 package org.restflow.reporter;
 
-import java.util.Map;
-
 import org.restflow.metadata.FileSystemMetadataManager;
 import org.restflow.metadata.RunMetadata;
 

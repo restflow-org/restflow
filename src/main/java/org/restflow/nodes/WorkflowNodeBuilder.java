@@ -6,7 +6,6 @@ import org.restflow.WorkflowContext;
 import org.restflow.actors.SubworkflowBuilder;
 import org.restflow.actors.Workflow;
 import org.restflow.directors.Director;
-import org.restflow.reporter.GroovyTemplateReporter;
 import org.restflow.reporter.Reporter;
 
 

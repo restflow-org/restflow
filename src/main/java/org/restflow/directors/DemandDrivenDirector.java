@@ -7,7 +7,6 @@ import java.util.Map;
 import org.restflow.data.Inflow;
 import org.restflow.data.Outflow;
 import org.restflow.data.Packet;
-import org.restflow.directors.Director.DirectorFSM;
 import org.restflow.enums.WorkflowModified;
 import org.restflow.metadata.WrapupResult;
 import org.restflow.nodes.WorkflowNode;

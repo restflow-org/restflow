@@ -13,11 +13,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.restflow.actors.Actor.ActorFSM;
 import org.restflow.data.Outflow;
 import org.restflow.util.Contract;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.yaml.snakeyaml.Yaml;
 

@@ -7,12 +7,9 @@ import java.util.Collection;
 import net.jcip.annotations.ThreadSafe;
 
 import org.apache.commons.io.FileUtils;
-import org.restflow.WorkflowContext;
 import org.restflow.actors.Actor;
 import org.restflow.nodes.WorkflowNode;
 import org.restflow.util.PortableIO;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 

@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +15,6 @@ import org.restflow.actors.Actor;
 import org.restflow.actors.Workflow;
 import org.restflow.data.Inflow;
 import org.restflow.data.Outflow;
-import org.restflow.nodes.AbstractWorkflowNode;
 import org.restflow.nodes.ActorWorkflowNode;
 import org.restflow.nodes.BufferNode;
 import org.restflow.nodes.InPortal;

@@ -1,7 +1,5 @@
 package org.restflow.actors;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.io.File;
 
 import net.jcip.annotations.GuardedBy;
@@ -9,9 +7,6 @@ import net.jcip.annotations.ThreadSafe;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.restflow.actors.Actor.ActorFSM;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
 
 
 /**

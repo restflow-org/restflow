@@ -1,6 +1,5 @@
 package org.restflow.data;
 
-import org.restflow.WorkflowContext;
 import org.restflow.actors.Actor;
 import org.restflow.nodes.WorkflowNode;
 import org.springframework.context.ApplicationContextAware;

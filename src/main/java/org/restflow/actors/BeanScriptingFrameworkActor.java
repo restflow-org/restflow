@@ -13,9 +13,7 @@ import net.jcip.annotations.NotThreadSafe;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 @NotThreadSafe()
 public class BeanScriptingFrameworkActor extends AbstractActor {

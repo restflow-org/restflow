@@ -2,7 +2,6 @@ package org.restflow.metadata;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Map;
 
 import org.restflow.actors.Actor;
