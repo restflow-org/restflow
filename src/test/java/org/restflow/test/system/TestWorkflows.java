@@ -1,14 +1,12 @@
 
 package org.restflow.test.system;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.restflow.beans.TextScanner;
 import org.restflow.directors.DemandDrivenDirector;
-import org.restflow.reporter.JunitFinalReporter;
 import org.restflow.test.WorkflowTestCase;
 import org.yaml.snakeyaml.Yaml;
 
@@ -64,8 +62,6 @@ public class TestWorkflows extends WorkflowTestCase {
 		_loadAndRunWorkflow("OneShotInflow", _publishSubscribeDirector());
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
-		String expected = _getExpectedProducts();
-		String actual = _runner.getProductsAsString();
 		assertEquals(_getExpectedProducts(), _runner.getProductsAsString());
 	}
 
@@ -519,6 +515,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertFileMatchesTemplate("_metadata/log.txt");
 	}
 
+	@SuppressWarnings("unchecked")
 	public void test_SimulateDataCollection_PublishSubscribeDirector() throws Exception {
 		configureForBeanActor();
 		_useWorkingDirectory();
@@ -550,13 +547,13 @@ public class TestWorkflows extends WorkflowTestCase {
 		s.compile();
 		
 		Map<String,Object> result = s.search(_runner.getStdoutRecording());
-		List logs = (List)result.get("log");
+		List<Object> logs = (List<Object>)result.get("log");
 		assertEquals ("6 log lines",6,logs.size());
 
-		List trace = (List)result.get("trace");
+		List<Object> trace = (List<Object>)result.get("trace");
 		assertEquals ("26 trace lines",26,trace.size());
 		
-		Map firstLine = (Map)trace.get(0);
+		Map<Object,Object> firstLine = (Map<Object,Object>)trace.get(0);
 		assertEquals(firstLine.get("imageNum"),"001");
 	}
 
@@ -1410,6 +1407,7 @@ public class TestWorkflows extends WorkflowTestCase {
 //		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 //	}
 	
+	@SuppressWarnings("unchecked")
 	public void test_liveReport() throws Exception {
 		configureForGroovyActor();
 		_useWorkingDirectory();
