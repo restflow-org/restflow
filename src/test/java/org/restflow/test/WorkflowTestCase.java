@@ -129,12 +129,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		_importSchemeToResourceMap.put("actors", "classpath:common/java/");
 		_importSchemeToResourceMap.put("testActors", "classpath:testActors/java/");				
 	}	
-	
-	protected void configureForTclActor() {
-		_importSchemeToResourceMap.put("actors", "classpath:common/tcl/");
-		_importSchemeToResourceMap.put("testActors", "classpath:testActors/tcl/");								
-	}
-	
+		
 	protected void configureForRestFlowActor() {
 		_importSchemeToResourceMap.put("actors", "classpath:common/restflowActors/");
 		_importSchemeToResourceMap.put("testActors", "classpath:testActors/restflowActors/");								

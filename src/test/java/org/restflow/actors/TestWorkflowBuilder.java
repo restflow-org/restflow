@@ -24,7 +24,6 @@ import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.InPortalBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.OutPortalBuilder;
-import org.restflow.nodes.TclNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.nodes.TestActorNodeBuilder.DoublerBeanWithoutAccessors;
 import org.restflow.test.RestFlowTestCase;
@@ -85,22 +84,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 
 		assertEquals(0, _store.size());
 	}
-	
-	public void test_WorkflowBuilder_HelloWorld_OneNode_Tcl() throws Exception {
 
-		Workflow workflow = new WorkflowBuilder()
-			.context(_context)
-			.node(new TclNodeBuilder()
-				.step("puts [list Hello world!]"))
-			.build();
-		
-		workflow.configure();
-		workflow.initialize();
-		
-		workflow.run();
-
-		assertEquals(0, _store.size());
-	}
 	
 	public void test_WorkflowBuilder_HelloWorld_TwoNodes() throws Exception {
 
