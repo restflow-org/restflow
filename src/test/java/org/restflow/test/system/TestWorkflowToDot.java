@@ -4,13 +4,11 @@
  */
 package org.restflow.test.system;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.restflow.RestFlow;
-import org.restflow.WorkflowRunner;
 import org.restflow.beans.TextScanner;
 import org.restflow.test.RestFlowTestCase;
 import org.restflow.util.PortableIO;
