@@ -57,6 +57,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		_teeLogToStandardOutput = true;
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean systemMemoryLow() {
 		
 		long freeMemory = Runtime.getRuntime().freeMemory();
