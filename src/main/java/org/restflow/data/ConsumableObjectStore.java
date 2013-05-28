@@ -15,7 +15,7 @@ public class ConsumableObjectStore extends HashMap<String,Object> {
 	public boolean removeValue(Object value) throws Exception {
 		
 		for (Map.Entry<String,Object> entry : entrySet()) {
-			if (entry.getValue() == value) {
+			if (entry.getValue().equals(value)) {
 				super.remove(entry.getKey());
 				return true;
 			}
