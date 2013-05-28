@@ -8,7 +8,6 @@ import org.restflow.WorkflowContext;
 import org.restflow.actors.Workflow;
 import org.restflow.data.InflowToOutflowsMap;
 import org.restflow.enums.WorkflowModified;
-import org.restflow.metadata.TraceRecorder;
 import org.restflow.metadata.WrapupResult;
 import org.restflow.nodes.WorkflowNode;
 import org.restflow.util.Contract;
@@ -96,7 +95,6 @@ public abstract class AbstractDirector implements Director  {
 	}
 	
 	public void initialize() throws Exception {
-		TraceRecorder recorder = _workflowContext.getTraceRecorder();
 		Contract.requires(_state == DirectorFSM.CONFIGURED || _state == DirectorFSM.WRAPPED_UP);
 	}
 	
