@@ -1,6 +1,0 @@
-*** Node step counts ***
-HelloWorld: 1
-HelloWorld.CreateGreeting: 1
-HelloWorld.RenderGreeting: 1
-*** Published resources ***
-/messages/greeting: Hello World!

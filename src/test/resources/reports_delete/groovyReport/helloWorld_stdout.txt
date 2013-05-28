@@ -1,8 +1,0 @@
-
-File Name: greeting.txt
-Contents: Good night, and good luck
-Hello World!!
-Good Afternoon, Cosmos!!
-Good night, and good luck!!
-Yaml format: {g1: Hello World!!, g2: 'Good Afternoon, Cosmos', g3: 'Good night, and good luck!!'}
-

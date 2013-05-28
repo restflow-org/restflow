@@ -1,2 +1,0 @@
-Actor UncaughtActorException.ThrowExceptionOnThirdStep.(inner bean) threw exception:
-java.lang.Exception: More than three steps!
