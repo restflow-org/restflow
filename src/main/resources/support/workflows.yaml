@@ -1,4 +1,0 @@
-imports:
-  - classpath:common/directors.yaml
-  - classpath:common/types.yaml
-  

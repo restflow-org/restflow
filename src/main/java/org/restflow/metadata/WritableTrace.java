@@ -81,11 +81,11 @@ public class WritableTrace extends Trace {
 		createTraceDBTables(context, _traceDBConnection);
 	}
 	
-	WritableTrace(Connection connection) throws SQLException {
+	public WritableTrace(Connection connection) throws SQLException {
 		super(connection);
 	}
 	
-	static Connection createPrivateVolatileDatabase() throws SQLException {
+	public static Connection createPrivateVolatileDatabase() throws SQLException {
 		
 		return DriverManager.getConnection(
 				privateVolatileDatabaseUrl 			+
@@ -114,7 +114,7 @@ public class WritableTrace extends Trace {
 		);
 	}
 	
-	static int createTraceDBTables(ApplicationContext context, Connection connection) throws Exception {
+	public static int createTraceDBTables(ApplicationContext context, Connection connection) throws Exception {
 
 		// read the table creation sql script from a resource in the context
 		String sqlScript = IOUtils.toString(
