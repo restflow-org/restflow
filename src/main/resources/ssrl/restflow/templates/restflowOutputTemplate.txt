@@ -1,6 +1,0 @@
-<% if (dumpTrace) { %>
-*** Step counts ***
-${workflow.traceRecorder.stepCounts}
-*** Published resources ***
-${workflow.traceRecorder.publishedData}
-<%}%>
