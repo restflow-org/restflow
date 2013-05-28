@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.restflow.actors.Actor;
 import org.restflow.actors.Workflow;
 import org.restflow.data.ProtocolRegistry;
@@ -20,7 +19,6 @@ import org.restflow.metadata.MetadataManager;
 import org.restflow.metadata.RunMetadata;
 import org.restflow.metadata.Trace;
 import org.restflow.metadata.TraceRecorder;
-import org.restflow.reporter.GroovyTemplateReporter;
 import org.restflow.reporter.Reporter;
 import org.restflow.reporter.TraceReporter;
 import org.restflow.util.ImmutableMap;
@@ -379,27 +377,27 @@ public class WorkflowRunner {
 
 	public String generateDot() throws Exception {
 
-		_metadataManager.buildStdoutRecorder(_suppressWorkflowStdout).recordExecution(new StdoutRecorder.WrappedCode() {
-			@Override
-			public void execute() throws Exception {
-				try {
-					GroovyTemplateReporter reporter = new GroovyTemplateReporter();
-					reporter.setTemplate( IOUtils.toString(
-							_context.getResource(
-									"classpath:ssrl/restflow/templates/dotWorkflow.txt").getInputStream(), "UTF-8") );
-					
-					reporter.addToModel("workflow", _actor);
-					reporter.renderReport();
-				} catch (ActorException e) {
-					System.err.println(e.getMessage());
-					e.getCause().printStackTrace(System.err);
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		});
-		
-		_writeOutputFile();
+//		_metadataManager.buildStdoutRecorder(_suppressWorkflowStdout).recordExecution(new StdoutRecorder.WrappedCode() {
+//			@Override
+//			public void execute() throws Exception {
+//				try {
+//					GroovyTemplateReporter reporter = new GroovyTemplateReporter();
+//					reporter.setTemplate( IOUtils.toString(
+//							_context.getResource(
+//									"classpath:ssrl/restflow/templates/dotWorkflow.txt").getInputStream(), "UTF-8") );
+//					
+//					reporter.addToModel("workflow", _actor);
+//					reporter.renderReport();
+//				} catch (ActorException e) {
+//					System.err.println(e.getMessage());
+//					e.getCause().printStackTrace(System.err);
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		});
+//		
+//		_writeOutputFile();
 		
 		return "";
 	}	
@@ -599,6 +597,7 @@ public class WorkflowRunner {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static class YamlStream extends StringBufferInputStream {
 		
 		public YamlStream(String yaml) {
