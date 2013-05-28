@@ -27,7 +27,7 @@ public class Trace {
 	protected static String traceDBFileNameRoot					= "tracedb";
 	protected static String dbExistsSuffix						= ";IFEXISTS=TRUE";
 	protected static String dbSerializableIsolationModeSuffix	= ";LOCK_MODE=1";
-	protected static String tableCreationSqlFile 				= "classpath:tracedb/createtables.sql";
+	protected static String tableCreationSqlFile 				= "classpath:/org/restflow/metadata/tracedb/createtables.sql";
 
 	private PreparedStatement _identifyNodeStatement			= null;
 	private PreparedStatement _identifyTopNodeStatement			= null; 
