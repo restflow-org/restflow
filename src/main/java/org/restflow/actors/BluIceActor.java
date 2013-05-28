@@ -1,6 +1,5 @@
 package org.restflow.actors;
 
-import groovy.lang.MissingPropertyException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -514,9 +513,9 @@ public class BluIceActor extends AbstractActor {
 
 				Object value;
 
-				try {
-					value = binding.get(label);
-				} catch (MissingPropertyException e) {
+				value = binding.get(label);
+				
+				if (value == null && !binding.containsKey(label)) {
 					throw new Exception("Actor " + this
 							+ " did not output a value for " + label);
 				}
