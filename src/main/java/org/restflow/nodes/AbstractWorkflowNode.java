@@ -414,7 +414,7 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 	
 	public abstract boolean readyForInputPacket(String label) throws Exception;
 	
-	synchronized void writeValueToInflow(String label, Object value) throws Exception {
+	public synchronized void writeValueToInflow(String label, Object value) throws Exception {
 		 Packet packet = new SingleResourcePacket(value);
 		 setInputPacket(label, packet);
 	}

@@ -110,11 +110,6 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-    <dependency>
       <groupId>org.restflow</groupId>
       <artifactId>YamlSpringLoader</artifactId>
       <version>3.1</version>
@@ -134,11 +129,7 @@
       <artifactId>h2</artifactId>
       <version>1.3.165</version>
     </dependency>
-    <dependency>
-      <groupId>org.python</groupId>
-      <artifactId>jython</artifactId>
-      <version>2.5.3</version>
-    </dependency>
+
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>jcip-annotations</artifactId>
@@ -262,9 +253,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.13</version>
         <configuration>
-          <excludes>
-           <!-- <exclude>**/TestRestFlowServer.java</exclude>-->
-          </excludes>
 		  <forkedProcessTimeoutInSeconds>600</forkedProcessTimeoutInSeconds>
         </configuration>
       </plugin>
