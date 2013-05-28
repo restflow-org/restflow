@@ -9,8 +9,6 @@ import java.util.Map;
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
 import org.restflow.actors.CloneableBean;
-import org.restflow.actors.GroovyActor;
-import org.restflow.actors.GroovyActorBuilder;
 import org.restflow.actors.JavaActor;
 import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.SubworkflowBuilder;
@@ -34,7 +32,6 @@ import org.restflow.exceptions.NullOutputException;
 import org.restflow.exceptions.WorkflowRuntimeException;
 import org.restflow.metadata.NoopTraceRecorder;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.InPortalBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
@@ -116,55 +113,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 	}
 	
 	
-	public void testGroovyActor_AllowedNullInputsAndOutputs() throws Exception {
-		
-		 Map<String,Object> nullable = new HashMap<String,Object>();
-		 nullable.put("nullable", true);
-		
-		GroovyActor actor = new GroovyActorBuilder()
-			.name("greatest")
-			.context(_context)
-			.input("a", nullable)
-			.input("b", nullable)
-			.step("if 	   (a == null && b == null) c = null;	" +
-				  "else if (a != null && b == null) c = a;		" +
-				  "else if (b != null && a == null) c = b;		" +
-				  "else if (a > b) 				    c = a;		" +
-				  "else  							c = b;		" 
-				)
-			.output("c", nullable)
-			.build();
-
-		actor.elaborate();
-		actor.configure();
-		actor.initialize();
-
-		actor.set("a", 2);
-		actor.set("b", 1);
-		actor.step();
-		assertEquals(2, actor.get("c"));
-
-		actor.set("a", 3);
-		actor.set("b", 4);
-		actor.step();
-		assertEquals(4, actor.get("c"));
-
-		actor.set("a", null);
-		actor.set("b", 5);
-		actor.step();
-		assertEquals(5, actor.get("c"));
-
-		actor.set("a", 6);
-		actor.set("b", null);
-		actor.step();
-		assertEquals(6, actor.get("c"));
 	
-		actor.set("a", null);
-		actor.set("b", null);
-		actor.step();
-		assertNull(actor.get("c"));
-	}
-
 	public void testJavaActor_DisallowedNullInput() throws Exception {
 		
 		JavaActor actor = new JavaActorBuilder()
@@ -202,37 +151,6 @@ public class TestNullDataSupport extends RestFlowTestCase {
 		assertEquals("Null data received on non-nullable input 'a' of actor 'buffer'", exception.getMessage());
 	}
 	
-	public void testGroovyActor_DisallowedNullInput() throws Exception {
-		
-		GroovyActor actor = new GroovyActorBuilder()
-			.name("buffer")
-			.context(_context)
-			.input("a")
-			.step("c = a;")
-			.output("c")
-			.build();
-
-		actor.elaborate();
-		actor.configure();
-		actor.initialize();
-
-		actor.set("a", 2);
-		actor.step();
-		assertEquals(2, actor.get("c"));
-
-		actor.set("a", 0);
-		actor.step();
-		assertEquals(0, actor.get("c"));
-		
-		Exception exception = null;
-		try {
-			actor.set("a", null);
-		} catch(NullInputException e) {
-			exception = e;
-		}
-		assertNotNull(exception);
-		assertEquals("Null data received on non-nullable input 'a' of actor 'buffer'", exception.getMessage());
-	}
 	
 	public void testJavaActor_DisallowedNullOutput() throws Exception {
 		
@@ -276,42 +194,6 @@ public class TestNullDataSupport extends RestFlowTestCase {
 		assertEquals("Null data produced on non-nullable output 'c' of actor 'buffer'", exception.getMessage());
 	}
 	
-	public void testGroovyActor_DisallowedNullOutput() throws Exception {
-		
-		 Map<String,Object> nullable = new HashMap<String,Object>();
-		 nullable.put("nullable", true);
-		
-		GroovyActor actor = new GroovyActorBuilder()
-			.name("buffer")
-			.context(_context)
-			.input("a", nullable)
-			.step("c = a;")
-			.output("c")
-			.build();
-
-		actor.elaborate();
-		actor.configure();
-		actor.initialize();
-
-		actor.set("a", 2);
-		actor.step();
-		assertEquals(2, actor.get("c"));
-
-		actor.set("a", 0);
-		actor.step();
-		assertEquals(0, actor.get("c"));
-		
-		actor.set("a", null);
-		
-		Exception exception = null;
-		try {
-			actor.step();
-		} catch(NullOutputException e) {
-			exception = e;
-		}
-		assertNotNull(exception);
-		assertEquals("Null data produced on non-nullable output 'c' of actor 'buffer'", exception.getMessage());
-	}
 	
 	public void testJavaActor_UnsupportedNullInput() throws Exception {
 		
@@ -710,10 +592,13 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			.context(context)
 			
 			.node(new ActorNodeBuilder()
-				.actor(new GroovyActorBuilder()
-					.step(	"greetingOne = 'Hello'; 	" +
-							"greetingTwo = null;		"
-					)
+			.actor(new JavaActorBuilder()
+				.bean(new Object() {
+					public String greetingOne, greetingTwo;
+					public void step() {
+						greetingOne = "Hello";
+						greetingTwo = null;
+					}})
 					.output("greetingOne")
 					.output("greetingTwo", nullable)
 				)
@@ -722,13 +607,16 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			)
 				
 			.node(new ActorNodeBuilder()
-				.actor(new GroovyActorBuilder()
+				.actor(new JavaActorBuilder()
 					.input("messageOne", fileType)
 					.input("messageTwo", nullable)
-					.step(	"println(messageOne); 		" +
-							"println(messageTwo);		"
-					)
-				)
+					.bean(new Object() {
+						public String messageOne, messageTwo;
+						public void step() {
+							System.out.println(messageOne);
+							System.out.println(messageTwo);
+						}
+					}))
 				.inflow("file:/greetingOne.txt", "messageOne")
 				.inflow("file:/greetingTwo.txt", "messageTwo")
 			)
@@ -792,7 +680,7 @@ public class TestNullDataSupport extends RestFlowTestCase {
 		Map<String,Object> fileType = new HashMap<String,Object>();
 		fileType.put("type", "String");
 
-		/// build the workflow
+		// build the workflow
 		final Workflow workflow = new WorkflowBuilder() 
 
 			.name("Top")
@@ -800,10 +688,13 @@ public class TestNullDataSupport extends RestFlowTestCase {
 			.context(context)
 			
 			.node(new ActorNodeBuilder()
-				.actor(new GroovyActorBuilder()
-					.step(	"greetingOne = 'Hello'; 	" +
-							"greetingTwo = null;		"
-					)
+				.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public String greetingOne, greetingTwo;
+						public void step() {
+							greetingOne = "Hello";
+							greetingTwo = null;
+						}})
 					.output("greetingOne")
 					.output("greetingTwo", nullable)
 				)
@@ -822,12 +713,16 @@ public class TestNullDataSupport extends RestFlowTestCase {
 				.node(new ActorNodeBuilder()
 					.inflow("file:/messageOne.txt", "messageOne")
 					.inflow("file:/messageTwo.txt", "messageTwo")
-					.actor(new GroovyActorBuilder()
+					.actor(new JavaActorBuilder()
 						.input("messageOne", fileType)
 						.input("messageTwo", nullable)
-						.step(	"println(messageOne); 		" +
-								"println(messageTwo);		"
-						)
+						.bean(new Object() {
+							public String messageOne, messageTwo;
+							public void step() {
+								System.out.println(messageOne);
+								System.out.println(messageTwo);
+							}
+						})
 					)
 				)				
 			)

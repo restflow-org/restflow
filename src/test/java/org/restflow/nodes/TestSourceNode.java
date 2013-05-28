@@ -3,7 +3,7 @@ package org.restflow.nodes;
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
 import org.restflow.actors.CloneableBean;
-import org.restflow.actors.GroovyActorBuilder;
+import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
@@ -11,7 +11,6 @@ import org.restflow.data.FileProtocol;
 import org.restflow.data.Packet;
 import org.restflow.metadata.NoopTraceRecorder;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.SourceNode;
 import org.restflow.nodes.SourceNodeBuilder;
@@ -118,6 +117,7 @@ public class TestSourceNode extends RestFlowTestCase {
 
 	public void test_SourceNode_MinimalWorkflow_ExplicitSourceNode() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 	
 			.context(_context)
@@ -131,8 +131,11 @@ public class TestSourceNode extends RestFlowTestCase {
 				
 			.node(new ActorNodeBuilder()
 				.inflow("/a", "value")
-				.actor(new GroovyActorBuilder()
-					.step("println value"))
+				.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public Object value;
+						public void step() {System.out.println(value);}
+					}))
 			)
 
 		.build();	
@@ -163,6 +166,7 @@ public class TestSourceNode extends RestFlowTestCase {
 
 	public void test_SourceNode_MinimalWorkflow_ImplicitSourceNode() throws Exception {
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 		
 			.prefix("/run{RUN}/")
@@ -170,10 +174,13 @@ public class TestSourceNode extends RestFlowTestCase {
 			
 			.node(new ActorNodeBuilder()
 				.inflow("file:src/test/resources/unit/TestSourceNode/test.txt", "value")
-				.actor(new GroovyActorBuilder()
-					.step("println value")))
+				.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public Object value;
+						public void step() {System.out.println(value);}
+					})))
 
-			.build();
+				.build();
 
 		workflow.configure();
 		workflow.initialize();
@@ -253,11 +260,15 @@ public class TestSourceNode extends RestFlowTestCase {
 					.outflow("m", "/message")
 				)
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("PrintGreeting")
 					.inflow("/message", "value")
-					.step("println value")
-				)						
+					.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public Object value;
+						public void step() {System.out.println(value);}
+					}))
+				)
 			)
 
 		.build();
@@ -387,10 +398,14 @@ public class TestSourceNode extends RestFlowTestCase {
 					.outflow("m", "/message")
 				)
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("PrintGreeting")
 					.inflow("/message", "value")
-					.step("println value")
+					.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public Object value;
+						public void step() {System.out.println(value);}
+					}))
 				)
 			)
 
@@ -472,10 +487,13 @@ public class TestSourceNode extends RestFlowTestCase {
 			.name("EmphasizeGreeting")
 			.context(_context)
 	
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("PrintGreeting")
 				.sequence("e", new Integer[] {0, 1, 2, 3, 4, 5} )
-				.step("v = e;")
+				.bean(new Object() {
+					public int e, v;
+					public void step() { v = e; }
+				})
 				.outflow("v", "/count")
 			)
 	
@@ -521,10 +539,14 @@ public class TestSourceNode extends RestFlowTestCase {
 						})
 					.outflow("m", "/message"))
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("PrintGreeting")
 					.inflow("/message", "value")
-					.step("println value")
+					.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public Object value;
+						public void step() {System.out.println(value);}
+					}))
 				)									
 			)
 			

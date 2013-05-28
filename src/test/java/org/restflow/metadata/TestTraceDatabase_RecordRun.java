@@ -8,7 +8,6 @@ import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
 import org.restflow.data.InflowProperty;
 import org.restflow.metadata.Trace;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
@@ -252,10 +251,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				.outflow("z", "/product")
 				.stepsOnce())
 				
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("printer")
 				.inflow("/product", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public Object value;
+					public void step() {System.out.println(value);}
+				}))
 				
 			.outflow("/product", "c")
 			
@@ -482,10 +484,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				.outflow("z", "/product")
 				.stepsOnce())
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("printer")
 				.inflow("/product", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public Object value;
+					public void step() {System.out.println(value);}
+				}))
 				
 			.outflow("/product", "c")
 			
@@ -801,10 +806,13 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				.outflow("z", "/product")
 				.stepsOnce())
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("printer")
 				.inflow("/product", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public Object value;
+					public void step() {System.out.println(value);}
+				}))
 				
 			.outflow("/product", "c")
 			

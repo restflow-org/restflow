@@ -8,7 +8,6 @@ import java.util.Set;
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
 import org.restflow.actors.CloneableBean;
-import org.restflow.actors.GroovyActorBuilder;
 import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
@@ -20,7 +19,6 @@ import org.restflow.directors.Director.DirectorFSM;
 import org.restflow.metadata.MetadataManager;
 import org.restflow.metadata.RunMetadata;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.InPortalBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.OutPortalBuilder;
@@ -44,7 +42,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			.build();
 	}
 	
-	public void test_WorkflowBuilder_HelloWorld_OneNode_Java() throws Exception {
+	public void test_WorkflowBuilder_HelloWorld_OneNode() throws Exception {
 
 		final Workflow workflow = new WorkflowBuilder()
 			.context(_context)			
@@ -67,24 +65,6 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			recorder.getStdoutRecording());
 		assertEquals(0, _store.size());
 	}
-	
-	public void test_WorkflowBuilder_HelloWorld_OneNode_Groovy() throws Exception {
-
-		Workflow workflow = new WorkflowBuilder()
-			.name("Hello")
-			.context(_context)
-			.node(new GroovyNodeBuilder()
-				.step("println 'Hello world!'"))
-			.build();
-		
-		workflow.configure();
-		workflow.initialize();
-		
-		workflow.run();
-
-		assertEquals(0, _store.size());
-	}
-
 	
 	public void test_WorkflowBuilder_HelloWorld_TwoNodes() throws Exception {
 
@@ -135,9 +115,12 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			
 			.director(new PublishSubscribeDirector())
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.constant("a", 2)
-				.step("b=a; println b")
+				.bean(new Object() {
+					public int a, b;
+					public void step() { b=a; System.out.println(b); }
+					})
 				.outflow("b", "/original"))
 
 			.node(new JavaNodeBuilder()
@@ -147,9 +130,12 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 				.outflow("y", "/doubled")
 				.maxConcurrency(2))
 				
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("/doubled", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public int value;
+					public void step() { System.out.println(value); }
+					}))
 			
 			.build();
 		
@@ -167,7 +153,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 		workflow.dispose();
 	}
 	
-	public void test_WorkflowWithConcurrentActor_JavaActor() throws Exception {
+	public void test_WorkflowWithConcurrentActor() throws Exception {
 		
 		Workflow workflow = new WorkflowBuilder()
 		
@@ -175,7 +161,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			.context(_context)
 			.director(new MTDataDrivenDirector())
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("source")
 				.sequence("c", new Object [] {
 						2, 
@@ -184,7 +170,10 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 						8, 
 						10, 
 						12})
-				.step("o=c")
+				.bean(new Object() {
+					public int o, c;
+					public void step() { o = c; }
+					})
 				.outflow("o", "/original"))
 				
 			.node(new JavaNodeBuilder()
@@ -201,10 +190,13 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 				.maxConcurrency(6)
 				.ordered(false))
 				
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("printer")
 				.inflow("/tripled", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public int value;
+					public void step() { System.out.println(value); }
+					}))
 		
 			.build();
 		
@@ -241,77 +233,9 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 		assertEquals(0, triples.size());
 	}
 
-	public void test_WorkflowWithConcurrentActor_GroovyActor() throws Exception {
-		
-		Workflow workflow = new WorkflowBuilder()
-		
-			.name("DoublerWorkflow")
-			.context(_context)
-			.director(new MTDataDrivenDirector())
-			
-			.node(new GroovyNodeBuilder()
-				.name("source")
-				.sequence("c", new Object [] {
-						2,
-						4,
-						6,
-						8,
-						10,
-						12})
-				.step("o=c")
-				.outflow("o", "/original"))
-				
-			.node(new GroovyNodeBuilder()
-				.name("doubler")
-				.inflow("/original", "x")
-				.step(	"println 'Computing 3 * ' + x;		" 	+
-						"y = 3 * x;							")
-				.outflow("y", "/tripled")
-				.maxConcurrency(6)
-				.ordered(false))
-				
-			.node(new GroovyNodeBuilder()
-				.name("printer")
-				.inflow("/tripled", "value")
-				.step("println value"))
-		
-			.build();
-		
-		workflow.configure();
-		workflow.initialize();
-		workflow.run();
-		workflow.wrapup();
-		workflow.dispose();
-		
-		assertEquals(2, _store.take("/original/1"));
-		assertEquals(4, _store.take("/original/2"));
-		assertEquals(6, _store.take("/original/3"));
-		assertEquals(8, _store.take("/original/4"));
-		assertEquals(10, _store.take("/original/5"));
-		assertEquals(12, _store.take("/original/6"));
-		
-		Set<Integer> triples = new HashSet<Integer>();
-		triples.add((Integer)_store.take("/tripled/1"));
-		triples.add((Integer)_store.take("/tripled/2"));
-		triples.add((Integer)_store.take("/tripled/3"));
-		triples.add((Integer)_store.take("/tripled/4"));
-		triples.add((Integer)_store.take("/tripled/5"));
-		triples.add((Integer)_store.take("/tripled/6"));
-		
-		assertEquals(0, _store.size());
+	
 
-		assertTrue(triples.remove(6));
-		assertTrue(triples.remove(12));
-		assertTrue(triples.remove(18));
-		assertTrue(triples.remove(24));
-		assertTrue(triples.remove(30));
-		assertTrue(triples.remove(36));
-		
-		assertEquals(0, triples.size());
-	}
-
-
-	public void test_WorkflowWithNestedConcurrentActor_JavaActor() throws Exception {
+	public void test_WorkflowWithNestedConcurrentActor() throws Exception {
 		
 		Workflow workflow = new WorkflowBuilder()
 			.name("DoublerWorkflow")
@@ -322,11 +246,14 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 				.director(new MTDataDrivenDirector())
 				.prefix("/sub{STEP}")
 
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("trigger")
 					.context(_context)
 					.sequence("constant", new Object [] {"A", "B", "C"})
-					.step("value=constant")
+					.bean(new Object() {
+						public String value, constant;
+						public void step() { value = constant; }
+						})
 					.outflow("value", "/trigger"))
 					
 				.node(new WorkflowNodeBuilder()
@@ -334,7 +261,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 					.director(new MTDataDrivenDirector())
 					.inflow("/trigger", "/discard")
 
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.name("source")
 						.sequence("c", new Object [] {
 								2, 
@@ -343,7 +270,10 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 								8, 
 								10, 
 								12})
-						.step("o=c")
+						.bean(new Object() {
+							public int o, c;
+							public void step() { o = c; }
+							})
 						.outflow("o", "/original"))
 				
 					.node(new JavaNodeBuilder()
@@ -357,10 +287,13 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 						.ordered(false)
 						.outflow("y", "/tripled"))
 	
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.name("printer")
 						.inflow("/tripled", "value")
-						.step("println value"))
+						.bean(new Object() {
+							public int value;
+							public void step() { System.out.println(value); }
+							}))
 					)
 				)
 					
@@ -446,141 +379,7 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 		
 		assertEquals(0, triples.size());
 	}
-	
 
-	public void test_WorkflowWithNestedConcurrentActor_GroovyActor() throws Exception {
-		
-		Workflow workflow = new WorkflowBuilder()
-			.name("DoublerWorkflow")
-			.context(_context)
-			.director(new MTDataDrivenDirector())
-			
-			.node(new WorkflowNodeBuilder()
-				.director(new MTDataDrivenDirector())
-				.prefix("/sub{STEP}")
-
-				.node(new GroovyNodeBuilder()
-					.name("trigger")
-					.context(_context)
-					.sequence("constant", new Object [] {"A", "B", "C"})
-					.step("value=constant")
-					.outflow("value", "/trigger"))
-					
-				.node(new WorkflowNodeBuilder()
-					.prefix("/subsub{STEP}")
-					.director(new MTDataDrivenDirector())
-					.inflow("/trigger", "/discard")
-
-					.node(new GroovyNodeBuilder()
-						.name("source")
-						.sequence("c", new Object [] {
-								2, 
-								4, 
-								6, 
-								8, 
-								10, 
-								12})
-						.step("o=c")
-						.outflow("o", "/original"))
-				
-					.node(new GroovyNodeBuilder()
-						.name("doubler")
-						.inflow("/original", "x")
-						.step("y = 3 * x")
-						.outflow("y", "/yy")
-						.maxConcurrency(3)
-						.ordered(false)
-						.outflow("y", "/tripled"))
-	
-					.node(new GroovyNodeBuilder()
-						.name("printer")
-						.inflow("/tripled", "value")
-						.step("println value"))
-					)
-				)
-					
-			.build();
-		
-		workflow.configure();
-		workflow.initialize();
-		workflow.run();
-		workflow.wrapup();
-		workflow.dispose();
-
-		assertEquals("A", 	_store.take("/sub1/trigger/1"));
-		assertEquals("B", 	_store.take("/sub1/trigger/2"));
-		assertEquals("C", 	_store.take("/sub1/trigger/3"));
-
-		assertEquals("A", 	_store.take("/sub1/subsub1/discard"));
-		assertEquals("B", 	_store.take("/sub1/subsub2/discard"));
-		assertEquals("C", 	_store.take("/sub1/subsub3/discard"));
-
-		assertEquals(2, _store.take("/sub1/subsub1/original/1"));
-		assertEquals(4, _store.take("/sub1/subsub1/original/2"));
-		assertEquals(6, _store.take("/sub1/subsub1/original/3"));
-		assertEquals(8, _store.take("/sub1/subsub1/original/4"));
-		assertEquals(10, _store.take("/sub1/subsub1/original/5"));
-		assertEquals(12, _store.take("/sub1/subsub1/original/6"));
-
-		assertEquals(2, _store.take("/sub1/subsub2/original/1"));
-		assertEquals(4, _store.take("/sub1/subsub2/original/2"));
-		assertEquals(6, _store.take("/sub1/subsub2/original/3"));
-		assertEquals(8, _store.take("/sub1/subsub2/original/4"));
-		assertEquals(10, _store.take("/sub1/subsub2/original/5"));
-		assertEquals(12, _store.take("/sub1/subsub2/original/6"));
-
-		assertEquals(2, _store.take("/sub1/subsub3/original/1"));
-		assertEquals(4, _store.take("/sub1/subsub3/original/2"));
-		assertEquals(6, _store.take("/sub1/subsub3/original/3"));
-		assertEquals(8, _store.take("/sub1/subsub3/original/4"));
-		assertEquals(10, _store.take("/sub1/subsub3/original/5"));
-		assertEquals(12, _store.take("/sub1/subsub3/original/6"));
-		
-		Set<Integer> triples = new HashSet<Integer>();
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/1"));
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/2"));
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/3"));
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/4"));
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/5"));
-		triples.add((Integer)_store.take("/sub1/subsub1/tripled/6"));
-		
-		assertTrue(triples.remove(6));
-		assertTrue(triples.remove(12));
-		assertTrue(triples.remove(18));
-		assertTrue(triples.remove(24));
-		assertTrue(triples.remove(30));
-		assertTrue(triples.remove(36));
-
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/1"));
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/2"));
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/3"));
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/4"));
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/5"));
-		triples.add((Integer)_store.take("/sub1/subsub2/tripled/6"));
-		
-		assertTrue(triples.remove(6));
-		assertTrue(triples.remove(12));
-		assertTrue(triples.remove(18));
-		assertTrue(triples.remove(24));
-		assertTrue(triples.remove(30));
-		assertTrue(triples.remove(36));
-
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/1"));
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/2"));
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/3"));
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/4"));
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/5"));
-		triples.add((Integer)_store.take("/sub1/subsub3/tripled/6"));
-		
-		assertTrue(triples.remove(6));
-		assertTrue(triples.remove(12));
-		assertTrue(triples.remove(18));
-		assertTrue(triples.remove(24));
-		assertTrue(triples.remove(30));
-		assertTrue(triples.remove(36));
-		
-		assertEquals(0, triples.size());
-	}
 	
 	public void test_WorkflowWithInputAndOutput() throws Exception {
 		
@@ -592,12 +391,15 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			
 			.inflow("a", "/original")
 
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("doubler")
 				.inflow("/original", "x")
-				.step("y = 3 * x;")
+				.bean(new Object() {
+						public int x, y;
+						public void step() { y = 3 * x; }
+					})				
 				.outflow("y", "/tripled"))
-					
+			
 			.outflow("/tripled", "b")
 			
 			.build();
@@ -634,9 +436,12 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 					})
 				.outflow("z", "/product"))
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("/product", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public int value;
+					public void step() { System.out.println(value); }
+					}))
 				
 			.outflow("/product", "c")
 			
@@ -664,10 +469,13 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			
 			.inflow("u", "/inputNumber")
 		
-			.node(new GroovyNodeBuilder() 
+			.node(new JavaNodeBuilder() 
 				.inflow("/inputNumber", "m")
 				.stepsOnce()
-				.step("n = m + 1")
+				.bean(new CloneableBean() {
+						public int m, n;
+						public void step() { n = m + 1; }
+					})
 				.outflow("n", "/incrementedInputNumber"))
 			
 			.node(new WorkflowNodeBuilder()
@@ -688,9 +496,12 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 						})
 					.outflow("z", "/product"))
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.inflow("/product", "value")
-					.step("println value"))
+					.bean(new Object() {
+						public int value;
+						public void step() { System.out.println(value); }
+						}))
 					
 				.outflow("/product", "/outputNumber")
 				)
@@ -749,10 +560,13 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			.context(_context)
 			.inflow("u", "/inputNumber")
 		
-			.node(new GroovyNodeBuilder() 
+			.node(new JavaNodeBuilder() 
 				.inflow("/inputNumber", "m")
 				.stepsOnce()
-				.step("n = m + 1")
+				.bean(new CloneableBean() {
+						public int m, n;
+						public void step() { n = m + 1; }
+					})
 				.outflow("n", "/incrementedInputNumber"))
 			
 			.node(new WorkflowNodeBuilder()
@@ -773,10 +587,13 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 						})
 					.outflow("z", "/product"))
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.inflow("/product", "value")
 					.stepsOnce()
-					.step("println value"))
+					.bean(new Object() {
+						public int value;
+						public void step() { System.out.println(value); }
+						}))
 					
 				.outflow("/product", "/outputNumber"))
 				
@@ -806,5 +623,12 @@ public class TestWorkflowBuilder extends RestFlowTestCase {
 			assertEquals(v,   _store.take("/outputNumber"));
 			assertEquals(0,   _store.size());
 		}
+	}
+	
+	public static class DoublerBeanWithoutAccessors extends CloneableBean {
+		private int _x, _y;
+		public void setX(int x) {_x = x;}
+		public void step() {_y = 2 * _x;}
+		public int getY() {return _y;}
 	}
 }

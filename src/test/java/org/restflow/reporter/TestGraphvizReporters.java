@@ -9,7 +9,6 @@ import org.restflow.data.InflowProperty;
 import org.restflow.directors.DataDrivenDirector;
 import org.restflow.directors.Director;
 import org.restflow.directors.PublishSubscribeDirector;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.reporter.GraphvizReporter;
@@ -35,10 +34,13 @@ public class TestGraphvizReporters extends RestFlowTestCase {
 			
 			.inflow("v", "/multiplier")
 	
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("GenerateScaleFactors")
 				.sequence("constant", new Object [] {2, 5, 30})
-				.step("value=constant")
+				.bean(new Object() {
+					public int value, constant;
+					public void step() { value = constant; }
+				})
 				.outflow("value", "/scaleFactor"))					
 					
 			.node(new JavaNodeBuilder()
@@ -115,11 +117,14 @@ public class TestGraphvizReporters extends RestFlowTestCase {
 		
 		.inflow("u", "/inputNumber")
 	
-		.node(new GroovyNodeBuilder() 
+		.node(new JavaNodeBuilder() 
 			.name("incrementer")
 			.inflow("/inputNumber", "m")
 			.stepsOnce()
-			.step("n = m + 1")
+			.bean(new Object() {
+				public int m, n;
+				public void step() { n = m + 1; }
+			})
 			.outflow("n", "/incrementedInputNumber"))
 		
 		.node(new WorkflowNodeBuilder()
@@ -140,9 +145,12 @@ public class TestGraphvizReporters extends RestFlowTestCase {
 					})
 				.outflow("z", "/product"))
 			
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("/product", "value")
-				.step("println value"))
+				.bean(new Object() {
+					public int value;
+					public void step() { System.out.println(value); }
+				}))
 				
 			.outflow("/product", "product", "/outputNumber")
 			)

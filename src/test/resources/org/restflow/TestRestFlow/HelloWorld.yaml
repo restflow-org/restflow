@@ -1,6 +1,6 @@
 imports:
 
-- classpath:/common/groovy/actors.yaml
+- classpath:/common/java/actors.yaml
 - classpath:/common/directors.yaml
 
 components:

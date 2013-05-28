@@ -9,7 +9,6 @@ import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
 import org.restflow.data.FileProtocol;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
@@ -43,10 +42,14 @@ public class TestFileProtocol extends RestFlowTestCase {
 			.build();
 		
 		/// build the workflow
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
-				.step("message = 'Hello';")
+			.node(new JavaNodeBuilder()
+				.bean(new Object() {
+					public String message;
+					public void step() {message="Hello";}
+				})
 				.outflow("message", "file:/greeting.txt"))
 			.build();
 		workflow.configure();
@@ -95,10 +98,18 @@ public class TestFileProtocol extends RestFlowTestCase {
 			.build();
 		
 		/// build the workflow
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
-				.step("message = 'Hello'; messageLength = message.size()")
+			.node(new JavaNodeBuilder()
+				.bean(new Object() {
+					public String message;
+					public int messageLength;
+					public void step() {
+						message = "Hello";
+						messageLength = message.length();
+					}
+				})
 				.outflow("message", "file:/greeting.txt")
 				.outflow("messageLength", "file:/length.txt"))
 			.build();
@@ -154,17 +165,24 @@ public class TestFileProtocol extends RestFlowTestCase {
 			.build();
 		
 		/// build the workflow
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 
 			.context(context)
 			
-			.node(new GroovyNodeBuilder()
-				.step("greetingOne = 'Hello'; greetingTwo = 'Hey'")
+			.node(new JavaNodeBuilder()
+				.bean(new Object() {
+					public String greetingOne, greetingTwo;
+					public void step() {
+						greetingOne = "Hello";
+						greetingTwo = "Hey";
+					}
+				})
 				.outflow("greetingOne", "file:/greetingOne.txt")
 				.outflow("greetingTwo", "file:/greetingTwo.txt"))
 				
-			.node(new GroovyNodeBuilder()
-				.step("")
+			.node(new JavaNodeBuilder()
+				.bean(new Object() {})
 				.inflow("file:/greetingOne.txt", "messageOne")
 				.inflow("file:/greetingTwo.txt", "messageTwo"))
 				
@@ -228,10 +246,13 @@ public class TestFileProtocol extends RestFlowTestCase {
 			
 			.inflow("u", "/inputNumber")
 		
-			.node(new GroovyNodeBuilder() 
+			.node(new JavaNodeBuilder() 
 				.inflow("/inputNumber", "m")
 				.stepsOnce()
-				.step("n = m + 1")
+				.bean(new Object() {
+					public int m, n;
+					public void step() { n = m + 1;}
+				})
 				.outflow("n", "/incrementedInputNumber"))
 			
 			.node(new WorkflowNodeBuilder()
@@ -252,9 +273,12 @@ public class TestFileProtocol extends RestFlowTestCase {
 						})
 					.outflow("z", "/product"))
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.inflow("/product", "value")
-					.step("println value"))
+					.bean(new Object() {
+						public int value;
+						public void step() {System.out.println(value);}
+					}))
 					
 				.outflow("/product", "file:/outputNumber")
 				)

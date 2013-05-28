@@ -2,7 +2,7 @@ package org.restflow.nodes;
 
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
-import org.restflow.actors.GroovyActorBuilder;
+import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
 import org.restflow.actors.Actor.ActorFSM;
@@ -31,6 +31,7 @@ public class TestInPortalBuilder extends RestFlowTestCase {
 
 	public void test_WorkflowWithInPortalAndOutPortal() throws Exception {
 		
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 		
 			.name("DoublerWorkflow")
@@ -48,8 +49,11 @@ public class TestInPortalBuilder extends RestFlowTestCase {
 			.node(new ActorNodeBuilder()
 				.name("doubler")
 				.inflow("/original", "x")
-				.actor(new GroovyActorBuilder()
-					.step("y = 3 * x;"))
+				.actor(new JavaActorBuilder()
+					.bean(new Object() {
+						public int x, y;
+						public void step() { y = 3 * x; }
+					}))
 				.outflow("y", "/doubled")
 			)
 			

@@ -1,11 +1,15 @@
 imports:
 
-- classpath:/common/types.yaml
+- classpath:/common/java/actors.yaml
 
 components:
 
-- id: HelloWorld
-  type: GroovyActor
+- id: HelloWorldActor
+  type: JavaActor
   properties:
-    step: |
-      print "Hello World!"
+    wrappedBean: !bean {className: org.restflow.beans.PrintStreamMessageWriter}
+    stepMethod: renderMessage
+    inputs:
+      message:
+        type: String
+        default: "Hello World!"

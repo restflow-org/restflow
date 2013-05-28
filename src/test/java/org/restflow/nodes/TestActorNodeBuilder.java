@@ -6,7 +6,6 @@ import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
 import org.restflow.actors.Actor;
 import org.restflow.actors.CloneableBean;
-import org.restflow.actors.GroovyActorBuilder;
 import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
@@ -98,12 +97,16 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 	
 	public void test_GroovyActor_OneInflowOneOutflow() throws Exception {
 		
+		@SuppressWarnings("unused")
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
 			.context(_context)
 			.inflow("x")
-			.actor(new GroovyActorBuilder()
+			.actor(new JavaActorBuilder()
 				.context(_context)
-				.step("y = 2 * x"))
+				.bean(new Object() {
+					public int x, y;
+					public void step() { y = 2 * x; }
+				}))
 			.outflow("y")
 			.build();
 		
@@ -126,9 +129,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 
 	public void test_GroovyActor_OneInflowOneOutflow_StandaloneActor() throws Exception {
 		
-		Actor actor = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor = new JavaActorBuilder()
 			.context(_context)
-			.step("y = 2 * x")
+			.bean(new Object() {
+				public int x, y;
+				public void step() { y = 2 * x; }
+			})
 			.build();
 		
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
@@ -157,13 +164,17 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 	
 	public void test_TwoInflowsOneOutflow() throws Exception {
 		
+		@SuppressWarnings("unused")
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
 			.context(_context)
 			.inflow("a")
 			.inflow("b")
-			.actor(new GroovyActorBuilder()
+			.actor(new JavaActorBuilder()
 				.context(_context)
-				.step("c = a * b"))
+				.bean(new Object() {
+					public int a, b, c;
+					public void step() { c = a * b; }
+				}))
 			.outflow("c")
 			.build();
 		
@@ -188,9 +199,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 
 	public void test_TwoInflowsOneOutflow_StandaloneActor() throws Exception {
 		
-		Actor actor = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor = new JavaActorBuilder()
 			.context(_context)
-			.step("c = a * b")
+			.bean(new Object() {
+				public int a, b, c;
+				public void step() { c = a * b; }
+			})
 			.build();
 		
 		ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()
@@ -222,13 +237,17 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 	
 	public void test_NodeWithStdoutAndInitializeAndWrapup() throws Exception {
 		
+		@SuppressWarnings("unused")
 		final ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()		
 			.context(_context)
-			.actor(new GroovyActorBuilder()
+			.actor(new JavaActorBuilder()
 					.state("total")
-					.initialize("total = 0; println total;")
-					.step("total += x; y = total; println y;")
-					.wrapup("println total;"))
+					.bean(new Object() {
+						public int x, y, total;
+						public void initialize() {total = 0; System.out.println(total);}
+						public void step() {total += x; y = total; System.out.println(y);}
+						public void wrapup() {System.out.println(total);}
+					}))
 			.inflow("x")
 			.outflow("y")
 			.build();
@@ -266,12 +285,16 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 
 	public void test_NodeWithStdoutAndInitializeAndWrapup_StandaloneActor() throws Exception {
 		
-		Actor actor = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor = new JavaActorBuilder()
 			.context(_context)
 			.state("total")
-			.initialize("total = 0; println total;")
-			.step("total += x; y = total; println y;")
-			.wrapup("println total;")
+			.bean(new Object() {
+				public int x, y, total;
+				public void initialize() {total = 0; System.out.println(total);}
+				public void step() {total += x; y = total; System.out.println(y);}
+				public void wrapup() {System.out.println(total);}
+			})
 			.build();
 		
 		final ActorWorkflowNode node = (ActorWorkflowNode) new ActorNodeBuilder()		
@@ -315,6 +338,7 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 	
 	public void test_WorkflowBuilder_NoNames() throws Exception {
 
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 
 			.context(_context)
@@ -322,9 +346,12 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 
 			.node(new ActorNodeBuilder()
 				.constant("input", 2)
-				.actor(new GroovyActorBuilder()
+				.actor(new JavaActorBuilder()
 					.context(_context)
-					.step("output=input; println output"))
+					.bean(new Object() {
+						public int input, output;
+						public void step() {output = input; System.out.println(output);}
+					}))
 				.outflow("output", "/original")
 			)
 				
@@ -339,11 +366,14 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 				
 			.node(new ActorNodeBuilder()
 				.inflow("/doubled", "value")
-				.actor(new GroovyActorBuilder()
+				.actor(new JavaActorBuilder()
 				.context(_context)
 					.context(_context)
-					.step("println value"))
-			)
+					.bean(new Object() {
+						public int value;
+						public void step() { System.out.println(value); }
+					}
+			)))
 			
 			.build();
 		
@@ -360,9 +390,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 	
 	public void test_WorkflowBuilder_NoNames_StandaloneActors() throws Exception {
 
-		Actor actor1 = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor1 = new JavaActorBuilder()
 			.context(_context)
-			.step("output=input; println output")
+			.bean(new Object() {
+				public Object input, output;
+				public void step() {output = input; System.out.println(output);}
+			})
 			.build();
 		
 		Actor actor2 = new JavaActorBuilder()
@@ -370,9 +404,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 			.bean(new DoublerBeanWithoutAccessors())
 			.build();
 		
-		Actor actor3 = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor3 = new JavaActorBuilder()
 			.context(_context)
-			.step("println value")
+			.bean(new Object() {
+				public Object value;
+				public void step() { System.out.println(value);}
+			})
 			.build();
 			
 		Workflow workflow = new WorkflowBuilder()
@@ -414,9 +452,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 
 	public void test_WorkflowBuilder_NoNames_StandaloneActorsAndNodes() throws Exception {
 
-		Actor actor1 = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor1 = new JavaActorBuilder()
 			.context(_context)
-			.step("output=input; println output")
+			.bean(new Object() {
+				public Object input, output;
+				public void step() {output = input; System.out.println(output);}
+			})
 			.build();
 		
 		Actor actor2 = new JavaActorBuilder()
@@ -424,9 +466,13 @@ public class TestActorNodeBuilder extends RestFlowTestCase {
 			.bean(new DoublerBeanWithoutAccessors())
 			.build();
 		
-		Actor actor3 = new GroovyActorBuilder()
+		@SuppressWarnings("unused")
+		Actor actor3 = new JavaActorBuilder()
 			.context(_context)
-			.step("println value")
+			.bean(new Object() {
+				public Object value;
+				public void step() { System.out.println(value);}
+			})
 			.build();
 		
 		WorkflowNode node1 = new ActorNodeBuilder()

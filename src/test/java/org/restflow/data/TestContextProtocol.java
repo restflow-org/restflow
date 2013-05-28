@@ -1,5 +1,7 @@
 package org.restflow.data;
 
+import java.util.Map;
+
 import org.restflow.RestFlow;
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
@@ -9,7 +11,7 @@ import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
 import org.restflow.data.ContextProtocol;
 import org.restflow.data.InflowProperty;
-import org.restflow.nodes.GroovyNodeBuilder;
+import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
 import org.restflow.util.StdoutRecorder;
@@ -28,7 +30,7 @@ public class TestContextProtocol extends RestFlowTestCase {
 		ContextProtocol p = new ContextProtocol();
 		assertTrue(p.isExternallyResolvable());
 	}
-
+	
 	public void testImportMappings_SingleNodeYamlWorkflow() throws Exception {
 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
@@ -42,7 +44,7 @@ public class TestContextProtocol extends RestFlowTestCase {
 		});
 		
 		assertTrue("import map should be in stdout",
-				recorder.getStdoutRecording().contains("strategy:classpath:/strategy/"));
+				recorder.getStdoutRecording().contains("strategy=classpath:/strategy/"));
 	}
 		
 	public void testImportMappings_SingleNodeWorkflow() throws Exception {
@@ -54,12 +56,18 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.importMapping("myActors", "~/myactors/")
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/import-map", "importMap")
-				.step(	"println importMap.get('strategy');		" +
-						"println importMap.get('myActors');  	"))
+				.bean(new Object() {
+					public Map<String,String> importMap;
+					public void step() {
+						System.out.println(importMap.get("strategy"));
+						System.out.println(importMap.get("myActors"));
+					}
+				}))
 			.build();
 
 		workflow.configure();
@@ -84,11 +92,17 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.property("mycontextproperty", "valueofcontextproperty")
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/mycontextproperty", "propertyvalue")
-				.step("println propertyvalue;"))
+				.bean(new Object() {
+					public String propertyvalue;
+					public void step() {	
+						System.out.println(propertyvalue);
+					}
+				}))
 			.build();
 
 		workflow.configure();
@@ -111,11 +125,17 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.scheme("context", new ContextProtocol())
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/mysystemproperty", "propertyvalue")
-				.step("println propertyvalue;"))
+				.bean(new Object() {
+					public String propertyvalue;
+					public void step() {
+						System.out.println(propertyvalue);
+					}
+				}))
 			.build();
 
 		workflow.configure();
@@ -139,11 +159,17 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.scheme("context", new ContextProtocol())
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/" + key, "propertyvalue")
-				.step("println propertyvalue;"))
+				.bean(new Object() {
+					public String propertyvalue;
+					public void step() {
+						System.out.println(propertyvalue);
+					}
+				}))
 			.build();
 
 		workflow.configure();
@@ -165,11 +191,17 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.scheme("context", new ContextProtocol())
 			.build();
 
+		@SuppressWarnings("unused")
 		SubworkflowBuilder workflowBuilder = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/mycontextproperty", "propertyvalue")
-				.step("println propertyvalue;"));
+				.bean(new Object() {
+					public String propertyvalue;
+					public void step() {
+						System.out.println(propertyvalue);
+					}
+				}));
 		
 		Exception exception = null;
 		
@@ -193,11 +225,17 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.scheme("context", new ContextProtocol())
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/mysystemproperty", "propertyvalue")
-				.step("println propertyvalue;"))
+				.bean(new Object() {
+					public String propertyvalue;
+					public void step() {
+						System.out.println(propertyvalue);
+					}
+				}))
 				.build();
 
 		workflow.configure();
@@ -231,15 +269,23 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.property("mycontextproperty", "valueofcontextproperty")
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder() 
 			.context(context)
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.inflow("context:/property/mycontextproperty", "contextpropertyvalue")
 				.inflow("context:/property/mysystemproperty", "systempropertyvalue")
 				.inflow("context:/property/" + key, "envpropertyvalue")
-				.step("		println envpropertyvalue;		" +
-					  "		println systempropertyvalue;	" +
-					  "		println contextpropertyvalue;	" ))
+				.bean(new Object() {
+					public String envpropertyvalue;
+					public String systempropertyvalue;
+					public String contextpropertyvalue;
+					public void step() {
+						System.out.println(envpropertyvalue);
+						System.out.println(systempropertyvalue);
+						System.out.println(contextpropertyvalue);
+					}
+				}))
 			.build();
 
 		workflow.configure();
@@ -269,6 +315,7 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.property("mycontextproperty", "valueofcontextproperty")
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			
 			.context(context)
@@ -276,23 +323,37 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.node(new WorkflowNodeBuilder()
 				.prefix("/sub{STEP}")
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("trigger")
 					.sequence("constant", new Object [] {"A", "B", "C"})
-					.step("value=constant")
+					.bean(new Object() {
+						public String constant, value;
+						public void step() {
+							value = constant;
+						}
+					})
 					.outflow("value", "/trigger"))
 					
 				.node(new WorkflowNodeBuilder()
 					.prefix("/subsub{STEP}")
 					.inflow("/trigger", "/discard")
 	
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.inflow("context:/property/mycontextproperty", "contextpropertyvalue")
 						.inflow("context:/property/mysystemproperty", "systempropertyvalue")
 						.inflow("context:/property/" + keyFromEnvironment, "envpropertyvalue")
-						.step("		println envpropertyvalue;		" +
-							  "		println systempropertyvalue;	" +
-							  "		println contextpropertyvalue;	" ))))
+						.bean(new Object() {
+							public String envpropertyvalue;
+							public String systempropertyvalue;
+							public String contextpropertyvalue;
+							public void step() {
+								System.out.println(envpropertyvalue);
+								System.out.println(systempropertyvalue);
+								System.out.println(contextpropertyvalue);
+							}
+						}))
+					)
+				)
 			.build();
 
 		workflow.configure();
@@ -349,6 +410,7 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.property("mycontextproperty", "valueofcontextproperty")
 			.build();
 
+		@SuppressWarnings("unused")
 		final Workflow workflow = new WorkflowBuilder()
 			
 			.context(context)
@@ -356,22 +418,30 @@ public class TestContextProtocol extends RestFlowTestCase {
 			.node(new WorkflowNodeBuilder()
 				.prefix("/sub{STEP}")
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("trigger")
 					.sequence("constant", new Object [] {"A", "B", "C"})
-					.step("value=constant")
+					.bean(new Object() {
+						public String constant, value;
+						public void step() {
+							value = constant;
+						}})
 					.outflow("value", "/trigger"))
 					
 				.node(new WorkflowNodeBuilder()
 					.prefix("/subsub{STEP}")
 					.inflow("/trigger", "/discard")
 	
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.sequence("constant", new Object [] {"sampleOne", "sampleTwo", "sampleThree"})
-						.step("value=constant")
+						.bean(new Object() {
+							public String constant, value;
+							public void step() {
+								value = constant;
+							}})
 						.outflow("value", "/sampleName"))
 
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.inflow("context:/property/mycontextproperty", 
 								"contextpropertyvalue", 
 								InflowProperty.ReceiveOnce)
@@ -383,10 +453,18 @@ public class TestContextProtocol extends RestFlowTestCase {
 								InflowProperty.ReceiveOnce)
 						.inflow("/sampleName", 
 								"sample")
-						.step("		println sample;					" +
-							  "		println envpropertyvalue;		" +
-							  "		println systempropertyvalue;	" +
-							  "		println contextpropertyvalue;	" ))))
+						.bean(new Object() {
+							public String sample;
+							public String envpropertyvalue;
+							public String systempropertyvalue;
+							public String contextpropertyvalue;
+							public void step() {
+								System.out.println(sample);
+								System.out.println(envpropertyvalue);
+								System.out.println(systempropertyvalue);
+								System.out.println(contextpropertyvalue);
+							}
+						}))))
 			.build();
 
 		workflow.configure();

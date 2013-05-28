@@ -3,7 +3,6 @@ package org.restflow.actors;
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
 import org.restflow.actors.CloneableBean;
-import org.restflow.actors.GroovyActorBuilder;
 import org.restflow.actors.JavaActorBuilder;
 import org.restflow.actors.SubworkflowBuilder;
 import org.restflow.actors.Workflow;
@@ -14,7 +13,6 @@ import org.restflow.directors.MTDataDrivenDirector;
 import org.restflow.directors.PublishSubscribeDirector;
 import org.restflow.directors.Director.DirectorFSM;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.InPortalBuilder;
 import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.OutPortalBuilder;
@@ -46,9 +44,12 @@ public class TestSubworkflowBuilder extends RestFlowTestCase {
 		
 			.inflow("u", "/inputNumber")
 
-			.node (new GroovyNodeBuilder() 
+			.node (new JavaNodeBuilder() 
 				.inflow("/inputNumber", "m")
-				.step("n = m + 1")
+				.bean(new CloneableBean() {
+						public int m, n;
+						public void step() { n = m + 1; }
+					})
 				.outflow("n", "/incrementedInputNumber"))
 			
 			.node(new ActorNodeBuilder()
@@ -76,9 +77,12 @@ public class TestSubworkflowBuilder extends RestFlowTestCase {
 							})
 						.outflow("z", "/product"))
 					
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.inflow("/product", "value")
-						.step("println value"))
+						.bean(new Object() {
+							public int value;
+							public void step() { System.out.println(value); }
+							}))
 						
 					.outflow("/product", "c")
 					

@@ -2,6 +2,7 @@
 imports:
 
   - classpath:/common/java/actors.yaml
+  - classpath:/org/restflow/java/testActors.yaml
   - classpath:/common/directors.yaml
   - classpath:/workflows/NestedWorkflow/NestedWorkflow.yaml
 
@@ -45,12 +46,10 @@ components:
       invalue: /invalue
 
 - id: ND
-  type: GroovyActorNode
+  type: Node
   properties:
     stepsOnce: true
-    actor.step: |
-      output = input;
-      println output;
+    actor: !ref PrintAndForwarder
     inflows: 
       input: /invalue
     outflows:

@@ -14,10 +14,16 @@ public class TestTraceQueryMethods_FileSystemMetadata  extends WorkflowTestCase 
 	public TestTraceQueryMethods_FileSystemMetadata() {
 		super("workflows");
 	}
+	
+	public void setUp() throws Exception {
+		super.setUp();
+		org.restflow.RestFlow.enableLog4J();
+		_importSchemeToResourceMap.put("actors", "classpath:/common/java/");
+		_importSchemeToResourceMap.put("testActors", "classpath:/org/restflow/java/");
+	}
 
 	public void test_HelloWorld_BeanActor_PublishSubscribeDirector() throws Exception {
 		
-		configureForBeanActor();
 		_useWorkingDirectory();
 		
 		_loadAndRunWorkflow("HelloWorld", _publishSubscribeDirector());

@@ -11,7 +11,7 @@ import org.restflow.directors.Director;
 import org.restflow.directors.MTDataDrivenDirector;
 import org.restflow.directors.PublishSubscribeDirector;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
+import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
 import org.restflow.util.StdoutRecorder;
@@ -41,6 +41,7 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void _setUp() throws Exception {
 
 		_store = new ConsumableObjectStore();
@@ -51,32 +52,48 @@ public class TestStepsOnceSupport extends RestFlowTestCase {
 
 		_demandDrivenDirector.setFiringCount(3);
 		
-		_triggerNodeBuilder = new GroovyNodeBuilder()
+		_triggerNodeBuilder = new JavaNodeBuilder()
 			.name("trigger")
 			.context(_context)
 			.sequence("constant", new Object [] {"A", "B", "C"})
-			.step("value=constant")
+			.bean(new Object() {
+				public Object value, constant;
+				public void step() { value = constant; }
+			})
+//			.step("value=constant")
 			.outflow("value", "/trigger");
 
-		_valueProducerNodeBuilder = new GroovyNodeBuilder()
+		_valueProducerNodeBuilder = new JavaNodeBuilder()
 			.name("valueProducer")
 			.context(_context)
 			.sequence("constant", new Object [] {2, 4, 6})
-			.step("value=constant")
+			.bean(new Object() {
+				public Object value, constant;
+				public void step() { value = constant; }
+			})
+//			.step("value=constant")
 			.outflow("value", "/value");
 
-		_valueCopierNodeBuilder = new GroovyNodeBuilder()
+		_valueCopierNodeBuilder = new JavaNodeBuilder()
 			.name("valueCopier")
 			.context(_context)
 			.inflow("/value", "original")
-			.step("copy=original")
+			.bean(new Object() {
+				public Object copy, original;
+				public void step() { copy = original; }
+			})
+//			.step("copy=original")
 			.outflow("copy", "/copy");
 
-		_valuePrinterNodeBuilder = new GroovyNodeBuilder()
+		_valuePrinterNodeBuilder = new JavaNodeBuilder()
 			.name("valuePrinter")
 			.context(_context)
 			.inflow("/copy", "value")
-			.step("println value");
+			.bean(new Object() {
+				public Object value;
+				public void step() { System.out.println(value); }
+			});
+//			.step("println value");
 	}
 	
 	public void test_DataSequencePrinter() throws Exception {

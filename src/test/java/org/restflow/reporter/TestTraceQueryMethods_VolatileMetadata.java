@@ -8,7 +8,7 @@ import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
 import org.restflow.directors.MTDataDrivenDirector;
 import org.restflow.metadata.Trace;
-import org.restflow.nodes.GroovyNodeBuilder;
+import org.restflow.nodes.JavaNodeBuilder;
 import org.restflow.test.WorkflowTestCase;
 
 
@@ -26,7 +26,8 @@ public class TestTraceQueryMethods_VolatileMetadata  extends WorkflowTestCase {
 	}
 
 	public void test_PrologQueries_SimpleWorkflow() throws Exception {
-		
+
+		@SuppressWarnings("unused")
 		Workflow workflow = new WorkflowBuilder()
 		
 			.name("DoublerWorkflow")
@@ -35,10 +36,13 @@ public class TestTraceQueryMethods_VolatileMetadata  extends WorkflowTestCase {
 			
 			.inflow("a", "/original")
 
-			.node(new GroovyNodeBuilder()
+			.node(new JavaNodeBuilder()
 				.name("doubler")
 				.inflow("/original", "x")
-				.step("y = 3 * x;")
+				.bean(new Object() {
+					public int x, y;
+					public void step() { y = 3 * x; }
+				})
 				.outflow("y", "/{x}/tripled")
 				.stepsOnce())
 					

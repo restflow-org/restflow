@@ -2,6 +2,7 @@ package org.restflow.nodes;
 
 import org.restflow.WorkflowContext;
 import org.restflow.WorkflowContextBuilder;
+import org.restflow.actors.ActorStatus;
 import org.restflow.actors.Workflow;
 import org.restflow.actors.WorkflowBuilder;
 import org.restflow.data.ConsumableObjectStore;
@@ -10,7 +11,6 @@ import org.restflow.directors.Director;
 import org.restflow.directors.MTDataDrivenDirector;
 import org.restflow.directors.PublishSubscribeDirector;
 import org.restflow.nodes.ActorNodeBuilder;
-import org.restflow.nodes.GroovyNodeBuilder;
 import org.restflow.nodes.MergeNodeBuilder;
 import org.restflow.nodes.WorkflowNodeBuilder;
 import org.restflow.test.RestFlowTestCase;
@@ -31,10 +31,9 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 	
 	public void setUp() throws Exception {
 		super.setUp();
-
-
 	}
 	
+	@SuppressWarnings("unused")
 	private void _createMergeIntegerStreamBuilders() throws Exception {
 		
 		_store = new ConsumableObjectStore();	 
@@ -43,34 +42,43 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 			.store(_store)
 			.build();
 			
-		_triggerNodeBuilder = new GroovyNodeBuilder()
+		_triggerNodeBuilder = new JavaNodeBuilder()
 			.name("trigger")
 			.context(_context)
 			.sequence("constant", new Object [] {"A", "B", "C"})
-			.step("value=constant")
+			.bean(new Object() {
+				public String value, constant;
+				public void step() {value = constant;}
+			})
 			.outflow("value", "/trigger");	
 
 		
-		_sequenceOneNodeBuilder = new GroovyNodeBuilder()
+		_sequenceOneNodeBuilder = new JavaNodeBuilder()
 			.name("GenerateSequence1")
 			.sequence("c", new Object [] {
 					2, 
 					4, 
 					6, 
 					8})
-			.step("value=c")
+			.bean(new Object() {
+				public int value, c;
+				public void step() { value = c; }
+			})
 			.outflow("value", "/sequenceOne");
 
-		_sequenceTwoNodeBuilder = new GroovyNodeBuilder()
+		_sequenceTwoNodeBuilder = new JavaNodeBuilder()
 			.name("GenerateSequence2")
 			.sequence("c", new Object [] {
 					1, 
 					3, 
 					5})
-			.step("value=c")
+			.bean(new Object() {
+				public int value, c;
+				public void step() { value = c; }
+			})
 			.outflow("value", "/sequenceTwo");
 		
-		_sequenceThreeNodeBuilder = new GroovyNodeBuilder()
+		_sequenceThreeNodeBuilder = new JavaNodeBuilder()
 			.name("GenerateSequence3")
 			.sequence("c", new Object [] {
 					13, 
@@ -78,7 +86,10 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 					60, 
 					15, 
 					20})
-			.step("value=c")
+			.bean(new Object() {
+				public int value, c;
+				public void step() { value = c; }
+			})
 			.outflow("value", "/sequenceThree");
 
 		_mergeNodeBuilder = new MergeNodeBuilder()
@@ -88,10 +99,13 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 			.inflow("/sequenceThree")
 			.outflow("/merged");
 
-		_printerNodeBuilder = new GroovyNodeBuilder()
+		_printerNodeBuilder = new JavaNodeBuilder()
 			.name("Printer")
 			.inflow("/merged", "value")
-			.step("println value");
+			.bean(new Object() {
+				public Object value;
+				public void step() { System.out.println(value); }
+			});
 	}
 
 	public void testMergeIntegerStreams_PublishSubscribeDirector() throws Exception {
@@ -749,13 +763,14 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 				
 			nestedDirector.setNodesStepOnce(true);
 			
+			@SuppressWarnings("unused")
 			final Workflow workflow = new WorkflowBuilder()
 			
 				.name("ConditionalRouting")
 				.context(_context)
 				.director(new PublishSubscribeDirector())
 				
-				.node(new GroovyNodeBuilder()
+				.node(new JavaNodeBuilder()
 					.name("CreateIntegerSequence")
 					.sequence("c", new Object [] {
 							1, 
@@ -766,7 +781,10 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 							9,
 							15,
 							2})
-					.step("value=c")
+					.bean(new Object() {
+						public int value, c;
+						public void step() { value = c; }
+					})
 					.outflow("value", "/integers"))
 				
 				.node(new WorkflowNodeBuilder()
@@ -775,23 +793,33 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 					.prefix("/Saturate{STEP}")
 					.inflow("/integers", "/original" )
 					
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.name("RouteIntegers")
 						.inflow("/original", "input")
-						.step("		if (input < 10) {						" +
-						      " 		under = input;						" +
-						      "      	_status.disableOutput('over');		" +
-						      "    	} else {								" +
-						      "     	over = input;						" +
-						      "			_status.disableOutput('under');		" +
-						      "		}										")
+						.bean(new Object() {
+							public int input, under, over;
+							private ActorStatus _status;
+							public void setStatus(ActorStatus actorStatus) {_status = actorStatus;}
+							public void step() {
+								if (input < 10) {
+									under = input;
+								    _status.disableOutput("over");
+								} else {
+									over = input;
+								    _status.disableOutput("under");
+								}
+							}
+						})
 						.outflow("under", "/allowedInteger")
 						.outflow("over", "/oversizedInteger"))
 
-					.node(new GroovyNodeBuilder()
+					.node(new JavaNodeBuilder()
 						.name("SaturateInteger")
 						.inflow("/oversizedInteger", "input")
-						.step("output = 10;")
+						.bean(new Object() {
+							public int input, output;
+							public void step() { output = 10; }
+						})
 						.outflow("output", "/saturatedInteger"))
 					
 					.node(new MergeNodeBuilder()
@@ -803,10 +831,13 @@ public class TestMergeNodeWorkflows extends RestFlowTestCase {
 					.outflow("/merged", "/saturated")
 				)
 				
-				.node( new GroovyNodeBuilder()
+				.node( new JavaNodeBuilder()
 					.name("Printer")
 					.inflow("/saturated", "value")
-					.step("println value"))
+					.bean(new Object() {
+						public int value;
+						public void step() { System.out.println(value); }
+					}))
 				
 				.build();
 			
