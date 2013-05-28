@@ -1,0 +1,36 @@
+imports:
+
+- classpath:/common/types.yaml
+
+components:
+
+- id: SlowMultiplier
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.SlowMultiplier
+    inputs:
+      a:
+      b:
+    outputs:
+      c:
+
+- id: SlowAdder
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.SlowAdder
+    inputs:
+      a:
+      b:
+      c:
+    outputs:
+      d:
+      
+- id: PrintAndForwarder
+  type: JavaActor
+  properties:
+    beanClassName: org.restflow.beans.PrintAndForwarder
+    inputs:
+      input:
+    outputs:
+      output:
+      

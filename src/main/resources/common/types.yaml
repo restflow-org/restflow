@@ -3,13 +3,6 @@ imports:
 - classpath:/common/protocols.yaml
 
 types:
-    
-- id: GroovyActor
-  className: org.restflow.actors.GroovyActor
-  singleton: false
-
-- id: GroovyTemplateActor
-  className: org.restflow.actors.GroovyTemplateActor 
 
 - id: Node
   className: org.restflow.nodes.ActorWorkflowNode
@@ -32,6 +25,12 @@ types:
   className: org.restflow.actors.JavaActor
   singleton: false     
 
+- id: JavaActorNode
+  type: Node
+  properties:
+    actor: !inline
+      type: JavaActor
+
 - id: InPortal
   className: org.restflow.nodes.InPortal
   singleton: false
@@ -40,34 +39,16 @@ types:
   className: org.restflow.nodes.OutPortal
   singleton: false
 
-- id: GroovyActorNode
-  type: Node
-  properties:
-    actor: !inline
-      type: GroovyActor
-      
-- id: GroovyActorStep
-  type: GroovyActorNode
-  properties:
-    stepsOnce: true
 
 - id: MergeNode
   className: org.restflow.nodes.NonDeterministicMerge
   singleton: false
-
-- id: GroovyTemplateReporter
-  className: org.restflow.reporter.GroovyTemplateReporter
-  properties:
-    tools:
-      yaml: !inline
-        className: org.yaml.snakeyaml.Yaml
 
 - id: UnixProcessStatusReporter
   className: org.restflow.reporter.UnixProcessStatusReporter
 
 - id: YamlReporter
   className: org.restflow.reporter.YamlReporter
-
 
 - id: ActorLoader
   type: JavaActor
