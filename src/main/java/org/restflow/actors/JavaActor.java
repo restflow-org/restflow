@@ -198,7 +198,7 @@ public class JavaActor extends AbstractActor {
 	 * @param className	The fully qualified class name for the wrapped bean.
 	 */
 	public synchronized void setBeanClassName(String className) {
-		Contract.requires(_state == ActorFSM.CONSTRUCTED);
+//		Contract.requires(_state == ActorFSM.CONSTRUCTED);
 		_beanClassName = className;
 	}
 
