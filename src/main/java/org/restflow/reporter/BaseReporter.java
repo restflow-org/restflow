@@ -26,8 +26,8 @@ abstract public class BaseReporter implements Reporter {
 	Boolean 			_includeStdout;	
 	Boolean 			_includeWorkflowInputs;
 	Map<String,String> 	_reportInflows;
-	List<String> 		_reportGenerationErrors;
-	Map<String, Object> _reportModel;	
+	protected List<String> 		_reportGenerationErrors;
+	protected Map<String, Object> _reportModel;	
 	Map<String, Object> _tools;		
 	
 	
