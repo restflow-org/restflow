@@ -1,6 +1,6 @@
 imports:
 
-- classpath:/common/java/actors.yaml
+- classpath:/org/restflow/java/actors.yaml
 
 components:
 

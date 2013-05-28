@@ -1,8 +1,8 @@
 
 imports:
 
-  - classpath:/common/types.yaml
-  - classpath:/common/directors.yaml
+  - classpath:/org/restflow/types.yaml
+  - classpath:/org/restflow/directors.yaml
 
 components:
 

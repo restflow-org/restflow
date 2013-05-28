@@ -28,7 +28,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 	    FileUtils.writeStringToFile(temp, "{a: 5,b: 5}");
 
 				
-		RestFlow.main(new String[]{"-f","classpath:common/java/actors.yaml",
+		RestFlow.main(new String[]{"-f","classpath:/org/restflow/java/actors.yaml",
 					"-w","Adder","-run", runName,
 					"-base", testRunsDir, "-infile",temp.getPath() } );		
 		
@@ -53,7 +53,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 	    FileUtils.writeStringToFile(temp, "{a: 5,b: 5}");
 
 				
-		RestFlow.main(new String[]{"-f","classpath:common/restflowActors/actors.yaml",
+		RestFlow.main(new String[]{"-f","classpath:/org/restflow/restflowActors/actors.yaml",
 					"-w","Adder","-run", runName,
 					"-base", testRunsDir, "-infile",temp.getPath() } );		
 		
@@ -77,7 +77,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 	    FileUtils.writeStringToFile(temp, "{input: 'count this input'}");
 
 				
-		RestFlow.main(new String[]{"-f","classpath:common/java/actors.yaml",
+		RestFlow.main(new String[]{"-f","classpath:/org/restflow/java/actors.yaml",
 					"-w","Counter","-run", runName + "_1",
 					"-base", testRunsDir, "-infile",temp.getPath() } );		
 		
@@ -87,7 +87,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 
 		assertEquals( 1, runMetadata.getOutputValues().get("count") );
 		
-		RestFlow.main(new String[]{"-f","classpath:common/java/actors.yaml",
+		RestFlow.main(new String[]{"-f","classpath:/org/restflow/java/actors.yaml",
 				"-w","Counter","-run", runName + "_2",
 				"-base", testRunsDir, "-prevrun", runName +"_1" , "-infile",temp.getPath() } );		
 

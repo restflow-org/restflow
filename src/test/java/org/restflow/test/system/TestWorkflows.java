@@ -12,7 +12,7 @@ public class TestWorkflows extends WorkflowTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		org.restflow.RestFlow.enableLog4J();
-		_importSchemeToResourceMap.put("actors", "classpath:/common/java/");
+		_importSchemeToResourceMap.put("actors", "classpath:/org/restflow/java/");
 		_importSchemeToResourceMap.put("testActors", "classpath:/org/restflow/java/");
 	}
 

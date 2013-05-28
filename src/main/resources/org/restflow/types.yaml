@@ -1,6 +1,6 @@
 imports:
 
-- classpath:/common/protocols.yaml
+- classpath:/org/restflow/protocols.yaml
 
 types:
 

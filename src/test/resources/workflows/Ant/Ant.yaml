@@ -1,9 +1,9 @@
 imports:
 
 - classpath:/org/restflow/groovy/actors.yaml
-- classpath:/common/directors.yaml
-- classpath:/common/types.yaml 
-- classpath:/common/support.yaml
+- classpath:/org/restflow/directors.yaml
+- classpath:/org/restflow/types.yaml 
+- classpath:/org/restflow/support.yaml
 
 components:
 

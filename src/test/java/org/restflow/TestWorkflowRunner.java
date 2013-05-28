@@ -11,9 +11,9 @@ public class TestWorkflowRunner extends RestFlowTestCase {
 		String yamlString =
 			"imports:                                           " + EOL +
 			"                                                   " + EOL +
-			"  - classpath:/common/types.yaml                   " + EOL +
-			"  - classpath:/common/java/actors.yaml             " + EOL +
-			"  - classpath:/common/directors.yaml               " + EOL +
+			"  - classpath:/org/restflow/types.yaml             " + EOL +
+			"  - classpath:/org/restflow/java/actors.yaml       " + EOL +
+			"  - classpath:/org/restflow/directors.yaml         " + EOL +
 			"                                                   " + EOL +
 			"components:                                        " + EOL +
 			"                                                   " + EOL +

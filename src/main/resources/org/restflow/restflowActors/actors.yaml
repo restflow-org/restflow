@@ -1,7 +1,7 @@
 
 imports:
 
-- /common/types.yaml
+- /org/restflow/types.yaml
 
 types:
 - id: RestFlowActor
@@ -16,7 +16,7 @@ components:
     usesStepDirectory: true
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: Adder   
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -31,7 +31,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: ConstantSource   
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -48,7 +48,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: ListSource  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -64,7 +64,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: SingleUnitBuffer 
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -80,7 +80,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: StringConcatenator 
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -97,7 +97,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: PrintStreamWriter  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -117,7 +117,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: Counter  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -133,7 +133,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: IntegerSequenceGenerator  
       restflow-generateDot: false
       restflow-importMapOverride: ~
@@ -156,7 +156,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: SerialAdder  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -171,7 +171,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: Multiplier  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -190,7 +190,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: Averager  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -205,7 +205,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: IntegerBandpassFilter  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -221,7 +221,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: IntegerStreamMerger  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -245,7 +245,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: IntegerStreamMergerNoDuplicates  
       restflow-generateDot: false
       restflow-importMapOverride: ~     
@@ -271,7 +271,7 @@ components:
   properties:
     settings:
       restflow-generateDot: false
-      restflow-file: classpath:common/java/actors.yaml      
+      restflow-file: classpath:/org/restflow/java/actors.yaml      
       restflow-workflow: ListDisassembler  
       restflow-generateDot: false
       restflow-importMapOverride: ~     

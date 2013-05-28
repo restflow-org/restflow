@@ -102,7 +102,7 @@ public class RestFlow {
 			Map<String,String> resourceMap = new HashMap<String, String>();
 			
 			resolveWorkspaceLocation(options, beanDefinitionResource, resourceMap);
-			resourceMap.put("actors", "classpath:/common/java/");	//default map be overridden			
+			resourceMap.put("actors", "classpath:/org/restflow/java/");	//default map be overridden			
 			
 			Collection<?> importMap = options.valuesOf("import-map");
 			for (Object pairObj : importMap) {
@@ -110,7 +110,7 @@ public class RestFlow {
 				String[] kv = pair.split("=");
 				if (kv.length != 2) {
 					throw new Exception(
-							"Input options should be key-value pairs. Example: -importMap actors=classpath:/common/groovy");
+							"Input options should be key-value pairs. Example: -importMap actors=classpath:/org/restflow/groovy");
 				} else {
 					resourceMap.put(kv[0], kv[1]);
 				}

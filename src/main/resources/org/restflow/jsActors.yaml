@@ -1,6 +1,6 @@
 imports:
 
-- classpath:/common/types.yaml
+- classpath:/org/restflow/types.yaml
 
 components:
 

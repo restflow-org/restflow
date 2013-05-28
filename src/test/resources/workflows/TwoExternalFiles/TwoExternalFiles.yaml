@@ -1,9 +1,9 @@
 
 imports:
 
-  - classpath:/common/types.yaml
+  - classpath:/org/restflow/types.yaml
   - actors:actors.yaml
-  - classpath:/common/directors.yaml
+  - classpath:/org/restflow/directors.yaml
 
 components:
   
