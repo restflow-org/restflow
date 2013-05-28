@@ -8,7 +8,7 @@ import java.util.Vector;
 import org.restflow.data.Inflow;
 import org.restflow.data.InflowToOutflowsMap;
 import org.restflow.data.Outflow;
-import org.restflow.directors.GroovyDirector.NodeInput;
+import org.restflow.nodes.NodeInput;
 
 
 public class OutflowSubscriptions {
