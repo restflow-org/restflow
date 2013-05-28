@@ -102,7 +102,7 @@ public class RestFlow {
 			Map<String,String> resourceMap = new HashMap<String, String>();
 			
 			resolveWorkspaceLocation(options, beanDefinitionResource, resourceMap);
-			resourceMap.put("actors", "classpath:/common/groovy/");	//default map be overridden			
+			resourceMap.put("actors", "classpath:/common/java/");	//default map be overridden			
 			
 			Collection<?> importMap = options.valuesOf("import-map");
 			for (Object pairObj : importMap) {
