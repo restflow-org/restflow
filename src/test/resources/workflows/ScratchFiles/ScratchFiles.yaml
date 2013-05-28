@@ -2,7 +2,7 @@
 imports:
 
   - actors:actors.yaml
-  - testActors://testActors.yaml
+  - testActors:testActors.yaml
   - classpath:/common/directors.yaml
 
 components:

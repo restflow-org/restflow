@@ -64,17 +64,16 @@ components:
         value: /multiplicand
 
   - id: MultiplySequenceDataBySingleton
-    type: GroovyActorNode
+    type: Node
     properties:   
-      actor.step: 
-        c = a * b
+      actor: !ref Multiplier
       inflows:
         a: 
           expression: /multiplier
           receiveOnce: true
         b: /multiplicand
       outflows:
-        c: /product
+        product: /product
   
   - id: RenderProducts
     type: Node

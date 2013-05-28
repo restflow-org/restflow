@@ -2,8 +2,9 @@
 imports:
 
   - classpath:/common/types.yaml
-  - actors:actors.yaml
   - classpath:/common/directors.yaml
+  - actors:actors.yaml
+  - testActors:testActors.yaml
 
 components:
 
@@ -42,16 +43,10 @@ components:
         value: /multiplicand
         
   - id: MultiplyConcurrently
-    type: GroovyActorNode
+    type: Node
     properties:
       maxConcurrency: 10
-      actor.step:
-        c = a * b;
-        import java.util.Random;
-        rand = new Random();
-        delay = rand.nextInt(30);
-        System.err.println(delay);
-        System.sleep(delay);
+      actor: !ref SlowMultiplier
       inflows:
         a: /multiplier
         b: /multiplicand

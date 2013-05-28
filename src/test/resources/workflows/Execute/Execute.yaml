@@ -1,7 +1,7 @@
 imports:
 
   - classpath:/common/scriptActors.yaml
-  - classpath:/common/groovy/actors.yaml
+  - classpath:/org/restflow/groovy/actors.yaml
   - classpath:/common/bash/actors.yaml
   - classpath:/common/directors.yaml
   - classpath:/common/types.yaml 

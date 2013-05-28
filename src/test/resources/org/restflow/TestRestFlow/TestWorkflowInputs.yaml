@@ -1,62 +1,43 @@
 
 imports:
 
-  - classpath:/common/types.yaml
-  - classpath:/common/groovy/actors.yaml
+  - classpath:/common/java/actors.yaml
   - classpath:/common/directors.yaml
   
 components:
 
-
-- id: Incrementer
+- id: TestWorkflowInputs
   type: Workflow
   properties:
     director: !ref DataDrivenDirector
     nodes:
-      - !ref InputValueAndIncrement
-      - !ref IncrementInputValue
-      - !ref RenderInputs
-      - !ref OutputIncrementedValueAndIncrement
+      - !ref InputWorkflowArgument
+      - !ref PrintArgumentOne
+      - !ref PrintArgumentTwo
     inputs:
-      value: 
-        default: 0 
-      increment:
-        default: 1
-    outputs:
-      incrementedValue: 
-      appliedIncrement:
+      argumentOne: 
+        default: 1 
+      argumentTwo:
+        default: 2
         
-- id: InputValueAndIncrement
+- id: InputWorkflowArgument
   type: InPortal
   properties:
     outflows: 
-      value: /inputValue/
-      increment: /inputIncrement/
+      argumentOne: /argOne/
+      argumentTwo: /argTwo/
 
-- id: IncrementInputValue
-  type: GroovyActorNode
-  properties: 
-    actor.step: |
-      sum = a + b
-    inflows:
-      a: /inputValue/
-      b: /inputIncrement/
-    outflows:
-      sum: /incrementedValue/   
-
-- id: RenderInputs
-  type: GroovyActorNode
+- id: PrintArgumentOne
+  type: Node
   properties:
-    actor.step: 
-      println "Incrementer received value=" + value + " and increment=" + increment
+    actor:  !ref PrintStreamWriter
     inflows:
-      value: /inputValue/
-      increment: /inputIncrement/
+      message: /argOne
 
-- id: OutputIncrementedValueAndIncrement
-  type: OutPortal
+- id: PrintArgumentTwo
+  type: Node
   properties:
-    inflows: 
-      incrementedValue: /incrementedValue/
-      appliedIncrement: /inputIncrement/
+    actor:  !ref PrintStreamWriter
+    inflows:
+      message: /argTwo
 

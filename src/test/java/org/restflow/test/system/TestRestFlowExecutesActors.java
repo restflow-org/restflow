@@ -1,7 +1,3 @@
-/**
-    This performs coarse-grained unit tests for the RestFlow CLI  
- * 
- */
 package org.restflow.test.system;
 
 import java.io.File;
@@ -111,11 +107,11 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 		stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
 			@Override
 			public void execute() throws Exception {
-				RestFlow.main(new String[]{"-f","classpath:actors/hello_actor.yaml",
-						"-base", testRunsDir, "-w","HelloWorld" } );		
+				RestFlow.main(new String[]{"-f","classpath:org/restflow/TestRestFlowExecutesActors/HelloWorldActor.yaml",
+						"-base", testRunsDir, "-w","HelloWorldActor" } );		
 			}
 		});
-		assertEquals("Hello World!", stdoutRecorder.getStdoutRecording() );
+		assertEquals("Hello World!" + EOL, stdoutRecorder.getStdoutRecording() );
 	}	
 	
 }

@@ -4,7 +4,8 @@ imports:
   - classpath:/common/types.yaml
   - actors:actors.yaml
   - classpath:/common/directors.yaml
-
+  - testActors:testActors.yaml
+  
 components:
 
   - id: UnorderedConcurrentMultiplyAdd
@@ -43,16 +44,11 @@ components:
         value: /multiplicand
         
   - id: MultiplyConcurrently
-    type: GroovyActorNode
+    type: Node
     properties:
+      actor: !ref SlowMultiplier
       maxConcurrency: 1000
       ordered: false
-      actor.step:
-        c = a * b;
-        import java.util.Random;
-        rand = new Random();
-        delay = rand.nextInt(5);
-        System.sleep(delay);
       inflows:
         a: /multiplier
         b: /multiplicand
@@ -60,16 +56,11 @@ components:
         c: /product/{a}/{b}/
 
   - id: AddConcurrently
-    type: GroovyActorNode
+    type: Node
     properties:
+      actor: !ref SlowAdder
       maxConcurrency: 1000
       ordered: false
-      actor.step:
-        d = c + a + b;
-        import java.util.Random;
-        rand = new Random();
-        delay = rand.nextInt(30);
-        System.sleep(delay);
       actor.inputs:
         a:
         b:
