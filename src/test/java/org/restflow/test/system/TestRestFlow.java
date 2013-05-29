@@ -92,7 +92,7 @@ public class TestRestFlow extends RestFlowTestCase {
 	
 	public void testHelloWorldInputFromStdin() throws IOException, InterruptedException {
 		
-		String s = PortableIO.readTextFileOnClasspath("org/restflow/TestRestFlow/HelloWorld" +WorkflowRunner.YAML_EXTENSION);
+		String s = PortableIO.readTextFileOnClasspath("org/restflow/TestRestFlow/HelloWorld" + WorkflowRunner.YAML_EXTENSION);
 		
 		verifyRunExact(RestFlowInvocationCommand + " -base RESTFLOW_TESTRUNS_DIR",
 				  s, 
