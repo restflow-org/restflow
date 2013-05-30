@@ -9,7 +9,6 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import org.restflow.beans.TextScanner;
-import org.restflow.test.system.TestRestFlow;
 import org.restflow.util.Contract;
 import org.restflow.util.PortableIO;
 import org.restflow.util.TestUtilities;
@@ -60,11 +59,11 @@ public abstract class RestFlowTestCase extends TestCase {
 		StreamSink[] p_out = run(cmdLine, stdIn);
 	
 		if (!Pattern.compile(expected_stdout,Pattern.DOTALL).matcher(p_out[0].toString()).matches()) {
-			fail("STDOUT does not match " + expected_stdout + PortableIO.EOL + " STDOUT was" + TestRestFlow.EOL +p_out[0].toString());
+			fail("STDOUT does not match " + expected_stdout + PortableIO.EOL + " STDOUT was" + EOL + p_out[0].toString());
 		}
 		
 		if (!Pattern.compile(expected_stderr,Pattern.DOTALL).matcher(p_out[1].toString()).matches()) {
-			fail("STDERR does not match " + expected_stderr + PortableIO.EOL + " STDERR was" + TestRestFlow.EOL +p_out[1].toString());
+			fail("STDERR does not match " + expected_stderr + PortableIO.EOL + " STDERR was" + EOL + p_out[1].toString());
 		}
 	}
 
