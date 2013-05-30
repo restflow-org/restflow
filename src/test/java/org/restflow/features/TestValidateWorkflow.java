@@ -14,7 +14,7 @@ public class TestValidateWorkflow extends RestFlowTestCase {
 	
 	public void testValidate_NoOutflowVariablesInTemplate() throws Exception {
 		
-		final String workflowFile = "classpath:/org/restflow/TestValidateWorkflow/FileProtocolWithoutOutflowUriVariables" +
+		final String workflowFile = "classpath:/org/restflow/test/TestValidateWorkflow/FileProtocolWithoutOutflowUriVariables" +
 			WorkflowRunner.YAML_EXTENSION;
 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
