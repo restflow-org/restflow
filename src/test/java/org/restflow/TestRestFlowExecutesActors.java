@@ -1,4 +1,4 @@
-package org.restflow.test.system;
+package org.restflow;
 
 import java.io.File;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 	    FileUtils.writeStringToFile(temp, "{a: 5,b: 5}");
 
 				
-		RestFlow.main(new String[]{"-f","classpath:/org/restflow/restflowActors/actors.yaml",
+		RestFlow.main(new String[]{"-f","classpath:/org/restflow/test/TestRestFlowExecutesActors/actors.yaml",
 					"-w","Adder","-run", runName,
 					"-base", testRunsDir, "-infile",temp.getPath() } );		
 		
@@ -107,7 +107,7 @@ public class TestRestFlowExecutesActors extends RestFlowTestCase {
 		stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
 			@Override
 			public void execute() throws Exception {
-				RestFlow.main(new String[]{"-f","classpath:org/restflow/TestRestFlowExecutesActors/HelloWorldActor.yaml",
+				RestFlow.main(new String[]{"-f","classpath:org/restflow/test/TestRestFlowExecutesActors/HelloWorldActor.yaml",
 						"-base", testRunsDir, "-w","HelloWorldActor" } );		
 			}
 		});

@@ -119,12 +119,6 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		return director;
 	}
 
-		
-	protected void configureForRestFlowActor() {
-		_importSchemeToResourceMap.put("actors", "classpath:org/restflow/restflowActors/");
-		_importSchemeToResourceMap.put("testActors", "classpath:testActors/restflowActors/");								
-	}	
-
 	protected void _loadAndRunWorkflow(String name, Director director) throws Exception {
 		_loadAndRunWorkflow(name, name, director, name);
 	}
