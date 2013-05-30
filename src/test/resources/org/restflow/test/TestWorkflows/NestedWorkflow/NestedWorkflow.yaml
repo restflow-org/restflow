@@ -3,7 +3,7 @@ imports:
 
   - classpath:/org/restflow/java/actors.yaml
   - classpath:/org/restflow/directors.yaml
-  - classpath:/workflows/Incrementer/Incrementer.yaml
+  - classpath:/org/restflow/test/TestWorkflows/Incrementer/Incrementer.yaml
 
 components:
 

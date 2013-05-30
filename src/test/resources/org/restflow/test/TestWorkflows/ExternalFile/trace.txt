@@ -3,4 +3,4 @@ ExternalFile: 1
 ExternalFile.RenderFile: 1
 ExternalFile.Source1: 1
 *** Published resources ***
-src/test/resources/workflows/ExternalFile/test.txt: hello
+src/test/resources/org/restflow/test/TestWorkflows/ExternalFile/test.txt: hello

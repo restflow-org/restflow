@@ -15,7 +15,7 @@ components:
         name: RenderFile
         outputAtWrapup: true
       inflows:
-        message: file:src/test/resources/workflows/ExternalFile/test.txt
+        message: file:src/test/resources/org/restflow/test/TestWorkflows/ExternalFile/test.txt
 
   - id: ExternalFile
     type: Workflow

@@ -1,4 +1,4 @@
-package org.restflow.test.system;
+package org.restflow;
 
 import org.restflow.directors.DemandDrivenDirector;
 import org.restflow.test.WorkflowTestCase;
@@ -6,7 +6,7 @@ import org.restflow.test.WorkflowTestCase;
 public class TestWorkflows extends WorkflowTestCase {
 
 	public TestWorkflows() {
-		super("workflows");
+		super("org/restflow/test/TestWorkflows");
 	}
 
 	public void setUp() throws Exception {

@@ -15,7 +15,7 @@ components:
         name: Render file one first
         outputAtWrapup: true
       inflows:
-        message: file:src/test/resources/workflows/TwoExternalFiles/file1.txt
+        message: file:src/test/resources/org/restflow/test/TestWorkflows/TwoExternalFiles/file1.txt
 
   - id: RenderFileOneSecond
     type: Node
@@ -25,7 +25,7 @@ components:
         name: Render file one second
         outputAtWrapup: true
       inflows:
-        message: file:src/test/resources/workflows/TwoExternalFiles/file1.txt
+        message: file:src/test/resources/org/restflow/test/TestWorkflows/TwoExternalFiles/file1.txt
 
   - id: RenderFileTwo
     type: Node
@@ -35,7 +35,7 @@ components:
         name: Render file two
         outputAtWrapup: true
       inflows:
-        message: file:src/test/resources/workflows/TwoExternalFiles/file2.txt
+        message: file:src/test/resources/org/restflow/test/TestWorkflows/TwoExternalFiles/file2.txt
 
   - id: TwoExternalFiles
     type: Workflow

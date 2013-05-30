@@ -3,7 +3,7 @@ imports:
 
   - classpath:/org/restflow/java/actors.yaml
   - classpath:/org/restflow/directors.yaml
-  - classpath:/workflows/NestedWorkflow/NestedWorkflow.yaml
+  - classpath:/org/restflow/test/TestWorkflows/NestedWorkflow/NestedWorkflow.yaml
 
 components:
 

@@ -6,5 +6,5 @@ TwoExternalFiles.RenderFileTwo: 1
 TwoExternalFiles.Source1: 1
 TwoExternalFiles.Source2: 1
 *** Published resources ***
-src/test/resources/workflows/TwoExternalFiles/file1.txt: hello
-src/test/resources/workflows/TwoExternalFiles/file2.txt: goodbye
+src/test/resources/org/restflow/test/TestWorkflows/TwoExternalFiles/file1.txt: hello
+src/test/resources/org/restflow/test/TestWorkflows/TwoExternalFiles/file2.txt: goodbye
