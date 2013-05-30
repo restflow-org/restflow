@@ -35,7 +35,7 @@ public class TestContextProtocol extends RestFlowTestCase {
 
 		StdoutRecorder recorder = new StdoutRecorder(new StdoutRecorder.WrappedCode() {
 			public void execute() throws Exception {
-				RestFlow.main(new String[]{"-f","classpath:protocols/context/DisplayContext.yaml",
+				RestFlow.main(new String[]{"-f","classpath:/org/restflow/test/TestContextProtocol/DisplayContext.yaml",
 						"-w","DisplayContext",
 						"-base", "RESTFLOW_TESTRUNS_DIR",
 						"-i","spreadsheetId=19980",
