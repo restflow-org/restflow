@@ -47,7 +47,7 @@ public class TestSourceNode extends RestFlowTestCase {
 		SourceNode source = (SourceNode)new SourceNodeBuilder()
 			.context(_noopContext)
 			.protocol(new FileProtocol())
-			.resource("src/test/resources/unit/TestSourceNode/test.txt")
+			.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 			.outflow("a", "/a")
 			.build();
 				
@@ -68,7 +68,7 @@ public class TestSourceNode extends RestFlowTestCase {
 		SourceNode source = (SourceNode) new SourceNodeBuilder()
 			.context(_noopContext)
 			.protocol(new FileProtocol())
-			.resource("src/test/resources/unit/TestSourceNode/test.txt")
+			.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 			.outflow("a", "/a")
 			.build();
 		
@@ -95,7 +95,7 @@ public class TestSourceNode extends RestFlowTestCase {
 		SourceNode source = (SourceNode) new SourceNodeBuilder()
 			.context(_noopContext)
 			.protocol(new FileProtocol())
-			.resource("src/test/resources/unit/TestSourceNode/test.txt")
+			.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 			.outflow("a", "/a")
 			.build();
 		
@@ -125,7 +125,7 @@ public class TestSourceNode extends RestFlowTestCase {
 
 			.node(new SourceNodeBuilder()
 				.protocol(new FileProtocol())
-				.resource("src/test/resources/unit/TestSourceNode/test.txt")
+				.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 				.outflow("a", "/a")
 			)
 				
@@ -173,7 +173,7 @@ public class TestSourceNode extends RestFlowTestCase {
 			.context(_context)
 			
 			.node(new ActorNodeBuilder()
-				.inflow("file:src/test/resources/unit/TestSourceNode/test.txt", "value")
+				.inflow("file:src/test/resources/org/restflow/test/TestSourceNode/test.txt", "value")
 				.actor(new JavaActorBuilder()
 					.bean(new Object() {
 						public Object value;
@@ -198,8 +198,8 @@ public class TestSourceNode extends RestFlowTestCase {
 				recorder.getStdoutRecording());
 		assertEquals("", recorder.getStderrRecording());
 		
-		assertEquals("hello", _store.take("/run1/src/test/resources/unit/TestSourceNode/test.txt"));
-		assertEquals("hello", _store.take("/run2/src/test/resources/unit/TestSourceNode/test.txt"));
+		assertEquals("hello", _store.take("/run1/src/test/resources/org/restflow/test/TestSourceNode/test.txt"));
+		assertEquals("hello", _store.take("/run2/src/test/resources/org/restflow/test/TestSourceNode/test.txt"));
 		
 		assertEquals(0, _store.size());
 	}
@@ -244,7 +244,7 @@ public class TestSourceNode extends RestFlowTestCase {
 				.node(new SourceNodeBuilder()
 					.name("ReadGreetingFile")
 					.protocol(new FileProtocol())
-					.resource("src/test/resources/unit/TestSourceNode/test.txt")
+					.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 					.outflow("greeting", "/greeting")
 				)
 
@@ -379,7 +379,7 @@ public class TestSourceNode extends RestFlowTestCase {
 					.node(new SourceNodeBuilder()
 						.name("ReadGreetingFile")
 						.protocol(new FileProtocol())
-						.resource("src/test/resources/unit/TestSourceNode/test.txt")
+						.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 						.outflow("text", "/text")
 					)
 					
@@ -524,7 +524,7 @@ public class TestSourceNode extends RestFlowTestCase {
 				.node(new SourceNodeBuilder()
 					.name("ReadGreetingFile")
 					.protocol(new FileProtocol())
-					.resource("src/test/resources/unit/TestSourceNode/test.txt")
+					.resource("src/test/resources/org/restflow/test/TestSourceNode/test.txt")
 					.outflow("greeting", "/greeting")
 				)
 
