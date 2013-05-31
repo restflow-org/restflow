@@ -1,0 +1,19 @@
+imports:
+
+- classpath:/org/restflow/types.yaml
+- classpath:/org/restflow/directors.yaml
+
+components:
+
+- id: TestCP
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    nodes:
+    - !ref Actor
+
+- id: Actor
+  type: JavaActorNode
+  properties:
+    actor.beanClassName: ActorNotOnMainClasspath
+

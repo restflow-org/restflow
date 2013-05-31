@@ -9,3 +9,5 @@ target/
 classes/
 .settings/
 !src/test/exclude/TestUtil.class
+/target
+/target
