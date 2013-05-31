@@ -759,10 +759,8 @@ public class TestJavaActor extends RestFlowTestCase {
 				 	 "Data of incorrect type received on input 'originalValue' of actor MultiplyActor", 
 				 	 exception.toString());
 		assertNotNull(exception.getCause());
-		assertEquals("java.lang.IllegalArgumentException: " + 
-					 "Cannot invoke org.restflow.actors.TestJavaActor$UncloneableMultiplyBean.setOriginalValue on " +
-				     "bean class 'class org.restflow.actors.TestJavaActor$MultiplyBean' " +
-				     "- argument type mismatch - had objects of type \"java.lang.String\" " +
+		assertMatchesRegexp(
+					".* - had objects of type \"java.lang.String\" " +
 				     "but expected signature \"java.lang.Integer\"", 
 					 exception.getCause().toString());
 	}	
