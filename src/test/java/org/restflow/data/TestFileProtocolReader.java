@@ -19,7 +19,7 @@ public class TestFileProtocolReader extends RestFlowTestCase {
 	public void testReadExternalFile() throws Exception {
 		
 		ProtocolReader reader = _fileProtocol.getNewProtocolReader();
-		String fileContents = (String)reader.getExternalResource("src/test/resources/unit/TestSourceNode/test.txt");
+		String fileContents = (String)reader.getExternalResource("src/test/resources/org/restflow/test/TestFileProtocolReader/test.txt");
 		
 		assertEquals("hello", fileContents);
 	}
@@ -27,24 +27,24 @@ public class TestFileProtocolReader extends RestFlowTestCase {
 	public void testReadExternalFileTwiceWithoutReset() throws Exception {
 		
 		ProtocolReader reader = _fileProtocol.getNewProtocolReader();
-		String fileContents = (String)reader.getExternalResource("src/test/resources/unit/TestSourceNode/test.txt");
+		String fileContents = (String)reader.getExternalResource("src/test/resources/org/restflow/test/TestFileProtocolReader/test.txt");
 		assertNotNull(fileContents);
 		assertEquals("hello", fileContents);
 
-		fileContents = (String)reader.getExternalResource("src/test/resources/unit/TestSourceNode/test.txt");
+		fileContents = (String)reader.getExternalResource("src/test/resources/org/restflow/test/TestFileProtocolReader/test.txt");
 		assertNull(fileContents);
 	}
 
 	public void testReadExternalFileTwiceWithReset() throws Exception {
 		
 		ProtocolReader reader = _fileProtocol.getNewProtocolReader();
-		String fileContents = (String)reader.getExternalResource("src/test/resources/unit/TestSourceNode/test.txt");
+		String fileContents = (String)reader.getExternalResource("src/test/resources/org/restflow/test/TestFileProtocolReader/test.txt");
 		assertNotNull(fileContents);
 		assertEquals("hello", fileContents);
 
 		reader.initialize();
 		
-		fileContents = (String)reader.getExternalResource("src/test/resources/unit/TestSourceNode/test.txt");
+		fileContents = (String)reader.getExternalResource("src/test/resources/org/restflow/test/TestFileProtocolReader/test.txt");
 		assertNotNull(fileContents);
 		assertEquals("hello", fileContents);
 	}
