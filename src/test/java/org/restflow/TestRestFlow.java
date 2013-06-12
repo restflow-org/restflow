@@ -95,8 +95,7 @@ public class TestRestFlow extends RestFlowTestCase {
 		String s = PortableIO.readTextFileOnClasspath("org/restflow/test/TestRestFlow/HelloWorld" + WorkflowRunner.YAML_EXTENSION);
 		
 		verifyRunExact(RestFlowInvocationCommand + " -base RESTFLOW_TESTRUNS_DIR",
-				  s, 
-				  "Reading Workflow Description from std in:" + EOL +
+				  s,
 				  "Hello World!" + EOL,
 				  "");
 	}

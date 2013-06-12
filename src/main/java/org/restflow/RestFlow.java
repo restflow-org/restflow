@@ -3,6 +3,7 @@ package org.restflow;
 import static java.util.Arrays.asList;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.restflow.reporter.MultiRunReporter;
 import org.restflow.reporter.Reporter;
 import org.restflow.reporter.ReporterUtilities;
 import org.restflow.util.ClassPathHacker;
+import org.restflow.util.PortableIO;
 import org.restflow.util.TestUtilities;
 import org.yaml.snakeyaml.Yaml;
 
@@ -79,30 +81,33 @@ public class RestFlow {
 				return null;
 			}
 
-			String beanDefinitions = (String) options.valueOf("f");
-			String beanDefinitionResource = null;
+			String workflowDefinitionResource = null;
 			
-			if (beanDefinitions.equalsIgnoreCase("-")) {
-				// read bean definitions for workflow from standard input if no
-				// bean definition argument provided given or the first argument
-				// is a dash
-				System.out.println("Reading Workflow Description from std in:");
-				wrb.workflowDefinitionStream(System.in);
-			} else {
-
-				if (!beanDefinitions.contains(":")) {
-					beanDefinitionResource="file:" + beanDefinitions;
-				} else {
-					beanDefinitionResource = beanDefinitions;
-				}
-				
-				wrb.workflowDefinitionPath(beanDefinitionResource);
+			// path to a workflow definition resource can be provided as a single (non-option) argument 
+			// or as an argument to the -f option
+			if (options.nonOptionArguments().size() == 1) {
+				workflowDefinitionResource = options.nonOptionArguments().get(0);
+			} else if (options.hasArgument("f") && (!options.valueOf("f").equals("-"))) {
+				workflowDefinitionResource = (String) options.valueOf("f");
 			}
+
+			// runner builder is configured to take the workflow defintion either from a
+			// provided workflow definition resource or from the standard input stream
+			if (workflowDefinitionResource != null) {
+				if (workflowDefinitionResource.contains(":")) {
+					wrb.workflowDefinitionPath(workflowDefinitionResource);
+				} else {
+					wrb.workflowDefinitionPath("file:" + workflowDefinitionResource);
+				}
+			} else {
+				wrb.workflowDefinitionStream(System.in);
+			}
+				
 			
 			Map<String,String> resourceMap = new HashMap<String, String>();
 			
-			resolveWorkspaceLocation(options, beanDefinitionResource, resourceMap);
-			resourceMap.put("actors", "classpath:/org/restflow/java/");	//default map be overridden			
+			resourceMap.put("workspace", resolveWorkspaceLocation(options, workflowDefinitionResource));
+			resourceMap.put("actors", "classpath:/org/restflow/java/");	
 			
 			Collection<?> importMap = options.valuesOf("import-map");
 			for (Object pairObj : importMap) {
@@ -207,17 +212,17 @@ public class RestFlow {
 	 *  
 	 * @param options
 	 * @param beanDefinitionResource
-	 * @param resourceMap
+	 * @throws IOException 
 	 */
-	private static void resolveWorkspaceLocation(OptionSet options,
-			String beanDefinitionResource, Map<String, String> resourceMap) {
+	private static String resolveWorkspaceLocation(OptionSet options,
+			String beanDefinitionResource) throws IOException {
 
 		if (options.has("workspace")) {
-			resourceMap.put("workspace", "file:" + (String) options.valueOf("workspace"));
+			return "file:" + (String) options.valueOf("workspace");
+		} else if (beanDefinitionResource != null) {
+			return Uri.extractParent(beanDefinitionResource);
 		} else {
-			if ( beanDefinitionResource != null) {
-				resourceMap.put("workspace", Uri.extractParent(beanDefinitionResource));
-			}
+			return "file:" + PortableIO.getCurrentDirectoryPath();
 		}
 	}
 	
@@ -290,7 +295,9 @@ public class RestFlow {
 						.describedAs("directory");
 				acceptsAll(asList("f", "workflow-description"))
 						.withRequiredArg().ofType(String.class)
-						.describedAs("file").defaultsTo("-");
+						.describedAs("file")
+						.defaultsTo("-")
+						;
 				acceptsAll(asList("w", "workflow"), "workflow name")
 						.withRequiredArg().ofType(String.class)
 						.describedAs("name");
