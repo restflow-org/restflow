@@ -436,22 +436,27 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		  
 		// parse the yaml block and save output variable values in map
 		Yaml yaml = new Yaml();
-		Map<String,Object> outputMap = (Map<String,Object>) yaml.load(yamlOutput);
-		if (outputMap != null) {
-			for (Map.Entry<String,Object> entry : outputMap.entrySet()) { 
-				String key = entry.getKey();
-				Object value = entry.getValue();
-				Object variableType = _variableTypes.get(key);
-				if (value != null && value.equals("null")) {
-					binding.put(key, null);
-				} else if (variableType != null && variableType.equals("File")) {
-			    	binding.put(key, new File(_actorStatus.getStepDirectory(), value.toString()));
-			    } else {
-			    	binding.put(key, value);
-			    }
+		
+		Object yamlParseResult =  yaml.load(yamlOutput);
+		
+		if (yamlParseResult instanceof Map<?,?>) {
+			Map<String,Object> outputMap = (Map<String,Object>) yamlParseResult;
+			if (outputMap != null) {
+				for (Map.Entry<String,Object> entry : outputMap.entrySet()) { 
+					String key = entry.getKey();
+					Object value = entry.getValue();
+					Object variableType = _variableTypes.get(key);
+					if (value != null && value.equals("null")) {
+						binding.put(key, null);
+					} else if (variableType != null && variableType.equals("File")) {
+				    	binding.put(key, new File(_actorStatus.getStepDirectory(), value.toString()));
+				    } else {
+				    	binding.put(key, value);
+				    }
+				}
 			}
 		}
-		
+
 		return binding;
 	}
 	
