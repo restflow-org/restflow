@@ -356,7 +356,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		StreamSink[] outputs = PortableIO.runProcess(
 									runcommand, 
 					  				augmentedScript,
-					  				new String[]{}, 
+					  				null, 
 					  				_actorStatus.getStepDirectory()
 		  						 );
 		
