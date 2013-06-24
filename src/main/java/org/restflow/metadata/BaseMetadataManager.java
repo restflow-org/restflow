@@ -32,9 +32,15 @@ public abstract class BaseMetadataManager implements MetadataManager {
 
 	
 	@Override
-	public void storeWorkflowOutputs(Actor workflow) throws Exception {
+	public void storeWorkflowOutputs(Actor workflow, Map<String, Object> outputBindings) throws Exception {
 		
 		Map<String,Object> outputValues = workflow.getFinalOutputs();
+		
+//		for (Map.Entry<String, Object> binding : outputBindings.entrySet()) {
+//			String name = binding.getKey();
+//			String path = (String)binding.getValue();
+//			Object value = outputValues.get(name);
+//		}
 		
 		outputValues.put("restflow-stdout", getStdoutRecording());
 

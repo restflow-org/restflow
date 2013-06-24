@@ -34,6 +34,8 @@ public class WorkflowRunner {
 	private boolean 			_validateOnly;
 	private Map<String, String>	_importSchemeResourceMap;
 	private Map<String, Object>	_inputValues;
+	private Map<String, Object>	_inputBindings;
+	private Map<String, Object> _outputBindings;
 	private MetadataManager 	_metadataManager;
 	private String 				_prevRunName;
 	private String 				_runName;
@@ -58,6 +60,7 @@ public class WorkflowRunner {
 		private String runName;
 		private String prevRunName;		
 		private Map<String, Object> inputBindings;
+		private Map<String, Object> outputBindings;
 		private String runsDirectory;
 		private TraceRecorder traceRecorder;
 		private InputStream workflowDefinitionStream;
@@ -124,6 +127,18 @@ public class WorkflowRunner {
 			return this;
 		}
 
+		/**
+		 * Binds paths to the named outputs of the Workflow.
+		 * 
+		 * @param val
+		 * @return
+		 */
+		public Builder outputBindings(Map<String, Object> val) {
+			outputBindings = val;
+			return this;
+		}
+
+		
 		/**
 		 * 
 		 * File system path to the root directory for RestFlow to place results
@@ -249,6 +264,7 @@ public class WorkflowRunner {
 		_workflowDefinitionPath = builder.workflowDefinitionPath;
 		_workflowName = builder.workflowName;
 		_inputValues = builder.inputBindings;
+		_outputBindings = builder.outputBindings;
 		_runsDirectory = builder.runsDirectory;
 		_workflowDefinitionString = builder.workflowDefinitionString;
 		_workflowDefinitionStream = builder.workflowDefinitionStream;
@@ -345,7 +361,7 @@ public class WorkflowRunner {
 						_actor.step();
 						_actor.wrapup();
 						_actor.dispose();
-						_writeOutputFile();
+						_metadataManager.storeWorkflowOutputs(_actor, _outputBindings);
 					}
 					
 				} catch (ActorException e) {
@@ -588,9 +604,6 @@ public class WorkflowRunner {
 		}
 	}
 
-	private void _writeOutputFile() throws Exception {
-		_metadataManager.storeWorkflowOutputs(_actor);		
-	}
 
 	public void dispose() throws SQLException {
 		_context.getTraceRecorder().close();

@@ -81,8 +81,8 @@ public class FileSystemMetadataManager extends BaseMetadataManager {
 	
 
 	@Override
-	public void storeWorkflowOutputs(Actor actor) throws Exception {
-		super.storeWorkflowOutputs(actor);
+	public void storeWorkflowOutputs(Actor actor, Map<String, Object> outputBindings) throws Exception {
+		super.storeWorkflowOutputs(actor, outputBindings);
 		
 		Yaml yaml = new Yaml();
 		yaml.setBeanAccess(org.yaml.snakeyaml.introspector.BeanAccess.FIELD);		

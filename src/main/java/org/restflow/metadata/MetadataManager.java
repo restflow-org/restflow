@@ -48,11 +48,12 @@ public interface MetadataManager  {
 	/**
 	 * 
 	 * After a workflow run, store the outputs of the workflow
+	 * @param _outputBindings 
 	 * 
 	 * @param outputValues
 	 * @throws Exception
 	 */
-	public void storeWorkflowOutputs(Actor actor) throws Exception;
+	public void storeWorkflowOutputs(Actor actor, Map<String, Object> outputBindings) throws Exception;
 	
 	public String getStdoutRecording() throws Exception;
 	

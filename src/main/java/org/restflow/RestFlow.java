@@ -162,6 +162,23 @@ public class RestFlow {
 			
 			wrb.inputBindings(inputMap);
 			
+			Collection<?> outputs = options.valuesOf("o");
+			HashMap<String, Object> outputMap = new HashMap<String, Object>();
+			
+			//get String values from the command line and bind them to the workflow inputs
+			for (Object pairObj : outputs) {
+				String pair = (String) pairObj;
+				String[] kv = pair.split("=");
+				if (kv.length != 2) {
+					throw new Exception(
+							"Output options should be name values pairs. Example: -o result=result.txt");
+				} else {
+					outputMap.put(kv[0], kv[1]);
+				}
+			}
+			
+			wrb.outputBindings(outputMap);
+			
 			wrb.runsDirectory(runDirectoryContainer);			
 			
 			if (options.has("to-dot")) {
@@ -304,10 +321,13 @@ public class RestFlow {
 				acceptsAll(asList("i", "input"), "key-valueed inputs")
 						.withRequiredArg().describedAs("input parameters")
 						.ofType(String.class).describedAs("key=value");
+				acceptsAll(asList("o", "output"), "where to save a workflow output")
+						.withRequiredArg().describedAs("workflow output destination")
+						.ofType(String.class).describedAs("outputName=outputPath");
 				acceptsAll(asList("infile", "input-file"), "yaml input file")
 						.withRequiredArg().describedAs("file of input parameters")
 						.ofType(String.class).describedAs("file");
-				acceptsAll(asList("outfile", "output-file"), "yaml input file")
+				acceptsAll(asList("outfile", "output-file"), "yaml output file")
 				.withRequiredArg().describedAs("file of output objects")
 				.ofType(String.class).describedAs("file");					
 				acceptsAll(asList("to-dot"), "output a Graphviz dot file instead of running the workflow");
