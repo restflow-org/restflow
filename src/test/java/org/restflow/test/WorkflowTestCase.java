@@ -25,8 +25,8 @@ import org.restflow.util.TestUtilities;
 abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	protected String _parentDirectory = "";
-	private String _directory;
-	private boolean _useWorkingDirectory;
+	protected String _testDirectory;
+	protected boolean _useWorkingDirectory;
 	public File _runDirectory;
 	protected Map<String,String> _importSchemeToResourceMap;
 	protected Workflow _workflow;
@@ -35,6 +35,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	protected Reporter _finalReporter;
 	protected boolean _teeLogToStandardOutput;
 	protected String _resourceDirectory = "/src/test/resources/";
+	protected String _absolutePathToResourceDirectory;
 	
 	public WorkflowTestCase(String parentDirectoryName) {
 		_parentDirectory = parentDirectoryName;
@@ -55,6 +56,8 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		_importSchemeToResourceMap = new HashMap<String, String>();
 		_finalReporter = new JunitFinalReporter();
 		_teeLogToStandardOutput = true;
+		
+		_absolutePathToResourceDirectory = PortableIO.getCurrentDirectoryPath() + _resourceDirectory;
 	}
 	
 	@SuppressWarnings("unused")
@@ -74,7 +77,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	protected void assertFileResourcesMatchExactly(String resourcePath) throws Exception {
 		
-		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + _resourceDirectory  + _parentDirectory + "/" + _directory + "/expected/");
+		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + _resourceDirectory  + _parentDirectory + "/" + _testDirectory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
 		assertFilesystemResourceValid(expectedRoot, actualRoot, resourcePath);
@@ -82,7 +85,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 	protected void assertFileMatchesTemplate(String resourcePath) throws Exception {
 		
-		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + "/" + _resourceDirectory+ _parentDirectory + "/" + _directory + "/expected/");
+		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + "/" + _resourceDirectory+ _parentDirectory + "/" + _testDirectory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
 		assertFilesystemResourceMatchesTemplate(expectedRoot, actualRoot, resourcePath);
@@ -131,7 +134,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	protected void _loadAndRunWorkflow(String directory, final String name, 
 			Director director, String  bean) throws Exception {
 		
-		_directory = directory;
+		_testDirectory = directory;
 		
 		String testRunsDirectory;
 		if (_useWorkingDirectory) {
@@ -142,7 +145,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 
 		
 		
-		String workflowFilePath = _parentDirectory + "/" + _directory + "/" + name + WorkflowRunner.YAML_EXTENSION;
+		String workflowFilePath = _parentDirectory + "/" + _testDirectory + "/" + name + WorkflowRunner.YAML_EXTENSION;
 		String workspaceDirectory = PortableIO.getCurrentDirectoryPath() + _resourceDirectory + _parentDirectory + "/" + directory +"/";
 		_importSchemeToResourceMap.put("workspace", "file:" + workspaceDirectory);
 
@@ -188,9 +191,9 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	
 	protected void loadAndRunReport(String runDirectory,  String reportName) throws Exception {
 		
-		_directory = runDirectory;
+		_testDirectory = runDirectory;
 			
-		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + _resourceDirectory + _parentDirectory + "/" + _directory;
+		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + _resourceDirectory + _parentDirectory + "/" + _testDirectory;
 
 		loadAndRunReport(new File(workflowFilePath), reportName);
 	}
@@ -212,9 +215,9 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	
 	protected void multiRunReport(String runDirectory,  String reportName) throws Exception {
 		
-		_directory = runDirectory;
+		_testDirectory = runDirectory;
 			
-		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + "/" + _parentDirectory + "/" + _directory;
+		final String workflowFilePath =  PortableIO.getCurrentDirectoryPath() + "/" + _parentDirectory + "/" + _testDirectory;
 
 		multiRunReport(new File(workflowFilePath), reportName);
 	}
@@ -253,7 +256,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedResultFile(String filename) throws IOException {
-		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _testDirectory + "/" + filename);
 	}
 
 	protected String _getExpectedStdout() throws IOException {
@@ -261,7 +264,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedStdout(String filename) throws IOException {
-		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _testDirectory + "/" + filename);
 	}	
 
 	protected String _getExpectedStderr() throws IOException {
@@ -269,7 +272,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedStderr(String filename) throws IOException {
-		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _testDirectory + "/" + filename);
 	}
 	
 	protected String _getExpectedProducts() throws IOException {
@@ -277,7 +280,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 	}
 
 	protected String _getExpectedProducts(String filename) throws IOException {
-		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _directory + "/" + filename);
+		return PortableIO.readTextFileOnClasspath(_parentDirectory + "/" + _testDirectory + "/" + filename);
 	}
 
 	
