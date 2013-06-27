@@ -6,7 +6,7 @@ imports:
 
 components:
 
-- id: AdderLoop
+- id: IntegerAdder
   type: Workflow
   properties:
     director: !ref PublishSubscribeDirector
@@ -19,9 +19,9 @@ components:
       c:
         flow: /c
     nodes: 
-    - !ref Add
+    - !ref AddIntegers
     
-- id: Add
+- id: AddIntegers
   type: Node
   properties:   
     actor: !ref Adder
