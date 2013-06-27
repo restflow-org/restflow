@@ -80,7 +80,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + _resourceDirectory  + _parentDirectory + "/" + _testDirectory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
-		assertFilesystemResourceValid(expectedRoot, actualRoot, resourcePath);
+		TestUtilities.assertFilesystemResourceValid(expectedRoot, actualRoot, resourcePath);
 	}
 
 	protected void assertFileMatchesTemplate(String resourcePath) throws Exception {
@@ -88,7 +88,7 @@ abstract public class WorkflowTestCase extends RestFlowTestCase {
 		File expectedRoot = new File(PortableIO.getCurrentDirectoryPath() + "/" + _resourceDirectory+ _parentDirectory + "/" + _testDirectory + "/expected/");
 		File actualRoot = new File(_runDirectory.getAbsolutePath());
 		
-		assertFilesystemResourceMatchesTemplate(expectedRoot, actualRoot, resourcePath);
+		TestUtilities.assertFilesystemResourceMatchesTemplate(expectedRoot, actualRoot, resourcePath);
 	}
 	
 	protected DataDrivenDirector _dataDrivenDirector() {
