@@ -9,7 +9,6 @@ import junit.framework.TestCase;
 
 import org.restflow.WorkflowContext;
 import org.restflow.beans.TextScanner;
-import org.restflow.test.WorkflowTestCase;
 
 
 public class TestUtilities {
