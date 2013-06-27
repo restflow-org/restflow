@@ -254,7 +254,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		}
 	}
 	
-	public synchronized void setOutputs(Map<String, Object> outputs) {
+	public synchronized void setOutputs(Map<String, Object> outputs) throws Exception {
 
 		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
 		

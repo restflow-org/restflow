@@ -1,7 +1,7 @@
 
 imports:
 
-- actors:actors.yaml
+- classpath:/org/restflow/java/actors.yaml
 - classpath:/org/restflow/directors.yaml
 
 components:
@@ -12,21 +12,15 @@ components:
     director: !ref PublishSubscribeDirector
     inputs:
       a:
+        flow: /a
       b:
+        flow: /b
     outputs:
       c:
+        flow: /c
     nodes: 
-    - !ref GetInputs
     - !ref Add
-    - !ref SendOutputs
     
-- id: GetInputs
-  type: InPortal
-  properties:
-    outflows:
-      a: /a
-      b: /b
-
 - id: Add
   type: Node
   properties:   
@@ -36,10 +30,3 @@ components:
       b: /b
     outflows:
       sum: /c
-
-- id: SendOutputs
-  type: OutPortal
-  properties:
-    inflows:
-      c: /c
- 

@@ -63,13 +63,15 @@ public class Workflow extends AbstractActor {
 	@GuardedBy("this") private List<WorkflowNode> 		_nodes;
 	@GuardedBy("this") private Map<String,Reporter> 	_reports;
 	@GuardedBy("this") private List<WorkflowNode> 		_sinks;
-
+	
 	List<UnusedDataRecord> _unusedDataRecords;
 	
 	private Map<String, WorkflowNode> _nameToNodeMap;
 	protected UriTemplate _runUriPrefix;
 	private int _prefixVariableCount;
 	private long _nextNodeNumber = 0;
+	private InPortal _implicitInportal = null;
+	private OutPortal _implicitOutportal = null;
 	
 
 	private boolean 	_showPreambleReport = true;
@@ -155,6 +157,62 @@ public class Workflow extends AbstractActor {
 		Contract.requires(_state == ActorFSM.CONSTRUCTED);
 		_reports = new HashMap<String, Reporter>(reports);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public synchronized void setInputs(Map<String, Object> inputs) throws Exception {
+		
+		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
+		super.setInputs(inputs);
+
+		Map<String,String> flows = null;
+		
+		for (Map.Entry<String,Object> entry : inputs.entrySet()) {
+			String inputName = entry.getKey();
+			Map<String,Object> inputProperties = (Map<String,Object>)entry.getValue();
+			if (inputProperties != null ) {
+				String flowExpression = (String) inputProperties.get("flow");
+				if (flowExpression != null) {
+					if (flows == null) {
+						flows = new HashMap<String,String>();
+					}
+					flows.put(inputName, flowExpression);
+				}
+			}
+		}
+		
+		if (flows != null) {
+			_implicitInportal = new InPortal();
+			_implicitInportal.setOutflows(flows);
+		}
+	}
+	
+	public synchronized void setOutputs(Map<String, Object> outputs) throws Exception {
+		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
+		super.setOutputs(outputs);
+		
+		Map<String,Object> flows = null;
+
+		for (Map.Entry<String,Object> entry : outputs.entrySet()) {
+			String outputName = entry.getKey();
+			Map<String,Object> outputProperties = (Map<String,Object>)entry.getValue();
+			if (outputProperties != null && outputProperties instanceof Map) {
+				@SuppressWarnings("unchecked")
+				String flowExpression = (String) outputProperties.get("flow");
+				if (flowExpression != null) {
+					if (flows == null) {
+						flows = new HashMap<String,Object>();
+					}
+					flows.put(outputName, flowExpression);
+				}
+			}
+		}
+	
+		if (flows != null) {
+			_implicitOutportal = new OutPortal();
+			_implicitOutportal.setInflows(flows);
+		}
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////
 	///   actor configuration setters -- PROPERTES_UNSET or UNCONFIGURED   ////
@@ -255,6 +313,14 @@ public class Workflow extends AbstractActor {
 
 		_nameToNodeMap = new HashMap<String,WorkflowNode>();
 		
+		if (_implicitInportal != null) {
+			_nodes.add(_implicitInportal);
+		}
+		
+		if (_implicitOutportal != null) {
+			_nodes.add(_implicitOutportal);
+		}
+
 		// find a way to move this block after the workflow rewriting so that configure() is
 		// called on all nodes including buffer nodes
 		for (WorkflowNode node : _nodes) {
