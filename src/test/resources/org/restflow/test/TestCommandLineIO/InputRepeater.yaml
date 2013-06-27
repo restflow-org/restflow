@@ -1,0 +1,31 @@
+
+imports:
+
+- classpath:/org/restflow/java/actors.yaml
+- classpath:/org/restflow/directors.yaml
+
+components:
+
+- id: InputRepeater
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    inputs:
+      inputValue:
+        flow: /i
+        nullable: true
+    outputs:
+      outputValue:
+        flow: /o
+        nullable: true
+    nodes: 
+    - !ref RepeatInput
+    
+- id: RepeatInput
+  type: Node
+  properties:   
+    actor: !ref ConstantSource
+    inflows:
+      value: /i
+    outflows:
+      value: /o
