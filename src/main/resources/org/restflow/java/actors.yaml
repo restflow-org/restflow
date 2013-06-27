@@ -11,8 +11,10 @@ components:
     beanClassName: org.restflow.beans.ConstantSource
     inputs: 
       value:
+        nullable: true
     outputs: 
       value:
+        nullable: true
 
 - id: IntegerConstantSource
   type: JavaActor
