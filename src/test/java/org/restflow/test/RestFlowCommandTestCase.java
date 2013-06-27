@@ -23,6 +23,8 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 	protected File testRunDirectory;
 	protected File testWorkingDirectory;
 	
+	protected final static String EOL = System.getProperty("line.separator");
+	
 	protected void createTestEnvironment(String resourcePath) throws Exception {
 		testResourcePath = resourcePath;
 		testResourceDirectory = new File(PortableIO.getCurrentDirectoryPath() + testResourcePath);
@@ -30,11 +32,11 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 		testWorkingDirectory = PortableIO.createUniqueTimeStampedDirectory(TEST_RUNS_DIRECTORY, testName);
 	}
 
-	protected void runRestFlowWithArguments(String arguments) throws Exception {
-		testRun = RestFlow.loadAndRunWorkflow(arguments.trim().split(" "));
+	protected void runRestFlowWithArguments(String[] args) throws Exception {
+		testRun = RestFlow.loadAndRunWorkflow(args);
 		testRunDirectory = new File(testRun.getRunDirectory());
 	}
-	
+
 	protected String getExpected(String filename) throws IOException {
 		return PortableIO.readTextFileOnFilesystem(testResourceDirectory + "/" + filename);
 	}
