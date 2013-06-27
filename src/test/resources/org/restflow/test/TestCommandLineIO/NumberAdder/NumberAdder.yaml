@@ -1,0 +1,45 @@
+
+imports:
+
+- actors:actors.yaml
+- classpath:/org/restflow/directors.yaml
+
+components:
+
+- id: AdderLoop
+  type: Workflow
+  properties:
+    director: !ref PublishSubscribeDirector
+    inputs:
+      a:
+      b:
+    outputs:
+      c:
+    nodes: 
+    - !ref GetInputs
+    - !ref Add
+    - !ref SendOutputs
+    
+- id: GetInputs
+  type: InPortal
+  properties:
+    outflows:
+      a: /a
+      b: /b
+
+- id: Add
+  type: Node
+  properties:   
+    actor: !ref Adder
+    inflows:
+      a: /a
+      b: /b
+    outflows:
+      sum: /c
+
+- id: SendOutputs
+  type: OutPortal
+  properties:
+    inflows:
+      c: /c
+ 
