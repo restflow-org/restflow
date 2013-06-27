@@ -168,12 +168,14 @@ public class RestFlow {
 			//get String values from the command line and bind them to the workflow inputs
 			for (Object pairObj : outputs) {
 				String pair = (String) pairObj;
-				String[] kv = pair.split("=");
-				if (kv.length != 2) {
-					throw new Exception(
-							"Output options should be name values pairs. Example: -o result=result.txt");
-				} else {
+				String[] kv = pair.split(":");
+				if (kv.length == 1) {
+					outputMap.put(kv[0], "-");
+				} else if (kv.length == 2) {
 					outputMap.put(kv[0], kv[1]);
+				} else {
+					throw new Exception(
+							"Output options should be name value pairs. Example: -o result:result.txt");
 				}
 			}
 			
