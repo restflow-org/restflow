@@ -182,7 +182,9 @@ public class TestFileProtocol extends RestFlowTestCase {
 				.outflow("greetingTwo", "file:/greetingTwo.txt"))
 				
 			.node(new JavaNodeBuilder()
-				.bean(new Object() {})
+				.bean(new Object() {
+					public File messageOne, messageTwo;
+				})
 				.inflow("file:/greetingOne.txt", "messageOne")
 				.inflow("file:/greetingTwo.txt", "messageTwo"))
 				
