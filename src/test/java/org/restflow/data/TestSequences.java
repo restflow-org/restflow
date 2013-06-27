@@ -111,13 +111,17 @@ public class TestSequences extends RestFlowTestCase {
 		Sequences s = new Sequences();
 		s.setRepeatValues(true);
 		
-		
+		Exception exception = null;
 		try {
 			s.configure();
 			fail("should not be able to repeat a sequence on varying length sequences");
 		} catch (Exception e) {
-			e.printStackTrace();
+			exception = e;
 		}
+		
+		assertNotNull(exception);
+		assertEquals("cannot repeat sequences of varying length", exception.getMessage());
+
 	}	
 
 	
