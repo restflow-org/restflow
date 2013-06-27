@@ -96,10 +96,12 @@ public class RunMetadata {
 	// accessors for workflow input values
 	public void setInputValues(Map<String, Object> inputValues) 	{ _inputValues = inputValues; }
 	public Map<String, Object> getInputValues() 					{ return _inputValues; }
+	public Object getInputValue(String name)						{ return _inputValues.get(name);}
 
 	// accessors for workflow output values
 	public void setOutputValues(Map<String, Object> outputValues) 	{ _outputValues = outputValues; }
 	public Map<String, Object> getOutputValues() 					{ return _outputValues; }
+	public Object getOutputValue(String name)						{ return _outputValues.get(name); }
 	
 	public void setRestoreErrors(List<String> restoreErrors) 		{ _restoreErrors = restoreErrors; }
 	public List<String> getRestoreErrors() 							{ return _restoreErrors; }
