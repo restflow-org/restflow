@@ -136,7 +136,6 @@ public class RestFlow {
 			}
 			
 			
-			Collection<?> inputs = options.valuesOf("i");
 			HashMap<String, Object> inputMap = new HashMap<String, Object>();
 			
 			//load all of the yaml files and bind their contents to the workflow inputs
@@ -148,24 +147,26 @@ public class RestFlow {
 				inputMap.putAll(inputObjects);
 			}			
 			
-			//get String values from the command line and bind them to the workflow inputs
-			for (Object pairObj : inputs) {
-				String pair = (String) pairObj;
-				String[] kv = pair.split("=");
-				if (kv.length != 2) {
+			//get values from the command line and bind them to the workflow inputs
+			for (Object inputOptionObject :  options.valuesOf("i")) {
+				String inputOption = (String) inputOptionObject;
+				int indexOfFirstEquals = inputOption.indexOf("=");
+				if (indexOfFirstEquals == -1) {
 					throw new Exception(
-							"Input options should be key-value pairs. Example: -i count=12");
+						"Input options should be key-value pairs separated by equal signs. Example: -i count=12");
 				} else {
-					inputMap.put(kv[0], kv[1]);
+					String inputName = inputOption.substring(0, indexOfFirstEquals);
+					String inputValueString = inputOption.substring(indexOfFirstEquals + 1);
+					Object inputValue = yaml.load(inputValueString);
+					inputMap.put(inputName, inputValue);
 				}
 			}
-			
+
 			wrb.inputBindings(inputMap);
 			
 			Collection<?> outputs = options.valuesOf("o");
 			HashMap<String, Object> outputMap = new HashMap<String, Object>();
 			
-			//get String values from the command line and bind them to the workflow inputs
 			for (Object pairObj : outputs) {
 				String pair = (String) pairObj;
 				String[] kv = pair.split(":");
