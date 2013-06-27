@@ -1,10 +1,14 @@
 package org.restflow.metadata;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.restflow.actors.Actor;
+import org.restflow.data.PublishedResource;
+import org.restflow.data.SingleResourcePacket;
 import org.restflow.reporter.Reporter;
 import org.restflow.reporter.YamlErrorReporter;
 import org.restflow.util.StdoutRecorder;
@@ -36,11 +40,22 @@ public abstract class BaseMetadataManager implements MetadataManager {
 		
 		Map<String,Object> outputValues = workflow.getFinalOutputs();
 		
-//		for (Map.Entry<String, Object> binding : outputBindings.entrySet()) {
-//			String name = binding.getKey();
-//			String path = (String)binding.getValue();
-//			Object value = outputValues.get(name);
-//		}
+		if (outputBindings != null) {
+			for (Map.Entry<String, Object> binding : outputBindings.entrySet()) {
+				String resourceName = binding.getKey();
+				Object resourceValue = outputValues.get(resourceName);
+				String outputFilePath = (String)binding.getValue();
+	
+				if (resourceValue instanceof File) {
+					File publishedFile = (File)resourceValue;
+					File outputFile = new File(outputFilePath);
+					FileUtils.copyFile(publishedFile, outputFile);
+				} else {
+					File outputFile = new File(outputFilePath);
+					FileUtils.writeStringToFile(outputFile, String.valueOf(resourceValue));
+				}
+			}
+		}
 		
 		outputValues.put("restflow-stdout", getStdoutRecording());
 
