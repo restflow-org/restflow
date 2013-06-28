@@ -182,6 +182,7 @@ public class Workflow extends AbstractActor {
 		
 		if (flows != null) {
 			_implicitInportal = new InPortal();
+			_implicitInportal.setBeanName("WorkflowInportal");
 			_implicitInportal.setOutflows(flows);
 		}
 	}
@@ -209,6 +210,7 @@ public class Workflow extends AbstractActor {
 	
 		if (flows != null) {
 			_implicitOutportal = new OutPortal();
+			_implicitOutportal.setBeanName("WorkflowOutportal");
 			_implicitOutportal.setInflows(flows);
 		}
 	}
