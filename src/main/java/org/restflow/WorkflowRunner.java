@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.StringBufferInputStream;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 import org.restflow.actors.Actor;
@@ -334,6 +335,15 @@ public class WorkflowRunner {
 			_cutTerminalConnections();
 		}
 		
+		// Verify that all requested outputs are actually produced by the actor or workflow
+		Collection<String> outputs = _actor.getOutputNames();
+		if (_outputBindings != null) {
+			for (String requestedOutputName : _outputBindings.keySet()) {
+				if (! outputs.contains(requestedOutputName)) {
+					throw new Exception(_actor.getBeanName() + " does not produce requested output " + requestedOutputName + ".");
+				}
+			}
+		}
 		
 		final TraceRecorder traceRecorder = _context.getTraceRecorder();
 

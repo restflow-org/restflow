@@ -172,4 +172,24 @@ public class TestCommandLine_StandardOutput extends RestFlowCommandTestCase {
 		}
 	}
 
+	public void test_InvalidOutputName() throws Exception {
+		createTestEnvironment(testResourcePath);
+
+		try {
+			runRestFlowWithArguments( new String[] {
+					"-base", testWorkingDirectory.getPath(),
+					"-run", "run",
+					"-f", "classpath:/org/restflow/test/TestCommandLineIO/IntegerDivider.yaml",
+					"-w", "IntegerDivider",
+					"-i", "numerator=23",
+					"-i", "divisor=5",
+					"-o", "dividend:-"
+				}
+			);
+			fail("Exception expected");
+		} catch (Exception e) {
+			assertEquals("IntegerDivider does not produce requested output dividend.", e.getMessage());
+		}
+	}
+
 }
