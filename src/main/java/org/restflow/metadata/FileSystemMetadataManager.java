@@ -160,7 +160,7 @@ public class FileSystemMetadataManager extends BaseMetadataManager {
 		File control = new File (runDirectoryPath + CONTROL_FILE);		
 		File productsFile = new File( runDirectoryPath + PRODUCTS_FILE );
 		File stdout = new File(runDirectoryPath + File.separator + METADATA_DIR + StdoutRecorder.STDOUT_FILE );
-		File stderr = new File(runDirectoryPath + File.separator + METADATA_DIR + StdoutRecorder.STDOUT_FILE );
+		File stderr = new File(runDirectoryPath + File.separator + METADATA_DIR + StdoutRecorder.STDERR_FILE );
 		File inputFile = new File(runDirectoryPath + INPUTS_FILE );
 		File outputFile = new File(runDirectoryPath + OUTPUTS_FILE );
 		File stateFile = new File (runDirectoryPath + ACTOR_STATE_FILE );		
