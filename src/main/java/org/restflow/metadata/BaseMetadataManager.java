@@ -11,6 +11,7 @@ import org.restflow.data.PublishedResource;
 import org.restflow.data.SingleResourcePacket;
 import org.restflow.reporter.Reporter;
 import org.restflow.reporter.YamlErrorReporter;
+import org.restflow.util.PortableIO;
 import org.restflow.util.StdoutRecorder;
 
 
@@ -45,14 +46,24 @@ public abstract class BaseMetadataManager implements MetadataManager {
 				String resourceName = binding.getKey();
 				Object resourceValue = outputValues.get(resourceName);
 				String outputFilePath = (String)binding.getValue();
-	
-				if (resourceValue instanceof File) {
-					File publishedFile = (File)resourceValue;
-					File outputFile = new File(outputFilePath);
-					FileUtils.copyFile(publishedFile, outputFile);
+				
+				if (outputFilePath.equals("-")) {
+					if (resourceValue instanceof File) {
+						File publishedFile = (File)resourceValue;
+						String fileContents = FileUtils.readFileToString(publishedFile);
+						System.out.print(fileContents);
+					} else {
+						System.out.print(String.valueOf(resourceValue));
+					}
 				} else {
-					File outputFile = new File(outputFilePath);
-					FileUtils.writeStringToFile(outputFile, String.valueOf(resourceValue));
+					if (resourceValue instanceof File) {
+						File publishedFile = (File)resourceValue;
+						File outputFile = new File(outputFilePath);
+						FileUtils.copyFile(publishedFile, outputFile);
+					} else {
+						File outputFile = new File(outputFilePath);
+						FileUtils.writeStringToFile(outputFile, String.valueOf(resourceValue));
+					}
 				}
 			}
 		}
