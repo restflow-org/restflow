@@ -329,7 +329,7 @@ public class RestFlow {
 						.ofType(String.class).describedAs("key=value");
 				acceptsAll(asList("o", "output"), "where to save a workflow output")
 						.withRequiredArg().describedAs("workflow output destination")
-						.ofType(String.class).describedAs("outputName=outputPath");
+						.ofType(String.class).describedAs("outputName:outputPath");
 				acceptsAll(asList("infile", "input-file"), "yaml input file")
 						.withRequiredArg().describedAs("file of input parameters")
 						.ofType(String.class).describedAs("file");

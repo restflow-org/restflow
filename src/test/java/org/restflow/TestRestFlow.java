@@ -123,7 +123,7 @@ public class TestRestFlow extends RestFlowTestCase {
 				"--import-map <scheme=resource>          key-valueed import scheme to file      " + EOL +
 				"                                          resource                             " + EOL +
 				"--infile, --input-file <file>           yaml input file                        " + EOL +
-				"-o, --output <outputName=outputPath>    where to save a workflow output        " + EOL +
+				"-o, --output <outputName:outputPath>    where to save a workflow output        " + EOL +
 				"--outfile, --output-file <file>         yaml output file                       " + EOL +
 				"--preamble <directory>                  preamble template path (default: )     " + EOL +
 				"--prevrun <run directory>               uses final state from previous run     " + EOL +
