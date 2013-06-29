@@ -13,6 +13,7 @@ import org.apache.commons.io.output.CloseShieldOutputStream;
 import org.apache.commons.io.output.TeeOutputStream;
 
 public class StdoutRecorder {
+	
 	public static final String STDOUT_FILE = "stdout.txt";
 	public static final String STDERR_FILE = "stderr.txt";
 	
@@ -20,9 +21,118 @@ public class StdoutRecorder {
 	private PrintStream stderr;
 	private boolean _suppressTerminalOutput;
 	private StreamStorage _recording;
+	private boolean _rethrowException = false;
 
 	private PrintStream teeStdout;
 	private PrintStream teeStderr;
+	
+	/**
+	 * @param suppressTerminalOutput  If 'true' record the stdout silently; if 'false' continue streaming to stdout while recording.
+	 */
+	public StdoutRecorder(boolean suppressTerminalOutput) {
+		super();
+		_suppressTerminalOutput = suppressTerminalOutput;		
+		_recording = new InMemoryRecording();
+	}
+
+	public StdoutRecorder(boolean suppressTerminalOutput, boolean rethrowException) {
+		super();
+		_suppressTerminalOutput = suppressTerminalOutput;
+		_rethrowException = rethrowException;
+		_recording = new InMemoryRecording();
+	}
+
+	
+	/**
+	 * @param suppressTerminalOutput  If 'true' record the stdout silently; if 'false' continue streaming to stdout while recording.
+	 */
+	public StdoutRecorder(boolean suppressTerminalOutput, StreamStorage storage) {
+		super();
+		_suppressTerminalOutput = suppressTerminalOutput;		
+		_recording = storage;
+	}
+	
+	public StdoutRecorder(WrappedCode wrappedCode) throws Exception {
+		super();
+		_suppressTerminalOutput = true;
+		_recording = new InMemoryRecording();
+		recordExecution(wrappedCode);
+	}
+	
+	/**
+	 * @param wrappedCode  Execute and record the stdout,stderr of the code in the execute method of the WrappedCode implementation.
+	 * @throws Exception
+	 */
+	public void recordExecution (WrappedCode wrappedCode) throws Exception {
+		try {
+			redirect();
+			wrappedCode.execute();
+		} catch (Exception e) {
+			if (_rethrowException) {
+				throw e;
+			}
+			e.printStackTrace(stderr);
+		} finally {
+			restore();
+			_recording.done();
+		}
+	}
+	
+	private void redirect() {
+
+		stdout = System.out;
+		stderr = System.err;
+		
+		teeStdout = null;
+		teeStderr = null;
+		
+		CloseShieldOutputStream stdoutProxy = new CloseShieldOutputStream(stdout);
+		CloseShieldOutputStream stderrProxy = new CloseShieldOutputStream(stderr);
+		
+		OutputStream teedStdoutStream;
+		OutputStream teedStderrStream;			
+		if (_suppressTerminalOutput) {
+			teedStdoutStream = _recording.getStdout();
+			teedStderrStream = _recording.getStderr();					
+		} else {
+			teedStdoutStream = new TeeOutputStream(stdoutProxy, _recording.getStdout() );				
+			teedStderrStream = new TeeOutputStream(stderrProxy, _recording.getStderr() );								
+		}
+		teeStdout = new PrintStream( teedStdoutStream );
+		teeStderr = new PrintStream( teedStderrStream );			
+		
+		System.setOut( teeStdout ) ;
+		System.setErr( teeStderr ) ;
+		
+	}
+	
+	private void restore() {
+		System.setOut( stdout ) ;	
+		System.setErr( stderr ) ;	
+		
+		teeStdout.flush();
+		teeStdout.close();
+		
+		teeStderr.flush();
+		teeStderr.close();
+	}
+	
+	/**
+	 * @author scottm
+	 * Implement the 'execute' method to have code executed and stdout of the code recorded.
+	 * 
+	 */
+	public interface WrappedCode {
+		public void execute() throws Exception;
+	}
+	
+	public String getStdoutRecording() throws Exception {
+		return _recording.getStdoutRecording();
+	}
+	
+	public String getStderrRecording() throws Exception {
+		return _recording.getStderrRecording();
+	}
 	
 	public interface StreamStorage {
 		PrintStream getStdout();
@@ -124,103 +234,4 @@ public class StdoutRecorder {
 			IOUtils.closeQuietly(_capturedStderrBuffer);			
 		};
 	}
-	
-	/**
-	 * @param suppressTerminalOutput  If 'true' record the stdout silently; if 'false' continue streaming to stdout while recording.
-	 */
-	public StdoutRecorder(boolean suppressTerminalOutput) {
-		super();
-		_suppressTerminalOutput = suppressTerminalOutput;		
-		_recording = new InMemoryRecording();
-	}
-
-	/**
-	 * @param suppressTerminalOutput  If 'true' record the stdout silently; if 'false' continue streaming to stdout while recording.
-	 */
-	public StdoutRecorder(boolean suppressTerminalOutput, StreamStorage storage) {
-		super();
-		_suppressTerminalOutput = suppressTerminalOutput;		
-		_recording = storage;
-	}
-	
-	public StdoutRecorder(WrappedCode wrappedCode) throws Exception {
-		super();
-		_suppressTerminalOutput = true;
-		_recording = new InMemoryRecording();
-		recordExecution(wrappedCode);
-	}
-	
-	/**
-	 * @param wrappedCode  Execute and record the stdout,stderr of the code in the execute method of the WrappedCode implementation.
-	 * @throws Exception
-	 */
-	public void recordExecution (WrappedCode wrappedCode) throws Exception {
-		try {
-			redirect();
-			wrappedCode.execute();
-		} catch (Exception e) {
-			e.printStackTrace(stderr);
-		} finally {
-			restore();
-			_recording.done();
-		}
-	}
-	
-	private void redirect() {
-
-		stdout = System.out;
-		stderr = System.err;
-		
-		teeStdout = null;
-		teeStderr = null;
-		
-		CloseShieldOutputStream stdoutProxy = new CloseShieldOutputStream(stdout);
-		CloseShieldOutputStream stderrProxy = new CloseShieldOutputStream(stderr);
-		
-		OutputStream teedStdoutStream;
-		OutputStream teedStderrStream;			
-		if (_suppressTerminalOutput) {
-			teedStdoutStream = _recording.getStdout();
-			teedStderrStream = _recording.getStderr();					
-		} else {
-			teedStdoutStream = new TeeOutputStream(stdoutProxy, _recording.getStdout() );				
-			teedStderrStream = new TeeOutputStream(stderrProxy, _recording.getStderr() );								
-		}
-		teeStdout = new PrintStream( teedStdoutStream );
-		teeStderr = new PrintStream( teedStderrStream );			
-		
-		System.setOut( teeStdout ) ;
-		System.setErr( teeStderr ) ;
-		
-	}
-	
-	private void restore() {
-		System.setOut( stdout ) ;	
-		System.setErr( stderr ) ;	
-		
-		teeStdout.flush();
-		teeStdout.close();
-		
-		teeStderr.flush();
-		teeStderr.close();
-	}
-	
-	/**
-	 * @author scottm
-	 * Implement the 'execute' method to have code executed and stdout of the code recorded.
-	 * 
-	 */
-	public interface WrappedCode {
-		public void execute() throws Exception;
-	}
-	
-	public String getStdoutRecording() throws Exception {
-		return _recording.getStdoutRecording();
-	}
-	
-	public String getStderrRecording() throws Exception {
-		return _recording.getStderrRecording();
-	}
-	
-	
 }
