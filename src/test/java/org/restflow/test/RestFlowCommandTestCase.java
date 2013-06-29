@@ -9,6 +9,7 @@ import org.restflow.RestFlow;
 import org.restflow.metadata.RunMetadata;
 import org.restflow.reporter.TraceReporter;
 import org.restflow.util.PortableIO;
+import org.restflow.util.StdoutRecorder;
 import org.restflow.util.TestUtilities;
 
 
@@ -32,8 +33,17 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 		testWorkingDirectory = PortableIO.createUniqueTimeStampedDirectory(TEST_RUNS_DIRECTORY, testName);
 	}
 
-	protected void runRestFlowWithArguments(String[] args) throws Exception {
-		testRun = RestFlow.loadAndRunWorkflow(args);
+	protected void runRestFlowWithArguments(final String[] args) throws Exception {
+		
+		StdoutRecorder stdoutRecorder = new StdoutRecorder(true);
+
+		stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
+			@Override
+			public void execute() throws Exception {
+				testRun = RestFlow.loadAndRunWorkflow(args);
+			}
+		});
+
 		testRunDirectory = new File(testRun.getRunDirectory());
 	}
 
