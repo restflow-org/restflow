@@ -170,7 +170,10 @@ public class RestFlow {
 			for (Object pairObj : outputs) {
 				String pair = (String) pairObj;
 				String[] kv = pair.split(":");
-				if (kv.length == 1) {
+				if (kv.length == 1 || kv[1].equals("-")) {
+					if (outputMap.containsValue("-")) {
+						throw new Exception("Only one output may be sent to stdout.");
+					}
 					outputMap.put(kv[0], "-");
 				} else if (kv.length == 2) {
 					outputMap.put(kv[0], kv[1]);
