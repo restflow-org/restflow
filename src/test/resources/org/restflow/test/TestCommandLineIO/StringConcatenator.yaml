@@ -36,6 +36,7 @@ components:
   type: JavaActorNode
   properties:
     actor.beanClassName: org.restflow.beans.FileWriter
+    actor.usesStepDirectory: true
     inflows:
       inText: /s1s2
     outflows:
