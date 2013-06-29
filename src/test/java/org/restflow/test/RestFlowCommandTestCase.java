@@ -35,7 +35,7 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 
 	protected void runRestFlowWithArguments(final String[] args) throws Exception {
 		
-		StdoutRecorder stdoutRecorder = new StdoutRecorder(true);
+		StdoutRecorder stdoutRecorder = new StdoutRecorder(true, true);
 
 		stdoutRecorder.recordExecution(new StdoutRecorder.WrappedCode() {
 			@Override
