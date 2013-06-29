@@ -1,0 +1,17 @@
+
+imports:
+
+- classpath:/org/restflow/types.yaml
+
+components:
+
+- id: IntegerDivider
+  type: JavaActor
+  properties:   
+    beanClassName: org.restflow.beans.IntegerDivider
+    inputs:
+      numerator:
+      divisor:
+    outputs:
+      quotient:
+      remainder:
