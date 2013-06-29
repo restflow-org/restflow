@@ -1,0 +1,42 @@
+
+imports:
+
+- classpath:/org/restflow/java/actors.yaml
+- classpath:/org/restflow/directors.yaml
+
+components:
+
+- id: TestStringConcatenator
+  type: Workflow
+  properties:
+    director: !ref JobDependencyDirector
+    inputs:
+      s1:
+        flow: /s1
+      s2:
+        flow: /s2
+    outputs:
+      s1s2:
+        flow: /s1s2file
+    nodes: 
+    - !ref ConcatenateStrings
+    - !ref WriteStringToFile
+    
+- id: ConcatenateStrings
+  type: Node
+  properties:   
+    actor: !ref StringConcatenator
+    inflows:
+      stringOne: /s1
+      stringTwo: /s2
+    outflows:
+      concatenatedString: /s1s2
+      
+- id: WriteStringToFile
+  type: JavaActorNode
+  properties:
+    actor.beanClassName: org.restflow.beans.FileWriter
+    inflows:
+      inText: /s1s2
+    outflows:
+      outFile: file:/s1s2file
