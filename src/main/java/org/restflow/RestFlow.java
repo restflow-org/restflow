@@ -161,28 +161,26 @@ public class RestFlow {
 					inputMap.put(inputName, inputValue);
 				}
 			}
-
 			wrb.inputBindings(inputMap);
 			
-			Collection<?> outputs = options.valuesOf("o");
 			HashMap<String, Object> outputMap = new HashMap<String, Object>();
-			
-			for (Object pairObj : outputs) {
-				String pair = (String) pairObj;
-				String[] kv = pair.split(":");
-				if (kv.length == 1 || kv[1].equals("-")) {
-					if (outputMap.containsValue("-")) {
-						throw new Exception("Only one output may be sent to stdout.");
-					}
-					outputMap.put(kv[0], "-");
-				} else if (kv.length == 2) {
-					outputMap.put(kv[0], kv[1]);
+			for (Object outputOptionObject : options.valuesOf("o")) {
+				String outputOption = (String) outputOptionObject;
+				int indexOfFirstColon = outputOption.indexOf(":");
+				String outputName = null;
+				Object outputPath = null;
+				if (indexOfFirstColon == -1) {
+					outputName = outputOption;
+					outputPath = "-";
 				} else {
-					throw new Exception(
-							"Output options should be name value pairs. Example: -o result:result.txt");
+					outputName = outputOption.substring(0, indexOfFirstColon);
+					outputPath = outputOption.substring(indexOfFirstColon + 1);	
 				}
+				if (outputPath.equals("-") && outputMap.containsValue("-")) {
+					throw new Exception("Only one output may be sent to stdout.");
+				}
+				outputMap.put(outputName, outputPath);
 			}
-			
 			wrb.outputBindings(outputMap);
 			
 			wrb.runsDirectory(runDirectoryContainer);			

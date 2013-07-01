@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.restflow.test.RestFlowCommandTestCase;
 
-public class TestCommandLine_LiteralInputValues extends RestFlowCommandTestCase {
+public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCase {
 
 	private String testResourcePath = "/src/test/resources/org/restflow/test/TestCommandLineIO/";
 

@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.restflow.test.RestFlowCommandTestCase;
 
-public class TestCommandLine_StandardOutput extends RestFlowCommandTestCase {
+public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 
 	private String testResourcePath = "/src/test/resources/org/restflow/test/TestCommandLineIO/";
 
