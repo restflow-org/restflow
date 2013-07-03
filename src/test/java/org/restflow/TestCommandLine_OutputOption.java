@@ -10,7 +10,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	private String testResourcePath = "/src/test/resources/org/restflow/test/TestCommandLineIO/";
 
 	public void test_NoOutputToStandardOut_Value() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -23,7 +23,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_OutputToStandardOut_Value_NoDash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -37,7 +37,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_OutputToStandardOut_Value_Dash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -51,7 +51,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_NoOutputToStandardOut_File() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -65,7 +65,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 		
 	public void test_OutputToStandardOut_File_NoDash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -80,7 +80,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 		
 	public void test_OutputToStandardOut_File_Dash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -95,7 +95,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_TwoOutputs_BothToFiles() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -113,7 +113,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 	
 	public void test_TwoOutputs_OneToStandardOut() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
 				"-run", "run",
@@ -131,7 +131,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_TwoOutputs_BothToStandardOut_NoDash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 
 		try {
 			runRestFlowWithArguments( new String[] {
@@ -152,7 +152,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_TwoOutputs_BothToStandardOut_Dash() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 
 		try {
 			runRestFlowWithArguments( new String[] {
@@ -173,7 +173,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 	}
 
 	public void test_InvalidOutputName() throws Exception {
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 
 		try {
 			runRestFlowWithArguments( new String[] {

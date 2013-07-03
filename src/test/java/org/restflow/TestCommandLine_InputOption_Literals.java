@@ -13,7 +13,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Integer() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -32,7 +32,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Double() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -52,7 +52,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	
 	public void test_InputRepeater_Boolean_true() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -71,7 +71,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Boolean_TRUE() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -91,7 +91,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	
 	public void test_InputRepeater_Boolean_True() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -110,7 +110,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Boolean_false() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -129,7 +129,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Boolean_FALSE() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -149,7 +149,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	
 	public void test_InputRepeater_Boolean_False() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -168,7 +168,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_String_Unquoted_NoSpaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -187,7 +187,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_String_Unquoted_Spaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -206,7 +206,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_String_DoubleQuotes_NoSpaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 	runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -225,7 +225,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_String_DoubleQuotes_Spaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -244,7 +244,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_String_SingleQuotes_NoSpaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -263,7 +263,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	
 	public void test_InputRepeater_String_SingleQuotes_Spaces() throws Exception {
 	
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -282,7 +282,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_NULL() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -301,7 +301,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_Null() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -320,7 +320,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 
 	public void test_InputRepeater_null() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -340,7 +340,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Integers() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -370,7 +370,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Integers_NullElement() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -398,7 +398,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Strings_Unquoted_NoSpaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -426,7 +426,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Strings_Unquoted_NullElement() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -455,7 +455,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Strings_Unquoted_Spaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -484,7 +484,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Strings_DoubleQuotes_Spaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -512,7 +512,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_List_Strings_SingleQuotes_Spaces() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -540,7 +540,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_Map_StringToInteger() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -568,7 +568,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_Map_StringToString() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -596,7 +596,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	@SuppressWarnings("unchecked")
 	public void test_InputRepeater_Map_StringToBoolean() throws Exception {
 		
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
@@ -623,7 +623,7 @@ public class TestCommandLine_InputOption_Literals extends RestFlowCommandTestCas
 	
 	public void test_IntegerAdder_SaveOutputToFile() throws Exception {
 
-		createTestEnvironment(testResourcePath);
+		initializeTestEnvironment(testResourcePath);
 		
 		runRestFlowWithArguments( new String[] {
 				"-base", testWorkingDirectory.getPath(),
