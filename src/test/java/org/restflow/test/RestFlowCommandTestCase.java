@@ -2,6 +2,7 @@ package org.restflow.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -11,26 +12,30 @@ import org.restflow.reporter.TraceReporter;
 import org.restflow.util.PortableIO;
 import org.restflow.util.StdoutRecorder;
 import org.restflow.util.TestUtilities;
+import org.restflow.util.PortableIO.StreamSink;
 
 
 abstract public class RestFlowCommandTestCase extends TestCase {
 
 	private static String TEST_RUNS_DIRECTORY = TestUtilities.getTestRunsDirectoryPath();
 	
-	protected String testResourcePath;
+	protected String testCaseResourcePath;
+	protected File testCaseResourceDirectory;
 	protected File testResourceDirectory;	
-	protected String testName;
-	protected RunMetadata testRun;
 	protected File testRunDirectory;
 	protected File testWorkingDirectory;
+	protected RunMetadata testRun;
 	
 	protected final static String EOL = System.getProperty("line.separator");
 	
-	protected void createTestEnvironment(String resourcePath) throws Exception {
-		testResourcePath = resourcePath;
-		testResourceDirectory = new File(PortableIO.getCurrentDirectoryPath() + testResourcePath);
-		testName = testResourceDirectory.getName();
-		testWorkingDirectory = PortableIO.createUniqueTimeStampedDirectory(TEST_RUNS_DIRECTORY, testName);
+	@Override
+	public void setUp() throws IOException {
+		testCaseResourceDirectory = new File(PortableIO.getCurrentDirectoryPath() + testCaseResourcePath);
+	}
+	
+	protected void initializeTestEnvironment(String testDirectoryName) throws Exception {
+		testResourceDirectory = new File(testCaseResourceDirectory + "/" + testDirectoryName);
+		testWorkingDirectory = PortableIO.createUniqueTimeStampedDirectory(TEST_RUNS_DIRECTORY, testDirectoryName);
 	}
 
 	protected void runRestFlowWithArguments(final String[] args) throws Exception {
@@ -65,5 +70,12 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 
 	public String getTraceReport() throws Exception {
 		return TraceReporter.getReport(testRun.getTrace());
+	}
+	
+	protected static void assertMatchesPattern(String expected, String actual) throws IOException, InterruptedException {
+		
+		if (!Pattern.compile(expected).matcher(actual).matches()) {
+			assertEquals(expected, actual);
+		}
 	}
 }
