@@ -19,7 +19,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());		
-		assertEquals("", testRun.getStdoutText());
+		assertEquals("", testRun.getStdout());
 	}
 
 	public void test_OutputToStandardOut_Value_NoDash() throws Exception {
@@ -33,7 +33,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());		
-		assertEquals("3", testRun.getStdoutText());
+		assertEquals("3", testRun.getStdout());
 	}
 
 	public void test_OutputToStandardOut_Value_Dash() throws Exception {
@@ -47,7 +47,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());		
-		assertEquals("3", testRun.getStdoutText());
+		assertEquals("3", testRun.getStdout());
 	}
 
 	public void test_NoOutputToStandardOut_File() throws Exception {
@@ -61,7 +61,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());
-		assertEquals("", testRun.getStdoutText());		
+		assertEquals("", testRun.getStdout());		
 	}
 		
 	public void test_OutputToStandardOut_File_NoDash() throws Exception {
@@ -76,7 +76,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());
-		assertEquals("hello world", testRun.getStdoutText());		
+		assertEquals("hello world", testRun.getStdout());		
 	}
 		
 	public void test_OutputToStandardOut_File_Dash() throws Exception {
@@ -91,7 +91,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());
-		assertEquals("hello world", testRun.getStdoutText());		
+		assertEquals("hello world", testRun.getStdout());		
 	}
 
 	public void test_TwoOutputs_BothToFiles() throws Exception {
@@ -126,7 +126,7 @@ public class TestCommandLine_OutputOption extends RestFlowCommandTestCase {
 			}
 		);
 		assertEquals("", testRun.getStderr());
-		assertEquals("4", testRun.getStdoutText());
+		assertEquals("4", testRun.getStdout());
 		assertEquals("3", FileUtils.readFileToString(new File(testWorkingDirectory + "/remainder.txt")));
 	}
 

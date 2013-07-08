@@ -87,7 +87,7 @@ public class RunMetadata {
 	
 	// accessors for workflow stdout
 	public void setStdoutText(String stdoutText) 					{_stdoutText = stdoutText; }
-	public String getStdoutText() 									{ return _stdoutText; }
+	public String getStdout() 									{ return _stdoutText; }
 	
 	// accessors for workflow stderr
 	public void setStderr(String stderrText) 						{ _stderrText = stderrText; }

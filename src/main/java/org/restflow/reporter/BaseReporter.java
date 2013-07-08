@@ -97,7 +97,7 @@ abstract public class BaseReporter implements Reporter {
 		addProductsToModel( metadata );
 
 		if ( getIncludeStdout()) {
-			_reportModel.put("stdout", metadata.getStdoutText() );
+			_reportModel.put("stdout", metadata.getStdout() );
 			_reportModel.put("stderr", metadata.getStderr() );				
 		}
 		

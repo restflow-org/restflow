@@ -44,7 +44,7 @@ public class FileSystemMetadataLoader  {
 	
 	/*The stdout generated from the workflow's run*/
 	public String getRunStdout() {
-		return _metadata.getStdoutText(); 
+		return _metadata.getStdout(); 
 	}
 
 	/*The stderr generated from the workflow's run*/

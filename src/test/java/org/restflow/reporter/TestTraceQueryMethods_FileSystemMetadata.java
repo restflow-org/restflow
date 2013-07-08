@@ -31,7 +31,7 @@ public class TestTraceQueryMethods_FileSystemMetadata  extends WorkflowTestCase 
 		RunMetadata metadata = FileSystemMetadataManager.restoreMetadata(_runner.getRunDirectory());
 		Trace trace = metadata.getTrace();
 
-		assertEquals(_getExpectedStdout(), metadata.getStdoutText());
+		assertEquals(_getExpectedStdout(), metadata.getStdout());
 		assertEquals(_getExpectedProducts(), metadata.getProductsYaml());
 		assertEquals(_getExpectedTrace(), TraceReporter.getReport(trace));
 		
