@@ -22,11 +22,17 @@ public abstract class ScriptActor extends AbstractActor {
     @GuardedBy("this") protected String _wrapupScript;
     @GuardedBy("this") protected String _disposeScript;
     
+    public  enum OutputStreamMode { DISCARD, DELAYED, IMMEDIATE }; 
+    
+    protected OutputStreamMode _stdoutMode;
+    protected OutputStreamMode _stderrMode;
+    
 	public ScriptActor() {
-		super();
-		
+		super();		
 		synchronized(this) {
 			logger = LogFactory.getLog(getClass());
+			_stdoutMode = OutputStreamMode.DELAYED;
+		    _stderrMode = OutputStreamMode.DELAYED;
 		}
 	}
 	
@@ -56,6 +62,26 @@ public abstract class ScriptActor extends AbstractActor {
 		_configureScript = script;
 	}
 
+	public synchronized void setStdoutMode(String mode) throws Exception {
+		_stdoutMode = _parseOutputMode(mode);
+	}
+
+	public synchronized void setStderrMode(String mode) throws Exception {
+		_stderrMode = _parseOutputMode(mode);
+	}
+
+	private OutputStreamMode _parseOutputMode(String mode) throws Exception {
+		if (mode.equals("discard")) {
+			return OutputStreamMode.DISCARD;			
+		} else  if (mode.equals("delayed")) {
+			return OutputStreamMode.DELAYED;			
+		} else if (mode.equals("immediate")) {
+			return OutputStreamMode.IMMEDIATE;	
+		} else {
+			throw new Exception("Parse mode string must be one of discard, delayed, or immedate.");
+		}
+	}
+	
 	public synchronized void afterPropertiesSet() throws Exception {
 		Contract.requires(_state == ActorFSM.CONSTRUCTED);
 		super.afterPropertiesSet();
