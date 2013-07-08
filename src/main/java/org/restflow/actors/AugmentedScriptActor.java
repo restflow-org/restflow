@@ -390,8 +390,14 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			serializedOutputs = completeStdout.substring(serializedOutputStart);
 		}
 		
-		System.out.print(scriptStdout);
-		
+		if (_stderrMode == OutputStreamMode.DELAYED) {
+			System.out.print(adjustedStderr);
+		}
+
+		if (_stdoutMode == OutputStreamMode.DELAYED) {
+			System.out.print(scriptStdout);
+		}
+
 		return serializedOutputs;
 	}
 	
