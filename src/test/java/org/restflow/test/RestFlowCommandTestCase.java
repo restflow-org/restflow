@@ -62,6 +62,12 @@ abstract public class RestFlowCommandTestCase extends TestCase {
 		TestUtilities.assertFilesystemResourceValid(expectedRoot, actualRoot, resourcePath);
 	}
 
+	protected void assertFileResourcesMatchExactly(String expectedDirectory, String expectedResourcePath, String actualResourcePath) throws Exception {
+		File expectedRoot = new File(expectedDirectory + "/" + expectedResourcePath);
+		File actualRoot = new File(testWorkingDirectory.getAbsolutePath());
+		TestUtilities.assertFilesystemResourceValid(expectedRoot, actualRoot, actualResourcePath);
+	}
+
 	protected void assertFileMatchesTemplate(String resourcePath) throws Exception {
 		File expectedRoot = new File(testResourceDirectory + "/expected/");
 		File actualRoot = new File(testWorkingDirectory.getAbsolutePath());		
