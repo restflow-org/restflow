@@ -148,7 +148,12 @@ public class FileProtocol extends AbstractProtocol implements ApplicationContext
 			if (actorInputType.isEmpty() || actorInputType.equals("File")) {
 				
 				// duplicate the file
-				File duplicateFile = new File(actor.getNextStepDirectory() + "/" + localPath);				
+				File duplicateFile = new File(actor.getNextStepDirectory() + "/" + localPath);
+
+				if (duplicateFile.exists()) {
+					throw new Exception("File " + localPath + " already exists in run directory." );
+				}
+				
 				FileUtils.copyFile(inFile, duplicateFile);
 				
 				packetPayload = duplicateFile;
