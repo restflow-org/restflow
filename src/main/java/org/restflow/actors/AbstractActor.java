@@ -525,7 +525,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		}
 	}
 	
-	public synchronized void step() throws Exception {
+	protected synchronized void _abstractActorStep() throws Exception {
 
 		Contract.requires(_state == ActorFSM.INITIALIZED || _state == ActorFSM.STEPPED);
 
@@ -540,7 +540,11 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 
 		if (_usesStepDirectory) {
 			_actorStatus.setStepDirectory(_getCurrentStepDirectory());	
-		}
+		}	
+	}
+	
+	public synchronized void step() throws Exception {
+		_abstractActorStep();
 	}
 
 
