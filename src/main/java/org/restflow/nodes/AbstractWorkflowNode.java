@@ -58,8 +58,8 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 	@GuardedBy("this")	private boolean _enableLog;
 	@GuardedBy("this")	private String _uriPrefix;
 	@GuardedBy("this")	private Map<String,Object> _inflowConfiguration;
-	@GuardedBy("this")	private Map<String,String> _outflowConfiguration;
-	@GuardedBy("this")	private Map<String, String> _exceptionConfiguration;
+	@GuardedBy("this")	private Map<String,Object> _outflowConfiguration;
+	@GuardedBy("this")	private Map<String,Object> _exceptionConfiguration;
 
 	/***********************************
 	 *  protected configuration fields *
@@ -124,8 +124,8 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 			_receivedEosCount = 0;
 			_uriPrefix = "";
 			_inflowConfiguration = EMPTY_STRING_OBJECT_MAP;
-			_outflowConfiguration = EMPTY_STRING_STRING_MAP;
-			_exceptionConfiguration = EMPTY_STRING_STRING_MAP;
+			_outflowConfiguration = EMPTY_STRING_OBJECT_MAP;
+			_exceptionConfiguration = EMPTY_STRING_OBJECT_MAP;
 			_isFinished = NodeFinished.UNINITIALIZED;
 			_doneStepping = DoneStepping.UNINITIALIZED;
 			_allEosSent = false;
@@ -226,7 +226,7 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 	}
 
 
-	public synchronized void setExceptions(Map<String, String> exceptionConfiguration) throws Exception {
+	public synchronized void setExceptions(Map<String, Object> exceptionConfiguration) throws Exception {
 		_exceptionConfiguration = exceptionConfiguration;
 	}
 
@@ -241,7 +241,7 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 	}
 
 
-	public synchronized void setOutflows(Map<String, String> outflowConfiguration) throws Exception {
+	public synchronized void setOutflows(Map<String, Object> outflowConfiguration) throws Exception {
 		_outflowConfiguration = outflowConfiguration;
 	}
 
@@ -634,11 +634,20 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 	}
 
 
-	private synchronized void _addOutflowConfiguration(Map<String,String> outflowConfiguration) throws Exception {
+	private synchronized void _addOutflowConfiguration(Map<String,Object> outflowConfiguration) throws Exception {
 		
-		for (Map.Entry<String, String> entry : outflowConfiguration.entrySet()) {
+		for (Map.Entry<String, Object> entry : outflowConfiguration.entrySet()) {
 			String label = entry.getKey();
-			String uri = entry.getValue();
+			Object value = entry.getValue();
+
+			String uri = null;
+			if (value instanceof Map) {
+				Map outflowProperties = (Map)value;
+				uri = (String) outflowProperties.get("to");
+			} else {
+				uri = (String) value;
+			}
+			
 			if (uri == null) {
 				uri = _name + "." + label;
 				registerOutflow(label, uri, true);
@@ -660,7 +669,8 @@ public abstract class AbstractWorkflowNode implements WorkflowNode,
 			Boolean receiveOnce = false;
 			if (value instanceof Map) {
 				Map inflowProperties = (Map)value;
-				expression = (String) inflowProperties.get("expression");
+				expression = (String) inflowProperties.get("from");
+				if (expression == null) expression = (String) inflowProperties.get("expression");
 				receiveOnce = (Boolean) inflowProperties.get("receiveOnce");
 				if (receiveOnce == null) {
 					receiveOnce = false;
