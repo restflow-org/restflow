@@ -6,7 +6,7 @@ import java.util.Map;
 public class InPortalBuilder {
 	
 	private String 						_name = "";
-	private Map<String, String> 		_outflows = new HashMap<String, String>();
+	private Map<String,Object> 			_outflows = new HashMap<String,Object>();
 	
 	public InPortalBuilder name(String name) {
 		_name = name;

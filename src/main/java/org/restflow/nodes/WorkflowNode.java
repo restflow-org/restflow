@@ -27,7 +27,7 @@ public interface WorkflowNode extends Comparable<WorkflowNode> {
 	void replaceInflow(String label, String outflowPath) throws Exception;
 	Outflow registerOutflow(String label, String binding, boolean isDefaultUri) throws Exception;
 	void setInflows(Map<String, Object> inflows) throws Exception;
-	void setOutflows(Map<String, String> outflows) throws Exception;
+	void setOutflows(Map<String, Object> outflows) throws Exception;
 	void setStepsOnce(boolean b);
 	void setUriPrefix(String prefix);
 	void setWorkflow(Workflow workflow);

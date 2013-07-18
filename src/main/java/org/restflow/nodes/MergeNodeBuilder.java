@@ -8,10 +8,10 @@ import org.restflow.WorkflowContext;
 
 public class MergeNodeBuilder {
 	
-	private WorkflowContext				_context;
-	private String 						_name = "";
-	private Map<String, Object> 		_inflows = new HashMap<String, Object>();
-	private Map<String, String> 		_outflows = new HashMap<String, String>();
+	private WorkflowContext			_context;
+	private String 					_name = "";
+	private Map<String,Object> 		_inflows = new HashMap<String, Object>();
+	private Map<String,Object>		_outflows = new HashMap<String, Object>();
 	
 	public MergeNodeBuilder name(String name) {
 		_name = name;

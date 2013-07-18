@@ -20,7 +20,7 @@ public class ActorNodeBuilder  {
 	protected int						_maxConcurrency = 1;
 	protected boolean					_repeatValues = false;
 	protected String 					_name = "";
-	protected Map<String, String> 		_outflows = new HashMap<String, String>();
+	protected Map<String, Object> 		_outflows = new HashMap<String, Object>();
 	protected Map<String, String> 		_types = new HashMap<String, String>();
 	protected Map<String, List<Object>>	_sequences = new HashMap<String, List<Object>>();
 	protected boolean					_ordered = true;
