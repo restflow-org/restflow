@@ -11,13 +11,10 @@ components:
   properties:
     director: !ref PublishSubscribeDirector
     inputs:
-      a:
-        flow: /a
-      b:
-        flow: /b
+      a:                { to: /a }
+      b:                { to: /b }
     outputs:
-      c:
-        flow: /c
+      c:                { from: /c }
     nodes: 
     - !ref AddIntegers
     
@@ -26,7 +23,7 @@ components:
   properties:   
     actor: !ref Adder
     inflows:
-      a: /a
-      b: /b
+      a:                { from: /a }
+      b:                { from: /b }
     outflows:
-      sum: /c
+      sum:              { to: /c }

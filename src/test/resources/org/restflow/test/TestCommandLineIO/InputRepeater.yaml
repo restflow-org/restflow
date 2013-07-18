@@ -11,13 +11,9 @@ components:
   properties:
     director: !ref PublishSubscribeDirector
     inputs:
-      inputValue:
-        flow: /i
-        nullable: true
+      inputValue:       { to: /i, nullable: true }
     outputs:
-      outputValue:
-        flow: /o
-        nullable: true
+      outputValue:      { from: /o, nullable: true }
     nodes: 
     - !ref RepeatInput
     
@@ -26,6 +22,6 @@ components:
   properties:   
     actor: !ref ConstantSource
     inflows:
-      value: /i
+      value:            { from: /i }
     outflows:
-      value: /o
+      value:            { to: /o }
