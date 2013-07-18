@@ -164,16 +164,16 @@ public class Workflow extends AbstractActor {
 		Contract.requires(_state == ActorFSM.CONSTRUCTED || _state == ActorFSM.PROPERTIES_SET);
 		super.setInputs(inputs);
 
-		Map<String,String> flows = null;
+		Map<String,Object> flows = null;
 		
 		for (Map.Entry<String,Object> entry : inputs.entrySet()) {
 			String inputName = entry.getKey();
 			Map<String,Object> inputProperties = (Map<String,Object>)entry.getValue();
 			if (inputProperties != null ) {
-				String flowExpression = (String) inputProperties.get("flow");
+				String flowExpression = (String) inputProperties.get("to");
 				if (flowExpression != null) {
 					if (flows == null) {
-						flows = new HashMap<String,String>();
+						flows = new HashMap<String,Object>();
 					}
 					flows.put(inputName, flowExpression);
 				}
@@ -198,7 +198,7 @@ public class Workflow extends AbstractActor {
 			Map<String,Object> outputProperties = (Map<String,Object>)entry.getValue();
 			if (outputProperties != null && outputProperties instanceof Map) {
 				@SuppressWarnings("unchecked")
-				String flowExpression = (String) outputProperties.get("flow");
+				String flowExpression = (String) outputProperties.get("from");
 				if (flowExpression != null) {
 					if (flows == null) {
 						flows = new HashMap<String,Object>();
