@@ -20,7 +20,7 @@ public class TestInPortal extends RestFlowTestCase {
 	private WorkflowContext 	_context;
 	private InPortal 			_portal;
 	private MockTraceRecorder 	_recorder;
-	private Map<String,String> 	_requestedBindings;
+	private Map<String,Object> 	_requestedBindings;
 	
 	public void setUp() throws Exception {
 		
@@ -37,7 +37,7 @@ public class TestInPortal extends RestFlowTestCase {
 		_portal.setApplicationContext(_context);
 
 		// prepare a map for specifying bindings
-		_requestedBindings = new HashMap<String,String>();		
+		_requestedBindings = new HashMap<String,Object>();		
 	}
 	
 	private void _setThreeBindings() throws Exception {

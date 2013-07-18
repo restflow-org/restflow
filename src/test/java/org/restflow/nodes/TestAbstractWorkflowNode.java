@@ -25,7 +25,7 @@ public class TestAbstractWorkflowNode extends RestFlowTestCase {
 	
 	public void testSetExceptions_OneExceptionOutflow() throws Exception {
 		
-		Map<String,String> exceptionConfiguration = new HashMap<String,String>();
+		Map<String,Object> exceptionConfiguration = new HashMap<String,Object>();
 		exceptionConfiguration.put("java.lang.NullPointerException", "/nullPointerException");
 		_node.setExceptions(exceptionConfiguration);
 		_node.elaborate();
@@ -40,7 +40,7 @@ public class TestAbstractWorkflowNode extends RestFlowTestCase {
 
 	public void testSetExceptions_ClassNotFound() throws Exception {
 		
-		Map<String,String> exceptionConfiguration = new HashMap<String,String>();
+		Map<String,Object> exceptionConfiguration = new HashMap<String,Object>();
 		exceptionConfiguration.put("NotAnException", "/notAnException");
 		_node.setExceptions(exceptionConfiguration);
 

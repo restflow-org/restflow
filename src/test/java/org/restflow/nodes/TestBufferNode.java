@@ -136,7 +136,7 @@ public class TestBufferNode extends RestFlowTestCase {
 		inflows.put("CustomInput", "/custom/input");
 		node.setInflows(inflows);
 		
-		Map<String,String> outflows = new HashMap<String, String>();
+		Map<String,Object> outflows = new HashMap<String,Object>();
 		outflows.put("CustomOutput", "/custom/output");
 		node.setOutflows(outflows);
 		
