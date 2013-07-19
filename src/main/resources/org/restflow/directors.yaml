@@ -22,6 +22,12 @@ components:
   singleton: false
   properties:
     nodesStepOnce: true
+
+- id: TaskDependencyDirector
+  className: org.restflow.directors.PublishSubscribeDirector
+  singleton: false
+  properties:
+    nodesStepOnce: true
     
 - id: Publisher
   className: org.restflow.directors.Publisher
