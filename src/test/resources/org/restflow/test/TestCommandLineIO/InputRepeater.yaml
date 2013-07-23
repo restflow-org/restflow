@@ -12,6 +12,7 @@ components:
     director: !ref PublishSubscribeDirector
     inputs:
       inputValue:       { to: /i, nullable: true }
+      optionalInput:    { default: null }
     outputs:
       outputValue:      { from: /o, nullable: true }
     nodes: 

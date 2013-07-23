@@ -23,7 +23,7 @@ public interface Actor {
 	/** returns true if actor has any state variables */
 	boolean isStateful();
 
-	void addImplicitInput(String inputName) throws RestFlowException;
+	void addImplicitInput(String inputName) throws Exception;
 	void addImplicitOutput(String outputName) throws RestFlowException;
 
 	/*************************

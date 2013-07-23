@@ -19,7 +19,6 @@ public class TestCommandLine_InputOption_BadInput extends RestFlowCommandTestCas
 			}
 		);
 		
-		System.out.println(testRun.getStderr());
 		assertTrue(testRun.getStderr().contains("InputRepeater does not accept input 'badInputValue'"));
 	}
 

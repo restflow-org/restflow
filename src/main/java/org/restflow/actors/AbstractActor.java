@@ -268,7 +268,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 	///////////////////////////////////////////////////////////////////////////
 	///    actor configuration mutators -- UNCONFIGURED state only         ////
 
-	public void addImplicitInput(String inputName) throws RestFlowException {
+	public void addImplicitInput(String inputName) throws Exception {
 		
 		Contract.requires(_state == ActorFSM.PROPERTIES_SET);
 
@@ -641,8 +641,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 	///////////////////////////////////////////////////////////////////////////
 	////                   private helper methods                          ////
 	
-	@SuppressWarnings("rawtypes")
-	private void _addInputToSignature(String label, Object value) throws RestFlowException {
+	private void _addInputToSignature(String label, Object value) throws Exception {
 				
 		InputSignatureElement inputElement = new InputSignatureElement(label);
 		
@@ -654,23 +653,28 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 						"' on actor " + this + " must be a map");
 			}
 			
-			String localPath = (String) ((Map)value).get("path");
+			@SuppressWarnings("unchecked")
+			Map<String,Object> inputProperties = (Map<String,Object>) value;
+			
+			String localPath = (String) inputProperties.get("path");
 			if (localPath != null) {
 				inputElement.setLocalPath(localPath);
 			}
 			
-			Object defaultValue = ((Map)value).get("default");
-			if(defaultValue != null) {
+			boolean defaultIsNull = false;
+			if (inputProperties.containsKey("default")) {
+				Object defaultValue = inputProperties.get("default");
 				inputElement.setDefaultValue(defaultValue);
 				_defaultInputValues.put(label, defaultValue);
+				defaultIsNull = (defaultValue == null);
 			}
 							
-			String description = (String) ((Map)value).get("description");
+			String description = (String) inputProperties.get("description");
 			if (description != null) {
 				inputElement.setDescription(description);
 			}
 			
-			String typeName = (String) ((Map)value).get("type");
+			String typeName = (String) inputProperties.get("type");
 			if (typeName != null) {					
 				_variableTypes.put(label,typeName);
 				inputElement.setType(typeName);
@@ -679,17 +683,20 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 				}
 			}
 			
-			Boolean nullable = (Boolean) ((Map)value).get("nullable");
-			if (nullable != null && nullable) {
-				inputElement.setIsNullable();
-			}				
+			Boolean nullable = (Boolean) inputProperties.get("nullable");
+			if (nullable != null) { 
+				if (!nullable && defaultIsNull) throw new Exception("Null default not allowed for non-nullable input");
+			} else {
+				nullable = defaultIsNull;
+			}
+			if (nullable) inputElement.setIsNullable();
 
-			Boolean optional = (Boolean) ((Map)value).get("optional");
+			Boolean optional = (Boolean) inputProperties.get("optional");
 			if (optional != null && optional) {
 				inputElement.setIsOptional();
 			}				
 			
-			Boolean defaultReadiness = (Boolean) ((Map)value).get("defaultReadiness");
+			Boolean defaultReadiness = (Boolean) inputProperties.get("defaultReadiness");
 			if (defaultReadiness != null) {
 				inputElement.setDefaultInputEnable(defaultReadiness);
 			}

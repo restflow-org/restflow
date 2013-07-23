@@ -186,7 +186,7 @@ public class ActorWorkflowNode extends AbstractWorkflowNode {
 	 *************************/
 		
 	private synchronized void _assertActorDataInputs(Collection<String> nodeInflowNames, 
-			boolean validateInflowNames) throws RestFlowException {	
+			boolean validateInflowNames) throws Exception {	
 		
 		Collection<String> inputNames = _actor.getInputNames();
 		
