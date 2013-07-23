@@ -366,7 +366,7 @@ public class WorkflowRunner {
 					if (! _validateOnly) {
 						_actor.configure();
 						_actor.initialize();
-						_actor.loadInputValues(_inputValues);
+						_actor.loadInputValues(_inputValues, false);
 						_actor.loadStateValues(_stateValues);
 						_actor.step();
 						_actor.wrapup();

@@ -124,7 +124,7 @@ public interface Actor {
 
 	void loadStateValues(Map<String, Object> _previousStateValues);
 
-	void loadInputValues(Map<String, Object> inputBindings) throws Exception;
+	void loadInputValues(Map<String, Object> inputBindings, boolean ignoreExtraInputs) throws Exception;
 
 	void addLogOutput();
 	void setLogProtocol(LogProtocol protocol);

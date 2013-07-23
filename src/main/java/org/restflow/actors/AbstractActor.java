@@ -455,25 +455,20 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 
 	// This method is called only on top-level workflows (and solitary actors) from WorkflowRunner.run()
 	@Override
-	public synchronized void loadInputValues(Map<String, Object> inputBindings) throws Exception {
+	public synchronized void loadInputValues(Map<String, Object> inputBindings, boolean ignoreExtraInputs) throws Exception {
 		
 		Contract.requires(_state == ActorFSM.INITIALIZED);
 
 		if (inputBindings != null) {
-			for (String name :  _inputSignature.keySet()) {
-				Object value = inputBindings.get(name);
-				if (value != null) {
-					setInputValue(name, value);
-				}
+			for (Map.Entry<String,Object> entry :  inputBindings.entrySet()) {
+				String name = entry.getKey();
+				Object value = entry.getValue();
+			    if ((!ignoreExtraInputs) && _inputSignature.get(name) == null) {
+			    	throw new Exception(this + " does not accept input '" + name + "'"); 
+			    }
+				setInputValue(name, value);
 			}
 		}
-	
-		// TODO write test that exercises this code at the top-level actor or workflow level
-//		for (String name : _inputSignature.keySet()) {
-//			if ( _inputValues.get(name) == null) {
-//				throw new WorkflowMissingInputException(name, _beanName);
-//			}
-//		}
 	}
 		
 	public synchronized void loadStateValues(Map<String, Object> states) {
