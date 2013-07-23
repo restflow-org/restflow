@@ -12,6 +12,8 @@ components:
       director: !ref PublishSubscribeDirector
       nodes: 
         - !ref RenderContext
+      inputs:
+        spreadsheetId:
         
   - id: RenderContext
     type: JavaActorNode
