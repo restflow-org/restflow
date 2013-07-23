@@ -459,14 +459,20 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		
 		Contract.requires(_state == ActorFSM.INITIALIZED);
 
+		for (String inputName: _inputSignature.keySet()) {
+			if ( !_defaultInputValues.containsKey(inputName) && !inputBindings.containsKey(inputName)) {
+		    	throw new Exception(this + " requires missing input '" + inputName + "'"); 
+			}
+		}
+		
 		if (inputBindings != null) {
 			for (Map.Entry<String,Object> entry :  inputBindings.entrySet()) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-			    if ((!ignoreExtraInputs) && _inputSignature.get(name) == null) {
-			    	throw new Exception(this + " does not accept input '" + name + "'"); 
+				String inputName = entry.getKey();
+				Object inputValue = entry.getValue();
+			    if ((!ignoreExtraInputs) && _inputSignature.get(inputName) == null) {
+			    	throw new Exception(this + " does not accept input '" + inputName + "'"); 
 			    }
-				setInputValue(name, value);
+				setInputValue(inputName, inputValue);
 			}
 		}
 	}
