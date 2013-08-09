@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.restflow.data.InputSignatureElement;
 import org.restflow.util.PortableIO;
 import org.restflow.util.PortableIO.StreamSink;
@@ -106,6 +107,12 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 
 			// augment the step script
 			String augmentedStepScript = getAugmentedStepScript();
+			
+			// save the step script if the actor uses a step directory
+			if (this.usesStepDirectory()) {
+				File scriptFile = new File(_stepDirectory + "/" + "step." + _scriptExtension);
+				FileUtils.writeStringToFile(scriptFile, augmentedStepScript);
+			}
 
 			// run the augmented step script
 			String serializedOutput = _runAugmentedScript(augmentedStepScript);
