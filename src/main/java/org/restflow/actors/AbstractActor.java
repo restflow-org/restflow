@@ -362,6 +362,11 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
 		return _stepDirectoryFileSystem;
 	}
+	
+	public synchronized boolean usesStepDirectory() {
+		Contract.disallows(_state == ActorFSM.CONSTRUCTED);
+		return _usesStepDirectory;
+	}
 
 	// The cloneable property declares whether an actor can 
 	// be run cloned and run concurrently with other clones
