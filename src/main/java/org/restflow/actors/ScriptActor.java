@@ -21,6 +21,7 @@ public abstract class ScriptActor extends AbstractActor {
     @GuardedBy("this") protected String _stepScript;
     @GuardedBy("this") protected String _wrapupScript;
     @GuardedBy("this") protected String _disposeScript;
+    @GuardedBy("this") protected String _scriptExtension;
     
     public  enum OutputStreamMode { DISCARD, DELAYED, IMMEDIATE }; 
     
@@ -33,6 +34,7 @@ public abstract class ScriptActor extends AbstractActor {
 			logger = LogFactory.getLog(getClass());
 			_stdoutMode = OutputStreamMode.DELAYED;
 		    _stderrMode = OutputStreamMode.DELAYED;
+		    _scriptExtension = "txt";
 		}
 	}
 	
