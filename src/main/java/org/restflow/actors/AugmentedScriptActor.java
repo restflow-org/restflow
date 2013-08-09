@@ -312,7 +312,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 			Set<String> outputNames = new HashSet<String>(_outputSignature.keySet());
 			outputNames.removeAll(_stateVariables.keySet());
 			for (String name : outputNames) {
-			    script.appendVariableSerializationStatement(name, _variableTypes.get(name));
+			    script.appendOutputVariableSerializationStatement(name, _variableTypes.get(name));
 			}
 			script.appendBlankLine();
 		}
