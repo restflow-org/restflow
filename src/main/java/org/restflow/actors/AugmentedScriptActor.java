@@ -1,6 +1,7 @@
 package org.restflow.actors;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -44,7 +45,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 	}
 	
 	
-	protected String getAugmentedConfigureScript() {
+	protected String getAugmentedConfigureScript() throws IOException {
 		
 		ActorScriptBuilder augmentedScriptBuilder = getNewScriptBuilder();
 		
@@ -209,7 +210,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		return augmentedScriptBuilder.toString();
 	}
 	
-	protected void _appendScriptHeader(ActorScriptBuilder script, String scriptType) {
+	protected void _appendScriptHeader(ActorScriptBuilder script, String scriptType) throws IOException {
 		script.appendComment("AUGMENTED " + scriptType.toUpperCase() + " SCRIPT FOR ACTOR " + this.getFullyQualifiedName())
 		  	  .appendBlankLine()
 		  	  .appendScriptHeader(script, scriptType);
