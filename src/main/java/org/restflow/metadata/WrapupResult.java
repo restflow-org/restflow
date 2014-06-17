@@ -10,9 +10,6 @@ import org.restflow.data.SingleResourcePacket;
 import org.restflow.nodes.AbstractWorkflowNode;
 import org.restflow.util.PortableIO;
 
-import sun.org.mozilla.javascript.internal.Node;
-
-
 public class WrapupResult {
 
 	private final List<UnusedDataRecord> _unusedDataRecords;
