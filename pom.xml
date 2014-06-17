@@ -11,7 +11,7 @@
   <groupId>org.restflow</groupId>
   <artifactId>RestFlow</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.0-decorate</version>
     <repositories>
         <repository>
         <id>org.restflow</id>
