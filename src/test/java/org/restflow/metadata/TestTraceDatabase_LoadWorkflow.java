@@ -112,8 +112,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
 				"1      2      1              o             0           value           /multiplier                                       " 	+ EOL +
 				"2      3      2              o             0           v               /multiplicand                                     " 	+ EOL +
-				"3      4      3              i             0           b               /multiplicand                                     " 	+ EOL +
-				"4      4      4              i             0           a               /multiplier                                       " 	+ EOL +
+				"3      4      3              i             0           a               /multiplier                                       " 	+ EOL +
+				"4      4      4              i             0           b               /multiplicand                                     " 	+ EOL +
 				"5      4      5              o             0           c               /product                                          " 	+ EOL +
 				"6      5      6              i             0           v               /product                                          " 	+ EOL, 
 			manager.dumpPortTable());
@@ -123,8 +123,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
 				"1          2       o                        value        " 	+ EOL +
 				"2          3       o                        v            " 	+ EOL +
-				"3          4       i                        b            " 	+ EOL +
-				"4          4       i                        a            " 	+ EOL +
+				"3          4       i                        a            " 	+ EOL +
+				"4          4       i                        b            " 	+ EOL +
 				"5          4       o                        c            " 	+ EOL +
 				"6          5       i                        v            " 	+ EOL, 
 			manager.dumpActorVariableTable());
@@ -143,8 +143,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 		assertEquals(
 				"InPortID OutPortID " 	+ EOL +
 				"-------- --------- " 	+ EOL +
-				"3        2         " 	+ EOL +
-				"4        1         " 	+ EOL +
+				"3        1         " 	+ EOL +
+				"4        2         " 	+ EOL +
 				"6        5         " 	+ EOL,
 			manager.dumpChannelTable());
 	}
@@ -428,8 +428,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
 				"1      2      1              o             0           value           /multiplier                                       " 	+ EOL +
 				"2      3      2              o             0           v               /multiplicand                                     " 	+ EOL +
-				"3      4      3              i             0           b               BufferNode-for-MultiplyBySingleton-b/multiplicand " 	+ EOL +
-				"4      4      4              i             0           a               BufferNode-for-MultiplyBySingleton-a/multiplier   " 	+ EOL +
+				"3      4      3              i             0           a               BufferNode-for-MultiplyBySingleton-a/multiplier   "		+ EOL +
+				"4      4      4              i             0           b               BufferNode-for-MultiplyBySingleton-b/multiplicand " 	+ EOL +
 				"5      4      5              o             0           c               /product                                          " 	+ EOL +
 				"6      5      6              i             0           v               BufferNode-for-RenderProducts-v/product           " 	+ EOL +
 				"7      6      7              i             0           input           /multiplier                                       " 	+ EOL +
@@ -445,8 +445,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
 				"1          2       o                        value        " 	+ EOL +
 				"2          3       o                        v            " 	+ EOL +
-				"3          4       i                        b            " 	+ EOL +
-				"4          4       i                        a            " 	+ EOL +
+				"3          4       i                        a            " 	+ EOL +
+				"4          4       i                        b            " 	+ EOL +
 				"5          4       o                        c            " 	+ EOL +
 				"6          5       i                        v            " 	+ EOL +
 				"7          6       i                        input        " 	+ EOL +
@@ -473,8 +473,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 		assertEquals(
 				"InPortID OutPortID " 		+ EOL +
 				"-------- --------- " 		+ EOL +
-				"3        10        " 		+ EOL +
-				"4        8         " 		+ EOL +
+				"3        8         " 		+ EOL +
+				"4        10        " 		+ EOL +
 				"6        12        " 		+ EOL +
 				"7        1         " 		+ EOL +
 				"9        2         " 		+ EOL +
@@ -578,8 +578,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
 				"1      2      1              o             0           value           /multiplier                                       " 	+ EOL +
 				"2      3      2              o             0           v               /multiplicand                                     " 	+ EOL +
-				"3      4      3              i             0           b               /multiplicand                                     " 	+ EOL +
-				"4      4      4              i             0           a               /multiplier                                       " 	+ EOL +
+				"3      4      3              i             0           a               /multiplier                                       " 	+ EOL +
+				"4      4      4              i             0           b               /multiplicand                                     " 	+ EOL +
 				"5      4      5              o             0           c               /product                                          " 	+ EOL +
 				"6      5      6              i             0           v               /product                                          " 	+ EOL, 
 			manager.dumpPortTable());
@@ -589,8 +589,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
 				"1          2       o                        value        " 	+ EOL +
 				"2          3       o                        v            " 	+ EOL +
-				"3          4       i                        b            " 	+ EOL +
-				"4          4       i                        a            " 	+ EOL +
+				"3          4       i                        a            " 	+ EOL +
+				"4          4       i                        b            " 	+ EOL +
 				"5          4       o                        c            " 	+ EOL +
 				"6          5       i                        v            " 	+ EOL, 
 			manager.dumpActorVariableTable());
@@ -609,8 +609,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 		assertEquals(
 				"InPortID OutPortID " 	+ EOL +
 				"-------- --------- " 	+ EOL +
-				"3        2         " 	+ EOL +
-				"4        1         " 	+ EOL +
+				"3        1         " 	+ EOL +
+				"4        2         " 	+ EOL +
 				"6        5         " 	+ EOL,
 			manager.dumpChannelTable());
 	}
@@ -733,8 +733,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"6      6      6              i             0           Input0          /doubledmultiplier                                " 	+ EOL +
 				"7      7      7              o             0           Input0          /multiplier                                       " 	+ EOL +
 				"8      8      8              o             0           v               /multiplicand                                     " 	+ EOL +
-				"9      9      9              i             0           b               /multiplicand                                     " 	+ EOL +
-				"10     9      10             i             0           a               /multiplier                                       " 	+ EOL +
+				"9      9      9              i             0           a               /multiplier                                       "		+ EOL +
+				"10     9      10             i             0           b               /multiplicand                                     " 	+ EOL +
 				"11     9      11             o             0           c               /product                                          " 	+ EOL +
 				"12     10     12             i             0           v               /product                                          " 	+ EOL, 
 			manager.dumpPortTable());
@@ -750,8 +750,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"6          6       i                        Input0       " 	+ EOL +
 				"7          7       o                        Input0       " 	+ EOL +
 				"8          8       o                        v            " 	+ EOL +
-				"9          9       i                        b            " 	+ EOL +
-				"10         9       i                        a            " 	+ EOL +
+				"9          9       i                        a            " 	+ EOL +
+				"10         9       i                        b            " 	+ EOL +
 				"11         9       o                        c            " 	+ EOL +
 				"12         10      i                        v            " 	+ EOL, 
 			manager.dumpActorVariableTable());
@@ -779,8 +779,8 @@ public class TestTraceDatabase_LoadWorkflow extends RestFlowTestCase {
 				"2        1         " 		+ EOL +
 				"4        3         " 		+ EOL +
 				"6        5         " 		+ EOL +
-				"9        8         " 		+ EOL +
-				"10       7         " 		+ EOL +
+				"9        7         " 		+ EOL +
+				"10       8         " 		+ EOL +
 				"12       11        " 		+ EOL,
 			manager.dumpChannelTable());
 	}

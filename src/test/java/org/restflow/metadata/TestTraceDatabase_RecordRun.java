@@ -305,29 +305,29 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"PortId NodeID NodeVariableID PortDirection PacketCount PortName        UriTemplate                                       " 	+ EOL +
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
-				"1      1      1              i             1           b                                                                 " 	+ EOL +
-				"2      1      2              i             1           a                                                                 " 	+ EOL +
+				"1      1      1              i             1           a                                                                 " 	+ EOL +
+				"2      1      2              i             1           b                                                                 " 	+ EOL +
 				"3      1      3              o             1           c                                                                 " 	+ EOL +
 				"4      2      4              o             1           b               /multiplicand                                     " 	+ EOL +
 				"5      2      5              o             1           a               /multiplier                                       " 	+ EOL +
 				"6      3      6              i             1           c               /product                                          " 	+ EOL +
-				"7      4      7              i             1           y               /multiplicand                                     " 	+ EOL +
-				"8      4      8              i             1           x               /multiplier                                       " 	+ EOL +
-				"9      4      9              o             1           z               /product                                          " 	+ EOL +
+				"7      4      7              i             1           x               /multiplier                                       " 	+ EOL +
+				"8      4      8              i             1           y               /multiplicand                                     " 	+ EOL +
+				"9      4      9              o             1           z               /product                                          "		+ EOL +
 				"10     5      10             i             1           value           /product                                          " 	+ EOL, 
 			trace.dumpPortTable());
 		
 		assertEquals(
 				"VariableID ActorID VariableClass DataTypeID VariableName " 	+ EOL +
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
-				"1          1       i                        b            " 	+ EOL +
-				"2          1       i                        a            " 	+ EOL +
+				"1          1       i                        a            " 	+ EOL +
+				"2          1       i                        b            " 	+ EOL +
 				"3          1       o                        c            " 	+ EOL +
 				"4          2       o                        b            " 	+ EOL +
 				"5          2       o                        a            " 	+ EOL +
 				"6          3       i                        c            " 	+ EOL +
-				"7          4       i                        y            " 	+ EOL +
-				"8          4       i                        x            " 	+ EOL +
+				"7          4       i                        x            " 	+ EOL +
+				"8          4       i                        y            " 	+ EOL +
 				"9          4       o                        z            " 	+ EOL +
 				"10         5       i                        value        " 	+ EOL,
 			trace.dumpActorVariableTable());
@@ -351,8 +351,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"InPortID OutPortID " 	+ EOL +
 				"-------- --------- " 	+ EOL +
 				"6        9         " 	+ EOL +
-				"7        4         " 	+ EOL +
-				"8        5         " 	+ EOL +
+				"7        5         " 	+ EOL +
+				"8        4         " 	+ EOL +
 				"10       9         " 	+ EOL,
 			trace.dumpChannelTable());
 		
@@ -376,16 +376,16 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"4      3      1            1          0           ....-..-.. ..:..:..... ....-..-.. ..:..:..... " 		+ EOL +
 				"5      5      1            1          0           ....-..-.. ..:..:..... ....-..-.. ..:..:..... " 		+ EOL,
 			trace.dumpStepTable());
-		
+
 		assertMatchesRegexp(
 				"PortEventID PortID PacketID StepID EventClass EventNumber EventTime              " 		+ EOL +
 				"----------- ------ -------- ------ ---------- ----------- ---------------------- " 		+ EOL +
-				"1           1      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"2           2      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"3           4      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"4           5      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"5           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"6           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"1           2      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"2           1      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"3           5      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"4           4      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"5           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"6           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"7           9      5        3      w          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"8           6      5        4      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"9           10     5        5      r          1           ....-..-.. ..:..:..... "			+ EOL +
@@ -397,8 +397,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"------ ----------- ---------- ------------------------------------------------------ " 		+ EOL +
 				"1      FALSE                  5                                                      " 		+ EOL +
 				"2      FALSE                  3                                                      " 		+ EOL +
-				"3      FALSE                  5                                                      " 		+ EOL +
-				"4      FALSE                  3                                                      " 		+ EOL +
+				"3      FALSE                  3                                                      " 		+ EOL +
+				"4      FALSE                  5                                                      " 		+ EOL +
 				"5      FALSE                  15                                                     " 		+ EOL +
 				"6      FALSE                  15                                                     " 		+ EOL,
 			trace.dumpDataTable());
@@ -408,8 +408,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"---------- ------ --------------------------------------------------- " 		+ EOL +
 				"1          1                                                          " 		+ EOL +
 				"2          2                                                          " 		+ EOL +
-				"3          3      /multiplicand                                       " 		+ EOL +
-				"4          4      /multiplier                                         " 		+ EOL +
+				"3          3      /multiplier                                         " 		+ EOL +
+				"4          4      /multiplicand                                       " 		+ EOL +
 				"5          5      /product                                            " 		+ EOL +
 				"6          6                                                          " 		+ EOL,
 			trace.dumpResourceTable());
@@ -541,14 +541,14 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"PortId NodeID NodeVariableID PortDirection PacketCount PortName        UriTemplate                                       " 	+ EOL +
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
-				"1      1      1              i             3           b                                                                 " 	+ EOL +
-				"2      1      2              i             3           a                                                                 " 	+ EOL +
+				"1      1      1              i             3           a                                                                 " 	+ EOL +
+				"2      1      2              i             3           b                                                                 " 	+ EOL +
 				"3      1      3              o             3           c                                                                 " 	+ EOL +
 				"4      2      4              o             5           b               /multiplicand                                     " 	+ EOL +
 				"5      2      5              o             5           a               /multiplier                                       " 	+ EOL +
 				"6      3      6              i             5           c               /product                                          " 	+ EOL +
-				"7      4      7              i             5           y               /multiplicand                                     " 	+ EOL +
-				"8      4      8              i             5           x               /multiplier                                       " 	+ EOL +
+				"7      4      7              i             5           x               /multiplier                                       " 	+ EOL +
+				"8      4      8              i             5           y               /multiplicand                                     " 	+ EOL +
 				"9      4      9              o             5           z               /product                                          " 	+ EOL +
 				"10     5      10             i             5           value           /product                                          " 	+ EOL, 
 			trace.dumpPortTable());
@@ -556,14 +556,14 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"VariableID ActorID VariableClass DataTypeID VariableName " 	+ EOL +
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
-				"1          1       i                        b            " 	+ EOL +
-				"2          1       i                        a            " 	+ EOL +
+				"1          1       i                        a            " 	+ EOL +
+				"2          1       i                        b            " 	+ EOL +
 				"3          1       o                        c            " 	+ EOL +
 				"4          2       o                        b            " 	+ EOL +
 				"5          2       o                        a            " 	+ EOL +
 				"6          3       i                        c            " 	+ EOL +
-				"7          4       i                        y            " 	+ EOL +
-				"8          4       i                        x            " 	+ EOL +
+				"7          4       i                        x            " 	+ EOL +
+				"8          4       i                        y            " 	+ EOL +
 				"9          4       o                        z            " 	+ EOL +
 				"10         5       i                        value        " 	+ EOL,
 			trace.dumpActorVariableTable());
@@ -572,8 +572,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"InPortID OutPortID " 	+ EOL +
 				"-------- --------- " 	+ EOL +
 				"6        9         " 	+ EOL +
-				"7        4         " 	+ EOL +
-				"8        5         " 	+ EOL +
+				"7        5         " 	+ EOL +
+				"8        4         " 	+ EOL +
 				"10       9         " 	+ EOL,
 			trace.dumpChannelTable());
 		
@@ -624,32 +624,32 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertMatchesRegexp(
 				"PortEventID PortID PacketID StepID EventClass EventNumber EventTime              " 		+ EOL +
 				"----------- ------ -------- ------ ---------- ----------- ---------------------- " 		+ EOL +
-				"1           1      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"2           2      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"3           4      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"4           5      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"5           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"6           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"1           2      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"2           1      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"3           5      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"4           4      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"5           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"6           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"7           9      5        3      w          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"8           6      5        4      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"9           10     5        5      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"10          3      6        1      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"11          1      7        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"12          2      8        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"13          4      9        7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"14          5      10       7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"15          7      9        8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"16          8      10       8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"11          2      7        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
+				"12          1      8        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
+				"13          5      9        7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"14          4      10       7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"15          8      10       8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"16          7      9        8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"17          9      11       8      w          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"18          6      11       9      r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"19          10     11       10     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"20          3      12       6      w          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"21          1      13       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"22          2      14       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"23          4      15       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"24          5      16       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"25          7      15       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"26          8      16       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"21          2      13       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"22          1      14       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"23          5      15       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"24          4      16       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"25          8      16       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"26          7      15       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"27          9      17       13     w          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"28          6      17       14     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"29          10     17       15     r          5           ....-..-.. ..:..:..... " 		+ EOL +
@@ -661,20 +661,20 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"------ ----------- ---------- ------------------------------------------------------ " 		+ EOL +
 				"1      FALSE                  3                                                      " 		+ EOL +
 				"2      FALSE                  1                                                      " 		+ EOL +
-				"3      FALSE                  3                                                      " 		+ EOL +
-				"4      FALSE                  1                                                      " 		+ EOL +
+				"3      FALSE                  1                                                      " 		+ EOL +
+				"4      FALSE                  3                                                      " 		+ EOL +
 				"5      FALSE                  3                                                      " 		+ EOL +
 				"6      FALSE                  3                                                      " 		+ EOL +
 				"7      FALSE                  6                                                      " 		+ EOL +
 				"8      FALSE                  2                                                      " 		+ EOL +
-				"9      FALSE                  6                                                      " 		+ EOL +
-				"10     FALSE                  2                                                      " 		+ EOL +
+				"9      FALSE                  2                                                      " 		+ EOL +
+				"10     FALSE                  6                                                      " 		+ EOL +
 				"11     FALSE                  12                                                     " 		+ EOL +
 				"12     FALSE                  12                                                     " 		+ EOL +
 				"13     FALSE                  9                                                      " 		+ EOL +
 				"14     FALSE                  3                                                      " 		+ EOL +
-				"15     FALSE                  9                                                      " 		+ EOL +
-				"16     FALSE                  3                                                      " 		+ EOL +
+				"15     FALSE                  3                                                      " 		+ EOL +
+				"16     FALSE                  9                                                      " 		+ EOL +
 				"17     FALSE                  27                                                     " 		+ EOL +
 				"18     FALSE                  27                                                     " 		+ EOL,
 			trace.dumpDataTable());
@@ -684,20 +684,20 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"---------- ------ --------------------------------------------------- " 		+ EOL +
 				"1          1                                                          " 		+ EOL +
 				"2          2                                                          " 		+ EOL +
-				"3          3      /multiplicand                                       " 		+ EOL +
-				"4          4      /multiplier                                         " 		+ EOL +
+				"3          3      /multiplier                                         " 		+ EOL +
+				"4          4      /multiplicand                                       " 		+ EOL +
 				"5          5      /product                                            " 		+ EOL +
 				"6          6                                                          " 		+ EOL +
 				"7          7                                                          " 		+ EOL +
 				"8          8                                                          " 		+ EOL +
-				"9          9      /multiplicand                                       " 		+ EOL +
-				"10         10     /multiplier                                         " 		+ EOL +
+				"9          9      /multiplier                                         " 		+ EOL +
+				"10         10     /multiplicand                                       " 		+ EOL +
 				"11         11     /product                                            " 		+ EOL +
 				"12         12                                                         " 		+ EOL +
 				"13         13                                                         " 		+ EOL +
 				"14         14                                                         " 		+ EOL +
-				"15         15     /multiplicand                                       " 		+ EOL +
-				"16         16     /multiplier                                         " 		+ EOL +
+				"15         15     /multiplier                                         " 		+ EOL +
+				"16         16     /multiplicand                                       " 		+ EOL +
 				"17         17     /product                                            " 		+ EOL +
 				"18         18                                                         " 		+ EOL,
 			trace.dumpResourceTable());
@@ -866,14 +866,14 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"PortId NodeID NodeVariableID PortDirection PacketCount PortName        UriTemplate                                       " 	+ EOL +
 				"------ ------ -------------- ------------- ----------- --------------- ------------------------------------------------- " 	+ EOL +
-				"1      1      1              i             3           b                                                                 " 	+ EOL +
-				"2      1      2              i             3           a                                                                 " 	+ EOL +
+				"1      1      1              i             3           a                                                                 " 	+ EOL +
+				"2      1      2              i             3           b                                                                 " 	+ EOL +
 				"3      1      3              o             3           c                                                                 " 	+ EOL +
 				"4      2      4              o             5           b               /multiplicand                                     " 	+ EOL +
 				"5      2      5              o             5           a               /multiplier                                       " 	+ EOL +
 				"6      3      6              i             5           c               /product                                          " 	+ EOL +
-				"7      4      7              i             5           y               /multiplicand                                     " 	+ EOL +
-				"8      4      8              i             5           x               /multiplier                                       " 	+ EOL +
+				"7      4      7              i             5           x               /multiplier                                       " 	+ EOL +
+				"8      4      8              i             5           y               /multiplicand                                     " 	+ EOL +
 				"9      4      9              o             5           z               /product                                          " 	+ EOL +
 				"10     5      10             i             5           value           /product                                          " 	+ EOL, 
 			trace.dumpPortTable());
@@ -881,14 +881,14 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertEquals(
 				"VariableID ActorID VariableClass DataTypeID VariableName " 	+ EOL +
 				"---------- ------- ------------- ---------- ------------ " 	+ EOL +
-				"1          1       i                        b            " 	+ EOL +
-				"2          1       i                        a            " 	+ EOL +
+				"1          1       i                        a            " 	+ EOL +
+				"2          1       i                        b            " 	+ EOL +
 				"3          1       o                        c            " 	+ EOL +
 				"4          2       o                        b            " 	+ EOL +
 				"5          2       o                        a            " 	+ EOL +
 				"6          3       i                        c            " 	+ EOL +
-				"7          4       i                        y            " 	+ EOL +
-				"8          4       i                        x            " 	+ EOL +
+				"7          4       i                        x            " 	+ EOL +
+				"8          4       i                        y            " 	+ EOL +
 				"9          4       o                        z            " 	+ EOL +
 				"10         5       i                        value        " 	+ EOL,
 			trace.dumpActorVariableTable());
@@ -897,8 +897,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"InPortID OutPortID " 	+ EOL +
 				"-------- --------- " 	+ EOL +
 				"6        9         " 	+ EOL +
-				"7        4         " 	+ EOL +
-				"8        5         " 	+ EOL +
+				"7        5         " 	+ EOL +
+				"8        4         " 	+ EOL +
 				"10       9         " 	+ EOL,
 			trace.dumpChannelTable());
 		
@@ -949,32 +949,32 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 		assertMatchesRegexp(
 				"PortEventID PortID PacketID StepID EventClass EventNumber EventTime              " 		+ EOL +
 				"----------- ------ -------- ------ ---------- ----------- ---------------------- " 		+ EOL +
-				"1           1      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"2           2      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"3           4      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"4           5      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"5           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"6           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"1           2      1        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"2           1      2        1      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"3           5      3        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"4           4      4        2      w          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"5           8      4        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"6           7      3        3      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"7           9      5        3      w          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"8           6      5        4      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"9           10     5        5      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"10          3      6        1      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"11          1      7        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"12          2      8        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"13          4      9        7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"14          5      10       7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"15          7      9        8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"16          8      10       8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"11          2      7        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
+				"12          1      8        6      r          2           ....-..-.. ..:..:..... " 		+ EOL +
+				"13          5      9        7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"14          4      10       7      w          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"15          8      10       8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"16          7      9        8      r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"17          9      11       8      w          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"18          6      11       9      r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"19          10     11       10     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"20          3      12       6      w          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"21          1      13       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"22          2      14       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"23          4      15       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"24          5      16       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"25          7      15       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"26          8      16       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"21          2      13       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"22          1      14       11     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"23          5      15       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"24          4      16       12     w          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"25          8      16       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"26          7      15       13     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"27          9      17       13     w          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"28          6      17       14     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"29          10     17       15     r          5           ....-..-.. ..:..:..... " 		+ EOL +
@@ -986,20 +986,20 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"------ ----------- ---------- ------------------------------------------------------ " 		+ EOL +
 				"1      FALSE                  3                                                      " 		+ EOL +
 				"2      FALSE                  1                                                      " 		+ EOL +
-				"3      FALSE                  3                                                      " 		+ EOL +
-				"4      FALSE                  1                                                      " 		+ EOL +
+				"3      FALSE                  1                                                      " 		+ EOL +
+				"4      FALSE                  3                                                      " 		+ EOL +
 				"5      FALSE                  3                                                      " 		+ EOL +
 				"6      FALSE                  3                                                      " 		+ EOL +
 				"7      FALSE                  6                                                      " 		+ EOL +
 				"8      FALSE                  2                                                      " 		+ EOL +
-				"9      FALSE                  6                                                      " 		+ EOL +
-				"10     FALSE                  2                                                      " 		+ EOL +
+				"9      FALSE                  2                                                      " 		+ EOL +
+				"10     FALSE                  6                                                      " 		+ EOL +
 				"11     FALSE                  12                                                     " 		+ EOL +
 				"12     FALSE                  12                                                     " 		+ EOL +
 				"13     FALSE                  9                                                      " 		+ EOL +
 				"14     FALSE                  3                                                      " 		+ EOL +
-				"15     FALSE                  9                                                      " 		+ EOL +
-				"16     FALSE                  3                                                      " 		+ EOL +
+				"15     FALSE                  3                                                      " 		+ EOL +
+				"16     FALSE                  9                                                      " 		+ EOL +
 				"17     FALSE                  27                                                     " 		+ EOL +
 				"18     FALSE                  27                                                     " 		+ EOL,
 			trace.dumpDataTable());
@@ -1009,20 +1009,20 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"---------- ------ --------------------------------------------------- " 		+ EOL +
 				"1          1                                                          " 		+ EOL +
 				"2          2                                                          " 		+ EOL +
-				"3          3      /Run1/multiplicand                                  " 		+ EOL +
-				"4          4      /Run1/multiplier                                    " 		+ EOL +
+				"3          3      /Run1/multiplier                                    " 		+ EOL +
+				"4          4      /Run1/multiplicand                                  " 		+ EOL +
 				"5          5      /Run1/product                                       " 		+ EOL +
 				"6          6                                                          " 		+ EOL +
 				"7          7                                                          " 		+ EOL +
 				"8          8                                                          " 		+ EOL +
-				"9          9      /Run2/multiplicand                                  " 		+ EOL +
-				"10         10     /Run2/multiplier                                    " 		+ EOL +
+				"9          9      /Run2/multiplier                                    " 		+ EOL +
+				"10         10     /Run2/multiplicand                                  " 		+ EOL +
 				"11         11     /Run2/product                                       " 		+ EOL +
 				"12         12                                                         " 		+ EOL +
 				"13         13                                                         " 		+ EOL +
 				"14         14                                                         " 		+ EOL +
-				"15         15     /Run3/multiplicand                                  " 		+ EOL +
-				"16         16     /Run3/multiplier                                    " 		+ EOL +
+				"15         15     /Run3/multiplier                                    " 		+ EOL +
+				"16         16     /Run3/multiplicand                                  " 		+ EOL +
 				"17         17     /Run3/product                                       " 		+ EOL +
 				"18         18                                                         " 		+ EOL,
 			trace.dumpResourceTable());
@@ -1250,8 +1250,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"6      6      6              i             5           Input0          /doubledmultiplier                                " 	+ EOL +
 				"7      7      7              o             5           Input0          /multiplier                                       " 	+ EOL +
 				"8      8      8              o             11          v               /multiplicand                                     " 	+ EOL +
-				"9      9      9              i             11          b               /multiplicand                                     " 	+ EOL +
-				"10     9      10             i             5           a               /multiplier                                       " 	+ EOL +
+				"9      9      9              i             5           a               /multiplier                                       " 	+ EOL +
+				"10     9      10             i             11          b               /multiplicand                                     " 	+ EOL +
 				"11     9      11             o             11          c               /product                                          " 	+ EOL +
 				"12     10     12             i             11          v               /product                                          " 	+ EOL, 
 			trace.dumpPortTable());
@@ -1267,8 +1267,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"6          6       i                        Input0       " 	+ EOL +
 				"7          7       o                        Input0       " 	+ EOL +
 				"8          8       o                        v            " 	+ EOL +
-				"9          9       i                        b            " 	+ EOL +
-				"10         9       i                        a            " 	+ EOL +
+				"9          9       i                        a            " 	+ EOL +
+				"10         9       i                        b            " 	+ EOL +
 				"11         9       o                        c            " 	+ EOL +
 				"12         10      i                        v            " 	+ EOL, 
 			trace.dumpActorVariableTable());
@@ -1296,8 +1296,8 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"2        1         " 		+ EOL +
 				"4        3         " 		+ EOL +
 				"6        5         " 		+ EOL +
-				"9        8         " 		+ EOL +
-				"10       7         " 		+ EOL +
+				"9        7         " 		+ EOL +
+				"10       8         " 		+ EOL +
 				"12       11        " 		+ EOL,
 			trace.dumpChannelTable());
 
@@ -1387,6 +1387,9 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"46     10     36           9          0           ....-..-.. ..:..:..... ....-..-.. ..:..:..... " 		+ EOL,
 			trace.dumpStepTable());
 
+		
+		
+		
 		assertMatchesRegexp(
 				"PortEventID PortID PacketID StepID EventClass EventNumber EventTime              " 		+ EOL +
 				"----------- ------ -------- ------ ---------- ----------- ---------------------- " 		+ EOL +
@@ -1397,17 +1400,17 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"5           5      3        5      w          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"6           6      3        6      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"7           7      4        7      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"8           10     4        9      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"8           9      4        9      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"9           8      5        8      w          1           ....-..-.. ..:..:..... " 		+ EOL +
-				"10          9      5        9      r          1           ....-..-.. ..:..:..... " 		+ EOL +
+				"10          10     5        9      r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"11          11     6        9      w          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"12          12     6        10     r          1           ....-..-.. ..:..:..... " 		+ EOL +
 				"13          8      7        11     w          2           ....-..-.. ..:..:..... " 		+ EOL +
-				"14          9      7        12     r          2           ....-..-.. ..:..:..... " 		+ EOL +
+				"14          10     7        12     r          2           ....-..-.. ..:..:..... " 		+ EOL +
 				"15          11     8        12     w          2           ....-..-.. ..:..:..... " 		+ EOL +
 				"16          12     8        13     r          2           ....-..-.. ..:..:..... " 		+ EOL +
 				"17          8      9        14     w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"18          9      9        15     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"18          10     9        15     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"19          11     10       15     w          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"20          12     10       16     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"21          1      11       17     w          2           ....-..-.. ..:..:..... " 		+ EOL +
@@ -1417,17 +1420,17 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"25          5      13       20     w          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"26          6      13       21     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"27          7      14       22     w          3           ....-..-.. ..:..:..... " 		+ EOL +
-				"28          10     14       24     r          3           ....-..-.. ..:..:..... " 		+ EOL +
+				"28          9      14       24     r          3           ....-..-.. ..:..:..... " 		+ EOL +
 				"29          8      15       23     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"30          9      15       24     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"30          10     15       24     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"31          11     16       24     w          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"32          12     16       25     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"33          8      17       26     w          6           ....-..-.. ..:..:..... " 		+ EOL +
-				"34          9      17       27     r          6           ....-..-.. ..:..:..... " 		+ EOL +
+				"34          10     17       27     r          6           ....-..-.. ..:..:..... " 		+ EOL +
 				"35          11     18       27     w          6           ....-..-.. ..:..:..... " 		+ EOL +
 				"36          12     18       28     r          6           ....-..-.. ..:..:..... " 		+ EOL +
 				"37          8      19       29     w          7           ....-..-.. ..:..:..... " 		+ EOL +
-				"38          9      19       30     r          7           ....-..-.. ..:..:..... " 		+ EOL +
+				"38          10     19       30     r          7           ....-..-.. ..:..:..... " 		+ EOL +
 				"39          11     20       30     w          7           ....-..-.. ..:..:..... " 		+ EOL +
 				"40          12     20       31     r          7           ....-..-.. ..:..:..... " 		+ EOL +
 				"41          1      21       32     w          3           ....-..-.. ..:..:..... " 		+ EOL +
@@ -1437,17 +1440,17 @@ public class TestTraceDatabase_RecordRun extends RestFlowTestCase {
 				"45          5      23       35     w          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"46          6      23       36     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"47          7      24       37     w          5           ....-..-.. ..:..:..... " 		+ EOL +
-				"48          10     24       39     r          5           ....-..-.. ..:..:..... " 		+ EOL +
+				"48          9      24       39     r          5           ....-..-.. ..:..:..... " 		+ EOL +
 				"49          8      25       38     w          9           ....-..-.. ..:..:..... " 		+ EOL +
-				"50          9      25       39     r          9           ....-..-.. ..:..:..... " 		+ EOL +
+				"50          10     25       39     r          9           ....-..-.. ..:..:..... " 		+ EOL +
 				"51          11     26       39     w          9           ....-..-.. ..:..:..... " 		+ EOL +
 				"52          12     26       40     r          9           ....-..-.. ..:..:..... " 		+ EOL +
 				"53          8      27       41     w          10          ....-..-.. ..:..:..... " 		+ EOL +
-				"54          9      27       42     r          10          ....-..-.. ..:..:..... " 		+ EOL +
+				"54          10     27       42     r          10          ....-..-.. ..:..:..... " 		+ EOL +
 				"55          11     28       42     w          10          ....-..-.. ..:..:..... " 		+ EOL +
 				"56          12     28       43     r          10          ....-..-.. ..:..:..... " 		+ EOL +
 				"57          8      29       44     w          11          ....-..-.. ..:..:..... " 		+ EOL +
-				"58          9      29       45     r          11          ....-..-.. ..:..:..... " 		+ EOL +
+				"58          10     29       45     r          11          ....-..-.. ..:..:..... " 		+ EOL +
 				"59          11     30       45     w          11          ....-..-.. ..:..:..... " 		+ EOL +
 				"60          12     30       46     r          11          ....-..-.. ..:..:..... " 		+ EOL,
 		trace.dumpPortEventTable());

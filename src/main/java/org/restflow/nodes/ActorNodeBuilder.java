@@ -2,6 +2,7 @@ package org.restflow.nodes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +16,14 @@ import org.restflow.util.BitPattern;
 public class ActorNodeBuilder  {
 	
 	protected Actor 					_actor = null;
-	protected Map<String, Object> 		_constants = new HashMap<String, Object>();
-	protected Map<String, Object> 		_inflows = new HashMap<String, Object>();
+	protected Map<String, Object> 		_constants = new LinkedHashMap<String, Object>();
+	protected Map<String, Object> 		_inflows = new LinkedHashMap<String, Object>();
 	protected int						_maxConcurrency = 1;
 	protected boolean					_repeatValues = false;
 	protected String 					_name = "";
-	protected Map<String, Object> 		_outflows = new HashMap<String, Object>();
-	protected Map<String, String> 		_types = new HashMap<String, String>();
-	protected Map<String, List<Object>>	_sequences = new HashMap<String, List<Object>>();
+	protected Map<String, Object> 		_outflows = new LinkedHashMap<String, Object>();
+	protected Map<String, String> 		_types = new LinkedHashMap<String, String>();
+	protected Map<String, List<Object>>	_sequences = new LinkedHashMap<String, List<Object>>();
 	protected boolean					_ordered = true;
 	private boolean 					_endFlowOnNoOutput = false;
 	private boolean 					_stepsOnce = false;
