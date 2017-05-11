@@ -81,8 +81,6 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 		assertEquals(_getExpectedProducts(), _runner.getProductsAsString());
-//		assertFileResourcesMatchExactly("scratch");
-//		assertFileResourcesMatchExactly("files");
 	}
 
 	public void test_Files_PublishSubscribeDirector() throws Exception {
@@ -91,7 +89,7 @@ public class TestWorkflows extends WorkflowTestCase {
 		assertEquals(_getExpectedTrace(), _runner.getTraceReport());
 		assertEquals(_getExpectedStdout(), _runner.getStdoutRecording());
 		assertEquals(_getExpectedProducts(), _runner.getProductsAsString());
-		assertFileResourcesMatchExactly("scratch");
+		assertFileResourcesMatchExactly(".steps");
 		assertFileResourcesMatchExactly("files");
 	}
 

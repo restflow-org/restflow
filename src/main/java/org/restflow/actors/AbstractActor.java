@@ -766,7 +766,7 @@ public abstract class AbstractActor implements Actor, BeanNameAware, Application
 				//iso9660 file systems do not allow . in directory structure
 				nodeName = nodeName.replaceAll("\\.", "_");
 			}
-			String scratchDirectory = runDirectoryPath + "/scratch/" + uriPrefix +  "/" + nodeName + "_" + step;
+			String scratchDirectory = runDirectoryPath + "/.steps/" + uriPrefix +  "/" + nodeName + "_" + step;
 			_stepDirectory = new File(scratchDirectory);
 			_stepDirectory.mkdirs();
 			_stepOfScratchDirectory = step;

@@ -375,7 +375,7 @@ public abstract class AugmentedScriptActor extends ScriptActor {
 		
 		String adjustedStderr = adjustStderr(completeStderr);
 		
-		if (!adjustedStderr.isEmpty()) {
+		if (!adjustedStderr.isEmpty() && _stderrMode == OutputStreamMode.IMMEDIATE) {
 			System.err.println(	">>>>>>>>>>>>>>>>>>>> Error running augmented actor script >>>>>>>>>>>>>>>>>>>>>>"	);
 			System.err.print  (	augmentedScript																		);
 			System.err.println(	"-------------------------------- Error message ---------------------------------"	);

@@ -20,7 +20,7 @@ import org.yaml.snakeyaml.Yaml;
 public class FileSystemMetadataManager extends BaseMetadataManager {
 
 	private static final String YAML_EXTENSION = ".yaml";	
-	public static final String METADATA_DIR = File.separator + "_metadata" + File.separator;	
+	public static final String METADATA_DIR = File.separator + ".metadata" + File.separator;	
 	private static final String CONTROL_FILE = METADATA_DIR + "control" + YAML_EXTENSION;
 	private static final String PRODUCTS_FILE = METADATA_DIR + "products"  + YAML_EXTENSION ;	
 	private static final String INPUTS_FILE = METADATA_DIR + "inputs" + YAML_EXTENSION;			
